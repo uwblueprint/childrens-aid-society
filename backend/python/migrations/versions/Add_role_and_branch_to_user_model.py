@@ -1,4 +1,4 @@
-"""empty message
+"""Add driver role and branch to user model
 
 Revision ID: e7f7ce362f62
 Revises: 2d6c26fde419

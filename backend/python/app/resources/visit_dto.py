@@ -8,12 +8,9 @@ ALLOWABLE_CONTENT_TYPES = [
 
 
 class VisitDTO(object):
-    pass
 
+    def __init__(self):
+        pass
 
-def __init__(self):
-    pass
-
-
-def validate(self):
-    pass
+    def validate(self):
+        pass

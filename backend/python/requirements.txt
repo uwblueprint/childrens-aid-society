@@ -29,8 +29,9 @@ httplib2==0.19.1
 idna==2.10
 importlib-metadata==4.4.0
 iniconfig==1.1.1
+isort==5.8.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 Mako==1.1.4
 MarkupSafe==1.1.1
 mongoengine==0.23.0

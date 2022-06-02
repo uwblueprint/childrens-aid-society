@@ -34,3 +34,10 @@ def downgrade():
     op.drop_column("users", "branch")
     # ### end Alembic commands ###
     op.execute("DROP TYPE branches")
+
+    op.execute("ALTER TYPE roles RENAME TO roles_old")
+    op.execute("CREATE TYPE roles AS ENUM('User', 'Admin')")
+    op.execute(
+        ("ALTER TABLE users ALTER COLUMN role TYPE roles USING " "roles::text::roles")
+    )
+    op.execute("DROP TYPE roles_old")

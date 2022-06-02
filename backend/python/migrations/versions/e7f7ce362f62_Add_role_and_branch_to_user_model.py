@@ -1,7 +1,7 @@
 """Add driver role and branch to user model
 
 Revision ID: e7f7ce362f62
-Revises: 2d6c26fde419
+Revises: 797bfedc3a06
 Create Date: 2022-06-01 01:25:25.210065
 
 """

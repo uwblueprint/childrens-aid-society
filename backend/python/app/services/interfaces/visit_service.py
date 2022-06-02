@@ -3,5 +3,5 @@ from abc import ABC, abstractmethod
 
 class IVisitService(ABC):
     @abstractmethod
-    def do_something():
+    def create_visit():
         pass

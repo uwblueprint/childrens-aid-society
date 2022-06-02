@@ -6,6 +6,7 @@ migrate = Migrate()
 
 
 def init_app(app):
+    from .address import Address
     from .entity import Entity
     from .user import User
 

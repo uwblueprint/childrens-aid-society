@@ -6,11 +6,14 @@ ALLOWABLE_CONTENT_TYPES = [
     "image/gif",
 ]
 
+
 class VisitDTO(object):
     pass
 
+
 def __init__(self):
     pass
+
 
 def validate(self):
     pass

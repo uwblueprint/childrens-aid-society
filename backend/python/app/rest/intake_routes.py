@@ -3,6 +3,7 @@ import json
 from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
+
 # from ..middlewares.validate import validate_request
 # from ..services.implementations.intake_service import IntakeService
 
@@ -17,4 +18,7 @@ blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 # @require_authorization_by_role({"User", "Admin"})
 # @validate_request("IntakeDTO")
 def create_intake():
-    return (jsonify({"status": "ok"}),200,)
+    return (
+        jsonify({"status": "ok"}),
+        200,
+    )

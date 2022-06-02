@@ -12,6 +12,7 @@ Confirm that you have the following files added to your repository, with the cor
 ```
 .env
 frontend/.env
+e2e-tests/.env
 ```
 
 ## Prereqs
@@ -56,6 +57,19 @@ Be sure to lint your code prior to opening pull requests! To lint the backend, r
 
 ```
 docker exec -it cas_py_backend /bin/bash -c "black . && isort --profile black ."
+```
+
+# Running Tests
+To test your backend, run:
+```
+docker exec -it cas_py_backend /bin/bash -c "pip install -e . && pytest"
+```
+
+To run E2E tests, first create a `.env` file in your `e2e-tests` directory, and populate it with the necessary variables. Then run:
+```
+$ pip3 install pytest python-dotenv inflection --user
+$ cd e2e-tests
+$ python3 -m pytest --lang python --auth --fs
 ```
 
 # Database + Migrations

@@ -8,7 +8,6 @@ ALLOWABLE_CONTENT_TYPES = [
 
 
 class VisitDTO(object):
-
     def __init__(self):
         pass
 

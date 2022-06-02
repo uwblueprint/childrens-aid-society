@@ -1,5 +1,6 @@
-from ..interfaces.intake_service import IIntakeService
 from ..interfaces.file_storage_service import IFileStorageService
+from ..interfaces.intake_service import IIntakeService
+
 
 class IntakeService(IIntakeService):
     def __init__(self, logger, file_storage_service: IFileStorageService):

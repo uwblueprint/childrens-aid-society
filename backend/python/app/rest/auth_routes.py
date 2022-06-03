@@ -3,15 +3,14 @@ import os
 from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import (
-    require_authorization_by_user_id,
     require_authorization_by_email,
+    require_authorization_by_user_id,
 )
 from ..middlewares.validate import validate_request
 from ..resources.create_user_dto import CreateUserDTO
 from ..services.implementations.auth_service import AuthService
 from ..services.implementations.email_service import EmailService
 from ..services.implementations.user_service import UserService
-
 
 user_service = UserService(current_app.logger)
 email_service = EmailService(

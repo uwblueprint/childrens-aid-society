@@ -1,9 +1,9 @@
 import firebase_admin.auth
 
-from ..interfaces.user_service import IUserService
-from ...models.user import User
 from ...models import db
+from ...models.user import User
 from ...resources.user_dto import UserDTO
+from ..interfaces.user_service import IUserService
 
 
 class UserService(IUserService):
@@ -398,4 +398,3 @@ class UserService(IUserService):
         user_dict = user.to_dict()
         user_dict.pop("auth_id", None)
         return user_dict
-

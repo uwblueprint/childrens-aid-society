@@ -1,6 +1,7 @@
-from flask import jsonify, request
-from functools import wraps
 import json
+from functools import wraps
+
+from flask import jsonify, request
 
 from ..resources.create_user_dto import CreateUserDTO
 from ..resources.entity_dto import EntityDTO

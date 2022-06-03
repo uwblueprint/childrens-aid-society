@@ -1,9 +1,8 @@
 import pytest
 
 from app import create_app
-from app.models.user import User
-
 from app.models import db
+from app.models.user import User
 
 """
 Sample python test.

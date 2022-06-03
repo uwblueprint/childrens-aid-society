@@ -11,7 +11,6 @@ from ..services.implementations.email_service import EmailService
 from ..services.implementations.user_service import UserService
 from ..utilities.csv_utils import generate_csv_from_list
 
-
 user_service = UserService(current_app.logger)
 email_service = EmailService(
     current_app.logger,

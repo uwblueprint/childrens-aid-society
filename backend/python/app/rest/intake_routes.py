@@ -13,7 +13,4 @@ blueprint = Blueprint("intake", __name__, url_prefix="/intakes")
 # @require_authorization_by_role({"User", "Admin"})
 # @validate_request("IntakeDTO")
 def create_intake():
-    return (
-        jsonify({"status": "ok"}),
-        200,
-    )
+    pass

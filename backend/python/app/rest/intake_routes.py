@@ -3,15 +3,10 @@ import json
 from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
-
-# from ..middlewares.validate import validate_request
-# from ..services.implementations.intake_service import IntakeService
-
-# define instance of EntityService
-# intake_service = IntakeService(current_app.logger, file_storage_service)
+from ..middlewares.validate import validate_request
 
 # defines a shared URL prefix for all routes
-blueprint = Blueprint("intake", __name__, url_prefix="/intake")
+blueprint = Blueprint("intake", __name__, url_prefix="/intakes")
 
 # define POST endpoint for creating an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)

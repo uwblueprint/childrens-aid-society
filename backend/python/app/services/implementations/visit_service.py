@@ -6,5 +6,5 @@ class VisitService(IVisitService):
     def __init__(self, logger):
         self.logger = logger
 
-    def create_visits():
+    def create_visit():
         pass

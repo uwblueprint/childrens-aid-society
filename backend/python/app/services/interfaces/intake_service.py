@@ -8,7 +8,7 @@ class IIntakeService(ABC):
 
     @abstractmethod
     def create_intake(self, intake):
-        """Create a new Entity object
+        """Create a new Intake object
 
         :param intake: dictionary of intake fields
         :return: dictionary of Intake object

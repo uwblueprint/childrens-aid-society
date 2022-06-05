@@ -1,9 +1,10 @@
 export const HOME_PAGE = "/";
-
+export const INTAKE_PAGE = "/intake";
+export const VISIT_PAGE = "/visit";
 export const LOGIN_PAGE = "/login";
-
 export const SIGNUP_PAGE = "/signup";
 
+// TODO: Delete these
 export const EDIT_TEAM_PAGE = "/edit-team";
 
 export const DISPLAY_ENTITY_PAGE = "/entity";

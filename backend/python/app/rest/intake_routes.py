@@ -1,4 +1,3 @@
-
 from flask import Blueprint
 
 from ..middlewares.auth import require_authorization_by_role

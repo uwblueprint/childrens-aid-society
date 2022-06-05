@@ -1,11 +1,10 @@
-from flask import Blueprint, current_app, request
-from flask import jsonify
 import json
 
-from ..resources.entity_dto import EntityDTO
+from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
+from ..resources.entity_dto import EntityDTO
 from ..services.implementations.entity_service import EntityService
 from ..services.implementations.file_storage_service import FileStorageService
 from ..utilities.csv_utils import generate_csv_from_list

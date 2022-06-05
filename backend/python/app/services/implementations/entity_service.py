@@ -1,8 +1,9 @@
-from ...models.entity import Entity
+from uuid import uuid4
+
 from ...models import db
+from ...models.entity import Entity
 from ..interfaces.entity_service import IEntityService
 from ..interfaces.file_storage_service import IFileStorageService
-from uuid import uuid4
 
 
 class EntityService(IEntityService):
@@ -91,4 +92,3 @@ class EntityService(IEntityService):
 
         self.logger.error("Invalid id")
         raise Exception("Invalid id")
-

@@ -20,9 +20,9 @@ def upgrade():
     op.create_table(
         "addresses",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("street_address", sa.String(), nullable=True),
-        sa.Column("city", sa.String(), nullable=True),
-        sa.Column("postal_code", sa.String(), nullable=True),
+        sa.Column("street_address", sa.String(), nullable=False),
+        sa.Column("city", sa.String(), nullable=False),
+        sa.Column("postal_code", sa.String(), nullable=False),
         sa.Column("latitude", sa.Numeric(precision=8, scale=6), nullable=True),
         sa.Column("longitude", sa.Numeric(precision=9, scale=6), nullable=True),
         sa.PrimaryKeyConstraint("id"),

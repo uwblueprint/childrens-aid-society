@@ -1,5 +1,5 @@
 from ...models import db
-from ..interfaces.visit_service import IVisitService
+from ..interfaces.child_service import IChildService
 
 
 class ChildService(IChildService):

@@ -7,7 +7,6 @@ from ..middlewares.validate import validate_request
 from ..resources.child_dto import ChildDTO
 from ..services.implementations.child_service import ChildService
 
-
 child_service = ChildService(current_app.logger)
 
 

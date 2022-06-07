@@ -1,12 +1,12 @@
 def init_app(app):
     from . import (
         auth_routes,
+        child_routes,
         documentation_routes,
         entity_routes,
         intake_routes,
         user_routes,
         visit_routes,
-        child_routes,
     )
 
     app.register_blueprint(user_routes.blueprint)

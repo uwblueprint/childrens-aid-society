@@ -1,7 +1,7 @@
 """Create transportation_method model
 
 Revision ID: 5c95f4efed2d
-Revises: 797bfedc3a06
+Revises: 8a03057d5a04
 Create Date: 2022-06-05 16:08:35.285100
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.sql import table
 
 # revision identifiers, used by Alembic.
 revision = "5c95f4efed2d"
-down_revision = "797bfedc3a06"
+down_revision = "8a03057d5a04"
 branch_labels = None
 depends_on = None
 

@@ -9,7 +9,6 @@ def init_app(app):
     from .address import Address
     from .entity import Entity
     from .transportation_methods import TransportationMethod
-
     from .user import User
 
     app.app_context().push()

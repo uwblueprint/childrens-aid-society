@@ -1,11 +1,11 @@
 from sqlalchemy import inspect
 from sqlalchemy.orm.properties import ColumnProperty
+from .branches import Branches
 
 from . import db
 
 roles_enum = db.Enum("Driver", "User", "Admin", name="roles")
-branches_enum = db.Enum("Algoma", name="branches")
-
+# branches_enum = db.Enum(Branches.branch, name="branches")
 
 class User(db.Model):
     __tablename__ = "users"
@@ -15,7 +15,7 @@ class User(db.Model):
     last_name = db.Column(db.String, nullable=False)
     auth_id = db.Column(db.String, nullable=False)
     role = db.Column(roles_enum)
-    branch = db.Column(branches_enum)
+    branch_id = db.Column(db.Integer, db.ForeignKey("branches.id"), nullable=False)
 
     def to_dict(self, include_relationships=False):
         # define the entities table

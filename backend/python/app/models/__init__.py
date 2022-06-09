@@ -6,9 +6,9 @@ migrate = Migrate()
 
 
 def init_app(app):
+    from .access_types import AccessTypes
     from .entity import Entity
     from .user import User
-    from .access_types import AccessTypes
 
     app.app_context().push()
     db.init_app(app)

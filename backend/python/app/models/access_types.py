@@ -23,4 +23,4 @@ class AccessTypes(db.Model):
                 formatted[field] = attr
             elif include_relationships:
                 formatted[field] = [obj.to_dict() for obj in attr]
-        return formatted    
+        return formatted

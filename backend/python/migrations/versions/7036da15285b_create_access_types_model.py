@@ -5,9 +5,8 @@ Revises: 797bfedc3a06
 Create Date: 2022-06-09 00:45:26.144213
 
 """
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "7036da15285b"
@@ -24,13 +23,14 @@ def upgrade():
         sa.PrimaryKeyConstraint("id"),
     )
 
-    op.bulk_insert(access_types,
-    [
-            {'id':1, 'access_type':'Twice Weekly'},
-            {'id':2, 'access_type':'Weekly, Any Time'},
-            {'id':3, 'access_type':'Weekly, After School'},
-            {'id':4, 'access_type':'Virtual'}
-        ]
+    op.bulk_insert(
+        access_types,
+        [
+            {"id": 1, "access_type": "Twice Weekly"},
+            {"id": 2, "access_type": "Weekly, Any Time"},
+            {"id": 3, "access_type": "Weekly, After School"},
+            {"id": 4, "access_type": "Virtual"},
+        ],
     )
     # ### end Alembic commands ###
 

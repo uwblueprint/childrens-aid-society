@@ -5,8 +5,8 @@ Revises: 8a03057d5a04
 Create Date: 2022-06-09 00:54:26.467547
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
@@ -24,7 +24,9 @@ def upgrade():
         sa.Column("branch", sa.String(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.add_column("users", sa.Column('branch_id', sa.Integer(), sa.ForeignKey('branches.id')))
+    op.add_column(
+        "users", sa.Column("branch_id", sa.Integer(), sa.ForeignKey("branches.id"))
+    )
     op.execute("INSERT INTO branches (branch) VALUES ('Algoma')")
     # ### end Alembic commands ###
 

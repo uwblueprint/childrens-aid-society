@@ -8,10 +8,10 @@ migrate = Migrate()
 def init_app(app):
     from .access_type import AccessType
     from .address import Address
+    from .branches import Branches
     from .entity import Entity
     from .transportation_methods import TransportationMethod
     from .user import User
-    from .branches import Branches
 
     app.app_context().push()
     db.init_app(app)

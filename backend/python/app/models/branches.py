@@ -3,6 +3,7 @@ from sqlalchemy.orm.properties import ColumnProperty
 
 from . import db
 
+
 class Branches(db.Model):
     __tablename__ = "branches"
 

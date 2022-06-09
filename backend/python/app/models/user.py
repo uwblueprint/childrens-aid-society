@@ -1,11 +1,11 @@
 from sqlalchemy import inspect
 from sqlalchemy.orm.properties import ColumnProperty
-from .branches import Branches
 
 from . import db
+from .branches import Branches
 
 roles_enum = db.Enum("Driver", "User", "Admin", name="roles")
-# branches_enum = db.Enum(Branches.branch, name="branches")
+
 
 class User(db.Model):
     __tablename__ = "users"

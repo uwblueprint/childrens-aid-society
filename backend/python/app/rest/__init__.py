@@ -1,6 +1,7 @@
 def init_app(app):
     from . import (
         auth_routes,
+        child_routes,
         documentation_routes,
         entity_routes,
         intake_routes,
@@ -14,3 +15,4 @@ def init_app(app):
     app.register_blueprint(entity_routes.blueprint)
     app.register_blueprint(documentation_routes.blueprint)
     app.register_blueprint(visit_routes.blueprint)
+    app.register_blueprint(child_routes.blueprint)

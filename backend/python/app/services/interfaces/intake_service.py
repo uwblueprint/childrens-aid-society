@@ -16,3 +16,15 @@ class IIntakeService(ABC):
         :raises Exception: if intake fields are invalid
         """
         pass
+
+    @abstractmethod
+    def _get_transport_method_id(self, transport_method):
+        """Get the id for a transport method; if it doesn't exist, create a new
+           entry and return the id
+
+        :param transport_method: string of transportation_method
+        :return: TransportationMethodDTO
+        :rtype: TransportationMethodDTO
+        :raises Exception: if transport method is invalid
+        """
+        pass

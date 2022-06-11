@@ -9,6 +9,7 @@ Made with [starter-code-v2](https://github.com/uwblueprint/starter-code-v2), bro
 ## Environment Variables
 
 Confirm that you have the following files added to your repository, with the correct environment variables set:
+
 ```
 .env
 frontend/.env
@@ -60,12 +61,21 @@ docker exec -it cas_py_backend /bin/bash -c "black . && isort --profile black ."
 ```
 
 # Running Tests
+
 To test your backend, run:
+
 ```
 docker exec -it cas_py_backend /bin/bash -c "pip install -e . && pytest"
 ```
 
+Alternatively, inside the backend container you can run:
+
+```
+python -m pytest
+```
+
 To run E2E tests, first create a `.env` file in your `e2e-tests` directory, and populate it with the necessary variables. Then run:
+
 ```
 $ pip3 install pytest python-dotenv inflection --user
 $ cd e2e-tests
@@ -79,7 +89,7 @@ $ python3 -m pytest --lang python --auth --fs
 To access the database:
 
 ```
-docker exec -it cas_db /bin/bash -c " psql -U postgres -d cas"
+docker exec -it cas_db /bin/bash -c "psql -U postgres -d cas"
 ```
 
 ## Migrations
@@ -109,6 +119,7 @@ docker exec -it cas_py_backend /bin/bash -c "flask db migrate -m '<short descrip
 ```
 
 To check the migration currently applied to your database, run:
+
 ```
 docker exec -it cas_py_backend /bin/bash -c "flask db current -v"
 ```

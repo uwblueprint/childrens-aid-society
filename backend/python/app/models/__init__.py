@@ -14,6 +14,7 @@ def init_app(app):
     from .familial_concern import FamilialConcern
     from .transportation_method import TransportationMethod
     from .user import User
+    from .caregivers import Caregivers
 
     app.app_context().push()
     db.init_app(app)

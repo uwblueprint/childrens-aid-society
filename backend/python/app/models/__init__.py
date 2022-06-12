@@ -11,6 +11,7 @@ def init_app(app):
     from .branch import Branch
     from .caregiver import Caregiver
     from .child_concern import ChildConcern
+    from .daytime_contact import DaytimeContact
     from .entity import Entity
     from .familial_concern import FamilialConcern
     from .transportation_method import TransportationMethod

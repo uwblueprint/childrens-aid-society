@@ -28,9 +28,9 @@ def upgrade():
     op.bulk_insert(
         transportation_methods,
         [
-            {"transportation_method": "Agency Driver"},
-            {"transportation_method": "Kin Provider"},
-            {"transportation_method": "Foster Parent"},
+            {"transportation_method": "AGENCY DRIVER"},
+            {"transportation_method": "KIN PROVIDER"},
+            {"transportation_method": "FOSTER PARENT"},
         ],
     )
     # ### end Alembic commands ###

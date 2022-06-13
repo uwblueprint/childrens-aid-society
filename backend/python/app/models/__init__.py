@@ -9,11 +9,11 @@ def init_app(app):
     from .access_type import AccessType
     from .address import Address
     from .branch import Branch
-    from .entity import Entity
-    from .transportation_method import TransportationMethod
-    from .user import User
     from .child_concerns import ChildConcern
+    from .entity import Entity
     from .familial_concerns import FamilialConcern
+    from .transportation_methods import TransportationMethod
+    from .user import User
 
     app.app_context().push()
     db.init_app(app)

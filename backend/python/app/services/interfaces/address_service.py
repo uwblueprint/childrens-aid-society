@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 
+
 class IAddressService(ABC):
     """
     AddressService interface with address management methods
     """
+
     @abstractmethod
     def create_address(self, address):
         """

@@ -5,20 +5,21 @@ from ..interfaces.address_service import IAddressService
 
 
 class AddressService(IAddressService):
-
     def __init__(self, logger):
         self.logger = logger
 
     def create_address(self, address):
         try:
             if address:
-                new_address = Address(**{
-                    "street_address": address.street_address,
-                    "city": address.city,
-                    "postal_code": address.postal_code,
-                    "latitude": address.latitude,
-                    "longitude": address.longitude,
-                })
+                new_address = Address(
+                    **{
+                        "street_address": address.street_address,
+                        "city": address.city,
+                        "postal_code": address.postal_code,
+                        "latitude": address.latitude,
+                        "longitude": address.longitude,
+                    }
+                )
                 db.session.add(new_address)
                 db.session.commit()
                 return AddressDTO(
@@ -36,4 +37,3 @@ class AddressService(IAddressService):
             db.session.rollback()
             self.logger.error(str(error))
             raise error
-

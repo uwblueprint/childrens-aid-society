@@ -12,6 +12,8 @@ def init_app(app):
     from .entity import Entity
     from .transportation_method import TransportationMethod
     from .user import User
+    from .child_concerns import ChildConcern
+    from .familial_concerns import FamilialConcern
 
     app.app_context().push()
     db.init_app(app)

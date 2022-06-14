@@ -22,7 +22,7 @@ def upgrade():
     op.create_table(
         "branches",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("branch", sa.String(), nullable=False),
+        sa.Column("branch", sa.Text(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.add_column(
@@ -35,4 +35,4 @@ def downgrade():
     op.drop_column("users", "branch_id")
     op.drop_table("branches")
     op.execute("CREATE type branches")
-    op.add_column("users", sa.Column("branch", sa.String()))
+    op.add_column("users", sa.Column("branch", sa.Text()))

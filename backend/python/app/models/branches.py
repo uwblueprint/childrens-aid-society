@@ -8,7 +8,7 @@ class Branches(db.Model):
     __tablename__ = "branches"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    branch = db.Column(db.String, nullable=False)
+    branch = db.Column(db.Text(), nullable=False)
 
     def to_dict(self, include_relationships=False):
         cls = type(self)

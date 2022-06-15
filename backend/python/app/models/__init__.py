@@ -9,9 +9,9 @@ def init_app(app):
     from .access_type import AccessType
     from .address import Address
     from .branch import Branch
-    from .child_concerns import ChildConcern
+    from .child_concern import ChildConcern
     from .entity import Entity
-    from .familial_concerns import FamilialConcern
+    from .familial_concern import FamilialConcern
     from .transportation_methods import TransportationMethod
     from .user import User
 

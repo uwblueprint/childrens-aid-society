@@ -36,7 +36,7 @@ def upgrade():
             {"concern": "RUNAWAY"},
             {"concern": "CHILD_BEHAVIORS"},
             {"concern": "SEXUAL_ABUSE"},
-            {"concern": "DEVELOPMENTAL DISABILITY"},
+            {"concern": "DEVELOPMENTAL_DISABILITY"},
             {"concern": "SUBSTANCE_ABUSE"},
             {"concern": "TRUANCY_OR_SCHOOL_PROBLEMS"},
             {"concern": "SUICIDE_ATTEMPTS"},

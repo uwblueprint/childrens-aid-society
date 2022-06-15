@@ -26,9 +26,9 @@ def upgrade():
     op.bulk_insert(
         access_types,
         [
-            {"id": 1, "access_type": "TWICE WEEKLY"},
-            {"id": 2, "access_type": "WEEKLY, ANY TIME"},
-            {"id": 3, "access_type": "WEEKLY, AFTER SCHOOL"},
+            {"id": 1, "access_type": "TWICE_WEEKLY"},
+            {"id": 2, "access_type": "WEEKLY_ANY_TIME"},
+            {"id": 3, "access_type": "WEEKLY_AFTER_SCHOOL"},
             {"id": 4, "access_type": "VIRTUAL"},
         ],
     )

@@ -1,7 +1,7 @@
 """Create access_types model
 
 Revision ID: 7036da15285b
-Revises: 797bfedc3a06
+Revises: 5c95f4efed2d
 Create Date: 2022-06-09 00:45:26.144213
 
 """
@@ -10,7 +10,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "7036da15285b"
-down_revision = "797bfedc3a06"
+down_revision = "5c95f4efed2d"
 branch_labels = None
 depends_on = None
 
@@ -26,10 +26,10 @@ def upgrade():
     op.bulk_insert(
         access_types,
         [
-            {"id": 1, "access_type": "Twice Weekly"},
-            {"id": 2, "access_type": "Weekly, Any Time"},
-            {"id": 3, "access_type": "Weekly, After School"},
-            {"id": 4, "access_type": "Virtual"},
+            {"id": 1, "access_type": "TWICE WEEKLY"},
+            {"id": 2, "access_type": "WEEKLY, ANY TIME"},
+            {"id": 3, "access_type": "WEEKLY, AFTER SCHOOL"},
+            {"id": 4, "access_type": "VIRTUAL"},
         ],
     )
     # ### end Alembic commands ###

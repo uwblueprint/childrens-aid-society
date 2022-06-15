@@ -22,17 +22,17 @@ def upgrade():
     op.create_table(
         "branches",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("branch", sa.Text(), nullable=False),
+        sa.Column("branch", sa.String(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.add_column(
-        "users", sa.Column("branch_id", sa.Integer(), sa.ForeignKey("branches.id"))
+        "users", sa.Column("branch", sa.String(), default='ALGOMA')
     )
     op.execute("INSERT INTO branches (branch) VALUES ('ALGOMA')")
 
 
 def downgrade():
-    op.drop_column("users", "branch_id")
+    op.drop_column("users", "branch")
     op.drop_table("branches")
     op.execute("CREATE type branches")
-    op.add_column("users", sa.Column("branch", sa.Text()))
+    op.add_column("users", sa.Column("branch", sa.String(), default='ALGOMA'))

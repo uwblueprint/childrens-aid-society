@@ -4,11 +4,11 @@ from sqlalchemy.orm.properties import ColumnProperty
 from . import db
 
 
-class Branches(db.Model):
+class Branch(db.Model):
     __tablename__ = "branches"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    branch = db.Column(db.Text(), nullable=False)
+    branch = db.Column(db.String, nullable=False)
 
     def to_dict(self, include_relationships=False):
         cls = type(self)

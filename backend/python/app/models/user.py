@@ -2,7 +2,6 @@ from sqlalchemy import inspect
 from sqlalchemy.orm.properties import ColumnProperty
 
 from . import db
-from .branches import Branches
 
 roles_enum = db.Enum("Driver", "User", "Admin", name="roles")
 
@@ -15,7 +14,7 @@ class User(db.Model):
     last_name = db.Column(db.String, nullable=False)
     auth_id = db.Column(db.String, nullable=False)
     role = db.Column(roles_enum)
-    branch_id = db.Column(db.Integer, db.ForeignKey("branches.id"), nullable=False)
+    branch = db.Column(db.String, nullable=False, default='ALGOMA')
 
     def to_dict(self, include_relationships=False):
         # define the entities table

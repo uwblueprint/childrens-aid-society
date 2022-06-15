@@ -7,7 +7,9 @@ migrate = Migrate()
 
 def init_app(app):
     from .access_types import AccessTypes
+    from .address import Address
     from .entity import Entity
+    from .transportation_methods import TransportationMethod
     from .user import User
 
     app.app_context().push()

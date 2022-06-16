@@ -1,17 +1,16 @@
 """Reference user branch using lookup table
 
 Revision ID: 6cd80740889b
-Revises: 8a03057d5a04
+Revises: 7036da15285b
 Create Date: 2022-06-09 00:54:26.467547
 
 """
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision = "6cd80740889b"
-down_revision = "8a03057d5a04"
+down_revision = "7036da15285b"
 branch_labels = None
 depends_on = None
 

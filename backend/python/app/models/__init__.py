@@ -8,7 +8,7 @@ migrate = Migrate()
 def init_app(app):
     from .access_type import AccessType
     from .address import Address
-    from .branches import Branches
+    from .branch import Branch
     from .entity import Entity
     from .transportation_methods import TransportationMethod
     from .user import User

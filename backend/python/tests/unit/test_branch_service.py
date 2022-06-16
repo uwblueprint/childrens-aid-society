@@ -11,6 +11,7 @@ def branch_service():
     branch_service = BranchService(current_app.logger)
     yield branch_service
 
+
 def test_get_branch_id_success(branch_service):
     res = branch_service.get_branch("ALGOMA")
     assert type(res) is BranchDTO

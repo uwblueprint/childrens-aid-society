@@ -18,6 +18,7 @@ depends_on = None
 def upgrade():
     op.drop_column("users", "branch")
     op.execute("DROP type branches")
+    # op.drop_table("branches")
     op.create_table(
         "branches",
         sa.Column("id", sa.Integer(), nullable=False),

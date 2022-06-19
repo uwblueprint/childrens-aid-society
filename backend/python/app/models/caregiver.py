@@ -14,14 +14,14 @@ relationship_to_child_enum = db.Enum(
 )
 
 
-class Caregivers(db.Model):
+class Caregiver(db.Model):
     __tablename__ = "caregivers"
     # TODO: add foreign key reference to child
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     type = db.Column(type_enum)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    is_primary = db.Column(db.Boolean, nullable=False, default=True)
+    is_primary = db.Column(db.Boolean, nullable=True, default=True)
     address_id = db.Column(db.Integer, db.ForeignKey("addresses.id"), nullable=True)
     relationship_to_child = db.Column(relationship_to_child_enum, nullable=False)
     phone_number = db.Column(db.String, nullable=False)

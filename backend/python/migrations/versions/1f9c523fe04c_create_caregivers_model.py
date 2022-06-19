@@ -5,8 +5,6 @@ Revises: 8ad687618714
 Create Date: 2022-06-12 16:35:45.886412
 
 """
-from email.policy import default
-
 import sqlalchemy as sa
 from alembic import op
 

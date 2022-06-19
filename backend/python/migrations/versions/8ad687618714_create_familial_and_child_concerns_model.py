@@ -1,7 +1,7 @@
 """Create familial and child concerns model
 
 Revision ID: 8ad687618714
-Revises: 5c95f4efed2d
+Revises: 6cd80740889b
 Create Date: 2022-06-13 12:58:15.978295
 
 """
@@ -10,7 +10,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "8ad687618714"
-down_revision = "5c95f4efed2d"
+down_revision = "6cd80740889b"
 branch_labels = None
 depends_on = None
 

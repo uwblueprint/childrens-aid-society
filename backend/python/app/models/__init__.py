@@ -12,7 +12,7 @@ def init_app(app):
     from .child_concern import ChildConcern
     from .entity import Entity
     from .familial_concern import FamilialConcern
-    from .transportation_methods import TransportationMethod
+    from .transportation_method import TransportationMethod
     from .user import User
 
     app.app_context().push()

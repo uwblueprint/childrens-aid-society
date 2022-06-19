@@ -1,7 +1,7 @@
 import pytest
 from flask import current_app
-from app.models import db
 
+from app.models import db
 from app.models.branch import Branch
 from app.resources.branch_dto import BranchDTO
 from app.services.implementations.branch_service import BranchService
@@ -14,9 +14,8 @@ def branch_service():
     yield branch_service
     Branch.query.delete()
 
-DEFAULT_BRANCH = {
-    "branch": "ALGOMA"
-}
+
+DEFAULT_BRANCH = {"branch": "ALGOMA"}
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
@@ -24,15 +23,18 @@ def seed_database():
     db.session.add(branch_instance)
     db.session.commit()
 
+
 def test_get_branch_id_success(branch_service):
     res = branch_service.get_branch("ALGOMA")
     assert type(res) is BranchDTO
     assert res.branch == "ALGOMA"
 
+
 def test_add_new_branch(branch_service):
     res = branch_service.add_new_branch("PICKERING")
     assert type(res) is BranchDTO
     assert Branch.query.get(res.id).branch == "PICKERING"
+
 
 def test_add_new_branch_success(branch_service):
     res = branch_service.get_branch("TORONTO")
@@ -43,9 +45,11 @@ def test_add_new_branch_success(branch_service):
     assert type(res2) is BranchDTO
     assert Branch.query.get(res2.id).branch == "OTTAWA"
 
+
 def test_get_branch_invalid_arg(branch_service):
     with pytest.raises(Exception):
         branch_service.get_branch(3143)
+
 
 def test_get_branch_null_arg_raises_exception(branch_service):
     with pytest.raises(Exception):

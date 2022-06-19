@@ -7,7 +7,6 @@ from ..interfaces.branch_service import IBranchService
 class BranchService(IBranchService):
     def __init__(self, logger):
         self.logger = logger
-        pass
 
     def get_branch(self, branch):
         try:

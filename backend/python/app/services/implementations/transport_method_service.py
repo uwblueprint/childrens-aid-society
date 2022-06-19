@@ -1,5 +1,5 @@
 from ...models import db
-from ...models.transportation_methods import TransportationMethod
+from ...models.transportation_method import TransportationMethod
 from ...resources.transportation_method_dto import (
     CreateTransportationMethodDTO,
     TransportationMethodDTO,
@@ -10,7 +10,6 @@ from ..interfaces.transport_method_service import ITransportationMethodService
 class TransportationMethodService(ITransportationMethodService):
     def __init__(self, logger):
         self.logger = logger
-        pass
 
     def _get_transport_method(self, method):
         try:

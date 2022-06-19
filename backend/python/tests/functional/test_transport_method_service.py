@@ -2,7 +2,7 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.transportation_methods import TransportationMethod
+from app.models.transportation_method import TransportationMethod
 from app.resources.transportation_method_dto import TransportationMethodDTO
 from app.services.implementations.transport_method_service import (
     TransportationMethodService,

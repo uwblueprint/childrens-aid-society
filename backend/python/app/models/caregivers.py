@@ -22,10 +22,8 @@ class Caregivers(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     is_primary = db.Column(db.Boolean, nullable=False, default=True)
-    address_id = db.Column(db.Integer, db.ForeignKey(
-        "addresses.id"), nullable=True)
-    relationship_to_child = db.Column(
-        relationship_to_child_enum, nullable=False)
+    address_id = db.Column(db.Integer, db.ForeignKey("addresses.id"), nullable=True)
+    relationship_to_child = db.Column(relationship_to_child_enum, nullable=False)
     phone_number = db.Column(db.String, nullable=False)
     cpin_number = db.Column(db.String, nullable=True)
     date_of_birth = db.Column(db.Date, nullable=True)

@@ -9,6 +9,7 @@ def init_app(app):
     from .access_type import AccessType
     from .address import Address
     from .branch import Branch
+    from .caregivers import Caregivers
     from .child_concern import ChildConcern
     from .entity import Entity
     from .familial_concern import FamilialConcern

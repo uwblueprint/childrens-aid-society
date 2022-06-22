@@ -56,3 +56,15 @@ def test_get_transport_method_raises_exception_invalid_argument(
 ):
     with pytest.raises(Exception):
         transport_method_service._get_transport_method(12345)
+
+
+def test_get_transportation_method_success(transport_method_service):
+    res = transport_method_service.get_transportation_methods()
+    assert type(res) == list
+    assert res
+
+
+def test_get_transportation_method_success_empty_db(transport_method_service):
+    res = transport_method_service.get_transportation_methods()
+    assert type(res) == list
+    assert not res

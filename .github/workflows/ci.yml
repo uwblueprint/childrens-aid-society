@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_DB_DEV: ${{ secrets.POSTGRES_DB_DEV }}
+      POSTGRES_DB_TEST: ${{ secrets.POSTGRES_DB_TEST }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_HOST: $${{ secrets.DB_HOST }}
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      # installing dependencies
+      - name: Install dependencies
+        run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
+      
+      - name: Build the docker-compose stack
+        run: docker-compose up --build
+      
+      - name: Check running containers
+        run: docker ps -a
+      
+      # running tests
+      - name: Run tests for frontend
+        working-directory: ./frontend
+        run: yarn test
+      
+      - name: Run tests for backend
+        run: docker exec -it cas_py_backend /bin/bash -c "pip install -e . && pytest"

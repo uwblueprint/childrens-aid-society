@@ -1,7 +1,5 @@
-from sqlalchemy import inspect
-from sqlalchemy.orm.properties import ColumnProperty
-
 from . import db
+from .base_mixin import BaseMixin
 
 type_enum = db.Enum("CAREGIVER", "PROVIDER", name="caregivers_type")
 relationship_to_child_enum = db.Enum(
@@ -14,7 +12,7 @@ relationship_to_child_enum = db.Enum(
 )
 
 
-class Caregiver(db.Model):
+class Caregiver(db.Model, BaseMixin):
     __tablename__ = "caregivers"
     # TODO: add foreign key reference to child
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -35,17 +33,3 @@ class Caregiver(db.Model):
     foster_care_coord_ext = db.Column(db.String, nullable=True)
     limitations_for_access = db.Column(db.String, nullable=True)
     address = db.relationship("Address")
-
-    def to_dict(self, include_relationships=False):
-        cls = type(self)
-
-        mapper = inspect(cls)
-        formatted = {}
-        for column in mapper.attrs:
-            field = column.key
-            attr = getattr(self, field)
-            if isinstance(column, ColumnProperty):
-                formatted[field] = attr
-            elif include_relationships:
-                formatted[field] = [obj.to_dict() for obj in attr]
-        return formatted

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 
-import { Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 
 import authAPIClient from "../../APIClients/AuthAPIClient";
 import { HOME_PAGE } from "../../constants/Routes";
@@ -66,13 +66,9 @@ const Signup = (): React.ReactElement => {
           />
         </div>
         <div>
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={onSignupClick}
-          >
+          <Button onClick={onSignupClick} textStyle="body-regular">
             Sign Up
-          </button>
+          </Button>
         </div>
       </form>
     </div>

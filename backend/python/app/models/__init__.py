@@ -10,11 +10,16 @@ def init_app(app):
     from .address import Address
     from .branch import Branch
     from .caregiver import Caregiver
+    from .child import Child
     from .child_concern import ChildConcern
     from .daytime_contact import DaytimeContact
     from .familial_concern import FamilialConcern
+    from .intake import Intake
+    from .long_term_goal import LongTermGoal
+    from .short_term_goal import ShortTermGoal
     from .transportation_method import TransportationMethod
     from .user import User
+    from .visit_location import VisitLocation
 
     app.app_context().push()
     db.init_app(app)

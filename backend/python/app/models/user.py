@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-roles_enum = db.Enum("Driver", "User", "Admin", name="roles")
+roles_enum = db.Enum("Driver", "User", "Admin", name="users_role")
 
 
 class User(db.Model, BaseMixin):

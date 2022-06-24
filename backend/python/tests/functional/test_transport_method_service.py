@@ -33,13 +33,13 @@ def seed_database():
 
 
 def test_get_transport_method_fetches_existing_method(transport_method_service):
-    res = transport_method_service._get_transport_method("Agency Driver")
+    res = transport_method_service.get_transportation_method("Agency Driver")
     assert type(res) is TransportationMethodDTO
     assert res.transportation_method == "AGENCY DRIVER"
 
 
 def test_get_transport_method_creates_new_transport(transport_method_service):
-    res = transport_method_service._get_transport_method("New Driver")
+    res = transport_method_service.get_transportation_method("New Driver")
     assert type(res) is TransportationMethodDTO
     assert TransportationMethod.query.get(res.id).transportation_method == "NEW DRIVER"
 
@@ -48,23 +48,18 @@ def test_get_transport_method_raises_exception_null_argument(
     transport_method_service,
 ):
     with pytest.raises(Exception):
-        transport_method_service._get_transport_method(None)
+        transport_method_service.get_transportation_method(None)
 
 
 def test_get_transport_method_raises_exception_invalid_argument(
     transport_method_service,
 ):
     with pytest.raises(Exception):
-        transport_method_service._get_transport_method(12345)
+        transport_method_service.get_transportation_method(12345)
 
 
-def test_get_transportation_method_success(transport_method_service):
+def test_get_transportation_methods_success(transport_method_service):
     res = transport_method_service.get_transportation_methods()
     assert type(res) == list
     assert res
-
-
-def test_get_transportation_method_success_empty_db(transport_method_service):
-    res = transport_method_service.get_transportation_methods()
-    assert type(res) == list
-    assert not res
+    assert type(res[0]) is TransportationMethodDTO

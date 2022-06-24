@@ -13,12 +13,15 @@ class TransportationMethodService(ITransportationMethodService):
 
     def get_transportation_methods(self):
         try:
-            return [result.to_dict() for result in TransportationMethod.query.all()]
+            return [
+                TransportationMethodDTO(result.id, result.transportation_method)
+                for result in TransportationMethod.query.all()
+            ]
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def _get_transport_method(self, method):
+    def get_transportation_method(self, method):
         try:
             new_method = CreateTransportationMethodDTO(method)
 

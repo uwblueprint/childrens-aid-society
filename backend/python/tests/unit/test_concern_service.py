@@ -54,7 +54,6 @@ def seed_database():
     familial_concern_instance = [FamilialConcern(**data) for data in DEFAULT_FAMILIAR]
     db.session.bulk_save_objects(child_concern_instance)
     db.session.bulk_save_objects(familial_concern_instance)
-    # db.session.commit()
 
 
 def test_get_familial_concern_id_success(concern_service):

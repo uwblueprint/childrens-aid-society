@@ -5,7 +5,6 @@ from . import db
 from .enum import enum
 
 class Entity(db.Model):
-    # define the entities table
 
     __tablename__ = "entities"
 

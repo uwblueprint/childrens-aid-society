@@ -1,5 +1,3 @@
-from os import access
-
 from ...models import db
 from ...models.access_type import AccessType
 from ...resources.access_type_dto import AccessTypeDTO, CreateAccessTypeDTO
@@ -22,12 +20,12 @@ class AccessTypeService(IAccessTypeService):
                     access_type_entry.id, access_type_entry.access_type
                 )
             else:
-                return self.add_new_access_type(access_type_upper)
+                return self._add_new_access_type(access_type_upper)
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def add_new_access_type(self, access_type):
+    def _add_new_access_type(self, access_type):
         try:
             new_access_type_entry = AccessType(access_type=access_type.upper())
             db.session.add(new_access_type_entry)

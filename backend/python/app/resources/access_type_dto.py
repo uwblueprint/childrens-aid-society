@@ -12,6 +12,6 @@ class CreateAccessTypeDTO:
         error_list = []
         if type(self.access_type) is not str:
             error_list.append("The access_type value supplied is not a string.")
-        if type(self.street_address) is str and self.access_type == "":
+        if self.access_type == "":
             error_list.append("The access_type value supplied is empty.")
         return error_list

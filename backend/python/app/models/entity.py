@@ -4,6 +4,14 @@ from sqlalchemy.orm.properties import ColumnProperty
 from . import db
 from .enum import enum
 
+# common columns and methods across multiple data models can be added via a Mixin class:
+# https://docs.sqlalchemy.org/en/13/orm/extensions/declarative/mixins.html
+
+# see examples of Mixins in current and past Blueprint projects:
+# https://github.com/uwblueprint/dancefest-web/blob/master/db/models.py#L10-L70
+# https://github.com/uwblueprint/plasta/blob/master/backend/app/models/mixins.py#L10-L95
+
+
 class Entity(db.Model):
     # define the entities table
 

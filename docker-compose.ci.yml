@@ -1,0 +1,38 @@
+# Configurations for containers in Github Actions ci
+
+version: "3.7"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  python-backend:
+    build:
+      context: ./backend/python
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    dns:
+      - 8.8.8.8
+    depends_on:
+      db:
+        condition:
+          -service_healthy
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - DB_TEST_HOST
+  db-test:
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD

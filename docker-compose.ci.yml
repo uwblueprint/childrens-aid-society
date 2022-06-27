@@ -20,8 +20,7 @@ services:
     dns:
       - 8.8.8.8
     depends_on:
-      db:
-        - db-test
+      - db-test
     environment:
       - POSTGRES_DB
       - POSTGRES_USER

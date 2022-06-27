@@ -9,6 +9,7 @@ from .enum import enum
 
 # see examples of Mixins in current and past Blueprint projects:
 # https://github.com/uwblueprint/dancefest-web/blob/master/db/models.py#L10-L70
+# https://github.com/uwblueprint/plasta/blob/master/backend/app/models/mixins.py#L10-L95
 
 
 class Entity(db.Model):

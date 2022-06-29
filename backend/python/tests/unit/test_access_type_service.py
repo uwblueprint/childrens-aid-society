@@ -15,17 +15,17 @@ def access_type_service():
     AccessType.query.delete()
 
 
-DEFAULT_ACCESS_TYPES = {
-    "access_type": "TWICE_WEEKLY",
-    "access_type": "WEEKLY_ANY_TIME",
-    "access_type": "WEEKLY_AFTER_SCHOOL",
-    "access_type": "VIRTUAL",
-}
+DEFAULT_ACCESS_TYPES = [
+    {"access_type": "TWICE_WEEKLY"},
+    {"access_type": "WEEKLY_ANY_TIME"},
+    {"access_type": "WEEKLY_AFTER_SCHOOL"},
+    {"access_type": "VIRTUAL"},
+]
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
-    access_type_instance = AccessType(**DEFAULT_ACCESS_TYPES)
-    db.session.add(access_type_instance)
+    access_type_instances = [AccessType(**data) for data in DEFAULT_ACCESS_TYPES]
+    db.session.bulk_save_objects(access_type_instances)
     db.session.commit()
 
 

@@ -43,4 +43,4 @@ jobs:
         run: yarn test
       
       - name: Run tests for backend
-        run: docker exec -d childrens-aid-society_python-backend_1 /bin/bash -c "pip install -e . && pytest"
+        run: docker exec -i childrens-aid-society_python-backend_1 /bin/bash -c "pip install -e . && pytest"

@@ -43,4 +43,4 @@ jobs:
         run: yarn test
       
       - name: Run tests for backend
-        run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh py-backend
+        run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend

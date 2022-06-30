@@ -41,10 +41,10 @@ class ConcernService(IConcernService):
             self.logger.error(str(error))
             raise error
 
-    def add_familial_concern(self, familial_concern):
+    def add_familial_concern(self, CreateConcernDTO):
         try:
             new_familial_concern_entry = FamilialConcern(
-                concern=familial_concern.upper()
+                concern=CreateConcernDTO.upper()
             )
             db.session.add(new_familial_concern_entry)
             db.session.commit()
@@ -55,9 +55,9 @@ class ConcernService(IConcernService):
             db.session.rollback()
             raise error
 
-    def add_child_concern(self, child_concern):
+    def add_child_concern(self, CreateConcernDTO):
         try:
-            new_child_concern_entry = ChildConcern(concern=child_concern.upper())
+            new_child_concern_entry = ChildConcern(concern=CreateConcernDTO.upper())
             db.session.add(new_child_concern_entry)
             db.session.commit()
             return ConcernDTO(

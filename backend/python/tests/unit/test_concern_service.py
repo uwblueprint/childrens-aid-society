@@ -85,19 +85,11 @@ def test_add_familial_concern_success(concern_service):
     assert type(res) is ConcernDTO
     assert FamilialConcern.query.get(res.id).concern == "ABUSE"
 
-    res2 = concern_service.get_familial_concern_id("VIOLENCE")
-    assert type(res2) is ConcernDTO
-    assert FamilialConcern.query.get(res2.id).concern == "VIOLENCE"
-
 
 def test_add_child_concern_success(concern_service):
     res = concern_service.get_child_concern_id("TERROR")
     assert type(res) is ConcernDTO
     assert ChildConcern.query.get(res.id).concern == "TERROR"
-
-    res2 = concern_service.get_child_concern_id("CURSE")
-    assert type(res2) is ConcernDTO
-    assert ChildConcern.query.get(res2.id).concern == "CURSE"
 
 
 def test_get_familial_concern_id_invalid_arg(concern_service):

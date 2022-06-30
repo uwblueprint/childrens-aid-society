@@ -32,7 +32,7 @@ jobs:
         run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
       
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.ci.yml up -d
+        run: docker-compose -f docker-compose.ci.yml up
       
       - name: Check running containers
         run: docker ps -a
@@ -43,4 +43,4 @@ jobs:
         run: yarn test
       
       - name: Run tests for backend
-        run: docker exec -i -d childrens-aid-society_python-backend_1 /bin/bash -c "pip install -e . && pytest"
+        run: docker exec -it childrens-aid-society_python-backend_1 /bin/bash -c "pip install -e . && pytest"

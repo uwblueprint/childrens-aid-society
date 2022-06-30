@@ -4,7 +4,6 @@ from sqlalchemy.orm.properties import ColumnProperty
 
 class BaseMixin(object):
     def to_dict(self, include_relationships=False):
-        # define the address table
         cls = type(self)
 
         mapper = inspect(cls)

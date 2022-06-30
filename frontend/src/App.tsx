@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useReducer } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import * as Routes from "./constants/Routes";
 import AUTHENTICATED_USER_KEY from "./constants/AuthConstants";
@@ -11,6 +12,8 @@ import SampleContext, {
 } from "./contexts/SampleContext";
 import sampleContextReducer from "./reducers/SampleContextReducer";
 import SampleContextDispatcherContext from "./contexts/SampleContextDispatcherContext";
+
+import customTheme from "./theme";
 
 import { AuthenticatedUser } from "./types/AuthTypes";
 import Login from "./components/auth/Login";
@@ -27,8 +30,9 @@ const App = (): React.ReactElement => {
     AUTHENTICATED_USER_KEY,
   );
 
-  const [authenticatedUser, setAuthenticatedUser] =
-    useState<AuthenticatedUser>(currentUser);
+  const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(
+    currentUser,
+  );
 
   // Some sort of global state. Context API replaces redux.
   // Split related states into different contexts as necessary.
@@ -39,28 +43,30 @@ const App = (): React.ReactElement => {
   );
 
   return (
-    <SampleContext.Provider value={sampleContext}>
-      <SampleContextDispatcherContext.Provider
-        value={dispatchSampleContextUpdate}
-      >
-        <AuthContext.Provider
-          value={{ authenticatedUser, setAuthenticatedUser }}
+    <ChakraProvider theme={customTheme}>
+      <SampleContext.Provider value={sampleContext}>
+        <SampleContextDispatcherContext.Provider
+          value={dispatchSampleContextUpdate}
         >
-          <Router>
-            <Switch>
-              <Route exact path={Routes.LOGIN_PAGE} component={Login} />
-              <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
-              {/* TODO: Change these to private routes */}
-              <Route exact path={Routes.HOME_PAGE} component={Home} />
-              <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
-              <Route exact path={Routes.VISIT_PAGE} component={Visit} />
+          <AuthContext.Provider
+            value={{ authenticatedUser, setAuthenticatedUser }}
+          >
+            <Router>
+              <Switch>
+                <Route exact path={Routes.LOGIN_PAGE} component={Login} />
+                <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
+                {/* TODO: Change these to private routes */}
+                <Route exact path={Routes.HOME_PAGE} component={Home} />
+                <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
+                <Route exact path={Routes.VISIT_PAGE} component={Visit} />
 
-              <Route exact path="*" component={NotFound} />
-            </Switch>
-          </Router>
-        </AuthContext.Provider>
-      </SampleContextDispatcherContext.Provider>
-    </SampleContext.Provider>
+                <Route exact path="*" component={NotFound} />
+              </Switch>
+            </Router>
+          </AuthContext.Provider>
+        </SampleContextDispatcherContext.Provider>
+      </SampleContext.Provider>
+    </ChakraProvider>
   );
 };
 

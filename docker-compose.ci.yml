@@ -12,6 +12,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
   python-backend:
+    command: ./run-test.sh
     build:
       context: ./backend/python
       dockerfile: Dockerfile

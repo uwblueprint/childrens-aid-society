@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "backend/python/**"
+      - jenn/setup_heroku-push-command
+    # paths:
+    #   - "backend/python/**"
 
 jobs:
   deploy:

@@ -70,6 +70,6 @@ class Intake(db.Model, BaseMixin):
     familial_concerns = db.relationship(
         "FamilialConcern", secondary=intakes_familial_concerns
     )
-    familial_concerns = db.relationship(
+    child_concerns = db.relationship(
         "ChildConcern", secondary=intakes_child_concerns
     )

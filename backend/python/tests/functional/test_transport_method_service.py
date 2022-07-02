@@ -60,23 +60,11 @@ def test_get_transport_method_raises_exception_invalid_argument(
 
 def test_get_transportation_methods_success(transport_method_service):
     res = transport_method_service.get_transportation_methods()
-    # Check if list is returned
     assert type(res) == list
-    # Check if returned list is not empty
-    assert res
-    # Check if returned list has TransportationMethodDTOs
-    assert type(res[0]) is TransportationMethodDTO
-    # Check if correct number of items are returned
     assert len(res) == 3
-    # Check values of all items
-    transportation_methods = set(
-        [key["transportation_method"] for key in DEFAULT_TRANSPORTATION_METHODS]
-    )
-    for transportation_method_object in res:
-        assert (
-            transportation_method_object.transportation_method in transportation_methods
-        )
-        transportation_methods.remove(
-            transportation_method_object.transportation_method
-        )
-    assert len(transportation_methods) == 0
+    assert all(type(item) == TransportationMethodDTO for item in res)
+    transportation_methods_db = [
+        entry["transportation_method"] for entry in DEFAULT_TRANSPORTATION_METHODS
+    ]
+    transportation_methods_res = [item.transportation_method for item in res]
+    assert set(transportation_methods_db) == set(transportation_methods_res)

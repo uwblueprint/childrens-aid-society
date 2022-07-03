@@ -60,7 +60,7 @@ def test_get_access_type_null_arg_raises_exception(access_type_service):
 def test_get_access_types_success(access_type_service):
     res = access_type_service.get_access_types()
     assert type(res) == list
-    assert len(res) == 4
+    assert len(res) == len(DEFAULT_ACCESS_TYPES)
     assert all(type(item) == AccessTypeDTO for item in res)
     access_types_db = [entry["access_type"] for entry in DEFAULT_ACCESS_TYPES]
     access_type_res = [item.access_type for item in res]

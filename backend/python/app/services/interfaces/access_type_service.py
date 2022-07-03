@@ -18,3 +18,13 @@ class IAccessTypeService(ABC):
         :raises Exception: if access type is invalid
         """
         pass
+
+    @abstractmethod
+    def get_access_types(self):
+        """
+        Fetches all access types in the db.
+        :return: List of access types
+        :rtype: list of AccessTypeDTO
+        :raises Exception: if querying the database fails
+        """
+        pass

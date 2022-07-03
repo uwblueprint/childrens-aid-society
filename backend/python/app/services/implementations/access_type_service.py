@@ -25,6 +25,16 @@ class AccessTypeService(IAccessTypeService):
             self.logger.error(str(error))
             raise error
 
+    def get_access_types(self):
+        try:
+            return [
+                AccessTypeDTO(result.id, result.access_type)
+                for result in AccessType.query.all()
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def _add_new_access_type(self, access_type):
         try:
             new_access_type_entry = AccessType(access_type=access_type.upper())

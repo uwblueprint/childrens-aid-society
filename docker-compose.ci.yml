@@ -16,10 +16,10 @@ services:
     depends_on:
       - db-test
     environment:
-      - POSTGRES_DB: ${{ secrets.POSTGRES_DB_TEST }}
-      - POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      - POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      - DB_TEST_HOST: ${{ secrets.DB_HOST }}
+      - POSTGRES_DB=${POSTGRES_DB_TEST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_TEST_HOST=${DB_HOST}
     # env_file:
     #   - ./.env
   db-test:
@@ -28,7 +28,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-      - POSTGRES_DB=${{ secrets.POSTGRES_DB_TEST }}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB_TEST=${POSTGRES_DB_TEST}
     # env_file:
     #   - ./.env

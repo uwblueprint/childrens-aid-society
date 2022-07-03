@@ -32,7 +32,7 @@ jobs:
         run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
       
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.ci.yml up -d
+        run: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit
       
       - name: Check running containers
         run: docker ps -a
@@ -43,5 +43,6 @@ jobs:
         run: yarn test
       
       - name: Run tests for backend
+        run: docker exec cas_py_backend ./run-test.sh
         # run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend
-        run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend
+        # run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend

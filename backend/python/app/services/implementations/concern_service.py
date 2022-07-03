@@ -1,7 +1,7 @@
 from ...models import db
 from ...models.child_concern import ChildConcern
 from ...models.familial_concern import FamilialConcern
-from ...resources.concern_dto import ConcernDTO
+from ...resources.concern_dto import ConcernDTO, CreateConcernDTO
 from ..interfaces.concern_service import IConcernService
 
 
@@ -17,9 +17,7 @@ class ConcernService(IConcernService):
             ).first()
 
             if familial_concern_entry:
-                return ConcernDTO(
-                    familial_concern_entry.id, familial_concern_entry.concern
-                )
+                return CreateConcernDTO(familial_concern_entry.concern)
             else:
                 return self.add_familial_concern(familial_concern_upper)
         except Exception as error:
@@ -34,17 +32,17 @@ class ConcernService(IConcernService):
             ).first()
 
             if child_concern_entry:
-                return ConcernDTO(child_concern_entry.id, child_concern_entry.concern)
+                return CreateConcernDTO(child_concern_entry.concern)
             else:
                 return self.add_child_concern(child_concern_upper)
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def add_familial_concern(self, CreateConcernDTO):
+    def add_familial_concern(self, familial_concern):
         try:
             new_familial_concern_entry = FamilialConcern(
-                concern=CreateConcernDTO.upper()
+                concern=familial_concern.upper()
             )
             db.session.add(new_familial_concern_entry)
             db.session.commit()
@@ -55,9 +53,9 @@ class ConcernService(IConcernService):
             db.session.rollback()
             raise error
 
-    def add_child_concern(self, CreateConcernDTO):
+    def add_child_concern(self, child_concern):
         try:
-            new_child_concern_entry = ChildConcern(concern=CreateConcernDTO.upper())
+            new_child_concern_entry = ChildConcern(concern=child_concern.upper())
             db.session.add(new_child_concern_entry)
             db.session.commit()
             return ConcernDTO(

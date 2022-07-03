@@ -9,7 +9,7 @@ class CreateConcernDTO:
         error = self.validate(concern)
         if error:
             raise Exception(error)
-        self.branch = concern.upper()
+        self.concern = concern.upper()
 
     def validate(self, concern):
         error_list = []

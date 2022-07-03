@@ -7,24 +7,24 @@ class IConcernService(ABC):
     """
 
     @abstractmethod
-    def get_familial_concern_id(self, CreateConcernDTO):
-        """Get the id and concern for a CreateConcernDTO; if it doesn't exist, create a new
+    def get_familial_concern_id(self, familial_concern):
+        """Get the id and concern for a familial_concern; if it doesn't exist, create a new
            entry and return the id
 
-        :param CreateConcernDTO: string of CreateConcernDTO
+        :param familial_concern: string of familial_concern
         :return: ConcernDTO
         :rtype: ConcernDTO
-        :raises Exception: if CreateConcernDTO is invalid
+        :raises Exception: if familial_concern is invalid
         """
         pass
 
-    def get_child_concern_id(self, CreateConcernDTO):
-        """Get the id and concern for a CreateConcernDTO; if it doesn't exist, create a new
+    def get_child_concern_id(self, child_concern):
+        """Get the id and concern for a child_concern; if it doesn't exist, create a new
            entry and return the id
 
-        :param CreateConcernDTO: string of child_concern
+        :param child_concern: string of child_concern
         :return: ConcernDTO
         :rtype: ConcernDTO
-        :raises Exception: if CreateConcernDTO is invalid
+        :raises Exception: if child_concern is invalid
         """
         pass

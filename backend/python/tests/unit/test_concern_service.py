@@ -4,7 +4,7 @@ from flask import current_app
 from app.models import db
 from app.models.child_concern import ChildConcern
 from app.models.familial_concern import FamilialConcern
-from app.resources.concern_dto import ConcernDTO
+from app.resources.concern_dto import ConcernDTO, CreateConcernDTO
 from app.services.implementations.concern_service import ConcernService
 
 
@@ -58,13 +58,13 @@ def seed_database():
 
 def test_get_familial_concern_id_success(concern_service):
     res = concern_service.get_familial_concern_id("FAMILY_CONFLICT")
-    assert type(res) is ConcernDTO
+    assert type(res) is CreateConcernDTO
     assert res.concern == "FAMILY_CONFLICT"
 
 
 def test_get_child_concern_id_success(concern_service):
     res = concern_service.get_child_concern_id("MENTAL_HEALTH")
-    assert type(res) is ConcernDTO
+    assert type(res) is CreateConcernDTO
     assert res.concern == "MENTAL_HEALTH"
 
 

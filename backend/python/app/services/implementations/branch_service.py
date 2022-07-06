@@ -1,9 +1,9 @@
 from unittest import result
-from ...models import db
+
+from ...models import branch, db
 from ...models.branch import Branch
 from ...resources.branch_dto import BranchDTO
 from ..interfaces.branch_service import IBranchService
-from ...models import branch
 
 
 class BranchService(IBranchService):
@@ -13,13 +13,11 @@ class BranchService(IBranchService):
     def get_branches(self):
         try:
             return [
-                BranchDTO(result.id, result.branch)
-                for result in Branch.query.all()
+                BranchDTO(result.id, result.branch) for result in Branch.query.all()
             ]
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
 
     def get_branch(self, branch):
         try:

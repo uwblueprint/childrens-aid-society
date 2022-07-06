@@ -17,3 +17,14 @@ class IBranchService(ABC):
         :raises Exception: if branch is invalid
         """
         pass
+
+    @abstractmethod
+    def get_branches(self):
+        """Add branch to DB and return the id
+
+        :param branch: None
+        :return: List of branches
+        :rtype: list
+        :raises Exception: if querying database fails
+        """
+        pass

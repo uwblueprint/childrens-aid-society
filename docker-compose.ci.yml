@@ -21,6 +21,8 @@ services:
       - POSTGRES_PASSWORD
       - DB_TEST_HOST
       - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY
+      - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID
+      - FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL
     # env_file:
     #   - ./.env
   db-test:

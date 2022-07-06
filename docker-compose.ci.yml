@@ -20,8 +20,8 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - DB_TEST_HOST
-    # env_file:
-    #   - ./.env
+    env_file:
+      - ./.env
   db-test:
     container_name: cas_db
     image: postgres:12-alpine
@@ -31,5 +31,5 @@ services:
       - POSTGRES_PASSWORD
       - POSTGRES_USER
       - POSTGRES_DB_TEST
-    # env_file:
-    #   - ./.env
+    env_file:
+      - ./.env

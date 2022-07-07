@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-type_enum = db.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOR", name="concerns_type")
+type_enum = db.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOUR", name="concerns_type")
 
 class Concern(db.Model, BaseMixin):
     __tablename__ = "concerns"

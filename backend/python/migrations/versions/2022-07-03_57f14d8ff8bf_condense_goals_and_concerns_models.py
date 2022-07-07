@@ -23,7 +23,7 @@ def upgrade():
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column(
             "type",
-            sa.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOR", name="concerns_type"),
+            sa.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOUR", name="concerns_type"),
             nullable=True,
         ),
         sa.Column("concern", sa.String(), nullable=False),
@@ -67,10 +67,10 @@ def upgrade():
         type_="unique",
     )
 
-    # seed_data(
-    #     concerns,
-    #     goals,
-    # )
+    seed_data(
+        concerns,
+        goals,
+    )
     # ### end Alembic commands ###
 
 def downgrade():
@@ -157,6 +157,9 @@ def downgrade():
     op.drop_table("intakes_concerns")
     op.drop_table("goals")
     op.drop_table("concerns")
+    sa.Enum(name='concerns_type').drop(op.get_bind(), checkfirst=False)
+    sa.Enum(name='goals_type').drop(op.get_bind(), checkfirst=False)
+
     # ### end Alembic commands ###
     seed_downgrade_data(
         child_concerns,
@@ -171,12 +174,13 @@ def seed_downgrade_data(
     long_term_goals,
     short_term_goals,
 ):
+
     op.bulk_insert(
         child_concerns,
         [
             {"concern": "MENTAL_HEALTH"},
             {"concern": "RUNAWAY"},
-            {"concern": "CHILD_BEHAVIORS"},
+            {"concern": "CHILD_BEHAVIOURS"},
             {"concern": "SEXUAL_ABUSE"},
             {"concern": "DEVELOPMENTAL_DISABILITY"},
             {"concern": "SUBSTANCE_ABUSE"},
@@ -196,7 +200,7 @@ def seed_downgrade_data(
             {"concern": "CHILD_ABUSE"},
             {"concern": "CHILD_NEGLECT"},
             {"concern": "SEXUAL_ABUSE"},
-            {"concern": "CHILD_BEHAVIORS"},
+            {"concern": "CHILD_BEHAVIOURS"},
             {"concern": "SUBSTANCE_ABUSE"},
             {"concern": "MENTAL_HEALTH"},
             {"concern": "SUICIDE_ATTEMPTS"},
@@ -252,7 +256,7 @@ def seed_downgrade_data(
             },
         ],
     )
-    pass
+
 
 def seed_data(
     concerns,
@@ -264,7 +268,7 @@ def seed_data(
             # CHILD CONCERNS
             {"type": "CHILD_BEHAVIOUR", "concern": "MENTAL_HEALTH"},
             {"type": "CHILD_BEHAVIOUR", "concern": "RUNAWAY"},
-            {"type": "CHILD_BEHAVIOUR", "concern": "CHILD_BEHAVIORS"},
+            {"type": "CHILD_BEHAVIOUR", "concern": "CHILD_BEHAVIOURS"},
             {"type": "CHILD_BEHAVIOUR", "concern": "SEXUAL_ABUSE"},
             {"type": "CHILD_BEHAVIOUR", "concern": "DEVELOPMENTAL_DISABILITY"},
             {"type": "CHILD_BEHAVIOUR", "concern": "SUBSTANCE_ABUSE"},
@@ -280,7 +284,7 @@ def seed_data(
             {"type": "FAMILIAL_CONCERN", "concern": "CHILD_ABUSE"},
             {"type": "FAMILIAL_CONCERN", "concern": "CHILD_NEGLECT"},
             {"type": "FAMILIAL_CONCERN", "concern": "SEXUAL_ABUSE"},
-            {"type": "FAMILIAL_CONCERN", "concern": "CHILD_BEHAVIORS"},
+            {"type": "FAMILIAL_CONCERN", "concern": "CHILD_BEHAVIOURS"},
             {"type": "FAMILIAL_CONCERN", "concern": "SUBSTANCE_ABUSE"},
             {"type": "FAMILIAL_CONCERN", "concern": "MENTAL_HEALTH"},
             {"type": "FAMILIAL_CONCERN", "concern": "SUICIDE_ATTEMPTS"},

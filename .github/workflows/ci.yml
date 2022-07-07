@@ -1,4 +1,4 @@
-name: docker build & run tests
+name: Docker build & run tests
 
 on:
   # Triggers the workflow on push or pull request events for the main branch

@@ -53,7 +53,7 @@ jobs:
         run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
       
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.ci.yml up --abort-on-container-exit
+        run: docker-compose -f docker-compose.ci.yml up -d
       
       - name: Check running containers
         run: docker ps -a

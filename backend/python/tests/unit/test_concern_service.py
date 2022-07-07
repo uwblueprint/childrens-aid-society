@@ -50,7 +50,8 @@ DEFAULT_CHILD_CONCERNS = (
 
 
 def seed_database():
-    child_concern_instance = [ChildConcern(**data) for data in DEFAULT_CHILD_CONCERNS]
+    child_concern_instance = [ChildConcern(
+        **data) for data in DEFAULT_CHILD_CONCERNS]
     familial_concern_instance = [
         FamilialConcern(**data) for data in DEFAULT_FAMILIAL_CONCERNS
     ]

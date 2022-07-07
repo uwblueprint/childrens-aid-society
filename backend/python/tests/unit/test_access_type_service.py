@@ -36,15 +36,14 @@ def test_get_access_type_id_success(access_type_service):
 
 
 def test_add_new_access_type(access_type_service):
-    res = access_type_service._add_new_access_type("MONTHLY")
+    res = access_type_service.add_new_access_type("MONTHLY")
     assert type(res) is AccessTypeDTO
     assert AccessType.query.get(res.id).access_type == "MONTHLY"
 
 
 def test_get_access_type_populates_nonexisting_field(access_type_service):
     res = access_type_service.get_access_type("WEEKLY")
-    assert type(res) is AccessTypeDTO
-    assert AccessType.query.get(res.id).access_type == "WEEKLY"
+    assert res is None
 
 
 def test_get_access_type_invalid_arg_raises_exception(access_type_service):

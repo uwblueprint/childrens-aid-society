@@ -36,14 +36,12 @@ def test_add_new_branch(branch_service):
     assert Branch.query.get(res.id).branch == "PICKERING"
 
 
-def test_add_new_branch_success(branch_service):
+def test_get_nonexisting_branch(branch_service):
     res = branch_service.get_branch("TORONTO")
-    assert type(res) is BranchDTO
-    assert Branch.query.get(res.id).branch == "TORONTO"
+    assert res is None
 
     res2 = branch_service.get_branch("OTTAWA")
-    assert type(res2) is BranchDTO
-    assert Branch.query.get(res2.id).branch == "OTTAWA"
+    assert res2 is None
 
 
 def test_get_branch_invalid_arg(branch_service):

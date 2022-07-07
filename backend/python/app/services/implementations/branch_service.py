@@ -16,7 +16,7 @@ class BranchService(IBranchService):
             if branch_entry:
                 return BranchDTO(branch_entry.id, branch_entry.branch)
             else:
-                return self.add_new_branch(branch_upper)
+                return None
         except Exception as error:
             self.logger.error(str(error))
             raise error

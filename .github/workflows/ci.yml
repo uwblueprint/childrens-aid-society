@@ -23,13 +23,7 @@ jobs:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       DB_HOST: ${{ secrets.DB_HOST }}
-      # FLASK_CONFIG: ${{ secrets.FLASK_CONFIG }}
-      # FLASK_APP: ${{ secrets.FLASK_APP }}
       # Firebase secrets
-      FIREBASE_WEB_API_KEY: ${{ secrets.DEV_FIREBASE_WEB_API_KEY }}
-      FIREBASE_REQUEST_URI: ${{ secrets.DEV_FIREBASE_REQUEST_URI }}
-      # These values are found in the downloaded service account file
-      # FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
       FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID: ${{ secrets.DEV_FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID }}
       FIREBASE_SVC_ACCOUNT_PRIVATE_KEY: ${{ secrets.DEV_FIREBASE_SVC_ACCOUNT_PRIVATE_KEY }}
       FIREBASE_SVC_ACCOUNT_CLIENT_EMAIL: ${{ secrets.DEV_FIREBASE_SVC_ACCOUNT_CLIENT_EMAIL }}
@@ -39,11 +33,6 @@ jobs:
       FIREBASE_SVC_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.DEV_FIREBASE_SVC_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL }}
       FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL: ${{ secrets.DEV_FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL }}
       FIREBASE_STORAGE_DEFAULT_BUCKET: ${{ secrets.DEV_FIREBASE_STORAGE_DEFAULT_BUCKET }}
-
-      MAILER_USER: ${{ secrets.DEV_MAILER_USER }}
-      MAILER_REFRESH_TOKEN: ${{ secrets.DEV_MAILER_REFRESH_TOKEN }}
-      MAILER_CLIENT_SECRET: ${{ secrets.DEV_MAILER_CLIENT_SECRET }}
-      MAILER_CLIENT_ID: ${{ secrets.DEV_MAILER_CLIENT_ID }}
 
     steps:
       - uses: actions/checkout@v2
@@ -65,5 +54,3 @@ jobs:
       
       - name: Run tests for backend
         run: docker exec cas_py_backend ./run-test.sh
-        # run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend
-        # run: docker-compose -f docker-compose.ci.yml run --entrypoint ./run-test.sh python-backend

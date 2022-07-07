@@ -29,8 +29,6 @@ services:
       - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID
       - FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL
       - FIREBASE_SVC_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
-    # env_file:
-    #   - ./.env
   db-test:
     container_name: cas_db
     image: postgres:12-alpine
@@ -40,5 +38,3 @@ services:
       - POSTGRES_PASSWORD
       - POSTGRES_USER
       - POSTGRES_DB=cas_test
-    # env_file:
-    #   - ./.env

@@ -23,6 +23,7 @@ services:
       - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY
       - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID
       - FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL
+      - FIREBASE_STORAGE_DEFAULT_BUCKET
     # env_file:
     #   - ./.env
   db-test:

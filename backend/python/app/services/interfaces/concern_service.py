@@ -7,7 +7,7 @@ class IConcernService(ABC):
     """
 
     @abstractmethod
-    def get_familial_concern_id(self, familial_concern):
+    def get_familial_concern(self, familial_concern):
         """Get the id and concern for a familial_concern; if it doesn't exist, create a new
            entry and return the id
 
@@ -18,7 +18,7 @@ class IConcernService(ABC):
         """
         pass
 
-    def get_child_concern_id(self, child_concern):
+    def get_child_concern(self, child_concern):
         """Get the id and concern for a child_concern; if it doesn't exist, create a new
            entry and return the id
 

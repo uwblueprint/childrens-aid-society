@@ -17,7 +17,7 @@ def concern_service():
     FamilialConcern.query.delete()
 
 
-DEFAULT_FAMILIAR = (
+DEFAULT_FAMILIAL_CONCERNS = (
     {"concern": "FAMILY_CONFLICT"},
     {"concern": "DOMESTIC_VIOLENCE"},
     {"concern": "ISOLATION"},
@@ -35,7 +35,7 @@ DEFAULT_FAMILIAR = (
     {"concern": "DEVELOPMENTAL_DISABILITY"},
     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY"},
 )
-DEFAULT_CHILD = (
+DEFAULT_CHILD_CONCERNS = (
     {"concern": "MENTAL_HEALTH"},
     {"concern": "RUNAWAY"},
     {"concern": "CHILD_BEHAVIORS"},
@@ -50,21 +50,23 @@ DEFAULT_CHILD = (
 
 
 def seed_database():
-    child_concern_instance = [ChildConcern(**data) for data in DEFAULT_CHILD]
-    familial_concern_instance = [FamilialConcern(**data) for data in DEFAULT_FAMILIAR]
+    child_concern_instance = [ChildConcern(**data) for data in DEFAULT_CHILD_CONCERNS]
+    familial_concern_instance = [
+        FamilialConcern(**data) for data in DEFAULT_FAMILIAL_CONCERNS
+    ]
     db.session.bulk_save_objects(child_concern_instance)
     db.session.bulk_save_objects(familial_concern_instance)
 
 
 def test_get_familial_concern_id_success(concern_service):
-    res = concern_service.get_familial_concern_id("FAMILY_CONFLICT")
-    assert type(res) is CreateConcernDTO
+    res = concern_service.get_familial_concern("FAMILY_CONFLICT")
+    assert type(res) is ConcernDTO
     assert res.concern == "FAMILY_CONFLICT"
 
 
 def test_get_child_concern_id_success(concern_service):
-    res = concern_service.get_child_concern_id("MENTAL_HEALTH")
-    assert type(res) is CreateConcernDTO
+    res = concern_service.get_child_concern("MENTAL_HEALTH")
+    assert type(res) is ConcernDTO
     assert res.concern == "MENTAL_HEALTH"
 
 
@@ -81,32 +83,32 @@ def test_add_child_concern(concern_service):
 
 
 def test_add_familial_concern_success(concern_service):
-    res = concern_service.get_familial_concern_id("ABUSE")
+    res = concern_service.get_familial_concern("ABUSE")
     assert type(res) is ConcernDTO
     assert FamilialConcern.query.get(res.id).concern == "ABUSE"
 
 
 def test_add_child_concern_success(concern_service):
-    res = concern_service.get_child_concern_id("TERROR")
+    res = concern_service.get_child_concern("TERROR")
     assert type(res) is ConcernDTO
     assert ChildConcern.query.get(res.id).concern == "TERROR"
 
 
 def test_get_familial_concern_id_invalid_arg(concern_service):
     with pytest.raises(Exception):
-        concern_service.get_familial_concern_id(3143)
+        concern_service.get_familial_concern(3143)
 
 
 def test_get_child_concern_id_invalid_arg(concern_service):
     with pytest.raises(Exception):
-        concern_service.get_child_concern_id(3143)
+        concern_service.get_child_concern(3143)
 
 
 def test_get_familial_concern_id_null_arg_raises_exception(concern_service):
     with pytest.raises(Exception):
-        concern_service.get_familial_concern_id(None)
+        concern_service.get_familial_concern(None)
 
 
 def test_get_child_concern_id_null_arg_raises_exception(concern_service):
     with pytest.raises(Exception):
-        concern_service.get_child_concern_id(None)
+        concern_service.get_child_concern(None)

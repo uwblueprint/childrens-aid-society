@@ -9,7 +9,7 @@ class ConcernService(IConcernService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_familial_concern_id(self, familial_concern):
+    def get_familial_concern(self, familial_concern):
         try:
             familial_concern_upper = familial_concern.upper()
             familial_concern_entry = FamilialConcern.query.filter_by(
@@ -17,14 +17,17 @@ class ConcernService(IConcernService):
             ).first()
 
             if familial_concern_entry:
-                return CreateConcernDTO(familial_concern_entry.concern)
+                return ConcernDTO(
+                    familial_concern_entry.id, familial_concern_entry.concern
+                )
             else:
-                return self.add_familial_concern(familial_concern_upper)
+                new_concern = CreateConcernDTO(familial_concern_upper)
+                return self.add_familial_concern(new_concern)
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def get_child_concern_id(self, child_concern):
+    def get_child_concern(self, child_concern):
         try:
             child_concern_upper = child_concern.upper()
             child_concern_entry = ChildConcern.query.filter_by(
@@ -32,9 +35,10 @@ class ConcernService(IConcernService):
             ).first()
 
             if child_concern_entry:
-                return CreateConcernDTO(child_concern_entry.concern)
+                return ConcernDTO(child_concern_entry.id, child_concern_entry.concern)
             else:
-                return self.add_child_concern(child_concern_upper)
+                new_concern = CreateConcernDTO(child_concern_upper)
+                return self.add_child_concern(new_concern)
         except Exception as error:
             self.logger.error(str(error))
             raise error

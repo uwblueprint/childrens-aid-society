@@ -11,7 +11,17 @@ class TransportationMethodService(ITransportationMethodService):
     def __init__(self, logger):
         self.logger = logger
 
-    def _get_transport_method(self, method):
+    def get_transportation_methods(self):
+        try:
+            return [
+                TransportationMethodDTO(result.id, result.transportation_method)
+                for result in TransportationMethod.query.all()
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_transportation_method(self, method):
         try:
             new_method = CreateTransportationMethodDTO(method)
 

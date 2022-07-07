@@ -4,7 +4,7 @@ from flask import current_app
 from app.models import db
 from app.models.child_concern import ChildConcern
 from app.models.familial_concern import FamilialConcern
-from app.resources.concern_dto import ConcernDTO, CreateConcernDTO
+from app.resources.concern_dto import ConcernDTO
 from app.services.implementations.concern_service import ConcernService
 
 
@@ -83,13 +83,13 @@ def test_add_child_concern(concern_service):
 
 
 def test_add_familial_concern_success(concern_service):
-    res = concern_service.get_familial_concern("ABUSE")
+    res = concern_service.add_familial_concern("ABUSE")
     assert type(res) is ConcernDTO
     assert FamilialConcern.query.get(res.id).concern == "ABUSE"
 
 
 def test_add_child_concern_success(concern_service):
-    res = concern_service.get_child_concern("TERROR")
+    res = concern_service.add_child_concern("TERROR")
     assert type(res) is ConcernDTO
     assert ChildConcern.query.get(res.id).concern == "TERROR"
 

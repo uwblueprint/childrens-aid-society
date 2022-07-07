@@ -1,7 +1,7 @@
 from ...models import db
 from ...models.child_concern import ChildConcern
 from ...models.familial_concern import FamilialConcern
-from ...resources.concern_dto import ConcernDTO, CreateConcernDTO
+from ...resources.concern_dto import ConcernDTO
 from ..interfaces.concern_service import IConcernService
 
 
@@ -16,13 +16,12 @@ class ConcernService(IConcernService):
                 concern=familial_concern_upper
             ).first()
 
-            if familial_concern_entry:
-                return ConcernDTO(
-                    familial_concern_entry.id, familial_concern_entry.concern
-                )
-            else:
-                new_concern = CreateConcernDTO(familial_concern_upper)
-                return self.add_familial_concern(new_concern)
+            return (
+                ConcernDTO(familial_concern_entry.id, familial_concern_entry.concern)
+                if familial_concern_entry
+                else None
+            )
+
         except Exception as error:
             self.logger.error(str(error))
             raise error
@@ -34,11 +33,11 @@ class ConcernService(IConcernService):
                 concern=child_concern_upper
             ).first()
 
-            if child_concern_entry:
-                return ConcernDTO(child_concern_entry.id, child_concern_entry.concern)
-            else:
-                new_concern = CreateConcernDTO(child_concern_upper)
-                return self.add_child_concern(new_concern)
+            return (
+                ConcernDTO(child_concern_entry.id, child_concern_entry.concern)
+                if child_concern_entry
+                else None
+            )
         except Exception as error:
             self.logger.error(str(error))
             raise error

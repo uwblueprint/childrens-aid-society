@@ -4,13 +4,11 @@ from functools import wraps
 from flask import jsonify, request
 
 from ..resources.create_user_dto import CreateUserDTO
-from ..resources.entity_dto import EntityDTO
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
 
 dtos = {
     "CreateUserDTO": CreateUserDTO,
-    "EntityDTO": EntityDTO,
     "RegisterUserDTO": RegisterUserDTO,
     "UpdateUserDTO": UpdateUserDTO,
 }

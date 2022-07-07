@@ -16,7 +16,7 @@ services:
     depends_on:
       - db-test
     environment:
-      - POSTGRES_DB
+      - POSTGRES_DB_TEST
       - DB_HOST
       - POSTGRES_USER
       - POSTGRES_PASSWORD

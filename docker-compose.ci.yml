@@ -17,7 +17,7 @@ services:
       - db-test
     environment:
       - POSTGRES_DB
-      - DB_TEST_HOST
+      - DB_HOST
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - FIREBASE_SVC_ACCOUNT_AUTH_URI

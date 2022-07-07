@@ -61,7 +61,7 @@ def test_get_transport_method_raises_exception_invalid_argument(
 def test_get_transportation_methods_success(transport_method_service):
     res = transport_method_service.get_transportation_methods()
     assert type(res) == list
-    assert len(res) == 3
+    assert len(res) == len(DEFAULT_TRANSPORTATION_METHODS)
     assert all(type(item) == TransportationMethodDTO for item in res)
     transportation_methods_db = [
         entry["transportation_method"] for entry in DEFAULT_TRANSPORTATION_METHODS

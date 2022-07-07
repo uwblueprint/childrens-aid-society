@@ -22,6 +22,7 @@ intakes_concerns = db.Table(
     db.Column("concern_id", db.ForeignKey("concerns.id")),
 )
 
+
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
 
@@ -60,6 +61,4 @@ class Intake(db.Model, BaseMixin):
     access_location = db.relationship("Address")
     referring_worker = db.relationship("User", foreign_keys=[referring_worker_id])
     lead_access_worker = db.relationship("User", foreign_keys=[lead_access_worker_id])
-    concerns = db.relationship(
-        "Concern", secondary=intakes_concerns
-    )
+    concerns = db.relationship("Concern", secondary=intakes_concerns)

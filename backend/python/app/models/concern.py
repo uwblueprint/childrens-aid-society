@@ -3,6 +3,7 @@ from .base_mixin import BaseMixin
 
 type_enum = db.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOUR", name="concerns_type")
 
+
 class Concern(db.Model, BaseMixin):
     __tablename__ = "concerns"
 

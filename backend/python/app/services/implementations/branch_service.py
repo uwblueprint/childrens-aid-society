@@ -1,5 +1,3 @@
-from unittest import result
-
 from ...models import branch, db
 from ...models.branch import Branch
 from ...resources.branch_dto import BranchDTO

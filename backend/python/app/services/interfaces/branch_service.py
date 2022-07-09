@@ -20,11 +20,10 @@ class IBranchService(ABC):
 
     @abstractmethod
     def get_branches(self):
-        """Add branch to DB and return the id
+        """Fetches all branches in the database
 
-        :param branch: None
         :return: List of branches
-        :rtype: list
+        :rtype: List of BranchDTO
         :raises Exception: if querying database fails
         """
         pass

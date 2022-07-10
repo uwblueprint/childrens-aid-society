@@ -86,7 +86,7 @@ $ python3 -m pytest --lang python --auth --fs
 
 To generate a test coverage report, run:
 ```
- docker exec -it cas_py_backend /bin/bash -c "bash /app/tests/coverage.sh"
+ docker exec -it cas_py_backend /bin/bash -c "./tests/coverage.sh"
 ```
 
 # Database + Migrations

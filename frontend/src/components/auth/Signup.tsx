@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 
+import { Button, Text } from "@chakra-ui/react";
+
 import authAPIClient from "../../APIClients/AuthAPIClient";
 import { HOME_PAGE } from "../../constants/Routes";
 import AuthContext from "../../contexts/AuthContext";
@@ -29,7 +31,7 @@ const Signup = (): React.ReactElement => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Signup</h1>
+      <Text>Signup</Text>
       <form>
         <div>
           <input
@@ -64,13 +66,9 @@ const Signup = (): React.ReactElement => {
           />
         </div>
         <div>
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={onSignupClick}
-          >
+          <Button onClick={onSignupClick} textStyle="body-regular">
             Sign Up
-          </button>
+          </Button>
         </div>
       </form>
     </div>

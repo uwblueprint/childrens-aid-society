@@ -6,6 +6,8 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 
+import { Button, Text } from "@chakra-ui/react";
+
 import authAPIClient from "../../APIClients/AuthAPIClient";
 import { HOME_PAGE, SIGNUP_PAGE } from "../../constants/Routes";
 import AuthContext from "../../contexts/AuthContext";
@@ -46,7 +48,7 @@ const Login = (): React.ReactElement => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Login</h1>
+      <Text>Login</Text>
       <form>
         <div>
           <input
@@ -65,13 +67,9 @@ const Login = (): React.ReactElement => {
           />
         </div>
         <div>
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={onLogInClick}
-          >
+          <Button onClick={onLogInClick} textStyle="body-regular">
             Log In
-          </button>
+          </Button>
         </div>
         <GoogleLogin
           clientId={process.env.REACT_APP_OAUTH_CLIENT_ID || ""}
@@ -91,13 +89,9 @@ const Login = (): React.ReactElement => {
         />
       </form>
       <div>
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={onSignUpClick}
-        >
+        <Button onClick={onSignUpClick} textStyle="body-regular">
           Sign Up
-        </button>
+        </Button>
       </div>
     </div>
   );

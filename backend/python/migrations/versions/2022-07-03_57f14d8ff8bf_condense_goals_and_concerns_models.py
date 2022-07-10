@@ -23,7 +23,7 @@ def upgrade():
         sa.Column(
             "type",
             sa.Enum("FAMILIAL_CONCERN", "CHILD_BEHAVIOUR", name="concerns_type"),
-            nullable=True,
+            nullable=False,
         ),
         sa.Column("concern", sa.String(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
@@ -50,12 +50,12 @@ def upgrade():
             ["intakes.id"],
         ),
     )
-    op.drop_table("short_term_goals")
     op.drop_table("intakes_child_concerns")
     op.drop_table("intakes_familial_concerns")
     op.drop_table("familial_concerns")
-    op.drop_table("long_term_goals")
     op.drop_table("child_concerns")
+    op.drop_table("short_term_goals")
+    op.drop_table("long_term_goals")
 
     op.drop_constraint("access_types_access_type_key", "access_types", type_="unique")
     op.drop_constraint("branches_branch_key", "branches", type_="unique")
@@ -87,41 +87,34 @@ def downgrade():
         "child_concerns",
         sa.Column(
             "id",
-            sa.INTEGER(),
+            sa.Integer(),
             server_default=sa.text("nextval('child_concerns_id_seq'::regclass)"),
             autoincrement=True,
             nullable=False,
         ),
-        sa.Column("concern", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="child_concerns_pkey"),
         sa.UniqueConstraint("concern", name="child_concerns_concern_key"),
         postgresql_ignore_search_path=False,
-    )
-    long_term_goals = op.create_table(
-        "long_term_goals",
-        sa.Column("id", sa.INTEGER(), autoincrement=True, nullable=False),
-        sa.Column("goal", sa.VARCHAR(), autoincrement=False, nullable=False),
-        sa.PrimaryKeyConstraint("id", name="long_term_goals_pkey"),
-        sa.UniqueConstraint("goal", name="long_term_goals_goal_key"),
     )
     familial_concerns = op.create_table(
         "familial_concerns",
         sa.Column(
             "id",
-            sa.INTEGER(),
+            sa.Integer(),
             server_default=sa.text("nextval('familial_concerns_id_seq'::regclass)"),
             autoincrement=True,
             nullable=False,
         ),
-        sa.Column("concern", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="familial_concerns_pkey"),
         sa.UniqueConstraint("concern", name="familial_concerns_concern_key"),
         postgresql_ignore_search_path=False,
     )
     op.create_table(
         "intakes_familial_concerns",
-        sa.Column("intake_id", sa.INTEGER(), autoincrement=False, nullable=True),
-        sa.Column("concern_id", sa.INTEGER(), autoincrement=False, nullable=True),
+        sa.Column("intake_id", sa.Integer(), autoincrement=False, nullable=True),
+        sa.Column("concern_id", sa.Integer(), autoincrement=False, nullable=True),
         sa.ForeignKeyConstraint(
             ["concern_id"],
             ["familial_concerns.id"],
@@ -135,8 +128,8 @@ def downgrade():
     )
     op.create_table(
         "intakes_child_concerns",
-        sa.Column("intake_id", sa.INTEGER(), autoincrement=False, nullable=True),
-        sa.Column("concern_id", sa.INTEGER(), autoincrement=False, nullable=True),
+        sa.Column("intake_id", sa.Integer(), autoincrement=False, nullable=True),
+        sa.Column("concern_id", sa.Integer(), autoincrement=False, nullable=True),
         sa.ForeignKeyConstraint(
             ["concern_id"],
             ["child_concerns.id"],
@@ -146,10 +139,17 @@ def downgrade():
             ["intake_id"], ["intakes.id"], name="intakes_child_concerns_intake_id_fkey"
         ),
     )
+    long_term_goals = op.create_table(
+        "long_term_goals",
+        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
+        sa.Column("goal", sa.String(), autoincrement=False, nullable=False),
+        sa.PrimaryKeyConstraint("id", name="long_term_goals_pkey"),
+        sa.UniqueConstraint("goal", name="long_term_goals_goal_key"),
+    )
     short_term_goals = op.create_table(
         "short_term_goals",
-        sa.Column("id", sa.INTEGER(), autoincrement=True, nullable=False),
-        sa.Column("goal", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
+        sa.Column("goal", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="short_term_goals_pkey"),
         sa.UniqueConstraint("goal", name="short_term_goals_goal_key"),
     )

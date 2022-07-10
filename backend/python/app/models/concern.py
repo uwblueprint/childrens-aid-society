@@ -8,6 +8,5 @@ class Concern(db.Model, BaseMixin):
     __tablename__ = "concerns"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    type = db.Column(type_enum)
+    type = db.Column(type_enum, nullable=False)
     concern = db.Column(db.String, nullable=False)
-    test = db.Column(type_enum)

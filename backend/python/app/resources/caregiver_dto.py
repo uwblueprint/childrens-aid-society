@@ -25,8 +25,6 @@ class CaregiverDTO:
         self.foster_care_coord_name = foster_care_coord_name
         self.foster_care_coord_ext = foster_care_coord_ext
         self.limitations_for_access = limitations_for_access
-        self.address = address
-        self.child = child
 
 
 class CreateCaregiverDTO:
@@ -48,8 +46,6 @@ class CreateCaregiverDTO:
         self.foster_care_coord_name = kwargs.get("foster_care_coord_name")
         self.foster_care_coord_ext = kwargs.get("foster_care_coord_ext")
         self.limitations_for_access = kwargs.get("limitations_for_access")
-        # self.address = kwargs.get("address")
-        # self.child = kwargs.get("child")
 
     def validate(self):
         error_list = []

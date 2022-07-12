@@ -23,8 +23,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
       <FormControl style={{ padding: "30px" }}>
         <div className="gridStyle">
           <div>
-            <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
+            <FormLabel htmlFor="referringWorker" textStyle="body-regular">
+              REFERRING WORKER
+            </FormLabel>
             <Input
+              variant="filled"
               id="referringWorker"
               type="string"
               placeholder="Enter name of worker..."
@@ -41,6 +44,7 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
               REFERRING WORKER CONTACT
             </FormLabel>
             <Input
+              variant="filled"
               id="referringWorkerContact"
               type="string"
               placeholder="(ie. 223-2232-2323)"
@@ -53,8 +57,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
             />
           </div>
         </div>
-        <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
+        <FormLabel pt="15px" htmlFor="familyName">
+          FAMILY NAME
+        </FormLabel>
         <Input
+          variant="filled"
           id="familyName"
           type="string"
           placeholder="Enter family name..."
@@ -65,8 +72,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
             })
           }
         />
-        <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
+        <FormLabel pt="15px" htmlFor="referralDate">
+          REFERRAL DATE
+        </FormLabel>
         <Input
+          variant="filled"
           id="referralDate"
           type="string"
           placeholder="Select a date..."
@@ -79,8 +89,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
         />
         <div className="gridStyle">
           <div>
-            <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
+            <FormLabel pt="15px" htmlFor="cpinFileNumber">
+              CPIN FILE NUMBER
+            </FormLabel>
             <Input
+              variant="filled"
               id="cpinFileNumber"
               type="string"
               placeholder="(ie. 123456789)"
@@ -93,8 +106,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
             />
           </div>
           <div>
-            <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
+            <FormLabel pt="15px" htmlFor="cpinFileType">
+              CPIN FILE TYPE
+            </FormLabel>
             <Input
+              variant="filled"
               id="cpinFileType"
               type="string"
               placeholder="Select a file type..."
@@ -107,8 +123,11 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
             />
           </div>
         </div>
-        <FormLabel htmlFor="phoneNUmber">PHONE NUMBER</FormLabel>
+        <FormLabel pt="15px" htmlFor="phoneNUmber">
+          PHONE NUMBER
+        </FormLabel>
         <Input
+          variant="filled"
           id="phoneNumber"
           type="string"
           placeholder="(ie. 223-2232-2323)"

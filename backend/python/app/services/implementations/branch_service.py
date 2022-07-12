@@ -1,4 +1,4 @@
-from ...models import branch, db
+from ...models import db
 from ...models.branch import Branch
 from ...resources.branch_dto import BranchDTO
 from ..interfaces.branch_service import IBranchService

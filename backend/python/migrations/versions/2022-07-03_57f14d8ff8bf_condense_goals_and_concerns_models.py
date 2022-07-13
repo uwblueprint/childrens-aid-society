@@ -85,13 +85,7 @@ def downgrade():
     )
     child_concerns = op.create_table(
         "child_concerns",
-        sa.Column(
-            "id",
-            sa.Integer(),
-            server_default=sa.text("nextval('child_concerns_id_seq'::regclass)"),
-            autoincrement=True,
-            nullable=False,
-        ),
+        sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="child_concerns_pkey"),
         sa.UniqueConstraint("concern", name="child_concerns_concern_key"),
@@ -99,13 +93,7 @@ def downgrade():
     )
     familial_concerns = op.create_table(
         "familial_concerns",
-        sa.Column(
-            "id",
-            sa.Integer(),
-            server_default=sa.text("nextval('familial_concerns_id_seq'::regclass)"),
-            autoincrement=True,
-            nullable=False,
-        ),
+        sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="familial_concerns_pkey"),
         sa.UniqueConstraint("concern", name="familial_concerns_concern_key"),

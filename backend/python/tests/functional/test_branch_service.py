@@ -59,8 +59,8 @@ def test_get_branch_null_arg_raises_exception(branch_service):
 def test_get_branches_success(branch_service):
     res = branch_service.get_branches()
     assert type(res) == list
-    assert len(res) == len(DEFAULT_BRANCHES)
+    assert len(res) == len(DEFAULT_BRANCH)
     assert all(type(item) == BranchDTO for item in res)
-    branches_db = [entry["branch"] for entry in DEFAULT_BRANCHES]
+    branches_db = [entry["branch"] for entry in DEFAULT_BRANCH]
     branch_res = [item.branch for item in res]
-    assert set(branch_db) == set(branch_res)
+    assert set(branches_db) == set(branch_res)

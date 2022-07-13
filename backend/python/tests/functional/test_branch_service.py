@@ -54,3 +54,13 @@ def test_get_branch_invalid_arg(branch_service):
 def test_get_branch_null_arg_raises_exception(branch_service):
     with pytest.raises(Exception):
         branch_service.get_branch(None)
+
+
+def test_get_branches_success(branch_service):
+    res = branch_service.get_branches()
+    assert type(res) == list
+    assert len(res) == len(DEFAULT_BRANCHES)
+    assert all(type(item) == BranchDTO for item in res)
+    branches_db = [entry["branch"] for entry in DEFAULT_BRANCHES]
+    branch_res = [item.branch for item in res]
+    assert set(branch_db) == set(branch_res)

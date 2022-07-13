@@ -89,7 +89,6 @@ def downgrade():
         sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="child_concerns_pkey"),
         sa.UniqueConstraint("concern", name="child_concerns_concern_key"),
-        postgresql_ignore_search_path=False,
     )
     familial_concerns = op.create_table(
         "familial_concerns",
@@ -97,7 +96,6 @@ def downgrade():
         sa.Column("concern", sa.String(), autoincrement=False, nullable=False),
         sa.PrimaryKeyConstraint("id", name="familial_concerns_pkey"),
         sa.UniqueConstraint("concern", name="familial_concerns_concern_key"),
-        postgresql_ignore_search_path=False,
     )
     op.create_table(
         "intakes_familial_concerns",

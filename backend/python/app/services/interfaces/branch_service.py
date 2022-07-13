@@ -17,3 +17,13 @@ class IBranchService(ABC):
         :raises Exception: if branch is invalid
         """
         pass
+
+    @abstractmethod
+    def get_branches(self):
+        """Fetches all branches in the database
+
+        :return: List of branches
+        :rtype: List of BranchDTO
+        :raises Exception: if querying database fails
+        """
+        pass

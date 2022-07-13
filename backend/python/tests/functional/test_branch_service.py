@@ -17,6 +17,7 @@ def branch_service():
 
 DEFAULT_BRANCH = {"branch": "ALGOMA"}
 
+
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     branch_instance = Branch(**DEFAULT_BRANCH)
@@ -61,6 +62,4 @@ def test_get_branches_success(branch_service):
     assert type(res) == list
     assert len(res) == len(DEFAULT_BRANCH)
     assert all(type(item) == BranchDTO for item in res)
-    branches_db = [entry["branch"] for entry in DEFAULT_BRANCH]
-    branch_res = [item.branch for item in res]
-    assert set(branches_db) == set(branch_res)
+    assert DEFAULT_BRANCH["branch"] == res[0].branch

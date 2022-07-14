@@ -14,6 +14,7 @@ import sampleContextReducer from "./reducers/SampleContextReducer";
 import SampleContextDispatcherContext from "./contexts/SampleContextDispatcherContext";
 
 import customTheme from "./theme";
+import "./theme/styles.css";
 
 import { AuthenticatedUser } from "./types/AuthTypes";
 import Login from "./components/auth/Login";

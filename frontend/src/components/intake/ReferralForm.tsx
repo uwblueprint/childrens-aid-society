@@ -1,33 +1,50 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { FormControl, FormLabel, Input, Box, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  SimpleGrid,
+} from "@chakra-ui/react";
 
-import "./ReferralForm.css";
+export type ReferralDetails = {
+  cpinFileNumber: string;
+  cpinFileType: string;
+  familyName: string;
+  phoneNumber: string;
+  referralDate: string;
+  referringWorker: string;
+  referringWorkerContact: string;
+};
 
-interface IReferralFormProps {
-  referralDetails: Record<string, unknown>;
-  setReferralDetails: React.Dispatch<
-    React.SetStateAction<Record<string, unknown>>
-  >;
-}
+type ReferralFormProps = {
+  referralDetails: ReferralDetails;
+  setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
+};
 
-const ReferralForm: React.FC<IReferralFormProps> = ({
+const ReferralForm = ({
   referralDetails,
   setReferralDetails,
-}) => {
+}: ReferralFormProps): React.ReactElement => {
   return (
-    <Box>
-      <Heading style={{ textAlign: "center", padding: "10px" }}>
-        Referral Details
-      </Heading>
+    <Box
+      style={{
+        paddingLeft: "100px",
+        paddingRight: "100px",
+        paddingBottom: "30px",
+      }}
+    >
+      <Heading>Referral Details</Heading>
       <FormControl style={{ padding: "30px" }}>
-        <div className="gridStyle">
-          <div>
-            <FormLabel htmlFor="referringWorker" textStyle="body-regular">
+        <SimpleGrid columns={2} spacing="70px">
+          <Box>
+            <FormLabel htmlFor="referringWorker" style={{ marginTop: "0px" }}>
               REFERRING WORKER
             </FormLabel>
             <Input
-              variant="filled"
+              variant="customVariant"
               id="referringWorker"
               type="string"
               placeholder="Enter name of worker..."
@@ -38,13 +55,16 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
                 })
               }
             />
-          </div>
-          <div>
-            <FormLabel htmlFor="referringWorkerContact">
+          </Box>
+          <Box>
+            <FormLabel
+              htmlFor="referringWorkerContact"
+              style={{ marginTop: "0px" }}
+            >
               REFERRING WORKER CONTACT
             </FormLabel>
             <Input
-              variant="filled"
+              variant="customVariant"
               id="referringWorkerContact"
               type="string"
               placeholder="(ie. 223-2232-2323)"
@@ -55,13 +75,13 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
                 })
               }
             />
-          </div>
-        </div>
+          </Box>
+        </SimpleGrid>
         <FormLabel pt="15px" htmlFor="familyName">
           FAMILY NAME
         </FormLabel>
         <Input
-          variant="filled"
+          variant="customVariant"
           id="familyName"
           type="string"
           placeholder="Enter family name..."
@@ -76,7 +96,7 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
           REFERRAL DATE
         </FormLabel>
         <Input
-          variant="filled"
+          variant="customVariant"
           id="referralDate"
           type="string"
           placeholder="Select a date..."
@@ -87,13 +107,13 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
             })
           }
         />
-        <div className="gridStyle">
-          <div>
+        <SimpleGrid columns={2} spacing="70px">
+          <Box>
             <FormLabel pt="15px" htmlFor="cpinFileNumber">
               CPIN FILE NUMBER
             </FormLabel>
             <Input
-              variant="filled"
+              variant="customVariant"
               id="cpinFileNumber"
               type="string"
               placeholder="(ie. 123456789)"
@@ -104,13 +124,13 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
                 })
               }
             />
-          </div>
-          <div>
+          </Box>
+          <Box>
             <FormLabel pt="15px" htmlFor="cpinFileType">
               CPIN FILE TYPE
             </FormLabel>
             <Input
-              variant="filled"
+              variant="customVariant"
               id="cpinFileType"
               type="string"
               placeholder="Select a file type..."
@@ -121,13 +141,13 @@ const ReferralForm: React.FC<IReferralFormProps> = ({
                 })
               }
             />
-          </div>
-        </div>
+          </Box>
+        </SimpleGrid>
         <FormLabel pt="15px" htmlFor="phoneNUmber">
           PHONE NUMBER
         </FormLabel>
         <Input
-          variant="filled"
+          variant="customVariant"
           id="phoneNumber"
           type="string"
           placeholder="(ie. 223-2232-2323)"

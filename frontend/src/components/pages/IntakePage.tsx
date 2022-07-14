@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { Button, Text } from "@chakra-ui/react";
-import ReferralForm from "../intake/ReferralForm";
+import { Box, Button, Heading } from "@chakra-ui/react";
+import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
-  const [referralDetails, setReferralDetails] = useState({});
+  const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
+    referringWorker: "",
+    referringWorkerContact: "",
+    familyName: "",
+    referralDate: "",
+    cpinFileNumber: "",
+    cpinFileType: "",
+    phoneNumber: "",
+  });
 
   const nextStep = () => setStep(step + 1);
 
@@ -13,29 +21,28 @@ const Intake = (): React.ReactElement => {
   switch (step) {
     case 1:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
+        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
           />
-          <Text textStyle="heading">Intake 💨 1 </Text>
           <Button onClick={nextStep}>Next Button</Button>
-        </div>
+        </Box>
       );
     case 2:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          <Text textStyle="heading">Intake 💨 2</Text>
+        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
+          <Heading textStyle="heading">Intake 💨 2</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
-        </div>
+        </Box>
       );
     default:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          <Text textStyle="heading">Intake 💨 3</Text>
+        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
+          <Heading textStyle="heading">Intake 💨 3</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
-        </div>
+        </Box>
       );
   }
 };

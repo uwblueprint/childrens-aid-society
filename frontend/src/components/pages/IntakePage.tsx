@@ -1,9 +1,15 @@
-import React, { useState } from "react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import React, {useState} from "react";
+import { Button, Text, Box, Heading } from "@chakra-ui/react";
+import CourtInformationForm, {CourtDetails} from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
+  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
+    currentCourtStatus: "",
+  firstNationHeritage: "",
+  firstNationBand: "",
+  });
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -11,8 +17,7 @@ const Intake = (): React.ReactElement => {
     referralDate: "",
     cpinFileNumber: "",
     cpinFileType: "",
-    phoneNumber: "",
-  });
+    phoneNumber: "", });
 
   const nextStep = () => setStep(step + 1);
 
@@ -31,8 +36,15 @@ const Intake = (): React.ReactElement => {
       );
     case 2:
       return (
+<<<<<<< HEAD
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <Heading textStyle="heading">Intake 💨 2</Heading>
+=======
+        <div style={{ textAlign: "center", paddingTop: "20px" }}>
+          <CourtInformationForm 
+          courtDetails={courtDetails} setCourtDetails={setCourtDetails} />
+          <Text textStyle="heading">Intake 💨 2</Text>
+>>>>>>> 0f8533c... added inital court info form
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
         </Box>

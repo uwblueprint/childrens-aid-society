@@ -11,12 +11,10 @@ def init_app(app):
     from .branch import Branch
     from .caregiver import Caregiver
     from .child import Child
-    from .child_concern import ChildConcern
+    from .concern import Concern
     from .daytime_contact import DaytimeContact
-    from .familial_concern import FamilialConcern
+    from .goal import Goal
     from .intake import Intake
-    from .long_term_goal import LongTermGoal
-    from .short_term_goal import ShortTermGoal
     from .transportation_method import TransportationMethod
     from .user import User
     from .visit_location import VisitLocation

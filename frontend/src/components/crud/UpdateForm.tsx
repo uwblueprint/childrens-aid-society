@@ -88,14 +88,16 @@ const UpdateForm = (): React.ReactElement => {
     const { id, ...entityData } = formData;
 
     const multipartFormData = new FormData();
-    multipartFormData.append("body", JSON.stringify(decamelizeKeys(entityData)));
+    multipartFormData.append(
+      "body",
+      JSON.stringify(decamelizeKeys(entityData)),
+    );
     if (fileField) {
       multipartFormData.append("file", fileField);
     }
-    const result = await EntityAPIClient.update(
-      formData.id,
-      { entityData: multipartFormData }
-    );
+    const result = await EntityAPIClient.update(formData.id, {
+      entityData: multipartFormData,
+    });
     setData(result);
   };
   return (

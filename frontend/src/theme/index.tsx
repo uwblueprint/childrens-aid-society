@@ -3,7 +3,7 @@ import { Dict } from "@chakra-ui/utils";
 
 import colors from "./colors";
 import textStyles from "./textStyles";
-import { Button, FormLabel, Heading, Input } from "./components";
+import { Button, FormLabel, Input } from "./components";
 
 const customTheme = extendTheme({
   styles: {
@@ -15,11 +15,14 @@ const customTheme = extendTheme({
     useSystemColorMode: false,
     initialColorMode: "light",
   },
+  fonts: {
+    heading: `'Roboto'`,
+    body: `'Roboto'`,
+  },
   colors,
   textStyles,
   components: {
     Button,
-    Heading,
     FormLabel,
     Input,
   },

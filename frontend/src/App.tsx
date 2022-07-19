@@ -2,6 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useReducer } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/700.css";
 
 import * as Routes from "./constants/Routes";
 import AUTHENTICATED_USER_KEY from "./constants/AuthConstants";
@@ -14,7 +16,6 @@ import sampleContextReducer from "./reducers/SampleContextReducer";
 import SampleContextDispatcherContext from "./contexts/SampleContextDispatcherContext";
 
 import customTheme from "./theme";
-import "./theme/fontStyles.css";
 
 import { AuthenticatedUser } from "./types/AuthTypes";
 import Login from "./components/auth/Login";

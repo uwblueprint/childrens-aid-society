@@ -29,7 +29,7 @@ const ReferralForm = ({
 }: ReferralFormProps): React.ReactElement => {
   return (
     <Box style={{ padding: "0px 100px 30px 100px" }}>
-      <Heading>Referral Details</Heading>
+      <Heading textStyle="heading">Referral Details</Heading>
       <FormControl style={{ padding: "30px" }}>
         <SimpleGrid columns={2} spacing="70px">
           <Box>
@@ -38,7 +38,6 @@ const ReferralForm = ({
             </FormLabel>
             <Input
               value={referralDetails.referringWorker}
-              variant="customVariant"
               id="referringWorker"
               type="string"
               placeholder="Enter name of worker..."
@@ -59,7 +58,6 @@ const ReferralForm = ({
             </FormLabel>
             <Input
               value={referralDetails.referringWorkerContact}
-              variant="customVariant"
               id="referringWorkerContact"
               type="string"
               placeholder="(ie. 223-2232-2323)"
@@ -75,7 +73,6 @@ const ReferralForm = ({
         <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
         <Input
           value={referralDetails.familyName}
-          variant="customVariant"
           id="familyName"
           type="string"
           placeholder="Enter family name..."
@@ -87,9 +84,9 @@ const ReferralForm = ({
           }
         />
         <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
+        {/* TO DO : change to date picker */}
         <Input
           value={referralDetails.referralDate}
-          variant="customVariant"
           id="referralDate"
           type="string"
           placeholder="Select a date..."
@@ -105,7 +102,6 @@ const ReferralForm = ({
             <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
             <Input
               value={referralDetails.cpinFileNumber}
-              variant="customVariant"
               id="cpinFileNumber"
               type="string"
               placeholder="(ie. 123456789)"
@@ -121,7 +117,6 @@ const ReferralForm = ({
             <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
             <Input
               value={referralDetails.cpinFileType}
-              variant="customVariant"
               id="cpinFileType"
               type="string"
               placeholder="Select a file type..."
@@ -137,7 +132,6 @@ const ReferralForm = ({
         <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
         <Input
           value={referralDetails.phoneNumber}
-          variant="customVariant"
           id="phoneNumber"
           type="string"
           placeholder="(ie. 223-2232-2323)"

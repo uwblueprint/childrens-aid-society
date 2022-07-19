@@ -40,18 +40,9 @@ export const FormLabel: ComponentStyleConfig = {
   },
 };
 
-export const Heading: ComponentStyleConfig = {
-  variants: {
-    heading: textStyles.heading,
-  },
-  defaultProps: {
-    variant: "heading",
-  },
-};
-
 export const Input: ComponentStyleConfig = {
   variants: {
-    customVariant: {
+    solid: {
       field: {
         background: "#EEECF2",
         borderRadius: "0px",
@@ -63,6 +54,6 @@ export const Input: ComponentStyleConfig = {
     },
   },
   defaultProps: {
-    variant: "customVariant",
+    variant: "solid",
   },
 };

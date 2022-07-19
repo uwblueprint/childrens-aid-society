@@ -14,6 +14,14 @@ const textStyles = {
     lineHeight: "150%",
     color: "#242426",
   },
+  formLabel: {
+    fontFamily: "Roboto",
+    fontSize: "17px",
+    fontWeight: "600",
+    lineHeight: "16px",
+    color: "#242426",
+    marginTop: "28px",
+  },
 };
 
 export default textStyles;

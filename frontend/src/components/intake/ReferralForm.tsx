@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import {
   Box,
@@ -29,13 +28,7 @@ const ReferralForm = ({
   setReferralDetails,
 }: ReferralFormProps): React.ReactElement => {
   return (
-    <Box
-      style={{
-        paddingLeft: "100px",
-        paddingRight: "100px",
-        paddingBottom: "30px",
-      }}
-    >
+    <Box style={{ padding: "0px 100px 30px 100px" }}>
       <Heading>Referral Details</Heading>
       <FormControl style={{ padding: "30px" }}>
         <SimpleGrid columns={2} spacing="70px">
@@ -44,6 +37,7 @@ const ReferralForm = ({
               REFERRING WORKER
             </FormLabel>
             <Input
+              value={referralDetails.referringWorker}
               variant="customVariant"
               id="referringWorker"
               type="string"
@@ -64,6 +58,7 @@ const ReferralForm = ({
               REFERRING WORKER CONTACT
             </FormLabel>
             <Input
+              value={referralDetails.referringWorkerContact}
               variant="customVariant"
               id="referringWorkerContact"
               type="string"
@@ -77,10 +72,9 @@ const ReferralForm = ({
             />
           </Box>
         </SimpleGrid>
-        <FormLabel pt="15px" htmlFor="familyName">
-          FAMILY NAME
-        </FormLabel>
+        <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
         <Input
+          value={referralDetails.familyName}
           variant="customVariant"
           id="familyName"
           type="string"
@@ -92,10 +86,9 @@ const ReferralForm = ({
             })
           }
         />
-        <FormLabel pt="15px" htmlFor="referralDate">
-          REFERRAL DATE
-        </FormLabel>
+        <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
         <Input
+          value={referralDetails.referralDate}
           variant="customVariant"
           id="referralDate"
           type="string"
@@ -109,10 +102,9 @@ const ReferralForm = ({
         />
         <SimpleGrid columns={2} spacing="70px">
           <Box>
-            <FormLabel pt="15px" htmlFor="cpinFileNumber">
-              CPIN FILE NUMBER
-            </FormLabel>
+            <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
             <Input
+              value={referralDetails.cpinFileNumber}
               variant="customVariant"
               id="cpinFileNumber"
               type="string"
@@ -126,10 +118,9 @@ const ReferralForm = ({
             />
           </Box>
           <Box>
-            <FormLabel pt="15px" htmlFor="cpinFileType">
-              CPIN FILE TYPE
-            </FormLabel>
+            <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
             <Input
+              value={referralDetails.cpinFileType}
               variant="customVariant"
               id="cpinFileType"
               type="string"
@@ -143,10 +134,9 @@ const ReferralForm = ({
             />
           </Box>
         </SimpleGrid>
-        <FormLabel pt="15px" htmlFor="phoneNUmber">
-          PHONE NUMBER
-        </FormLabel>
+        <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
         <Input
+          value={referralDetails.phoneNumber}
           variant="customVariant"
           id="phoneNumber"
           type="string"

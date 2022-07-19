@@ -21,7 +21,7 @@ const Intake = (): React.ReactElement => {
   switch (step) {
     case 1:
       return (
-        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
@@ -31,7 +31,7 @@ const Intake = (): React.ReactElement => {
       );
     case 2:
       return (
-        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <Heading textStyle="heading">Intake 💨 2</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
@@ -39,7 +39,7 @@ const Intake = (): React.ReactElement => {
       );
     default:
       return (
-        <Box style={{ textAlign: "center", paddingTop: "20px" }}>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <Heading textStyle="heading">Intake 💨 3</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
         </Box>

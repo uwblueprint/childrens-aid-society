@@ -29,3 +29,13 @@ class IBranchService(ABC):
         :raises Exception: if adding record to db fails
         """
         pass
+
+    @abstractmethod
+    def get_branches(self):
+        """Fetches all branches in the database
+
+        :return: List of branches
+        :rtype: List of BranchDTO
+        :raises Exception: if querying database fails
+        """
+        pass

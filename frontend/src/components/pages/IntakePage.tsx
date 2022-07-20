@@ -37,13 +37,10 @@ const Intake = (): React.ReactElement => {
     case 2:
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
-          <Heading textStyle="heading">Intake 💨 2</Heading>
-
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
           />
-          <Text textStyle="heading">Intake 💨 2</Text>
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
         </Box>

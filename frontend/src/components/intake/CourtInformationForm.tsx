@@ -1,12 +1,12 @@
 import React from "react";
 import {
   Center,
-  Grid,
+  Box,
   Heading,
   FormControl,
   FormLabel,
   Select,
-  FormErrorMessage,
+  Button,
 } from "@chakra-ui/react";
 
 export type CourtDetails = {
@@ -25,10 +25,8 @@ const CourtInformationForm = ({
   setCourtDetails,
 }: CourtInformationFormProps): React.ReactElement => {
   return (
-    // TODO: Will have to update styling convention here after Juthika's PR merged
-    <Center>
-      <Grid width="1000px">
-        <Heading style={{ textAlign: "center", padding: "10px" }}>
+    <Box style={{ padding: "0px 100px 30px 100px" }}>
+        <Heading textStyle="heading">
           Court Details
         </Heading>
         <FormControl style={{ padding: "30px" }}>
@@ -52,10 +50,7 @@ const CourtInformationForm = ({
         </FormControl>
         <FormControl>
            {/* TODO: store the uploaded file and save in backend */}
-          <Center>
-            <FormLabel>Attach Order Referral:</FormLabel>
-          </Center>
-          <input type="file" id="OrderReferral" name="OrderReferral" />
+          <Button>Attach Order Referral:</Button>
         </FormControl>
         <FormControl style={{ padding: "30px" }}>
           <FormLabel pt="15px" htmlFor="firstNationHeritage">
@@ -95,8 +90,7 @@ const CourtInformationForm = ({
             <option>Nigeria</option>
           </Select>
         </FormControl>
-      </Grid>
-    </Center>
+      </Box>
   );
 };
 

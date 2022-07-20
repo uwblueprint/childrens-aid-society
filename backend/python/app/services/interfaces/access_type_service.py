@@ -32,7 +32,7 @@ class IAccessTypeService(ABC):
     @abstractmethod
     def add_new_access_type(self, access_type):
         """
-        Adds access_type string to db as object of AccessType model and returns an AccessTypeDTO
+        Adds the specified access_type to the access_types table and returns a AccessTypeDTO of the new entry
         of the access_type just added
         :param access_type: the access type to be added
         :type access_type: string

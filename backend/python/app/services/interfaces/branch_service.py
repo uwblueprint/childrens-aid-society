@@ -21,8 +21,7 @@ class IBranchService(ABC):
     @abstractmethod
     def add_new_branch(self, branch):
         """
-        Adds branch string to db as object of Branch model and returns an BranchDTO
-        of the branch just added
+        Adds the specified bvranch to the branch table and returns a BranchDTO of the new entry
         :param branch: the branch to be added
         :type branch: string
         :return: BranchDTO

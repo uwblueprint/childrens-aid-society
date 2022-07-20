@@ -40,9 +40,6 @@ def test_get_nonexisting_branch(branch_service):
     res = branch_service.get_branch("TORONTO")
     assert res is None
 
-    res2 = branch_service.get_branch("OTTAWA")
-    assert res2 is None
-
 
 def test_get_branch_invalid_arg(branch_service):
     with pytest.raises(Exception):

@@ -35,10 +35,10 @@ class TransportationMethodService(ITransportationMethodService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_transportation_method(self, method):
+    def add_new_transportation_method(self, transportation_method):
         try:
             new_transportation_method = TransportationMethod(
-                transportation_method=method.transportation_method.upper()
+                transportation_method=transportation_method.transportation_method.upper()
             )
             db.session.add(new_transportation_method)
             db.session.commit()

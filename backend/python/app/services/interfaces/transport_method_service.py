@@ -31,10 +31,8 @@ class ITransportationMethodService(ABC):
 
     @abstractmethod
     def add_new_transportation_method(self, method):
-        """Adds method string to db as object of TransportationMethod model and returns an TransportationMethodDTO
-        of the method just added
-
-        :param method: transporation method to be added
+        """Adds the specified method to the transportation_models table and returns a TransportationMethodDTO of the new entry
+        :param transportation_method: transporation method to be added
         :type: string
         :return: TransportationMethodDTO
         :rtype: TransportationMethodDTO

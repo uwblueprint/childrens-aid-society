@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 import React, {useState} from "react";
 import { Button, Text, Box, Heading } from "@chakra-ui/react";
 import CourtInformationForm, {CourtDetails} from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
-=======
-import React, { useState } from "react";
-import { Button, Text } from "@chakra-ui/react";
-import CourtInformationForm, {
-  CourtDetails,
-} from "../intake/CourtInformationForm";
->>>>>>> d7381f0... rebuilt frontend container and updated nits/style
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);

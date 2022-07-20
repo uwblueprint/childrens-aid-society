@@ -10,17 +10,17 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     solid: {
-      background: "#000000",
-      color: "white",
-      opacity: "0.5",
-      fontSize: "14px",
-      lineHeight: "16px",
-      fontWeight: "600",
-      border: "none",
-      padding: "21px 118px",
       _hover: {
         background: "gray.800",
       },
+      background: "#000000",
+      border: "none",
+      color: "white",
+      fontSize: "14px",
+      fontWeight: "600",
+      lineHeight: "16px",
+      opacity: "0.5",
+      padding: "21px 118px",
     },
   },
   defaultProps: {

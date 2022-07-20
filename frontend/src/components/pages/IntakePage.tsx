@@ -1,38 +1,50 @@
-import React, {useState} from "react";
-import { Button, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Button, Heading } from "@chakra-ui/react";
+import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
+  const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
+    referringWorker: "",
+    referringWorkerContact: "",
+    familyName: "",
+    referralDate: "",
+    cpinFileNumber: "",
+    cpinFileType: "",
+    phoneNumber: "",
+  });
 
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
 
-  switch(step) {
+  switch (step) {
     case 1:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          <Text textStyle="heading">Intake 💨 1 </Text>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+          <ReferralForm
+            referralDetails={referralDetails}
+            setReferralDetails={setReferralDetails}
+          />
           <Button onClick={nextStep}>Next Button</Button>
-        </div>
+        </Box>
       );
-    case 2: 
+    case 2:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          <Text textStyle="heading">Intake 💨 2</Text>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+          <Heading textStyle="heading">Intake 💨 2</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
-        </div>
+        </Box>
       );
     default:
       return (
-        <div style={{ textAlign: "center", paddingTop: "20px" }}>
-          <Text textStyle="heading">Intake 💨 3</Text>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+          <Heading textStyle="heading">Intake 💨 3</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
-        </div>
+        </Box>
       );
   }
-  
 };
 
 export default Intake;

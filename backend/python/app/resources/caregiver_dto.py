@@ -70,7 +70,7 @@ class CreateCaregiverDTO:
         error_list = []
 
         if type(self.first_name) is not str:
-            error_list.append("The street_address value supplied is not a string.")
+            error_list.append("The first name value supplied is not a string.")
         if type(self.first_name) is str and self.first_name == "":
             error_list.append("The first name value supplied is empty.")
         if type(self.last_name) is not str:

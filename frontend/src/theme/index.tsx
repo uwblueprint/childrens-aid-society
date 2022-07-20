@@ -16,8 +16,8 @@ const customTheme = extendTheme({
     initialColorMode: "light",
   },
   fonts: {
-    heading: `'Roboto'`,
-    body: `'Roboto'`,
+    heading: `'Roboto', sans-serif`,
+    body: `'Roboto', sans-serif`,
   },
   colors,
   textStyles,

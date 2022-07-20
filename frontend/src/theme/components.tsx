@@ -1,6 +1,6 @@
 import type { ComponentStyleConfig } from "@chakra-ui/theme";
 import textStyles from "./textStyles";
-// TODO: thoughts on separating out each component into different files?
+// TODO: separate out each component into different files
 
 // Button styling
 export const Button: ComponentStyleConfig = {

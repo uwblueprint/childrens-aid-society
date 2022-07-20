@@ -9,7 +9,7 @@ class ICaregiverService(ABC):
     @abstractmethod
     def create_caregiver(self, caregiver):
         """
-        Create a new address object
+        Create a new caregiver object
         :param caregiver: the caregiver to be created
         :type caregiver: CreateCaregiverDTO
         :return: the created caregiver

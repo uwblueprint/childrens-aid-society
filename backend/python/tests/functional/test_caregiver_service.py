@@ -1,5 +1,3 @@
-import datetime
-
 import pytest
 from flask import current_app
 
@@ -8,7 +6,6 @@ from app.models.address import Address
 from app.models.caregiver import Caregiver
 from app.models.child import Child
 from app.models.daytime_contact import DaytimeContact
-from app.models.user import User
 from app.resources.caregiver_dto import CaregiverDTO, CreateCaregiverDTO
 from app.services.implementations.caregiver_service import CaregiverService
 
@@ -18,10 +15,6 @@ def caregiver_service():
     caregiver = CaregiverService(current_app.logger)
     seed_database()
     yield caregiver
-    # User.query.delete()
-    # Address.query.delete()
-    # DaytimeContact.query.delete()
-    # Child.query.delete()
     Caregiver.query.delete()
 
 
@@ -70,20 +63,6 @@ def seed_database():
     for dummy in dummy_method_instances:
         db.session.add(dummy)
     db.session.commit()
-
-
-class TestCreateCaregiverSuccess:
-    def test_nullable_true(self, caregiver_service):
-        param = CreateCaregiverDTO(
-            type="PROVIDER",
-            first_name="Hamza",
-            last_name="Yusuff",
-            child_id=1,
-            relationship_to_child="DAD",
-            phone_number="980332434",
-        )
-        caregiver_instance = caregiver_service.create_caregiver(param)
-        assert type(caregiver_instance) is CaregiverDTO
 
 
 class TestCreateCaregiverInvalidFails:

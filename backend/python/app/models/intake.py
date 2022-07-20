@@ -22,6 +22,15 @@ intakes_concerns = db.Table(
     db.Column("concern_id", db.ForeignKey("concerns.id")),
 )
 
+intakes_goals = db.Table(
+    "intakes_goals",
+    db.metadata,
+    db.Column("intake_id", db.ForeignKey("intakes.id")),
+    db.Column("goal_id", db.ForeignKey("goals.id")),
+    db.Column("start_date", db.DateTime),
+    db.Column("end_date", db.DateTime),
+)
+
 
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
@@ -62,3 +71,4 @@ class Intake(db.Model, BaseMixin):
     referring_worker = db.relationship("User", foreign_keys=[referring_worker_id])
     lead_access_worker = db.relationship("User", foreign_keys=[lead_access_worker_id])
     concerns = db.relationship("Concern", secondary=intakes_concerns)
+    goals = db.relationship("Goal", secondary=intakes_goals)

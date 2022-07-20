@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class ICaregiverService(ABC):
     """
-    Caregiverservice interface with address management methods
+    Caregiver service interface with caregiver management methods
     """
 
     @abstractmethod

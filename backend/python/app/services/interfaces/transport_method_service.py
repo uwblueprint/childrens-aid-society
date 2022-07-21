@@ -7,13 +7,35 @@ class ITransportationMethodService(ABC):
     """
 
     @abstractmethod
-    def _get_transport_method(self, transport_method):
-        """Check if transport method exists in DB/add to DB if it does not and
-           return the capitalized transport method
+    def get_transportation_method(self, method):
+        """Check if transport method exists in DB and
+           return the capitalized transport method if it exists
+           and return None if it does not
 
-        :param transport_method: string of transportation_method
+        :param transport_method: transportation_method to be queried
+        :type: string
+        :return: TransportationMethodDTO / None
+        :rtype: TransportationMethodDTO / None
+        :raises Exception: if transport method is invalid
+        """
+        pass
+
+    @abstractmethod
+    def get_transportation_methods(self):
+        """Get all exisiting transportation methods
+        :return: List of transportation methods
+        :rtype: list of TransportationMethodDTOs
+        :raises Exception: if querying database fails
+        """
+        pass
+
+    @abstractmethod
+    def add_new_transportation_method(self, method):
+        """Adds the specified method to the transportation_models table and returns a TransportationMethodDTO of the new entry
+        :param transportation_method: transporation method to be added
+        :type: string
         :return: TransportationMethodDTO
         :rtype: TransportationMethodDTO
-        :raises Exception: if transport method is invalid
+        :raises Exception: if adding to database fails
         """
         pass

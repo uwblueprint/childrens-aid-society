@@ -15,17 +15,20 @@ intakes_access_weekday_enum = db.Enum(
     name="intakes_access_weekday",
 )
 
-intakes_familial_concerns = db.Table(
-    "intakes_familial_concerns",
+intakes_concerns = db.Table(
+    "intakes_concerns",
     db.metadata,
     db.Column("intake_id", db.ForeignKey("intakes.id")),
-    db.Column("concern_id", db.ForeignKey("familial_concerns.id")),
+    db.Column("concern_id", db.ForeignKey("concerns.id")),
 )
-intakes_child_concerns = db.Table(
-    "intakes_child_concerns",
+
+intakes_goals = db.Table(
+    "intakes_goals",
     db.metadata,
     db.Column("intake_id", db.ForeignKey("intakes.id")),
-    db.Column("concern_id", db.ForeignKey("child_concerns.id")),
+    db.Column("goal_id", db.ForeignKey("goals.id")),
+    db.Column("start_date", db.DateTime),
+    db.Column("end_date", db.DateTime),
 )
 
 
@@ -67,9 +70,5 @@ class Intake(db.Model, BaseMixin):
     access_location = db.relationship("Address")
     referring_worker = db.relationship("User", foreign_keys=[referring_worker_id])
     lead_access_worker = db.relationship("User", foreign_keys=[lead_access_worker_id])
-    familial_concerns = db.relationship(
-        "FamilialConcern", secondary=intakes_familial_concerns
-    )
-    familial_concerns = db.relationship(
-        "ChildConcern", secondary=intakes_child_concerns
-    )
+    concerns = db.relationship("Concern", secondary=intakes_concerns)
+    goals = db.relationship("Goal", secondary=intakes_goals)

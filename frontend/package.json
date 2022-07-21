@@ -8,6 +8,7 @@
     "@chakra-ui/utils": "^2.0.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/roboto": "^4.5.7",
     "@rjsf/bootstrap-4": "^2.5.1",
     "@rjsf/core": "^2.5.1",
     "@testing-library/jest-dom": "^5.11.4",

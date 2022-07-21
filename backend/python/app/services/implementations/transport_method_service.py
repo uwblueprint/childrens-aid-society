@@ -1,9 +1,6 @@
 from ...models import db
 from ...models.transportation_method import TransportationMethod
-from ...resources.transportation_method_dto import (
-    CreateTransportationMethodDTO,
-    TransportationMethodDTO,
-)
+from ...resources.transportation_method_dto import TransportationMethodDTO
 from ..interfaces.transport_method_service import ITransportationMethodService
 
 
@@ -11,27 +8,37 @@ class TransportationMethodService(ITransportationMethodService):
     def __init__(self, logger):
         self.logger = logger
 
-    def _get_transport_method(self, method):
+    def get_transportation_methods(self):
         try:
-            new_method = CreateTransportationMethodDTO(method)
+            return [
+                TransportationMethodDTO(result.id, result.transportation_method)
+                for result in TransportationMethod.query.all()
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_transportation_method(self, method):
+        try:
+            transportation_method_upper = method.upper()
 
             transportation_method = TransportationMethod.query.filter_by(
-                transportation_method=new_method.transportation_method
+                transportation_method=transportation_method_upper
             ).first()
             if transportation_method:
                 return TransportationMethodDTO(
                     transportation_method.id,
                     transportation_method.transportation_method,
                 )
-            return self._add_transport_method(new_method)
+            return None
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def _add_transport_method(self, method):
+    def add_new_transportation_method(self, transportation_method):
         try:
             new_transportation_method = TransportationMethod(
-                transportation_method=method.transportation_method.upper()
+                transportation_method=transportation_method.transportation_method.upper()
             )
             db.session.add(new_transportation_method)
             db.session.commit()

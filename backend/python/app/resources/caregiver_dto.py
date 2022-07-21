@@ -79,6 +79,10 @@ class CreateCaregiverDTO:
             error_list.append("The child id field is not of integer type.")
         if self.address_id and type(self.address_id) is not int:
             error_list.append("The address id field is not of integer type.")
+        if self.is_primary and type(self.is_primary) is not bool:
+            error_list.append("The is_primary field is not of bool type.")
+        if self.date_of_birth and type(self.date_of_birth) is not datetime.datetime:
+            error_list.append("The datetime field is not of datetime type.")
         if type(self.phone_number) is not str:
             error_list.append("The phone number value is not a string.")
         if type(self.phone_number) is str and self.phone_number == "":

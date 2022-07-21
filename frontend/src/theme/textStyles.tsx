@@ -1,17 +1,26 @@
 const textStyles = {
   heading: {
     fontFamily: "Roboto",
-    fontSize: "28px",
-    fontWeight: "semibold",
-    lineHeight: "150%",
-    color: "text.default",
+    fontSize: "46px",
+    fontWeight: "700",
+    lineHeight: "36px",
+    color: "#000000",
+    padding: "40px",
   },
   "body-regular": {
     fontFamily: "Roboto",
     fontSize: "18px",
     fontWeight: "normal",
     lineHeight: "150%",
-    color: "text.default",
+    color: "#242426",
+  },
+  formLabel: {
+    fontFamily: "Roboto",
+    fontSize: "17px",
+    fontWeight: "600",
+    lineHeight: "16px",
+    color: "#242426",
+    marginTop: "28px",
   },
 };
 

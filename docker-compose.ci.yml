@@ -1,0 +1,40 @@
+# Configurations for containers in Github Actions ci
+
+version: "3.7"
+
+services:
+  py-backend:
+    container_name: cas_py_backend
+    command: ./run-test.sh
+    build:
+      context: ./backend/python
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    dns:
+      - 8.8.8.8
+    depends_on:
+      - db-test
+    environment:
+      - POSTGRES_DB_TEST
+      - DB_HOST
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - FIREBASE_SVC_ACCOUNT_AUTH_URI
+      - FIREBASE_SVC_ACCOUNT_CLIENT_ID
+      - FIREBASE_SVC_ACCOUNT_TOKEN_URI
+      - FIREBASE_STORAGE_DEFAULT_BUCKET
+      - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY
+      - FIREBASE_SVC_ACCOUNT_CLIENT_EMAIL
+      - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID
+      - FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL
+      - FIREBASE_SVC_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
+  db-test:
+    container_name: cas_db
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB=cas_test

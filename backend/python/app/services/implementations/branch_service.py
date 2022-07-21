@@ -8,6 +8,15 @@ class BranchService(IBranchService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_branches(self):
+        try:
+            return [
+                BranchDTO(result.id, result.branch) for result in Branch.query.all()
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def get_branch(self, branch):
         try:
             branch_upper = branch.upper()
@@ -16,7 +25,7 @@ class BranchService(IBranchService):
             if branch_entry:
                 return BranchDTO(branch_entry.id, branch_entry.branch)
             else:
-                return self.add_new_branch(branch_upper)
+                return None
         except Exception as error:
             self.logger.error(str(error))
             raise error

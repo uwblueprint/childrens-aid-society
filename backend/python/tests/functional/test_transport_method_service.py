@@ -38,10 +38,9 @@ def test_get_transport_method_fetches_existing_method(transport_method_service):
     assert res.transportation_method == "AGENCY DRIVER"
 
 
-def test_get_transport_method_creates_new_transport(transport_method_service):
+def test_get_transport_method_returns_none_nonexisting(transport_method_service):
     res = transport_method_service.get_transportation_method("New Driver")
-    assert type(res) is TransportationMethodDTO
-    assert TransportationMethod.query.get(res.id).transportation_method == "NEW DRIVER"
+    assert res is None
 
 
 def test_get_transport_method_raises_exception_null_argument(

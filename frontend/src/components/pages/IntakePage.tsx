@@ -1,6 +1,8 @@
-import React, {useState} from "react";
-import { Button, Text, Box, Heading } from "@chakra-ui/react";
-import CourtInformationForm, {CourtDetails} from "../intake/CourtInformationForm";
+import React, { useState } from "react";
+import { Box, Button, Heading } from "@chakra-ui/react";
+import CourtInformationForm, {
+  CourtDetails,
+} from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 
 const Intake = (): React.ReactElement => {
@@ -17,7 +19,8 @@ const Intake = (): React.ReactElement => {
     referralDate: "",
     cpinFileNumber: "",
     cpinFileType: "",
-    phoneNumber: "", });
+    phoneNumber: "",
+  });
 
   const nextStep = () => setStep(step + 1);
 

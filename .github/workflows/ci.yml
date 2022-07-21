@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-name: CI
-=======
 name: Docker build & run tests
->>>>>>> a165cd3cb09637a78e6aa9d9f53e95def363b9f0
 
 on:
   # Triggers the workflow on push or pull request events for the main branch
@@ -44,15 +40,6 @@ jobs:
       - name: Install dependencies
         run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
       
-<<<<<<< HEAD
-      - name: Build the docker-compose stack
-        run: docker-compose up --build
-      
-      - name: Check running containers
-        run: docker ps -a
-      
-      # running tests
-=======
       # building the docker containers
       - name: Build the docker-compose stack
         run: docker-compose -f docker-compose.ci.yml up -d
@@ -62,16 +49,10 @@ jobs:
         run: docker ps -a
       
       # running frontend tests
->>>>>>> a165cd3cb09637a78e6aa9d9f53e95def363b9f0
       - name: Run tests for frontend
         working-directory: ./frontend
         run: yarn test
       
-<<<<<<< HEAD
-      - name: Run tests for backend
-        run: docker exec -it cas_py_backend /bin/bash -c "pip install -e . && pytest"
-=======
       # running backend tests
       - name: Run tests for backend
         run: docker exec cas_py_backend ./run-test.sh
->>>>>>> a165cd3cb09637a78e6aa9d9f53e95def363b9f0

@@ -25,10 +25,20 @@ const Intake = (): React.ReactElement => {
     phoneNumber: "",
     relationship: "",
   });
+  const [
+    allOtherPermittedIndividuals,
+    setAllOtherPermittedIndividuals,
+  ] = useState<PermittedIndividualDetails[]>([]);
 
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
+
+  const addOtherIndividuals = () =>
+    setAllOtherPermittedIndividuals([
+      ...allOtherPermittedIndividuals,
+      permittedIndividualDetails,
+    ]);
 
   switch (step) {
     case 1:
@@ -57,7 +67,7 @@ const Intake = (): React.ReactElement => {
             setPermittedIndividualDetails={setPermittedIndividualDetails}
           />
           <Button onClick={prevStep}>Previous Button</Button>
-          <Button>Add</Button>
+          <Button onClick={addOtherIndividuals}>Add</Button>
         </Box>
       );
   }

@@ -71,10 +71,10 @@ const PermittedIndividualsForm = ({
           <Box>
             <FormLabel htmlFor="relationship">RELATIONSHIP TO CHILD</FormLabel>
             <Select
+              value={permittedIndividualDetails.relationship}
               placeholder="Choose relationship..."
               id="relationship"
               onChange={(event) => {
-                console.log("event", event.currentTarget.value);
                 setPermittedIndividualDetails({
                   ...permittedIndividualDetails,
                   relationship: event.currentTarget.value,

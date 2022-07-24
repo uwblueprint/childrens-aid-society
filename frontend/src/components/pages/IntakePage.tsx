@@ -18,33 +18,29 @@ const Intake = (): React.ReactElement => {
 
   const prevStep = () => setStep(step - 1);
 
-  switch (step) {
-    case 1:
-      return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+  const renderFormPage = (currentStep: number) => {
+    switch (currentStep) {
+      case 1:
+        return (
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
           />
-          <Button onClick={nextStep}>Next Button</Button>
-        </Box>
-      );
-    case 2:
-      return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
-          <Heading textStyle="header-large">Intake 💨 2</Heading>
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
-        </Box>
-      );
-    default:
-      return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
-          <Heading textStyle="header-large">Intake 💨 3</Heading>
-          <Button onClick={prevStep}>Previous Button</Button>
-        </Box>
-      );
-  }
+        );
+      case 2:
+        return <Heading textStyle="header-large">Intake 💨 2</Heading>;
+      default:
+        return <Heading textStyle="header-large">Intake 💨 3</Heading>;
+    }
+  };
+
+  return (
+    <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+      {renderFormPage(step)}
+      {step > 1 && <Button onClick={prevStep}>Previous Button</Button>}
+      {step < 3 && <Button onClick={nextStep}>Next Button</Button>}
+    </Box>
+  );
 };
 
 export default Intake;

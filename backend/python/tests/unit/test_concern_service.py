@@ -49,9 +49,7 @@ DEFAULT_CHILD_CONCERNS = (
 
 def seed_database():
     child_concern_instance = [Concern(**data) for data in DEFAULT_CHILD_CONCERNS]
-    familial_concern_instance = [
-        Concern(**data) for data in DEFAULT_FAMILIAL_CONCERNS
-    ]
+    familial_concern_instance = [Concern(**data) for data in DEFAULT_FAMILIAL_CONCERNS]
     db.session.bulk_save_objects(child_concern_instance)
     db.session.bulk_save_objects(familial_concern_instance)
 

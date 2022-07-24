@@ -33,7 +33,7 @@ export const FormLabel: ComponentStyleConfig = {
     paddingTop: "15px",
   },
   variants: {
-    formLabel: textStyles.formLabel,
+    formLabel: textStyles.label,
   },
   defaultProps: {
     variant: "formLabel",

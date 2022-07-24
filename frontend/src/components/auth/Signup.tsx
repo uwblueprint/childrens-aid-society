@@ -66,7 +66,7 @@ const Signup = (): React.ReactElement => {
           />
         </div>
         <div>
-          <Button onClick={onSignupClick} textStyle="body-regular">
+          <Button onClick={onSignupClick} textStyle="button-medium">
             Sign Up
           </Button>
         </div>

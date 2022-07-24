@@ -60,6 +60,7 @@ export const Input: ComponentStyleConfig = {
   },
 };
 
+// TODO: make the placeholder color "#888897 and selected input color black
 export const Select: ComponentStyleConfig = {
   variants: {
     solid: {

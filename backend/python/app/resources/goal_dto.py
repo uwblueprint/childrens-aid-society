@@ -9,7 +9,7 @@ class CreateGoalDTO:
         error = self.validate(goal)
         if error:
             raise Exception(error)
-        self.goal = bragoalnch.upper()
+        self.goal = goal.upper()
 
     def validate(self, goal):
         error_list = []

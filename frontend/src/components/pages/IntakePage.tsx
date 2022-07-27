@@ -11,6 +11,7 @@ const Intake = (): React.ReactElement => {
     currentCourtStatus: "",
     firstNationHeritage: "",
     firstNationBand: "",
+    orderReferral: null!,
   });
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",

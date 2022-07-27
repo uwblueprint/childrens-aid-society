@@ -6,12 +6,14 @@ import {
   FormLabel,
   Heading,
   Select,
+  Input,
 } from "@chakra-ui/react";
 
 export type CourtDetails = {
   currentCourtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
+  orderReferral: File;
 };
 
 type CourtInformationFormProps = {
@@ -23,30 +25,21 @@ const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
 }: CourtInformationFormProps): React.ReactElement => {
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>();
   const handleClick = () => {
-    // 👇️ open file input box on click of other element
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    inputRef.current.click();
+    if (inputRef && inputRef.current) {
+      inputRef.current.click();
+    }
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
       return;
     }
-
-    console.log("fileObj is", fileObj);
-
-    // 👇️ reset file input
-    // event.target.value = null;
-
-    // 👇️ is now empty
-    // console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    // console.log(fileObj);
-    // console.log(fileObj.name);
+    setCourtDetails({
+      ...courtDetails,
+      orderReferral: fileObj,
+    });
   };
   return (
     <Box style={{ padding: "0px 100px 30px 100px" }}>
@@ -72,13 +65,15 @@ const CourtInformationForm = ({
       </FormControl>
       <FormControl>
         {/* TODO: store the uploaded file and save in backend */}
-        <input
+        <Input
           style={{ display: "none" }}
           type="file"
           ref={inputRef}
+          // ref={this.inputRef}
           onChange={handleFileChange}
           id="OrderReferral"
           name="OrderReferral"
+          // value={courtDetails.orderReferral}
         />
         <Button onClick={handleClick}>Attach Order Referral</Button>
       </FormControl>

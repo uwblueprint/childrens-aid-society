@@ -67,7 +67,7 @@ const Login = (): React.ReactElement => {
           />
         </div>
         <div>
-          <Button onClick={onLogInClick} textStyle="body-regular">
+          <Button onClick={onLogInClick} textStyle="button-medium">
             Log In
           </Button>
         </div>
@@ -89,7 +89,7 @@ const Login = (): React.ReactElement => {
         />
       </form>
       <div>
-        <Button onClick={onSignUpClick} textStyle="body-regular">
+        <Button onClick={onSignUpClick} textStyle="button-medium">
           Sign Up
         </Button>
       </div>

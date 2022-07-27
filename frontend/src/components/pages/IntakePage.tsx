@@ -54,7 +54,7 @@ const Intake = (): React.ReactElement => {
     case 2:
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-          <Heading textStyle="heading">Intake 💨 2</Heading>
+          <Heading textStyle="header-large">Intake 💨 2</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
         </Box>

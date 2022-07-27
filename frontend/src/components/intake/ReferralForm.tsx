@@ -29,7 +29,7 @@ const ReferralForm = ({
 }: ReferralFormProps): React.ReactElement => {
   return (
     <Box style={{ padding: "0px 100px 30px 100px" }}>
-      <Heading textStyle="heading">Referral Details</Heading>
+      <Heading textStyle="header-large">Referral Details</Heading>
       <FormControl style={{ padding: "30px" }}>
         <SimpleGrid columns={2} spacing="70px">
           <Box>

@@ -52,7 +52,7 @@ const Intake = (): React.ReactElement => {
     default:
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
-          <Heading textStyle="heading">Intake 💨 3</Heading>
+          <Heading textStyle="header-large">Intake 💨 3</Heading>
           <Button onClick={prevStep}>Previous Button</Button>
         </Box>
       );

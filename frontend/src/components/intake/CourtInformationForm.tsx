@@ -25,7 +25,7 @@ const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
 }: CourtInformationFormProps): React.ReactElement => {
-  const inputRef = useRef<any>();
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();

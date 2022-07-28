@@ -8,19 +8,12 @@ class ConcernService(IConcernService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_familial_concern(self, familial_concern, type=None):
+    def get_familial_concern(self, familial_concern):
         try:
             familial_concern_upper = familial_concern.upper()
-            if type:
-                type_upper = type.upper()
-                familial_concern_entry = Concern.query.filter_by(
-                    concern=familial_concern_upper, type=type_upper
-                ).first()
-            else:
-                familial_concern_entry = Concern.query.filter_by(
-                    concern=familial_concern_upper
-                ).first()
-
+            familial_concern_entry = Concern.query.filter_by(
+                concern=familial_concern_upper
+            ).first()
             return (
                 ConcernDTO(
                     familial_concern_entry.id,
@@ -35,19 +28,12 @@ class ConcernService(IConcernService):
             self.logger.error(str(error))
             raise error
 
-    def get_child_concern(self, child_concern, type=None):
+    def get_child_concern(self, child_concern):
         try:
             child_concern_upper = child_concern.upper()
-            if type:
-                type_upper = type.upper()
-                child_concern_entry = Concern.query.filter_by(
-                    concern=child_concern_upper, type=type_upper
-                ).first()
-            else:
-                child_concern_entry = Concern.query.filter_by(
-                    concern=child_concern_upper
-                ).first()
-
+            child_concern_entry = Concern.query.filter_by(
+                concern=child_concern_upper
+            ).first()
             return (
                 ConcernDTO(
                     child_concern_entry.id,

@@ -54,28 +54,16 @@ def seed_database():
     db.session.bulk_save_objects(familial_concern_instance)
 
 
-def test_get_familial_concern_id_success(concern_service):
+def test_get_familial_concern_success(concern_service):
     res = concern_service.get_familial_concern("FAMILY_CONFLICT")
     assert type(res) is ConcernDTO
     assert res.concern == "FAMILY_CONFLICT"
 
 
-def test_get_child_concern_id_success(concern_service):
+def test_get_child_concern_success(concern_service):
     res = concern_service.get_child_concern("MENTAL_HEALTH")
     assert type(res) is ConcernDTO
     assert res.concern == "MENTAL_HEALTH"
-
-
-def test_add_familial_concern(concern_service):
-    res = concern_service.add_concern("FAMILIAL_CONCERN", "TRAUMA")
-    assert type(res) is ConcernDTO
-    assert Concern.query.get(res.id).concern == "TRAUMA"
-
-
-def test_add_child_concern(concern_service):
-    res = concern_service.add_concern("CHILD_BEHAVIOUR", "PTSD")
-    assert type(res) is ConcernDTO
-    assert Concern.query.get(res.id).concern == "PTSD"
 
 
 def test_add_familial_concern_success(concern_service):

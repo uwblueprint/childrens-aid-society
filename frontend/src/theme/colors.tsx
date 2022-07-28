@@ -1,7 +1,4 @@
 const colors = {
-  text: {
-    default: "#000000",
-  },
   black: {
     default: "#000000",
   },
@@ -9,8 +6,8 @@ const colors = {
     default: "#FFFFFF",
   },
   gray: {
-    50: "##F0F0FA",
-    100: "##E2E1EC",
+    50: "#F0F0FA",
+    100: "#E2E1EC",
     200: "#C6C6D0",
     300: "#AAAAB4",
     400: "#8F909A",

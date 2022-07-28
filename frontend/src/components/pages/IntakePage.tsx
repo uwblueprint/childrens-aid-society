@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Button, Heading } from "@chakra-ui/react";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {

@@ -41,7 +41,7 @@ const ReferralForm = ({
               id="referringWorker"
               type="string"
               placeholder="Enter name of worker..."
-              onChange={(event) =>
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setReferralDetails({
                   ...referralDetails,
                   referringWorker: event.currentTarget.value,
@@ -61,7 +61,7 @@ const ReferralForm = ({
               id="referringWorkerContact"
               type="string"
               placeholder="(ie. 223-2232-2323)"
-              onChange={(event) =>
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setReferralDetails({
                   ...referralDetails,
                   referringWorkerContact: event.currentTarget.value,
@@ -76,7 +76,7 @@ const ReferralForm = ({
           id="familyName"
           type="string"
           placeholder="Enter family name..."
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setReferralDetails({
               ...referralDetails,
               familyName: event.currentTarget.value,
@@ -90,7 +90,7 @@ const ReferralForm = ({
           id="referralDate"
           type="string"
           placeholder="Select a date..."
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setReferralDetails({
               ...referralDetails,
               referralDate: event.currentTarget.value,
@@ -105,7 +105,7 @@ const ReferralForm = ({
               id="cpinFileNumber"
               type="string"
               placeholder="(ie. 123456789)"
-              onChange={(event) =>
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setReferralDetails({
                   ...referralDetails,
                   cpinFileNumber: event.currentTarget.value,
@@ -120,7 +120,7 @@ const ReferralForm = ({
               id="cpinFileType"
               type="string"
               placeholder="Select a file type..."
-              onChange={(event) =>
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setReferralDetails({
                   ...referralDetails,
                   cpinFileType: event.currentTarget.value,
@@ -135,7 +135,7 @@ const ReferralForm = ({
           id="phoneNumber"
           type="string"
           placeholder="(ie. 223-2232-2323)"
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setReferralDetails({
               ...referralDetails,
               phoneNumber: event.currentTarget.value,

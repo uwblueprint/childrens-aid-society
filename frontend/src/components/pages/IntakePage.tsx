@@ -48,14 +48,14 @@ const Intake = (): React.ReactElement => {
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
           />
-          <Button onClick={nextStep}>Next Button</Button>
+          <Button variant="tertiary" onClick={nextStep}>Next Button</Button>
         </Box>
       );
     case 2:
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <Heading textStyle="header-large">Intake 💨 2</Heading>
-          <Button onClick={prevStep}>Previous Button</Button>
+          <Button size="sm" variant="secondary" onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
@@ -67,7 +67,7 @@ const Intake = (): React.ReactElement => {
             setPermittedIndividualDetails={setPermittedIndividualDetails}
           />
           <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={addOtherIndividuals}>Add</Button>
+          <Button disabled onClick={addOtherIndividuals}>Add</Button>
         </Box>
       );
   }

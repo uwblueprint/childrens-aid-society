@@ -48,6 +48,8 @@ jobs:
         if: steps.changes.outputs.frontend == 'true'
         working-directory: ./frontend
         run: yarn lint
+        env:
+          CI: true
 
       - name: Lint Python backend
         if: steps.changes.outputs.python-backend == 'true'

@@ -25,9 +25,6 @@ const Intake = (): React.ReactElement => {
 
   const prevStep = () => setStep(step - 1);
 
-  console.log(referralDetails);
-  console.log(allOtherPermittedIndividuals);
-
   switch (step) {
     case 1:
       return (

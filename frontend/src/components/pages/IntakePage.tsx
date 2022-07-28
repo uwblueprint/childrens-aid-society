@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";

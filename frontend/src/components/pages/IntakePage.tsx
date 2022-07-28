@@ -25,15 +25,19 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [permittedIndividualDetails, setPermittedIndividualDetails] =
-    useState<PermittedIndividualDetails>({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      relationship: "",
-    });
-  const [allOtherPermittedIndividuals, setAllOtherPermittedIndividuals] =
-    useState<PermittedIndividualDetails[]>([]);
+  const [
+    permittedIndividualDetails,
+    setPermittedIndividualDetails,
+  ] = useState<PermittedIndividualDetails>({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    relationship: "",
+  });
+  const [
+    allOtherPermittedIndividuals,
+    setAllOtherPermittedIndividuals,
+  ] = useState<PermittedIndividualDetails[]>([]);
 
   const nextStep = () => setStep(step + 1);
 

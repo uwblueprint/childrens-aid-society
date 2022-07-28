@@ -23,10 +23,9 @@ const Intake = (): React.ReactElement => {
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <ReferralForm
-            referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
           />
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     case 2:

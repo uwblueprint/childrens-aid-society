@@ -7,12 +7,6 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
-  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
-    currentCourtStatus: "",
-    firstNationHeritage: "",
-    firstNationBand: "",
-    orderReferral: null!,
-  });
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -21,6 +15,12 @@ const Intake = (): React.ReactElement => {
     cpinFileNumber: "",
     cpinFileType: "",
     phoneNumber: "",
+  });
+  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
+    currentCourtStatus: "",
+    firstNationHeritage: "",
+    firstNationBand: "",
+    orderReferral: null,
   });
 
   const nextStep = () => setStep(step + 1);

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ export type CourtDetails = {
   currentCourtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
-  orderReferral: File;
+  orderReferral: File | null;
 };
 
 type CourtInformationFormProps = {
@@ -69,11 +69,9 @@ const CourtInformationForm = ({
           style={{ display: "none" }}
           type="file"
           ref={inputRef}
-          // ref={this.inputRef}
           onChange={handleFileChange}
           id="OrderReferral"
           name="OrderReferral"
-          // value={courtDetails.orderReferral}
         />
         <Button onClick={handleClick}>Attach Order Referral</Button>
       </FormControl>

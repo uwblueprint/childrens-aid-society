@@ -7,6 +7,8 @@ export const Button: ComponentStyleConfig = {
   baseStyle: {
     textTransform: "uppercase",
     borderRadius: "none",
+    width: "30%",
+    margin: "10px",
   },
   variants: {
     solid: {
@@ -50,6 +52,22 @@ export const Input: ComponentStyleConfig = {
           color: "#888897",
           padding: "10px 0px",
         },
+      },
+    },
+  },
+  defaultProps: {
+    variant: "solid",
+  },
+};
+
+// TODO: make the placeholder color "#888897 and selected input color black
+export const Select: ComponentStyleConfig = {
+  variants: {
+    solid: {
+      field: {
+        background: "#EEECF2",
+        borderRadius: "0px",
+        color: "#888897",
       },
     },
   },

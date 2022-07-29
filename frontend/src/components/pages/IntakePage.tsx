@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
+import CourtInformationForm, {
+  CourtDetails,
+} from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {
   PermittedIndividualDetails,
@@ -15,6 +18,12 @@ const Intake = (): React.ReactElement => {
     cpinFileNumber: "",
     cpinFileType: "",
     phoneNumber: "",
+  });
+  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
+    currentCourtStatus: "",
+    firstNationHeritage: "",
+    firstNationBand: "",
+    orderReferral: null,
   });
   const [
     allOtherPermittedIndividuals,
@@ -37,8 +46,11 @@ const Intake = (): React.ReactElement => {
       );
     case 2:
       return (
-        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-          <Heading textStyle="header-large">Intake 💨 2</Heading>
+        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+          <CourtInformationForm
+            courtDetails={courtDetails}
+            setCourtDetails={setCourtDetails}
+          />
           <Button onClick={prevStep}>Previous Button</Button>
           <Button onClick={nextStep}>Next Button</Button>
         </Box>

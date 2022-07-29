@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box } from "@chakra-ui/react";
+import { Button, Text, Box } from "@chakra-ui/react";
 
 const Home = (): React.ReactElement => {
   return (
@@ -48,6 +48,18 @@ const Home = (): React.ReactElement => {
       <Text style={{ margin: "10px" }} textStyle="label">
         label
       </Text>
+      <Button variant="primary">Primary</Button>
+      <Button variant="primary" disabled>
+        Primary Disabled
+      </Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="secondary" disabled>
+        Secondary Disabled
+      </Button>
+      <Button variant="tertiary">Tertiary</Button>
+      <Button variant="tertiary" disabled>
+        Tertiary Disabled
+      </Button>
       <Box
         background="blue.500"
         width="100%"

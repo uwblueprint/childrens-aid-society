@@ -1,9 +1,10 @@
 import type { ComponentStyleConfig } from "@chakra-ui/theme";
+import colors from "./colors";
 
 // Button styling
 const Button: ComponentStyleConfig = {
   baseStyle: {
-    color: "#FFFFFF",
+    color: colors.white.default,
     width: "auto",
   },
   sizes: {
@@ -20,32 +21,31 @@ const Button: ComponentStyleConfig = {
   },
   variants: {
     primary: {
-      background: "#00287D",
+      background: colors.blue[400],
       boxShadow:
         "inset 0px 0px 18px rgba(143, 167, 255, 0.15), inset 0px 0px 32px rgba(53, 87, 188, 0.5)",
       _hover: {
-        background: "#00164E",
+        background: colors.blue[500],
         boxShadow:
           "0px 0px 32px rgba(143, 167, 255, 0.1), 0px 0px 16px rgba(0, 40, 125, 0.2)",
       },
       _active: {
-        background: "#00164E",
+        background: colors.blue[500],
         boxShadow:
           "0px 0px 32px rgba(143, 167, 255, 0.1), 0px 0px 16px rgba(0, 40, 125, 0.2), inset 0px 0px 32px rgba(220, 225, 255, 0.5)",
       },
       _disabled: {
-        background: "#00287D",
         opacity: "0.5",
         pointerEvents: "none",
       },
     },
     secondary: {
-      background: "#EFF0FF",
+      background: colors.blue[50],
       border: "1px solid #00287D",
       borderRadius: "8px",
-      color: "#00287D",
+      color: colors.blue[400],
       _hover: {
-        background: "#DCE1FF",
+        background: colors.blue[100],
       },
       _active: {
         background: "#DCE1FF",
@@ -57,15 +57,15 @@ const Button: ComponentStyleConfig = {
       },
     },
     tertiary: {
-      color: "#00287D",
+      color: colors.blue[400],
       _hover: {
-        color: "#3557BC",
+        color: colors.blue[300],
       },
       _active: {
-        color: "#00164E",
+        color: colors.blue[500],
       },
       _disabled: {
-        color: "#00287D",
+        color: colors.blue[400],
         pointerEvents: "none",
       },
     },

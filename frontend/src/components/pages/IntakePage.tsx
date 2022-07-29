@@ -57,12 +57,14 @@ const Intake = (): React.ReactElement => {
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
           />
-          <Button variant="tertiary" onClick={nextStep}>Next Button</Button>
+          <Button variant="tertiary" onClick={nextStep}>
+            Next Button
+          </Button>
         </Box>
       );
     case 2:
       return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
@@ -79,7 +81,9 @@ const Intake = (): React.ReactElement => {
             setPermittedIndividualDetails={setPermittedIndividualDetails}
           />
           <Button onClick={prevStep}>Previous Button</Button>
-          <Button disabled onClick={addOtherIndividuals}>Add</Button>
+          <Button disabled onClick={addOtherIndividuals}>
+            Add
+          </Button>
         </Box>
       );
   }

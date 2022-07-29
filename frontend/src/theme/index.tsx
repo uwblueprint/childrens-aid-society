@@ -3,7 +3,8 @@ import { Dict } from "@chakra-ui/utils";
 
 import colors from "./colors";
 import textStyles from "./textStyles";
-import { Button, FormLabel, Input, Select } from "./components";
+import { FormLabel, Input, Select } from "./components";
+import Button from "./buttonStyles";
 
 const customTheme = extendTheme({
   styles: {

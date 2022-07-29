@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -48,11 +48,10 @@ const Intake = (): React.ReactElement => {
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <CourtInformationForm
-            courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     default:
@@ -61,8 +60,8 @@ const Intake = (): React.ReactElement => {
           <PermittedIndividualsForm
             allOtherPermittedIndividuals={allOtherPermittedIndividuals}
             setAllOtherPermittedIndividuals={setAllOtherPermittedIndividuals}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
         </Box>
       );
   }

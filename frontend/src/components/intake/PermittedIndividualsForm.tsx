@@ -23,11 +23,13 @@ type PermittedIndividualFormProps = {
   setAllOtherPermittedIndividuals: React.Dispatch<
     React.SetStateAction<PermittedIndividualDetails[]>
   >;
+  prevStep: () => void;
 };
 
 const PermittedIndividualsForm = ({
   allOtherPermittedIndividuals,
   setAllOtherPermittedIndividuals,
+  prevStep,
 }: PermittedIndividualFormProps): React.ReactElement => {
   const initialValues: PermittedIndividualDetails = {
     firstName: "",
@@ -41,7 +43,7 @@ const PermittedIndividualsForm = ({
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleChange }) => (
+      {({ handleSubmit, handleChange }) => (
         <Form style={{ padding: "0px 100px 70px 100px" }}>
           <Heading textStyle="heading">Other Permitted Individuals</Heading>
           <FormControl style={{ padding: "30px" }}>
@@ -100,6 +102,14 @@ const PermittedIndividualsForm = ({
             </SimpleGrid>
           </FormControl>
           <Button type="submit">Add</Button>
+          <Button
+            onClick={() => {
+              handleSubmit();
+              prevStep();
+            }}
+          >
+            Previous Button
+          </Button>
         </Form>
       )}
     </Formik>

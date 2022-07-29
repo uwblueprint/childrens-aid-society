@@ -8,7 +8,8 @@
     "@chakra-ui/utils": "^2.0.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@fontsource/roboto": "^4.5.7",
+    "@fontsource/eczar": "^4.5.9",
+    "@fontsource/work-sans": "^4.5.10",
     "@rjsf/bootstrap-4": "^2.5.1",
     "@rjsf/core": "^2.5.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -48,7 +49,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --max-warnings=0",
     "fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "eslintConfig": {

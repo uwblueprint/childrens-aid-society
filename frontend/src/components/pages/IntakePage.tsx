@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -26,15 +26,6 @@ const Intake = (): React.ReactElement => {
     orderReferral: null,
   });
   const [
-    permittedIndividualDetails,
-    setPermittedIndividualDetails,
-  ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
-  });
-  const [
     allOtherPermittedIndividuals,
     setAllOtherPermittedIndividuals,
   ] = useState<PermittedIndividualDetails[]>([]);
@@ -43,43 +34,34 @@ const Intake = (): React.ReactElement => {
 
   const prevStep = () => setStep(step - 1);
 
-  const addOtherIndividuals = () =>
-    setAllOtherPermittedIndividuals([
-      ...allOtherPermittedIndividuals,
-      permittedIndividualDetails,
-    ]);
-
   switch (step) {
     case 1:
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <ReferralForm
-            referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
           />
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     case 2:
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <CourtInformationForm
-            courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     default:
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <PermittedIndividualsForm
-            permittedIndividualDetails={permittedIndividualDetails}
-            setPermittedIndividualDetails={setPermittedIndividualDetails}
+            allOtherPermittedIndividuals={allOtherPermittedIndividuals}
+            setAllOtherPermittedIndividuals={setAllOtherPermittedIndividuals}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={addOtherIndividuals}>Add</Button>
         </Box>
       );
   }

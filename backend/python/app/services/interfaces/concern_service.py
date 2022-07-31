@@ -7,22 +7,20 @@ class IConcernService(ABC):
     """
 
     @abstractmethod
-    def get_familial_concern(self, familial_concern, type):
+    def get_familial_concern(self, familial_concern):
         """Get the id and concern for a familial_concern; if it doesn't exist, return None
 
         :param familial_concern: string of familial_concern
-        :param type: default string = "FAMILIAL_BEHAVIOUR"
         :return: ConcernDTO
         :rtype: ConcernDTO
         :raises Exception: if familial_concern is invalid
         """
         pass
 
-    def get_child_concern(self, child_concern, type):
+    def get_child_concern(self, child_concern):
         """Get the id and concern for a child_concern; if it doesn't exist, return None
 
         :param child_concern: string of child_concern
-        :param type: default string = "CHILD_BEHAVIOUR"
         :return: ConcernDTO
         :rtype: ConcernDTO
         :raises Exception: if child_concern is invalid

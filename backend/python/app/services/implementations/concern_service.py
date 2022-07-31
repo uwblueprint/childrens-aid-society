@@ -8,11 +8,11 @@ class ConcernService(IConcernService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_familial_concern(self, familial_concern, type="FAMILIAL_CONCERN"):
+    def get_familial_concern(self, familial_concern):
         try:
             familial_concern_upper = familial_concern.upper()
             familial_concern_entry = Concern.query.filter_by(
-                concern=familial_concern_upper, type=type
+                concern=familial_concern_upper, type="FAMILIAL_CONCERN",
             ).first()
             return (
                 ConcernDTO(
@@ -28,11 +28,11 @@ class ConcernService(IConcernService):
             self.logger.error(str(error))
             raise error
 
-    def get_child_concern(self, child_concern, type="CHILD_BEHAVIOUR"):
+    def get_child_concern(self, child_concern):
         try:
             child_concern_upper = child_concern.upper()
             child_concern_entry = Concern.query.filter_by(
-                concern=child_concern_upper, type=type
+                concern=child_concern_upper, type="CHILD_BEHAVIOUR",
             ).first()
             return (
                 ConcernDTO(

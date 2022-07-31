@@ -41,7 +41,10 @@ class CreateChildDTO(object):
             error_list.append("The date_of_birth supplied is invalid")
         if self.cpin_number and not type(self.cpin_number) == str:
             error_list.append("The cpin_number supplied is invalid")
-        if not self.child_service_worker_id or not type(self.child_service_worker_id) == int:
+        if (
+            not self.child_service_worker_id
+            or not type(self.child_service_worker_id) == int
+        ):
             error_list.append("The child_service_worker_id supplied is invalid")
         if not self.daytime_contact_id or not type(self.daytime_contact_id) == int:
             error_list.append("The daytime_contact_id supplied is invalid")

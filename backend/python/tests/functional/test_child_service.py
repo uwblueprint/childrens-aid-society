@@ -34,7 +34,7 @@ DUMMY_USER_DATA = {
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
-    "id":1,
+    "id": 1,
     "contact_first_name": "Hamza",
     "contact_last_name": "Yusuff",
     "phone_number": "8790832",
@@ -137,6 +137,7 @@ def test_empty_input_string(child_service):
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)
+
 
 def test_missing_field(child_service):
     param = CreateChildDTO(

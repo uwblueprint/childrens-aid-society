@@ -27,23 +27,14 @@ class IConcernService(ABC):
         """
         pass
 
-    def add_familial_concern(self, familial_concern):
+    def add_concern(self, type, concern):
         """Creates a new db object and returns the ConcernDTO if adding was successful
 
-        :param familial_concern: string of familial_concern
+        :param concern: string of concern
+        :param type: type of concern
         :return: ConcernDTO
         :rtype: ConcernDTO
-        :raises Exception: if familial_concern is invalid
-        """
-        pass
-
-    def add_child_concern(self, child_concern):
-        """Creates a new db object and returns the ConcernDTO if adding was successful
-
-        :param child_concern: string of child_concern
-        :return: ConcernDTO
-        :rtype: ConcernDTO
-        :raises Exception: if child_concern is invalid
+        :raises Exception: if concern is invalid/adding to database fails
         """
         pass
 

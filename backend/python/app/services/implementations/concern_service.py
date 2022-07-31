@@ -13,11 +13,15 @@ class ConcernService(IConcernService):
         try:
             familial_concern_upper = familial_concern.upper()
             familial_concern_entry = Concern.query.filter_by(
-                concern=familial_concern_upper
+                concern=familial_concern_upper,
+                type="FAMILIAL_CONCERN",
             ).first()
-
             return (
-                ConcernDTO(familial_concern_entry.id, familial_concern_entry.concern)
+                ConcernDTO(
+                    familial_concern_entry.id,
+                    familial_concern_entry.type,
+                    familial_concern_entry.concern,
+                )
                 if familial_concern_entry
                 else None
             )
@@ -30,11 +34,15 @@ class ConcernService(IConcernService):
         try:
             child_concern_upper = child_concern.upper()
             child_concern_entry = Concern.query.filter_by(
-                concern=child_concern_upper
+                concern=child_concern_upper,
+                type="CHILD_BEHAVIOUR",
             ).first()
-
             return (
-                ConcernDTO(child_concern_entry.id, child_concern_entry.concern)
+                ConcernDTO(
+                    child_concern_entry.id,
+                    child_concern_entry.type,
+                    child_concern_entry.concern,
+                )
                 if child_concern_entry
                 else None
             )
@@ -42,25 +50,15 @@ class ConcernService(IConcernService):
             self.logger.error(str(error))
             raise error
 
-    def add_familial_concern(self, familial_concern):
+    def add_concern(self, type, concern):
         try:
-            new_familial_concern_entry = Concern(concern=familial_concern.upper())
-            db.session.add(new_familial_concern_entry)
+            new_concern_entry = Concern(type=type.upper(), concern=concern.upper())
+            db.session.add(new_concern_entry)
             db.session.commit()
             return ConcernDTO(
-                new_familial_concern_entry.id, new_familial_concern_entry.concern
-            )
-        except Exception as error:
-            db.session.rollback()
-            raise error
-
-    def add_child_concern(self, child_concern):
-        try:
-            new_child_concern_entry = Concern(concern=child_concern.upper())
-            db.session.add(new_child_concern_entry)
-            db.session.commit()
-            return ConcernDTO(
-                new_child_concern_entry.id, new_child_concern_entry.concern
+                new_concern_entry.id,
+                new_concern_entry.type,
+                new_concern_entry.concern,
             )
         except Exception as error:
             db.session.rollback()

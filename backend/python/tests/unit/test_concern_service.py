@@ -46,8 +46,6 @@ DEFAULT_CONCERNS = (
 
 
 def seed_database():
-
-    
     concern_instance = [Concern(**data) for data in DEFAULT_CONCERNS]
     db.session.bulk_save_objects(concern_instance)
 
@@ -64,17 +62,16 @@ def test_get_child_concern_success(concern_service):
     assert res.concern == "MENTAL_HEALTH"
 
 
-# def test_add_familial_concern_success(concern_service):
-#     res = concern_service.add_concern("FAMILIAL_CONCERN", "ABUSE")
-#     assert type(res) is ConcernDTO
-#     assert Concern.query.get(res.id).concern == "ABUSE"
-#
-#
-# def test_add_child_concern_success(concern_service):
-#     res = concern_service.add_concern("CHILD_BEHAVIOUR", "TERROR")
-#     assert type(res) is ConcernDTO
-#     assert Concern.query.get(res.id).concern == "TERROR"
+def test_add_familial_concern_success(concern_service):
+    res = concern_service.add_concern("FAMILIAL_CONCERN", "ABUSE")
+    assert type(res) is ConcernDTO
+    assert Concern.query.get(res.id).concern == "ABUSE"
 
+
+def test_add_child_concern_success(concern_service):
+    res = concern_service.add_concern("CHILD_BEHAVIOUR", "TERROR")
+    assert type(res) is ConcernDTO
+    assert Concern.query.get(res.id).concern == "TERROR"
 
 def test_get_familial_concern_id_invalid_arg(concern_service):
     with pytest.raises(Exception):

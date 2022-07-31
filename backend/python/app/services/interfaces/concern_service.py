@@ -47,7 +47,7 @@ class IConcernService(ABC):
         """
         pass
 
-    def get_concerns_by_intake(self, intake_id, type=nil):
+    def get_concerns_by_intake(self, intake_id, type=None):
 
         """Get all the concerns from database that's tied to a given intake_id
 

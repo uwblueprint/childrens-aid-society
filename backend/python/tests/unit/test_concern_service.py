@@ -1,114 +1,96 @@
-# import pytest
-# from flask import current_app
+import pytest
+from flask import current_app
 
-# from app.models import db
-# from app.models.child_concern import ChildConcern
-# from app.models.familial_concern import FamilialConcern
-# from app.resources.concern_dto import ConcernDTO
-# from app.services.implementations.concern_service import ConcernService
-
-
-# @pytest.fixture
-# def concern_service():
-#     concern_service = ConcernService(current_app.logger)
-#     seed_database()
-#     yield concern_service
-#     ChildConcern.query.delete()
-#     FamilialConcern.query.delete()
+from app.models import db
+from app.models.concern import Concern
+from app.resources.concern_dto import ConcernDTO
+from app.services.implementations.concern_service import ConcernService
 
 
-# DEFAULT_FAMILIAL_CONCERNS = (
-#     {"concern": "FAMILY_CONFLICT"},
-#     {"concern": "DOMESTIC_VIOLENCE"},
-#     {"concern": "ISOLATION"},
-#     {"concern": "WEAPONS_IN_HOME"},
-#     {"concern": "CHILD_ABUSE"},
-#     {"concern": "CHILD_NEGLECT"},
-#     {"concern": "SEXUAL_ABUSE"},
-#     {"concern": "CHILD_BEHAVIORS"},
-#     {"concern": "SUBSTANCE_ABUSE"},
-#     {"concern": "MENTAL_HEALTH"},
-#     {"concern": "SUICIDE_ATTEMPTS"},
-#     {"concern": "PARENTING_SKILLS"},
-#     {"concern": "HOME_MANAGEMENT"},
-#     {"concern": "POVERTY"},
-#     {"concern": "DEVELOPMENTAL_DISABILITY"},
-#     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY"},
-# )
-# DEFAULT_CHILD_CONCERNS = (
-#     {"concern": "MENTAL_HEALTH"},
-#     {"concern": "RUNAWAY"},
-#     {"concern": "CHILD_BEHAVIORS"},
-#     {"concern": "SEXUAL_ABUSE"},
-#     {"concern": "DEVELOPMENTAL_DISABILITY"},
-#     {"concern": "SUBSTANCE_ABUSE"},
-#     {"concern": "TRUANCY_OR_SCHOOL_PROBLEMS"},
-#     {"concern": "SUICIDE_ATTEMPTS"},
-#     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY"},
-# )
-# # TODO: remove this step when migrations are configured to run against test db
+@pytest.fixture
+def concern_service():
+    concern_service = ConcernService(current_app.logger)
+    seed_database()
+    yield concern_service
+    Concern.query.delete()
 
 
-# def seed_database():
-#     child_concern_instance = [ChildConcern(**data) for data in DEFAULT_CHILD_CONCERNS]
-#     familial_concern_instance = [
-#         FamilialConcern(**data) for data in DEFAULT_FAMILIAL_CONCERNS
-#     ]
-#     db.session.bulk_save_objects(child_concern_instance)
-#     db.session.bulk_save_objects(familial_concern_instance)
+DEFAULT_CONCERNS = (
+    {"concern": "FAMILY_CONFLICT", "type": "FAMILIAL_CONCERN"},
+    {"concern": "DOMESTIC_VIOLENCE", "type": "FAMILIAL_CONCERN"},
+    {"concern": "ISOLATION", "type": "FAMILIAL_CONCERN"},
+    {"concern": "WEAPONS_IN_HOME", "type": "FAMILIAL_CONCERN"},
+    {"concern": "CHILD_ABUSE", "type": "FAMILIAL_CONCERN"},
+    {"concern": "CHILD_NEGLECT", "type": "FAMILIAL_CONCERN"},
+    {"concern": "SEXUAL_ABUSE", "type": "FAMILIAL_CONCERN"},
+    {"concern": "CHILD_BEHAVIORS", "type": "FAMILIAL_CONCERN"},
+    {"concern": "SUBSTANCE_ABUSE", "type": "FAMILIAL_CONCERN"},
+    {"concern": "MENTAL_HEALTH", "type": "FAMILIAL_CONCERN"},
+    {"concern": "SUICIDE_ATTEMPTS", "type": "FAMILIAL_CONCERN"},
+    {"concern": "PARENTING_SKILLS", "type": "FAMILIAL_CONCERN"},
+    {"concern": "HOME_MANAGEMENT", "type": "FAMILIAL_CONCERN"},
+    {"concern": "POVERTY", "type": "FAMILIAL_CONCERN"},
+    {"concern": "DEVELOPMENTAL_DISABILITY", "type": "FAMILIAL_CONCERN"},
+    {"concern": "MEDICAL_ILLNESS_OR_DISABILITY", "type": "FAMILIAL_CONCERN"},
+    {"concern": "MENTAL_HEALTH", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "RUNAWAY", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "CHILD_BEHAVIORS", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "SEXUAL_ABUSE", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "DEVELOPMENTAL_DISABILITY", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "SUBSTANCE_ABUSE", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "TRUANCY_OR_SCHOOL_PROBLEMS", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "SUICIDE_ATTEMPTS", "type": "CHILD_BEHAVIOUR"},
+    {"concern": "MEDICAL_ILLNESS_OR_DISABILITY", "type": "CHILD_BEHAVIOUR"},
+)
+# TODO: remove this step when migrations are configured to run against test db
 
 
-# def test_get_familial_concern_id_success(concern_service):
-#     res = concern_service.get_familial_concern("FAMILY_CONFLICT")
-#     assert type(res) is ConcernDTO
-#     assert res.concern == "FAMILY_CONFLICT"
+def seed_database():
+
+    
+    concern_instance = [Concern(**data) for data in DEFAULT_CONCERNS]
+    db.session.bulk_save_objects(concern_instance)
 
 
-# def test_get_child_concern_id_success(concern_service):
-#     res = concern_service.get_child_concern("MENTAL_HEALTH")
-#     assert type(res) is ConcernDTO
-#     assert res.concern == "MENTAL_HEALTH"
+def test_get_familial_concern_success(concern_service):
+    res = concern_service.get_familial_concern("FAMILY_CONFLICT")
+    assert type(res) is ConcernDTO
+    assert res.concern == "FAMILY_CONFLICT"
 
 
-# def test_add_familial_concern(concern_service):
-#     res = concern_service.add_familial_concern("TRAUMA")
-#     assert type(res) is ConcernDTO
-#     assert FamilialConcern.query.get(res.id).concern == "TRAUMA"
-
-
-# def test_add_child_concern(concern_service):
-#     res = concern_service.add_child_concern("PTSD")
-#     assert type(res) is ConcernDTO
-#     assert ChildConcern.query.get(res.id).concern == "PTSD"
+def test_get_child_concern_success(concern_service):
+    res = concern_service.get_child_concern("MENTAL_HEALTH")
+    assert type(res) is ConcernDTO
+    assert res.concern == "MENTAL_HEALTH"
 
 
 # def test_add_familial_concern_success(concern_service):
-#     res = concern_service.add_familial_concern("ABUSE")
+#     res = concern_service.add_concern("FAMILIAL_CONCERN", "ABUSE")
 #     assert type(res) is ConcernDTO
-#     assert FamilialConcern.query.get(res.id).concern == "ABUSE"
-
-
+#     assert Concern.query.get(res.id).concern == "ABUSE"
+#
+#
 # def test_add_child_concern_success(concern_service):
-#     res = concern_service.add_child_concern("TERROR")
+#     res = concern_service.add_concern("CHILD_BEHAVIOUR", "TERROR")
 #     assert type(res) is ConcernDTO
-#     assert ChildConcern.query.get(res.id).concern == "TERROR"
+#     assert Concern.query.get(res.id).concern == "TERROR"
 
 
-# def test_get_familial_concern_id_invalid_arg(concern_service):
-#     with pytest.raises(Exception):
-#         concern_service.get_familial_concern(3143)
+def test_get_familial_concern_id_invalid_arg(concern_service):
+    with pytest.raises(Exception):
+        concern_service.get_familial_concern(3143)
 
 
-# def test_get_child_concern_id_invalid_arg(concern_service):
-#     with pytest.raises(Exception):
-#         concern_service.get_child_concern(3143)
+def test_get_child_concern_id_invalid_arg(concern_service):
+    with pytest.raises(Exception):
+        concern_service.get_child_concern(3143)
 
 
-# def test_get_familial_concern_id_null_arg_raises_exception(concern_service):
-#     with pytest.raises(Exception):
-#         concern_service.get_familial_concern(None)
+def test_get_familial_concern_id_null_arg_raises_exception(concern_service):
+    with pytest.raises(Exception):
+        concern_service.get_familial_concern(None)
 
 
-# def test_get_child_concern_id_null_arg_raises_exception(concern_service):
-#     with pytest.raises(Exception):
-#         concern_service.get_child_concern(None)
+def test_get_child_concern_id_null_arg_raises_exception(concern_service):
+    with pytest.raises(Exception):
+        concern_service.get_child_concern(None)

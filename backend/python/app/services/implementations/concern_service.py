@@ -44,9 +44,7 @@ class ConcernService(IConcernService):
 
     def add_familial_concern(self, familial_concern):
         try:
-            new_familial_concern_entry = Concern(
-                concern=familial_concern.upper()
-            )
+            new_familial_concern_entry = Concern(concern=familial_concern.upper())
             db.session.add(new_familial_concern_entry)
             db.session.commit()
             return ConcernDTO(
@@ -70,9 +68,7 @@ class ConcernService(IConcernService):
 
     def get_concerns_by_intake(self, intake_id, type=None):
         try:
-            intake_instance = Intake.query.filter_by(
-                intake_id=intake_id
-            )
+            intake_instance = Intake.query.filter_by(intake_id=intake_id)
             if type:
                 concern_instance = Concern.query.filter_by(
                     id=intake_instance.concerns.concern_id, type=type

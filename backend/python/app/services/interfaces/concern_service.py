@@ -51,10 +51,9 @@ class IConcernService(ABC):
 
         """Get all the concerns from database that's tied to a given intake_id
 
-        :param intake_id:
-        :param type:
-        :return:
+        :param intake_id: int of Intake id
+        :param type: string specifying type of Concern
+        :return: ConcernDTOs
+        :rtype: list of ConcernDTO
+        :raises Exception: if intake_id is invalid
         """
-        return Concern
-        where
-        intake_id = intake_id and type = type if type

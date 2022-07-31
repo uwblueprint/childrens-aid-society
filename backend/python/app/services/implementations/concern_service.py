@@ -12,7 +12,8 @@ class ConcernService(IConcernService):
         try:
             familial_concern_upper = familial_concern.upper()
             familial_concern_entry = Concern.query.filter_by(
-                concern=familial_concern_upper, type="FAMILIAL_CONCERN",
+                concern=familial_concern_upper,
+                type="FAMILIAL_CONCERN",
             ).first()
             return (
                 ConcernDTO(
@@ -32,7 +33,8 @@ class ConcernService(IConcernService):
         try:
             child_concern_upper = child_concern.upper()
             child_concern_entry = Concern.query.filter_by(
-                concern=child_concern_upper, type="CHILD_BEHAVIOUR",
+                concern=child_concern_upper,
+                type="CHILD_BEHAVIOUR",
             ).first()
             return (
                 ConcernDTO(

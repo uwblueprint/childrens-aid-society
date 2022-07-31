@@ -34,6 +34,6 @@ class IConcernService(ABC):
         :param type: type of concern
         :return: ConcernDTO
         :rtype: ConcernDTO
-        :raises Exception: if concern is invalid
+        :raises Exception: if concern is invalid/adding to database fails
         """
         pass

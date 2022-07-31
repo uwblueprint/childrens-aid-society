@@ -30,7 +30,8 @@ class IConcernService(ABC):
     def add_concern(self, type, concern):
         """Creates a new db object and returns the ConcernDTO if adding was successful
 
-        :param concern: string of concern, type: type of concern
+        :param concern: string of concern
+        :param type: type of concern
         :return: ConcernDTO
         :rtype: ConcernDTO
         :raises Exception: if concern is invalid

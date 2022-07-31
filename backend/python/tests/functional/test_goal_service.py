@@ -17,17 +17,17 @@ def goal_service():
 
 ## These are fake goals for testing purposes
 DEFAULT_GOALS = {
-        long_term_goals,
-        [
-            {"goal": "Caregiver(s) encourage/allow child(ren) to demonstrate"},
-            {"goal": "Caregiver(s) encourage child(ren)"},
-        ],
-         short_term_goals,
-        [
-            {"goal": "Caregiver(s) attend consistently"},
-            {"goal": "Caregiver(s) attend sober"},
-        ],
-    }
+    long_term_goals,
+    [
+        {"goal": "Caregiver(s) encourage/allow child(ren) to demonstrate"},
+        {"goal": "Caregiver(s) encourage child(ren)"},
+    ],
+    short_term_goals,
+    [
+        {"goal": "Caregiver(s) attend consistently"},
+        {"goal": "Caregiver(s) attend sober"},
+    ],
+}
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():

@@ -15,7 +15,7 @@ def concern_service():
     Concern.query.delete()
 
 
-DEFAULT_FAMILIAL_CONCERNS = (
+DEFAULT_CONCERNS = (
     {"concern": "FAMILY_CONFLICT", "type": "FAMILIAL_CONCERN"},
     {"concern": "DOMESTIC_VIOLENCE", "type": "FAMILIAL_CONCERN"},
     {"concern": "ISOLATION", "type": "FAMILIAL_CONCERN"},
@@ -32,8 +32,6 @@ DEFAULT_FAMILIAL_CONCERNS = (
     {"concern": "POVERTY", "type": "FAMILIAL_CONCERN"},
     {"concern": "DEVELOPMENTAL_DISABILITY", "type": "FAMILIAL_CONCERN"},
     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY", "type": "FAMILIAL_CONCERN"},
-)
-DEFAULT_CHILD_CONCERNS = (
     {"concern": "MENTAL_HEALTH", "type": "CHILD_BEHAVIOUR"},
     {"concern": "RUNAWAY", "type": "CHILD_BEHAVIOUR"},
     {"concern": "CHILD_BEHAVIORS", "type": "CHILD_BEHAVIOUR"},
@@ -48,10 +46,8 @@ DEFAULT_CHILD_CONCERNS = (
 
 
 def seed_database():
-    child_concern_instance = [Concern(**data) for data in DEFAULT_CHILD_CONCERNS]
-    familial_concern_instance = [Concern(**data) for data in DEFAULT_FAMILIAL_CONCERNS]
-    db.session.bulk_save_objects(child_concern_instance)
-    db.session.bulk_save_objects(familial_concern_instance)
+    concern_instance = [Concern(**data) for data in DEFAULT_CONCERNS]
+    db.session.bulk_save_objects(concern_instance)
 
 
 def test_get_familial_concern_success(concern_service):

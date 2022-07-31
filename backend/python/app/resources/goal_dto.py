@@ -1,11 +1,11 @@
 class GoalDTO:
-    def __init__(self, id, goal):
+    def __init__(self, id, goal, type):
         self.id = id
         self.goal = goal.upper()
 
 
 class CreateGoalDTO:
-    def __init__(self, goal):
+    def __init__(self, goal, type):
         error = self.validate(goal)
         if error:
             raise Exception(error)

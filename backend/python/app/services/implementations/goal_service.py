@@ -8,25 +8,64 @@ class GoalService(IGoalService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_goal(self, goal):
+    def get_goals(self):
         try:
-            goal_upper = goal.upper()
-            goal_entry = Goal.query.filter_by(goal=goal_upper).first()
-
-            if goal_entry:
-                return GoalDTO(goal_entry.id, goal_entry.goal)
-            else:
-                return self.add_new_goal(goal_upper)
+            return [
+                GoalDTO(result.id, result.goal)
+                for result in Goal.query.all()
+            ]
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def add_new_goal(self, goal):
+    def get_short_term_goal(self, method):
+            try:
+                goal_upper = method.upper()
+                type = method.type()
+
+                goal = Goal.query.filter_by(
+                    goal=goal_upper
+                    type=type;
+                ).first()
+                if goal:
+                    return GoalDTO(
+                        goal.id,
+                        goal.goal,
+                    )
+                return None
+            except Exception as error:
+                self.logger.error(str(error))
+                raise error
+
+    def get_goal(self, method):
+            try:
+                goal_upper = method.upper()
+
+                goal = Goal.query.filter_by(
+                    goal=goal_upper
+                ).first()
+                if goal:
+                    return GoalDTO(
+                        goal.id,
+                        goal.goal,
+                    )
+                return None
+            except Exception as error:
+                self.logger.error(str(error))
+                raise error
+
+
+    def add_new_goal(self, goal, type):
         try:
-            new_goal_entry = Goal(goal=goal.upper())
-            db.session.add(new_goal_entry)
+            new_goal = Goal(
+                goal=goal.goal.upper()
+            )
+            db.session.add(new_goal)
             db.session.commit()
-            return GoalDTO(new_goal_entry.id, new_goal_entry.goal)
+            return GoalDTO(
+                new_goal.id,
+                new_goal.goal,
+            )
         except Exception as error:
             db.session.rollback()
             raise error

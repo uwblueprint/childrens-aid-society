@@ -25,6 +25,7 @@ DUMMY_INTAKE_DATA = {
 }
 
 DUMMY_USER_DATA = {
+    "id": 1,
     "first_name": "Hamza",
     "last_name": "Yusuff",
     "auth_id": "hbyusuff",
@@ -33,6 +34,7 @@ DUMMY_USER_DATA = {
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
+    "id":1,
     "contact_first_name": "Hamza",
     "contact_last_name": "Yusuff",
     "phone_number": "8790832",
@@ -52,17 +54,18 @@ def child_service():
     seed_database()
     yield child_service
     empty_database()
-    Child.query.delete()
 
 
 def seed_database():
     dummy_intake = Intake(**DUMMY_INTAKE_DATA)
     db.session.add(dummy_intake)
     db.session.commit()
+    print(dummy_intake.__dict__)
 
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
     db.session.commit()
+    print(dummy_user.__dict__)
 
     dummy_address = Address(**DUMMY_ADDRESS_DATA)
     db.session.add(dummy_address)
@@ -82,9 +85,7 @@ def empty_database():
     User.query.delete()
 
 
-def test_add_new_child_success(
-    child_service,
-):
+def test_add_new_child_valid(child_service):
     param = CreateChildDTO(
         intake_id=1,
         first_name="Test",
@@ -103,8 +104,48 @@ def test_add_new_child_success(
     assert child_instance.__dict__ == param.__dict__
 
 
-def test_add_new_child_failure(
-    child_service,
-):
+def test_nullable_false_case(child_service):
+    param = CreateChildDTO(
+        first_name="Test",
+        last_name="Child",
+        child_service_worker_id=1,
+        daytime_contact_id=1,
+        special_needs="None",
+        has_foster_placement=True,
+        has_kinship_provider=False,
+    )
+    child_instance = child_service.add_new_child(param)
+    param.id = child_instance.id
+    assert type(child_instance) is ChildDTO
+    assert child_instance.__dict__ == param.__dict__
+
+
+def test_null_case(child_service):
     with pytest.raises(Exception):
         child_service.add_new_child(None)
+
+
+def test_empty_input_string(child_service):
+    param = CreateChildDTO(
+        first_name="Test",
+        last_name="",
+        child_service_worker_id=1,
+        daytime_contact_id=1,
+        special_needs="None",
+        has_foster_placement=True,
+        has_kinship_provider=False,
+    )
+    with pytest.raises(Exception):
+        child_service.add_new_child(param)
+
+def test_missing_field(child_service):
+    param = CreateChildDTO(
+        last_name="Child",
+        child_service_worker_id=1,
+        daytime_contact_id=1,
+        special_needs="None",
+        has_foster_placement=True,
+        has_kinship_provider=False,
+    )
+    with pytest.raises(Exception):
+        child_service.add_new_child(param)

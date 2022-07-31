@@ -73,6 +73,7 @@ def test_add_child_concern_success(concern_service):
     assert type(res) is ConcernDTO
     assert Concern.query.get(res.id).concern == "TERROR"
 
+
 def test_get_familial_concern_id_invalid_arg(concern_service):
     with pytest.raises(Exception):
         concern_service.get_familial_concern(3143)

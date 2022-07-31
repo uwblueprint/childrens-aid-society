@@ -3,6 +3,7 @@ import { Dict } from "@chakra-ui/utils";
 
 import colors from "./colors";
 import textStyles from "./textStyles";
+import spacing from "./spacing";
 import { Button, FormLabel, Input, Select } from "./components";
 
 const customTheme = extendTheme({
@@ -21,6 +22,7 @@ const customTheme = extendTheme({
   },
   colors,
   textStyles,
+  spacing,
   components: {
     Button,
     FormLabel,

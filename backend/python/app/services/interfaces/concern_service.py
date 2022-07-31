@@ -46,3 +46,15 @@ class IConcernService(ABC):
         :raises Exception: if child_concern is invalid
         """
         pass
+
+    def get_concerns_by_intake(self, intake_id, type=nil):
+
+        """Get all the concerns from database that's tied to a given intake_id
+
+        :param intake_id:
+        :param type:
+        :return:
+        """
+        return Concern
+        where
+        intake_id = intake_id and type = type if type

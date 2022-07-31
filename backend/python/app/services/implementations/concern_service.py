@@ -67,3 +67,5 @@ class ConcernService(IConcernService):
         except Exception as error:
             db.session.rollback()
             raise error
+
+

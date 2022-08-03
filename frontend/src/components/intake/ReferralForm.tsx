@@ -8,7 +8,7 @@ import {
   Input,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
+import { Field } from "formik";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
@@ -20,119 +20,89 @@ export type ReferralDetails = {
   referringWorkerContact: string;
 };
 
-type ReferralFormProps = {
-  setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
-  nextStep: () => void;
-};
-
-const ReferralForm = ({
-  setReferralDetails,
-  nextStep,
-}: ReferralFormProps): React.ReactElement => {
-  const initialValues: ReferralDetails = {
-    referringWorker: "",
-    referringWorkerContact: "",
-    familyName: "",
-    referralDate: "",
-    cpinFileNumber: "",
-    cpinFileType: "",
-    phoneNumber: "",
-  };
-  const onSubmit = (values: ReferralDetails) => {
-    setReferralDetails(values);
-    nextStep();
-  };
-
+const ReferralForm = (): React.ReactElement => {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleChange }) => (
-        <Form style={{ padding: "0px 100px 30px 100px" }}>
-          <Heading textStyle="header-large">Referral Details</Heading>
-          <FormControl style={{ padding: "30px" }}>
-            <SimpleGrid columns={2} spacing="70px">
-              <Box>
-                <FormLabel
-                  htmlFor="referringWorker"
-                  style={{ marginTop: "0px" }}
-                >
-                  REFERRING WORKER
-                </FormLabel>
-                <Input
-                  id="referringWorker"
-                  name="referringWorker"
-                  type="string"
-                  placeholder="Enter name of worker..."
-                  onChange={handleChange}
-                />
-              </Box>
-              <Box>
-                <FormLabel
-                  htmlFor="referringWorkerContact"
-                  style={{ marginTop: "0px" }}
-                >
-                  REFERRING WORKER CONTACT
-                </FormLabel>
-                <Input
-                  name="referringWorkerContact"
-                  id="referringWorkerContact"
-                  type="string"
-                  placeholder="(ie. 223-2232-2323)"
-                  onChange={handleChange}
-                />
-              </Box>
-            </SimpleGrid>
-            <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
-            <Input
-              id="familyName"
-              name="familyName"
+    <Box style={{ padding: "0px 100px 30px 100px" }}>
+      <Heading textStyle="header-large">Referral Details</Heading>
+      <FormControl style={{ padding: "30px" }}>
+        <SimpleGrid columns={2} spacing="70px">
+          <Box>
+            <FormLabel htmlFor="referringWorker" style={{ marginTop: "0px" }}>
+              REFERRING WORKER
+            </FormLabel>
+            <Field
+              as={Input}
+              id="referringWorker"
+              name="referringWorker"
               type="string"
-              placeholder="Enter family name..."
-              onChange={handleChange}
+              placeholder="Enter name of worker..."
             />
-            <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
-            {/* TO DO : change to date picker */}
-            <Input
-              id="referralDate"
-              name="referralDate"
-              type="string"
-              placeholder="Select a date..."
-              onChange={handleChange}
-            />
-            <SimpleGrid columns={2} spacing="70px">
-              <Box>
-                <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
-                <Input
-                  id="cpinFileNumber"
-                  name="cpinFileNumber"
-                  type="string"
-                  placeholder="(ie. 123456789)"
-                  onChange={handleChange}
-                />
-              </Box>
-              <Box>
-                <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
-                <Input
-                  id="cpinFileType"
-                  name="cpinFileType"
-                  type="string"
-                  placeholder="Select a file type..."
-                  onChange={handleChange}
-                />
-              </Box>
-            </SimpleGrid>
-            <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
-            <Input
-              id="phoneNumber"
-              name="phoneNumber"
+          </Box>
+          <Box>
+            <FormLabel
+              htmlFor="referringWorkerContact"
+              style={{ marginTop: "0px" }}
+            >
+              REFERRING WORKER CONTACT
+            </FormLabel>
+            <Field
+              as={Input}
+              name="referringWorkerContact"
+              id="referringWorkerContact"
               type="string"
               placeholder="(ie. 223-2232-2323)"
-              onChange={handleChange}
             />
-          </FormControl>
-          <Button type="submit">Next Button</Button>
-        </Form>
-      )}
-    </Formik>
+          </Box>
+        </SimpleGrid>
+        <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
+        <Field
+          as={Input}
+          id="familyName"
+          name="familyName"
+          type="string"
+          placeholder="Enter family name..."
+        />
+        <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
+        {/* TO DO : change to date picker */}
+        <Field
+          as={Input}
+          id="referralDate"
+          name="referralDate"
+          type="string"
+          placeholder="Select a date..."
+        />
+        <SimpleGrid columns={2} spacing="70px">
+          <Box>
+            <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
+            <Field
+              as={Input}
+              id="cpinFileNumber"
+              name="cpinFileNumber"
+              type="string"
+              placeholder="(ie. 123456789)"
+            />
+          </Box>
+          <Box>
+            <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
+            <Field
+              as={Input}
+              id="cpinFileType"
+              name="cpinFileType"
+              type="string"
+              placeholder="Select a file type..."
+            />
+          </Box>
+        </SimpleGrid>
+        <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
+        <Field
+          as={Input}
+          id="phoneNumber"
+          name="phoneNumber"
+          type="string"
+          placeholder="(ie. 223-2232-2323)"
+        />
+      </FormControl>
+    </Box>
   );
 };
 

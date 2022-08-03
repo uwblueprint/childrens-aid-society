@@ -60,12 +60,10 @@ def seed_database():
     dummy_intake = Intake(**DUMMY_INTAKE_DATA)
     db.session.add(dummy_intake)
     db.session.commit()
-    print(dummy_intake.__dict__)
 
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
     db.session.commit()
-    print(dummy_user.__dict__)
 
     dummy_address = Address(**DUMMY_ADDRESS_DATA)
     db.session.add(dummy_address)

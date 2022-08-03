@@ -10,10 +10,10 @@ class ChildService(IChildService):
 
     def add_new_child(self, child):
         try:
-            if not isinstance(child, CreateChildDTO):
-                raise Exception("Child passed is not of CreateChildDTO type")
             if not child:
                 raise Exception("Empty child DTO/None passed to add_new_child function")
+            if not isinstance(child, CreateChildDTO):
+                raise Exception("Child passed is not of CreateChildDTO type")
             error_list = child.validate()
             if error_list:
                 raise Exception(error_list)

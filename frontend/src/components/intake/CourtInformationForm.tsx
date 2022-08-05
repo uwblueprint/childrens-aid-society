@@ -7,7 +7,7 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -17,23 +17,18 @@ export type CourtDetails = {
 };
 
 type CourtInformationFormProps = {
+  courtDetails: CourtDetails,
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   prevStep: () => void;
 };
 
 const CourtInformationForm = ({
+  courtDetails,
   setCourtDetails,
   nextStep,
   prevStep,
 }: CourtInformationFormProps): React.ReactElement => {
-  const initialValues: CourtDetails = {
-    currentCourtStatus: "",
-    firstNationHeritage: "",
-    firstNationBand: "",
-    orderReferral: null,
-  };
-
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef && inputRef.current) {
@@ -56,23 +51,23 @@ const CourtInformationForm = ({
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleSubmit, handleChange, setFieldValue }) => (
+    <Formik initialValues={courtDetails} onSubmit={onSubmit}>
+      {({ handleSubmit, setFieldValue }) => (
         <Form style={{ padding: "0px 100px 30px 100px" }}>
           <Heading textStyle="heading">Court Details</Heading>
           <FormControl style={{ padding: "30px" }}>
             <FormLabel pt="15px" htmlFor="currentCourtStatus">
               Current Court Status
             </FormLabel>
-            <Select
+            <Field
+              as={Select}
               id="currentCourtStatus"
               name="currentCourtStatus"
               placeholder="Select Status..."
-              onChange={handleChange}
             >
               <option>United Arab Emirates</option>
               <option>Nigeria</option>
-            </Select>
+            </Field>
           </FormControl>
           <FormControl>
             {/* TODO: store the uploaded file and save in backend */}
@@ -90,29 +85,29 @@ const CourtInformationForm = ({
             <FormLabel pt="15px" htmlFor="firstNationHeritage">
               First Nation Heritage
             </FormLabel>
-            <Select
+            <Field
               id="firstNationHeritage"
+              as={Select}
               name="firstNationHeritage"
               placeholder="Select Heritage..."
-              onChange={handleChange}
             >
               <option>United Arab Emirates</option>
               <option>Nigeria</option>
-            </Select>
+            </Field>
           </FormControl>
           <FormControl style={{ padding: "30px" }}>
             <FormLabel pt="15px" htmlFor="firstNationBand">
               First Nation Band
             </FormLabel>
-            <Select
+            <Field
+              as={Select}
               id="firstNationBand"
               placeholder="Select Band..."
-              onChange={handleChange}
               name="firstNationBand"
             >
               <option>United Arab Emirates</option>
               <option>Nigeria</option>
-            </Select>
+            </Field>
           </FormControl>
           <Button
             onClick={() => {

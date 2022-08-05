@@ -9,7 +9,7 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 
 export type PermittedIndividualDetails = {
   firstName: string;
@@ -19,31 +19,25 @@ export type PermittedIndividualDetails = {
 };
 
 type PermittedIndividualFormProps = {
-  allOtherPermittedIndividuals: PermittedIndividualDetails[];
-  setAllOtherPermittedIndividuals: React.Dispatch<
-    React.SetStateAction<PermittedIndividualDetails[]>
+  permittedIndividualDetails: PermittedIndividualDetails;
+  setPermittedIndividualDetails: React.Dispatch<
+    React.SetStateAction<PermittedIndividualDetails>
   >;
   prevStep: () => void;
 };
 
 const PermittedIndividualsForm = ({
-  allOtherPermittedIndividuals,
-  setAllOtherPermittedIndividuals,
+  permittedIndividualDetails,
+  setPermittedIndividualDetails,
   prevStep,
 }: PermittedIndividualFormProps): React.ReactElement => {
-  const initialValues: PermittedIndividualDetails = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
-  };
   const onSubmit = (values: PermittedIndividualDetails) => {
-    setAllOtherPermittedIndividuals([...allOtherPermittedIndividuals, values]);
+    setPermittedIndividualDetails(values);
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleSubmit, handleChange }) => (
+    <Formik initialValues={permittedIndividualDetails} onSubmit={onSubmit}>
+      {({ handleSubmit }) => (
         <Form style={{ padding: "0px 100px 70px 100px" }}>
           <Heading textStyle="heading">Other Permitted Individuals</Heading>
           <FormControl style={{ padding: "30px" }}>
@@ -52,24 +46,24 @@ const PermittedIndividualsForm = ({
                 <FormLabel htmlFor="firstName" style={{ marginTop: "0px" }}>
                   FIRST NAME
                 </FormLabel>
-                <Input
+                <Field
+                  as={Input}
                   name="firstName"
                   id="firstName"
                   type="string"
                   placeholder="Enter name of worker..."
-                  onChange={handleChange}
                 />
               </Box>
               <Box>
                 <FormLabel htmlFor="lastName" style={{ marginTop: "0px" }}>
                   LAST NAME
                 </FormLabel>
-                <Input
+                <Field
+                  as={Input}
                   name="lastName"
                   id="lastName"
                   type="string"
                   placeholder="Enter name of worker..."
-                  onChange={handleChange}
                 />
               </Box>
             </SimpleGrid>
@@ -78,25 +72,25 @@ const PermittedIndividualsForm = ({
                 <FormLabel htmlFor="relationship">
                   RELATIONSHIP TO CHILD
                 </FormLabel>
-                <Select
+                <Field
+                  as={Select}
                   name="relationship"
                   placeholder="Choose relationship..."
                   id="relationship"
-                  onChange={handleChange}
                 >
                   <option value="Option 1">Option 1</option>
                   <option value="Option 2">Option 2</option>
                   <option value="Option 3">Option 3</option>
-                </Select>
+                </Field>
               </Box>
               <Box>
                 <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
-                <Input
+                <Field
+                  as={Input}
                   name="phoneNumber"
                   id="phoneNumber"
                   type="string"
                   placeholder="(ie. 223-2232-2323)"
-                  onChange={handleChange}
                 />
               </Box>
             </SimpleGrid>

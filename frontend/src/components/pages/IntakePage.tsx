@@ -26,9 +26,14 @@ const Intake = (): React.ReactElement => {
     orderReferral: null,
   });
   const [
-    allOtherPermittedIndividuals,
-    setAllOtherPermittedIndividuals,
-  ] = useState<PermittedIndividualDetails[]>([]);
+    permittedIndividualDetails,
+    setPermittedIndividualDetails,
+  ] = useState<PermittedIndividualDetails>({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    relationship: "",
+  });
 
   const nextStep = () => setStep(step + 1);
 
@@ -39,6 +44,7 @@ const Intake = (): React.ReactElement => {
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <ReferralForm
+            referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
           />
@@ -48,6 +54,7 @@ const Intake = (): React.ReactElement => {
       return (
         <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
           <CourtInformationForm
+            courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
             nextStep={nextStep}
             prevStep={prevStep}
@@ -58,8 +65,8 @@ const Intake = (): React.ReactElement => {
       return (
         <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <PermittedIndividualsForm
-            allOtherPermittedIndividuals={allOtherPermittedIndividuals}
-            setAllOtherPermittedIndividuals={setAllOtherPermittedIndividuals}
+            permittedIndividualDetails={permittedIndividualDetails}
+            setPermittedIndividualDetails={setPermittedIndividualDetails}
             prevStep={prevStep}
           />
         </Box>

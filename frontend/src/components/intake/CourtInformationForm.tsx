@@ -18,7 +18,7 @@ export type CourtDetails = {
 };
 
 type CourtInformationFormProps = {
-  courtDetails: CourtDetails,
+  courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   prevStep: () => void;
@@ -46,9 +46,7 @@ const CourtInformationForm = ({
     }
     setFieldValue("orderReferral", fileObj);
   };
-  const onSubmit = (values: CourtDetails) => {
-    setCourtDetails(values);
-  }
+  const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
   return (
     <Formik initialValues={courtDetails} onSubmit={onSubmit}>

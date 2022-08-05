@@ -31,9 +31,8 @@ const PermittedIndividualsForm = ({
   setPermittedIndividualDetails,
   prevStep,
 }: PermittedIndividualFormProps): React.ReactElement => {
-  const onSubmit = (values: PermittedIndividualDetails) => {
+  const onSubmit = (values: PermittedIndividualDetails) =>
     setPermittedIndividualDetails(values);
-  };
 
   return (
     <Formik initialValues={permittedIndividualDetails} onSubmit={onSubmit}>

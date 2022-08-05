@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Box,
   Button,
   FormControl,
   FormLabel,
@@ -38,7 +37,7 @@ const CourtInformationForm = ({
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void,
+    setFieldValue: (field: string, value: File) => void,
   ) => {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {

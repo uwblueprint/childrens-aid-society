@@ -53,7 +53,7 @@ const Intake = (): React.ReactElement => {
       );
     case 2:
       return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}

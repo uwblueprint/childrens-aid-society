@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, Box } from "@chakra-ui/react";
+import { Button, Text, Box, Input } from "@chakra-ui/react";
 
 const Home = (): React.ReactElement => {
   return (
@@ -60,6 +60,12 @@ const Home = (): React.ReactElement => {
       <Button variant="tertiary" disabled>
         Tertiary Disabled
       </Button>
+      <Box p="10px">
+        <Input placeholder="Text" />
+      </Box>
+      <Box p="10px">
+        <Input isInvalid placeholder="Text" />
+      </Box>
       <Box
         background="blue.500"
         width="100%"

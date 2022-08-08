@@ -15,7 +15,7 @@ def branch_service():
     Branch.query.delete()
 
 
-DEFAULT_BRANCH = {"branch": "ALGOMA"}
+DEFAULT_BRANCH = {"branch": "ALGOMA", "show_by_default": True}
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
@@ -31,7 +31,7 @@ def test_get_branch_id_success(branch_service):
 
 
 def test_add_new_branch(branch_service):
-    res = branch_service.add_new_branch("PICKERING")
+    res = branch_service.add_new_branch("PICKERING", True)
     assert type(res) is BranchDTO
     assert Branch.query.get(res.id).branch == "PICKERING"
 
@@ -54,6 +54,6 @@ def test_get_branch_null_arg_raises_exception(branch_service):
 def test_get_branches_success(branch_service):
     res = branch_service.get_branches()
     assert type(res) == list
-    assert len(res) == len(DEFAULT_BRANCH)
+    assert len(res) == len([DEFAULT_BRANCH])
     assert all(type(item) == BranchDTO for item in res)
     assert DEFAULT_BRANCH["branch"] == res[0].branch

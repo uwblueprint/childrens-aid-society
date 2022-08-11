@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Button, Icon, Text } from "@chakra-ui/react";
-import { ChevronDown, Cloud, Feather } from "react-feather";
 
 const Home = (): React.ReactElement => {
   return (
@@ -88,10 +87,6 @@ const Home = (): React.ReactElement => {
       <Box background="orange.400" margin="space.2">
         Test Spacing 2 (0.5 rem)
       </Box>
-    </div>
-      <Icon as={Feather} />
-      <Icon as={Cloud} />
-      <Icon as={ChevronDown} />
     </Box>
   );
 };

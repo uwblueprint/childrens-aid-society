@@ -24,7 +24,7 @@ const Input: ComponentStyleConfig = {
           background: "gray.100",
         },
         _focus: {
-          background: "#gray.100",
+          background: "gray.100",
           border: "1px solid #5D5E67",
         },
         _invalid: {

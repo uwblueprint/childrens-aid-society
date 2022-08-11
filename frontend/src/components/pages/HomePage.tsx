@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
 import { ChevronDown, Cloud, Feather } from "react-feather";
 
-
 const Home = (): React.ReactElement => {
   return (
     <Box style={{ textAlign: "center", paddingTop: "20px" }}>

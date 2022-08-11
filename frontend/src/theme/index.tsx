@@ -5,7 +5,8 @@ import colors from "./colors";
 import textStyles from "./textStyles";
 import space from "./spacing";
 import Button from "./buttonStyles";
-import { FormLabel, Input, Select } from "./components";
+import Input from "./inputStyles";
+import { FormLabel, Select } from "./components";
 
 const customTheme = extendTheme({
   styles: {

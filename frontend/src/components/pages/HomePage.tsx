@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 const Home = (): React.ReactElement => {
   return (

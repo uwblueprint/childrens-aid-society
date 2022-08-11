@@ -12,7 +12,7 @@ class TransportationMethodService(ITransportationMethodService):
         try:
             return [
                 TransportationMethodDTO(
-                    result.id, result.transportation_method, result.show_by_default
+                    result.id, result.transportation_method, result.is_default
                 )
                 for result in TransportationMethod.query.all()
             ]
@@ -31,25 +31,25 @@ class TransportationMethodService(ITransportationMethodService):
                 return TransportationMethodDTO(
                     transportation_method.id,
                     transportation_method.transportation_method,
-                    transportation_method.show_by_default,
+                    transportation_method.is_default,
                 )
             return None
         except Exception as error:
             self.logger.error(str(error))
             raise error
 
-    def add_new_transportation_method(self, transportation_method, show_by_default):
+    def add_new_transportation_method(self, transportation_method, is_default):
         try:
             new_transportation_method = TransportationMethod(
                 transportation_method=transportation_method.transportation_method.upper(),
-                show_by_default=show_by_default,
+                is_default=is_default,
             )
             db.session.add(new_transportation_method)
             db.session.commit()
             return TransportationMethodDTO(
                 new_transportation_method.id,
                 new_transportation_method.transportation_method,
-                new_transportation_method.show_by_default,
+                new_transportation_method.is_default,
             )
         except Exception as error:
             db.session.rollback()

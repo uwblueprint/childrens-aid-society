@@ -15,7 +15,7 @@ def branch_service():
     Branch.query.delete()
 
 
-DEFAULT_BRANCH = {"branch": "ALGOMA", "show_by_default": True}
+DEFAULT_BRANCH = {"branch": "ALGOMA", "is_default": True}
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():

@@ -18,9 +18,9 @@ def transport_method_service():
 
 
 DEFAULT_TRANSPORTATION_METHODS = (
-    {"transportation_method": "AGENCY DRIVER", "show_by_default": True},
-    {"transportation_method": "KIN PROVIDER", "show_by_default": True},
-    {"transportation_method": "FOSTER PARENT", "show_by_default": True},
+    {"transportation_method": "AGENCY DRIVER", "is_default": True},
+    {"transportation_method": "KIN PROVIDER", "is_default": True},
+    {"transportation_method": "FOSTER PARENT", "is_default": True},
 )
 
 

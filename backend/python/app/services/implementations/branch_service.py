@@ -11,7 +11,7 @@ class BranchService(IBranchService):
     def get_branches(self):
         try:
             return [
-                BranchDTO(result.id, result.branch, result.show_by_default)
+                BranchDTO(result.id, result.branch, result.is_default)
                 for result in Branch.query.all()
             ]
         except Exception as error:
@@ -25,7 +25,7 @@ class BranchService(IBranchService):
 
             if branch_entry:
                 return BranchDTO(
-                    branch_entry.id, branch_entry.branch, branch_entry.show_by_default
+                    branch_entry.id, branch_entry.branch, branch_entry.is_default
                 )
             else:
                 return None
@@ -33,17 +33,15 @@ class BranchService(IBranchService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_branch(self, branch, show_by_default):
+    def add_new_branch(self, branch, is_default):
         try:
-            new_branch_entry = Branch(
-                branch=branch.upper(), show_by_default=show_by_default
-            )
+            new_branch_entry = Branch(branch=branch.upper(), is_default=is_default)
             db.session.add(new_branch_entry)
             db.session.commit()
             return BranchDTO(
                 new_branch_entry.id,
                 new_branch_entry.branch,
-                new_branch_entry.show_by_default,
+                new_branch_entry.is_default,
             )
         except Exception as error:
             db.session.rollback()

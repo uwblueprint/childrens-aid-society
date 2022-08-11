@@ -7,4 +7,4 @@ class Branch(db.Model, BaseMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     branch = db.Column(db.String, nullable=False)
-    show_by_default = db.Column(db.Boolean, nullable=False, default=False)
+    is_default = db.Column(db.Boolean, nullable=False, default=False)

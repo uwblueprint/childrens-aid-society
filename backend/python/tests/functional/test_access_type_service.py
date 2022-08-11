@@ -16,10 +16,10 @@ def access_type_service():
 
 
 DEFAULT_ACCESS_TYPES = [
-    {"access_type": "TWICE_WEEKLY"},
-    {"access_type": "WEEKLY_ANY_TIME"},
-    {"access_type": "WEEKLY_AFTER_SCHOOL"},
-    {"access_type": "VIRTUAL"},
+    {"access_type": "TWICE_WEEKLY", "is_default": False},
+    {"access_type": "WEEKLY_ANY_TIME", "is_default": False},
+    {"access_type": "WEEKLY_AFTER_SCHOOL", "is_default": False},
+    {"access_type": "VIRTUAL", "is_default": False},
 ]
 
 # TODO: remove this step when migrations are configured to run against test db
@@ -36,7 +36,7 @@ def test_get_access_type_id_success(access_type_service):
 
 
 def test_add_new_access_type(access_type_service):
-    res = access_type_service.add_new_access_type("MONTHLY")
+    res = access_type_service.add_new_access_type("MONTHLY", True)
     assert type(res) is AccessTypeDTO
     assert AccessType.query.get(res.id).access_type == "MONTHLY"
 

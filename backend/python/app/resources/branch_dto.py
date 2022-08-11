@@ -1,5 +1,5 @@
 class BranchDTO:
-    def __init__(self, id, branch, show_by_default):
+    def __init__(self, id, branch, is_default=False):
         self.id = id
         self.branch = branch.upper()
-        self.show_by_default = show_by_default
+        self.is_default = is_default

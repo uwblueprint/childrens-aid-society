@@ -1,5 +1,5 @@
 class TransportationMethodDTO:
-    def __init__(self, id, transportation_method, show_by_default):
+    def __init__(self, id, transportation_method, is_default=False):
         self.id = id
         self.transportation_method = transportation_method.upper()
-        self.show_by_default = show_by_default
+        self.is_default = is_default

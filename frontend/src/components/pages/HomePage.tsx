@@ -1,9 +1,11 @@
 import React from "react";
-import { Button, Text, Box, Input } from "@chakra-ui/react";
+import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
+import { ChevronDown, Cloud, Feather } from "react-feather";
+
 
 const Home = (): React.ReactElement => {
   return (
-    <div style={{ textAlign: "center", paddingTop: "20px" }}>
+    <Box style={{ textAlign: "center", paddingTop: "20px" }}>
       <Text
         style={{
           marginBottom: "50px",
@@ -84,7 +86,10 @@ const Home = (): React.ReactElement => {
         p="25px"
         borderRadius="0 0 5px 5px"
       />
-    </div>
+      <Icon as={Feather} />
+      <Icon as={Cloud} />
+      <Icon as={ChevronDown} />
+    </Box>
   );
 };
 

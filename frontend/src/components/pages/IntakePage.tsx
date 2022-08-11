@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -34,20 +34,10 @@ const Intake = (): React.ReactElement => {
     phoneNumber: "",
     relationship: "",
   });
-  const [
-    allOtherPermittedIndividuals,
-    setAllOtherPermittedIndividuals,
-  ] = useState<PermittedIndividualDetails[]>([]);
 
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
-
-  const addOtherIndividuals = () =>
-    setAllOtherPermittedIndividuals([
-      ...allOtherPermittedIndividuals,
-      permittedIndividualDetails,
-    ]);
 
   switch (step) {
     case 1:
@@ -56,10 +46,8 @@ const Intake = (): React.ReactElement => {
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
           />
-          <Button variant="tertiary" onClick={nextStep}>
-            Next Button
-          </Button>
         </Box>
       );
     case 2:
@@ -68,9 +56,9 @@ const Intake = (): React.ReactElement => {
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     default:
@@ -79,11 +67,8 @@ const Intake = (): React.ReactElement => {
           <PermittedIndividualsForm
             permittedIndividualDetails={permittedIndividualDetails}
             setPermittedIndividualDetails={setPermittedIndividualDetails}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button disabled onClick={addOtherIndividuals}>
-            Add
-          </Button>
         </Box>
       );
   }

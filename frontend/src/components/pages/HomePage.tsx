@@ -1,9 +1,10 @@
 import React from "react";
-import { Text, Box } from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { ChevronDown, Cloud, Feather } from "react-feather";
 
 const Home = (): React.ReactElement => {
   return (
-    <div style={{ textAlign: "center", paddingTop: "20px" }}>
+    <Box style={{ textAlign: "center", paddingTop: "20px" }}>
       <Text
         style={{
           marginBottom: "50px",
@@ -48,6 +49,18 @@ const Home = (): React.ReactElement => {
       <Text style={{ margin: "10px" }} textStyle="label">
         label
       </Text>
+      <Button variant="primary">Primary</Button>
+      <Button variant="primary" disabled>
+        Primary Disabled
+      </Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="secondary" disabled>
+        Secondary Disabled
+      </Button>
+      <Button variant="tertiary">Tertiary</Button>
+      <Button variant="tertiary" disabled>
+        Tertiary Disabled
+      </Button>
       <Box
         background="blue.500"
         width="100%"
@@ -76,6 +89,10 @@ const Home = (): React.ReactElement => {
         Test Spacing 2 (0.5 rem)
       </Box>
     </div>
+      <Icon as={Feather} />
+      <Icon as={Cloud} />
+      <Icon as={ChevronDown} />
+    </Box>
   );
 };
 

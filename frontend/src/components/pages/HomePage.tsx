@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
+import { ChevronDown, Cloud, Feather } from "react-feather";
 
 const Home = (): React.ReactElement => {
   return (
@@ -84,6 +85,7 @@ const Home = (): React.ReactElement => {
         p="25px"
         borderRadius="0 0 5px 5px"
       />
+      <Icon as={Feather} />
       <Box background="pink.400" margin={20}>
         Test Spacing 20 (12 rem)
       </Box>

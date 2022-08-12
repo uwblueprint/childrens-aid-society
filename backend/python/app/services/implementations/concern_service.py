@@ -71,12 +71,16 @@ class ConcernService(IConcernService):
                 # concern_instance = Concern.query.filter_by(
                 #     id=intake_instance.concerns.concern_id, type=type,
                 # )
-                concern_instance = Concern.query.filter(Concern.intakes.any(id=intake_id, type=type)).all()
+                concern_instance = Concern.query.filter(
+                    Concern.intakes.any(id=intake_id, type=type)
+                ).all()
             else:
                 # concern_instance = Concern.query.filter_by(
                 #     id=intake_instance.concerns,
                 # )
-                concern_instance = Concern.query.filter(Concern.intakes.any(id=intake_id)).all()
+                concern_instance = Concern.query.filter(
+                    Concern.intakes.any(id=intake_id)
+                ).all()
             concerns = []
             for concern in concern_instance:
                 concern.append(

@@ -1,4 +1,5 @@
 import sqlalchemy.dialects.postgresql as pg
+
 from . import db
 from .base_mixin import BaseMixin
 

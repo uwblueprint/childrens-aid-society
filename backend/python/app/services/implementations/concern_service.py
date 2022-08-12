@@ -66,15 +66,17 @@ class ConcernService(IConcernService):
 
     def get_concerns_by_intake(self, intake_id, type=None):
         try:
-            intake_instance = Intake.query.filter_by(intake_id=intake_id)
+            intake_instance = Intake.query.filter_by(id=intake_id)
             if type:
-                concern_instance = Concern.query.filter_by(
-                    id=intake_instance.concerns.concern_id, type=type
-                )
+                # concern_instance = Concern.query.filter_by(
+                #     id=intake_instance.concerns.concern_id, type=type,
+                # )
+                concern_instance = Concern.query.filter(Concern.intakes.any(id=intake_id, type=type)).all()
             else:
-                concern_instance = Concern.query.filter_by(
-                    intake_id=intake_id,
-                )
+                # concern_instance = Concern.query.filter_by(
+                #     id=intake_instance.concerns,
+                # )
+                concern_instance = Concern.query.filter(Concern.intakes.any(id=intake_id)).all()
             concerns = []
             for concern in concern_instance:
                 concern.append(

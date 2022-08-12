@@ -3,6 +3,7 @@ from flask import current_app
 
 from app.models import db
 from app.models.concern import Concern
+from app.models.intake import Intake
 from app.resources.concern_dto import ConcernDTO
 from app.services.implementations.concern_service import ConcernService
 
@@ -13,6 +14,7 @@ def concern_service():
     seed_database()
     yield concern_service
     Concern.query.delete()
+    Intake.query.delete()
 
 
 DEFAULT_CONCERNS = (
@@ -29,7 +31,6 @@ DEFAULT_CONCERNS = (
     {"concern": "SUICIDE_ATTEMPTS", "type": "FAMILIAL_CONCERN"},
     {"concern": "PARENTING_SKILLS", "type": "FAMILIAL_CONCERN"},
     {"concern": "HOME_MANAGEMENT", "type": "FAMILIAL_CONCERN"},
-    {"concern": "POVERTY", "type": "FAMILIAL_CONCERN"},
     {"concern": "DEVELOPMENTAL_DISABILITY", "type": "FAMILIAL_CONCERN"},
     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY", "type": "FAMILIAL_CONCERN"},
     {"concern": "MENTAL_HEALTH", "type": "CHILD_BEHAVIOUR"},
@@ -43,11 +44,24 @@ DEFAULT_CONCERNS = (
     {"concern": "MEDICAL_ILLNESS_OR_DISABILITY", "type": "CHILD_BEHAVIOUR"},
 )
 # TODO: remove this step when migrations are configured to run against test db
+dummy_familial_intake_data = {"concern": "POVERTY", "type": "FAMILIAL_CONCERN"}
 
 
 def seed_database():
     concern_instance = [Concern(**data) for data in DEFAULT_CONCERNS]
     db.session.bulk_save_objects(concern_instance)
+    familial_concern_intake_instance = Concern(**dummy_familial_intake_data)
+    familial_intake = Intake(id=2)
+    familial_intake.concerns.append(familial_concern_intake_instance)
+    db.session.add(familial_concern_intake_instance)
+    db.session.add(familial_concern_intake_instance)
+    db.session.commit()
+
+
+def test_get_familial_concern_by_intake_id_success(concern_service):
+    res = concern_service.get_concerns_by_intake(2)
+    assert type(res) is ConcernDTO
+    assert res.concern == "FAMILY_CONFLICT"
 
 
 def test_get_familial_concern_success(concern_service):

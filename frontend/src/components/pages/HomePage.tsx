@@ -86,6 +86,8 @@ const Home = (): React.ReactElement => {
         borderRadius="0 0 5px 5px"
       />
       <Icon as={Feather} />
+      <Icon as={Cloud} />
+      <Icon as={ChevronDown} />
       <Box background="pink.400" margin={20}>
         Test Spacing 20 (12 rem)
       </Box>

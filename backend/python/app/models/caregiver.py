@@ -8,6 +8,9 @@ relationship_to_child_enum = db.Enum(
     "FOSTER_MOM",
     "FOSTER_DAD",
     "GRANDPARENT",
+    "FOSTER CAREGIVER",
+    "KINSHIP CAREGIVER",
+    "BIOLOGICAL FAMILY",
     name="caregivers_relationship_to_child",
 )
 

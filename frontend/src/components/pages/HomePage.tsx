@@ -97,6 +97,10 @@ const Home = (): React.ReactElement => {
       <Box background="orange.400" margin={2}>
         Test Spacing 2 (0.5 rem)
       </Box>
+      <Box bg="red.200" w={{ sm: 300, md: 400, base: 500 }}>
+        Breakpoint Box - Under 29em=300px width, 30em-53em=400px width, above
+        54=500px
+      </Box>
     </Box>
   );
 };

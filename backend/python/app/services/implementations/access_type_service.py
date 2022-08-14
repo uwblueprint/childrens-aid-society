@@ -36,7 +36,7 @@ class AccessTypeService(IAccessTypeService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_access_type(self, access_type, is_default):
+    def add_new_access_type(self, access_type, is_default=False):
         try:
             new_access_type_entry = AccessType(
                 access_type=access_type.upper(), is_default=is_default

@@ -16,10 +16,10 @@ def access_type_service():
 
 
 DEFAULT_ACCESS_TYPES = [
-    {"access_type": "TWICE_WEEKLY", "is_default": False},
-    {"access_type": "WEEKLY_ANY_TIME", "is_default": False},
-    {"access_type": "WEEKLY_AFTER_SCHOOL", "is_default": False},
-    {"access_type": "VIRTUAL", "is_default": False},
+    {"access_type": "TWICE_WEEKLY", "is_default": True},
+    {"access_type": "WEEKLY_ANY_TIME", "is_default": True},
+    {"access_type": "WEEKLY_AFTER_SCHOOL", "is_default": True},
+    {"access_type": "VIRTUAL", "is_default": True},
 ]
 
 # TODO: remove this step when migrations are configured to run against test db

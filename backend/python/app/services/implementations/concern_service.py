@@ -51,7 +51,7 @@ class ConcernService(IConcernService):
             self.logger.error(str(error))
             raise error
 
-    def add_concern(self, type, concern, is_default):
+    def add_concern(self, type, concern, is_default=False):
         try:
             new_concern_entry = Concern(
                 type=type.upper(),

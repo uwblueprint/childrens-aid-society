@@ -33,7 +33,7 @@ class BranchService(IBranchService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_branch(self, branch, is_default):
+    def add_new_branch(self, branch, is_default=False):
         try:
             new_branch_entry = Branch(branch=branch.upper(), is_default=is_default)
             db.session.add(new_branch_entry)

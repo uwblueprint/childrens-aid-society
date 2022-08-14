@@ -38,7 +38,7 @@ class TransportationMethodService(ITransportationMethodService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_transportation_method(self, transportation_method, is_default):
+    def add_new_transportation_method(self, transportation_method, is_default=False):
         try:
             new_transportation_method = TransportationMethod(
                 transportation_method=transportation_method.transportation_method.upper(),

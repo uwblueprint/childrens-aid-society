@@ -5,9 +5,9 @@ import {
   FormLabel,
   Heading,
   Select,
-  Input,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import CustomInput from "../common/CustomInput";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -34,6 +34,7 @@ const CourtInformationForm = ({
     if (inputRef && inputRef.current) {
       inputRef.current.click();
     }
+     console.log('input', inputRef);
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -68,11 +69,13 @@ const CourtInformationForm = ({
           </FormControl>
           <FormControl>
             {/* TODO: store the uploaded file and save in backend */}
-            <Input
+            <CustomInput
               style={{ display: "none" }}
               type="file"
               ref={inputRef}
-              onChange={(e) => handleFileChange(e, setFieldValue)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFileChange(e, setFieldValue)
+              }
               id="orderReferral"
               name="orderReferral"
             />

@@ -34,7 +34,6 @@ const CourtInformationForm = ({
     if (inputRef && inputRef.current) {
       inputRef.current.click();
     }
-     console.log('input', inputRef);
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,

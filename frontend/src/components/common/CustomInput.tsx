@@ -2,8 +2,8 @@ import { InputGroup, Input, InputLeftElement } from "@chakra-ui/react";
 import React from "react";
 
 type CustomInputProps = {
-  icon?: any;
-  [x: string]: any;
+  icon?: JSX.Element;
+  [x: string]: unknown;
 };
 
 const CustomInput = React.forwardRef(

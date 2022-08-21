@@ -1,28 +1,21 @@
 import React from "react";
 import {
   Box,
-  Button,
-  FormControl,
-  FormLabel,
   Heading,
-  Select,
-  Input,
   Text,
 } from "@chakra-ui/react";
 
-
 export type IntakeHeaderText = {
-  biggerMainTitle: string,
-  smallerTopTitle: string,
+  biggerMainTitle: string;
+  smallerTopTitle: string;
 };
 
 export type IntakeHeaderProps = {
   intakeHeaderText: IntakeHeaderText;
 };
 
-
 const IntakeHeader = ({
-  intakeHeaderText
+  intakeHeaderText,
 }: IntakeHeaderProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {

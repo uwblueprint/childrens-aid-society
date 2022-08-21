@@ -7,9 +7,15 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {
   PermittedIndividualDetails,
 } from "../intake/PermittedIndividualsForm";
+import IntakeHeader, { IntakeHeaderText } from "../intake/IntakeHeader";
+
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
+  const [intakeHeaderText, setIntakeHeaderText] = useState<IntakeHeaderText>({
+    biggerMainTitle: "Initate New Case",
+    smallerTopTitle: "Case Management",
+  });
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -49,6 +55,7 @@ const Intake = (): React.ReactElement => {
       permittedIndividualDetails,
     ]);
 
+  const renderDetailsForm = () => {
   switch (step) {
     case 1:
       return (
@@ -83,6 +90,13 @@ const Intake = (): React.ReactElement => {
         </Box>
       );
   }
+};
+return(
+  <>
+  <IntakeHeader intakeHeaderText={intakeHeaderText}/>
+  {renderDetailsForm()}
+  </>
+)
 };
 
 export default Intake;

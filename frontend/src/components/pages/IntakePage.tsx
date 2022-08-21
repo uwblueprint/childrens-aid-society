@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -41,12 +41,13 @@ const Intake = (): React.ReactElement => {
     relationship: "",
   });
 
-
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
 
+
   const renderDetailsForm = () => {
+
   switch (step) {
     case 1:
       return (
@@ -54,19 +55,19 @@ const Intake = (): React.ReactElement => {
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
           />
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     case 2:
       return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
         </Box>
       );
     default:
@@ -75,9 +76,8 @@ const Intake = (): React.ReactElement => {
           <PermittedIndividualsForm
             permittedIndividualDetails={permittedIndividualDetails}
             setPermittedIndividualDetails={setPermittedIndividualDetails}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={addOtherIndividuals}>Add</Button>
         </Box>
       );
   }

@@ -129,18 +129,24 @@ def test_add_child_concern_success(concern_service):
     assert type(res) is ConcernDTO
     assert Concern.query.get(res.id).concern == "TERROR"
 
+
 def test_get_all_child_concerns_success(concern_service):
     res = concern_service.get_all_concerns("child_behaviour")
     assert type(res) == list
-    child_concerns = [item for item in DEFAULT_CONCERNS if item["type"] == "CHILD_BEHAVIOUR"]
+    child_concerns = [
+        item for item in DEFAULT_CONCERNS if item["type"] == "CHILD_BEHAVIOUR"
+    ]
     assert len(res) == len(child_concerns)
     assert all(type(item) == ConcernDTO for item in res)
     assert all(item.type == "CHILD_BEHAVIOUR" for item in res)
 
+
 def test_get_all_familial_concerns_success(concern_service):
     res = concern_service.get_all_concerns("familial_concern")
     assert type(res) == list
-    familial_concerns = [item for item in DEFAULT_CONCERNS if item["type"] == "FAMILIAL_CONCERN"]
+    familial_concerns = [
+        item for item in DEFAULT_CONCERNS if item["type"] == "FAMILIAL_CONCERN"
+    ]
     assert len(res) == len(familial_concerns)
     assert all(type(item) == ConcernDTO for item in res)
     assert all(item.type == "FAMILIAL_CONCERN" for item in res)
@@ -164,6 +170,7 @@ def test_get_familial_concern_id_null_arg_raises_exception(concern_service):
 def test_get_child_concern_id_null_arg_raises_exception(concern_service):
     with pytest.raises(Exception):
         concern_service.get_child_concern(None)
+
 
 def test_get_concerns_nil_param_fails(concern_service):
     with pytest.raises(Exception):

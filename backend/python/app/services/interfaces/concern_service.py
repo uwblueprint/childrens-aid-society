@@ -39,6 +39,7 @@ class IConcernService(ABC):
         :raises Exception: if concern is invalid/adding to database fails
         """
         pass
+
     def get_all_concerns(self, type, is_default):
         """
         :param type: the type of concern
@@ -46,5 +47,5 @@ class IConcernService(ABC):
         :return: ConcernDTO
         :rtype: ConcernDTO
         :raises Exception: if type is invalid
-        
+
         """

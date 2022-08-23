@@ -69,20 +69,14 @@ class ConcernService(IConcernService):
         except Exception as error:
             db.session.rollback()
             raise error
-    
+
     def get_all_concerns(self, type, is_default=True):
         try:
             type_upper = type.upper()
             return [
-                ConcernDTO(
-                    result.id, 
-                    result.type, 
-                    result.concern, 
-                    result.is_default
-                )
+                ConcernDTO(result.id, result.type, result.concern, result.is_default)
                 for result in Concern.query.filter_by(
-                    type=type_upper,
-                    is_default=is_default
+                    type=type_upper, is_default=is_default
                 )
             ]
         except Exception as error:

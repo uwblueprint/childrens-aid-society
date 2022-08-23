@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Input,
   Select,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
@@ -68,8 +69,8 @@ const CourtInformationForm = ({
           </FormControl>
           <FormControl>
             {/* TODO: store the uploaded file and save in backend */}
-            <CustomInput
-              style={{ display: "none" }}
+            <Input
+              // style={{ display: "none" }}
               type="file"
               ref={inputRef}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

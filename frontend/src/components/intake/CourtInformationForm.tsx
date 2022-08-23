@@ -8,7 +8,6 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import CustomInput from "../common/CustomInput";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -70,7 +69,7 @@ const CourtInformationForm = ({
           <FormControl>
             {/* TODO: store the uploaded file and save in backend */}
             <Input
-              // style={{ display: "none" }}
+              style={{ display: "none" }}
               type="file"
               ref={inputRef}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

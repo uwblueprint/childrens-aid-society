@@ -19,11 +19,13 @@ class IBranchService(ABC):
         pass
 
     @abstractmethod
-    def add_new_branch(self, branch):
+    def add_new_branch(self, branch, is_default):
         """
         Adds the specified bvranch to the branch table and returns a BranchDTO of the new entry
         :param branch: the branch to be added
         :type branch: string
+        :param is_default: indicates whether or not the option is shown in the form by default
+        :type is_default: bool
         :return: BranchDTO
         :rtype: BranchDTO
         :raises Exception: if adding record to db fails

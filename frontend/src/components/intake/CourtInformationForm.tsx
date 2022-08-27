@@ -4,8 +4,8 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Select,
   Input,
+  Select,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 
@@ -72,7 +72,9 @@ const CourtInformationForm = ({
               style={{ display: "none" }}
               type="file"
               ref={inputRef}
-              onChange={(e) => handleFileChange(e, setFieldValue)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFileChange(e, setFieldValue)
+              }
               id="orderReferral"
               name="orderReferral"
             />

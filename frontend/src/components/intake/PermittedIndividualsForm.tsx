@@ -5,11 +5,11 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import CustomInput from "../common/CustomInput";
 
 export type PermittedIndividualDetails = {
   firstName: string;
@@ -46,7 +46,7 @@ const PermittedIndividualsForm = ({
                   FIRST NAME
                 </FormLabel>
                 <Field
-                  as={Input}
+                  as={CustomInput}
                   name="firstName"
                   id="firstName"
                   type="string"
@@ -58,7 +58,7 @@ const PermittedIndividualsForm = ({
                   LAST NAME
                 </FormLabel>
                 <Field
-                  as={Input}
+                  as={CustomInput}
                   name="lastName"
                   id="lastName"
                   type="string"
@@ -85,7 +85,7 @@ const PermittedIndividualsForm = ({
               <Box>
                 <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
                 <Field
-                  as={Input}
+                  as={CustomInput}
                   name="phoneNumber"
                   id="phoneNumber"
                   type="string"

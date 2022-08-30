@@ -3,12 +3,26 @@ import sqlalchemy.dialects.postgresql as pg
 from . import db
 from .base_mixin import BaseMixin
 
-court_status_enum = db.Enum("APPROVE", "INTERIM CARE", "FINAL ORDER FOR SOCIETY CARE", "EXTENDED SOCIETY CARE",
-                            "SUPERVISION ORDER", "KIN SERVICE PLACEMENT", "LIVING WITH BIO FAMILY", "OTHER",
-                            name="intakes_court_status")
+court_status_enum = db.Enum(
+    "APPROVE",
+    "INTERIM CARE",
+    "FINAL ORDER FOR SOCIETY CARE",
+    "EXTENDED SOCIETY CARE",
+    "SUPERVISION ORDER",
+    "KIN SERVICE PLACEMENT",
+    "LIVING WITH BIO FAMILY",
+    "OTHER",
+    name="intakes_court_status",
+)
 
-first_nation_heritage_enum = db.Enum("FIRST NATION REGISTERED", "ELIGIBLE FOR REGISTRATION", "INUIT", "METIS", "UNKNOWN",
-                                     name="intake_first_nation_heritage")
+first_nation_heritage_enum = db.Enum(
+    "FIRST NATION REGISTERED",
+    "ELIGIBLE FOR REGISTRATION",
+    "INUIT",
+    "METIS",
+    "UNKNOWN",
+    name="intake_first_nation_heritage",
+)
 
 intakes_access_weekday_enum = db.Enum(
     "MONDAY",

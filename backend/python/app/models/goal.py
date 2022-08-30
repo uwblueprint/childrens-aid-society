@@ -1,4 +1,4 @@
-import datetime
+from sqlalchemy import text
 
 from . import db
 from .base_mixin import BaseMixin
@@ -14,3 +14,6 @@ class Goal(db.Model, BaseMixin):
     goal = db.Column(db.String, nullable=False)
     start_date = db.Column(db.Date, nullable=True)
     end_date = db.Column(db.Date, nullable=True)
+    is_default = db.Column(
+        db.Boolean, nullable=False, default=False, server_default=text("False")
+    )

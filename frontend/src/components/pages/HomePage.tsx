@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { ChevronDown, Cloud, Feather } from "react-feather";
+import CustomInput from "../common/CustomInput";
 
 const Home = (): React.ReactElement => {
   return (
@@ -62,10 +63,14 @@ const Home = (): React.ReactElement => {
         Tertiary Disabled
       </Button>
       <Box p="10px">
-        <Input placeholder="Text" />
+        <CustomInput placeholder="Text" icon={<Icon as={Feather} />} />
       </Box>
       <Box p="10px">
-        <Input isInvalid placeholder="Text" />
+        <CustomInput
+          isInvalid
+          placeholder="Text"
+          icon={<Icon as={ChevronDown} />}
+        />
       </Box>
       <Box
         background="blue.500"
@@ -88,6 +93,15 @@ const Home = (): React.ReactElement => {
       <Icon as={Feather} />
       <Icon as={Cloud} />
       <Icon as={ChevronDown} />
+      <Box background="pink.400" margin={20}>
+        Test Spacing 20 (12 rem)
+      </Box>
+      <Box background="cyan.50" margin={8}>
+        Test Spacing 8 (2 rem)
+      </Box>
+      <Box background="orange.400" margin={2}>
+        Test Spacing 2 (0.5 rem)
+      </Box>
     </Box>
   );
 };

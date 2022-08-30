@@ -5,10 +5,10 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import CustomInput from "../common/CustomInput";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
@@ -47,7 +47,7 @@ const ReferralForm = ({
                 REFERRING WORKER
               </FormLabel>
               <Field
-                as={Input}
+                as={CustomInput}
                 id="referringWorker"
                 name="referringWorker"
                 type="string"
@@ -62,7 +62,7 @@ const ReferralForm = ({
                 REFERRING WORKER CONTACT
               </FormLabel>
               <Field
-                as={Input}
+                as={CustomInput}
                 name="referringWorkerContact"
                 id="referringWorkerContact"
                 type="string"
@@ -72,7 +72,7 @@ const ReferralForm = ({
           </SimpleGrid>
           <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
           <Field
-            as={Input}
+            as={CustomInput}
             id="familyName"
             name="familyName"
             type="string"
@@ -81,7 +81,7 @@ const ReferralForm = ({
           <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
           {/* TO DO : change to date picker */}
           <Field
-            as={Input}
+            as={CustomInput}
             id="referralDate"
             name="referralDate"
             type="string"
@@ -91,7 +91,7 @@ const ReferralForm = ({
             <Box>
               <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
               <Field
-                as={Input}
+                as={CustomInput}
                 id="cpinFileNumber"
                 name="cpinFileNumber"
                 type="string"
@@ -101,7 +101,7 @@ const ReferralForm = ({
             <Box>
               <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
               <Field
-                as={Input}
+                as={CustomInput}
                 id="cpinFileType"
                 name="cpinFileType"
                 type="string"
@@ -111,7 +111,7 @@ const ReferralForm = ({
           </SimpleGrid>
           <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
           <Field
-            as={Input}
+            as={CustomInput}
             id="phoneNumber"
             name="phoneNumber"
             type="string"

@@ -30,10 +30,12 @@ class ITransportationMethodService(ABC):
         pass
 
     @abstractmethod
-    def add_new_transportation_method(self, method):
+    def add_new_transportation_method(self, method, is_default):
         """Adds the specified method to the transportation_models table and returns a TransportationMethodDTO of the new entry
         :param transportation_method: transporation method to be added
         :type: string
+        :param is_default: indicates whether or not the option is shown in the form by default
+        :type is_default: bool
         :return: TransportationMethodDTO
         :rtype: TransportationMethodDTO
         :raises Exception: if adding to database fails

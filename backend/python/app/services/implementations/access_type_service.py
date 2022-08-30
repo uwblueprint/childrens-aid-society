@@ -36,13 +36,17 @@ class AccessTypeService(IAccessTypeService):
             self.logger.error(str(error))
             raise error
 
-    def add_new_access_type(self, access_type):
+    def add_new_access_type(self, access_type, is_default=False):
         try:
-            new_access_type_entry = AccessType(access_type=access_type.upper())
+            new_access_type_entry = AccessType(
+                access_type=access_type.upper(), is_default=is_default
+            )
             db.session.add(new_access_type_entry)
             db.session.commit()
             return AccessTypeDTO(
-                new_access_type_entry.id, new_access_type_entry.access_type
+                new_access_type_entry.id,
+                new_access_type_entry.access_type,
+                new_access_type_entry.is_default,
             )
         except Exception as error:
             db.session.rollback()

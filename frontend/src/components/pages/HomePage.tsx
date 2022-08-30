@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Button, Icon, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { ChevronDown, Cloud, Feather } from "react-feather";
+import CustomInput from "../common/CustomInput";
 
 const Home = (): React.ReactElement => {
   return (
@@ -62,10 +63,14 @@ const Home = (): React.ReactElement => {
         Tertiary Disabled
       </Button>
       <Box p="10px">
-        <Input placeholder="Text" />
+        <CustomInput placeholder="Text" icon={<Icon as={Feather} />} />
       </Box>
       <Box p="10px">
-        <Input isInvalid placeholder="Text" />
+        <CustomInput
+          isInvalid
+          placeholder="Text"
+          icon={<Icon as={ChevronDown} />}
+        />
       </Box>
       <Box
         background="blue.500"

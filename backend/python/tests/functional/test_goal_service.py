@@ -16,18 +16,15 @@ def goal_service():
 
 
 ## These are fake goals for testing purposes
-DEFAULT_GOALS = {
-    long_term_goals,
-    [
-        {"goal": "Caregiver(s) encourage/allow child(ren) to demonstrate"},
-        {"goal": "Caregiver(s) encourage child(ren)"},
-    ],
-    short_term_goals,
-    [
-        {"goal": "Caregiver(s) attend consistently"},
-        {"goal": "Caregiver(s) attend sober"},
-    ],
-}
+DEFAULT_GOALS = [
+    {
+        "goal": "Caregiver(s) encourage/allow child(ren) to demonstrate",
+        "type": "LONG_TERM",
+    },
+    {"goal": "Caregiver(s) encourage child(ren)", "type": "LONG_TERM"},
+    {"goal": "Caregiver(s) attend consistently", "type": "SHORT_TERM"},
+    {"goal": "Caregiver(s) attend sober", "type": "SHORT_TERM"},
+]
 
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
@@ -35,13 +32,33 @@ def seed_database():
     db.session.bulk_save_objects(goal_instances)
 
 
-def test_get_goal_fetches_existing_method(goal_service):
-    res = goal_service.get_goal("Caregiver(s) encourage/allow")
+def test_get_long_term_goal_fetches_existing_goal(goal_service):
+    res = goal_service.get_long_term_goal(
+        "Caregiver(s) encourage/allow child(ren) to demonstrate"
+    )
     assert type(res) is GoalDTO
-    assert res.goal == "Caregiver(s) encourage/allow"
+    assert res.goal == "Caregiver(s) encourage/allow child(ren) to demonstrate"
 
 
-def test_get_goal_success(goal_service):
+def test_get_long_term_goal_returns_none_for_nonexistent_goal(goal_service):
+    res = goal_service.get_long_term_goal("Caregiver(s) attend consistently")
+    assert res is None
+
+
+def test_get_short_term_goal_fetches_existing_goal(goal_service):
+    res = goal_service.get_short_term_goal("Caregiver(s) attend consistently")
+    assert type(res) is GoalDTO
+    assert res.goal == "Caregiver(s) attend consistently"
+
+
+def test_get_short_term_goal_returns_none_for_nonexistent_goal(goal_service):
+    res = goal_service.get_short_term_goal(
+        "Caregiver(s) encourage/allow child(ren) to demonstrate"
+    )
+    assert res is None
+
+
+def test_get_goals_success(goal_service):
     res = goal_service.get_goals()
     assert type(res) == list
     assert len(res) == len(DEFAULT_GOALS)

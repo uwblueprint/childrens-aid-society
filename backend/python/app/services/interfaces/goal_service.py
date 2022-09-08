@@ -7,8 +7,9 @@ class IGoalService(ABC):
     """
 
     @abstractmethod
-    def get_goals(self, goal):
-        """Get all goals in the database
+    def get_all_goals(self, type):
+        """Get all goals in the database based on type
+        :param type: string of type, either SHORT_TERM or LONG_TERM
         :return: List of goals in database
         :rtype: List of GoalDTOs
         :raises Exception: if goal is invalid

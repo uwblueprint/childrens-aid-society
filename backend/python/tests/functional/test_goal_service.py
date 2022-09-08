@@ -58,11 +58,23 @@ def test_get_short_term_goal_returns_none_for_nonexistent_goal(goal_service):
     assert res is None
 
 
-def test_get_goals_success(goal_service):
-    res = goal_service.get_goals()
+def test_get_all_long_term_goals_success(goal_service):
+    res = goal_service.get_all_goals("long_term")
+    long_term_goals = [item for item in DEFAULT_GOALS if item["type"] == "LONG_TERM"]
     assert type(res) == list
-    assert len(res) == len(DEFAULT_GOALS)
+    assert len(res) == len(long_term_goals)
     assert all(type(item) == GoalDTO for item in res)
-    goal_db = [entry["goal"] for entry in DEFAULT_GOALS]
+    goals_db = [entry["goal"] for entry in long_term_goals]
     goals_res = [item.goal for item in res]
-    assert set(goal_db) == set(goals_res)
+    assert set(goals_db) == set(goals_res)
+
+
+def test_get_all_short_term_goals_success(goal_service):
+    res = goal_service.get_all_goals("short_term")
+    short_term_goals = [item for item in DEFAULT_GOALS if item["type"] == "SHORT_TERM"]
+    assert type(res) == list
+    assert len(res) == len(short_term_goals)
+    assert all(type(item) == GoalDTO for item in res)
+    goals_db = [entry["goal"] for entry in short_term_goals]
+    goals_res = [item.goal for item in res]
+    assert set(goals_db) == set(goals_res)

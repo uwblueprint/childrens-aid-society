@@ -8,11 +8,12 @@ class GoalService(IGoalService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_goals(self):
+    def get_all_goals(self, type):
+        type_upper = type.upper()
         try:
             return [
                 GoalDTO(result.id, result.goal, result.type)
-                for result in Goal.query.all()
+                for result in Goal.query.filter_by(type=type_upper)
             ]
         except Exception as error:
             self.logger.error(str(error))

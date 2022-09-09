@@ -35,19 +35,31 @@ const Intake = (): React.ReactElement => {
     phoneNumber: "",
     relationship: "",
   });
-  const [intakeHeaderText] = useState<IntakeHeaderText>({
-    biggerMainTitle: "Initate New Case",
-    smallerTopTitle: "Case Management",
-  });
 
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
 
+  const intakeReferralText:IntakeHeaderText = {
+    primaryTitle: "Initate New Case",
+    secondaryTitle: "Case Management",
+  };
+  const intakeCourseDetailsText:IntakeHeaderText = {
+    primaryTitle: "Initate New Case",
+    secondaryTitle: "Case Management",
+  };
+  const intakePermittedIndividualText:IntakeHeaderText = {
+    primaryTitle: "Initate New Case",
+    secondaryTitle: "Case Management",
+  };
+  
+
   const renderDetailsForm = () => {
     switch (step) {
       case 1:
         return (
+          <>
+          <IntakeHeader intakeHeaderText={intakeReferralText} />
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
             <ReferralForm
               referralDetails={referralDetails}
@@ -55,9 +67,12 @@ const Intake = (): React.ReactElement => {
               nextStep={nextStep}
             />
           </Box>
+          </>
         );
       case 2:
         return (
+          <>
+          <IntakeHeader intakeHeaderText={intakeCourseDetailsText} />
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
             <CourtInformationForm
               courtDetails={courtDetails}
@@ -66,9 +81,12 @@ const Intake = (): React.ReactElement => {
               prevStep={prevStep}
             />
           </Box>
+          </>
         );
       default:
         return (
+          <>
+          <IntakeHeader intakeHeaderText={intakePermittedIndividualText} />
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
             <PermittedIndividualsForm
               permittedIndividualDetails={permittedIndividualDetails}
@@ -76,13 +94,13 @@ const Intake = (): React.ReactElement => {
               prevStep={prevStep}
             />
           </Box>
+          </>
         );
     }
   };
 
   return (
     <>
-      <IntakeHeader intakeHeaderText={intakeHeaderText} />
       {renderDetailsForm()}
     </>
   );

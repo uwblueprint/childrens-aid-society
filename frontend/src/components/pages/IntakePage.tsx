@@ -40,70 +40,65 @@ const Intake = (): React.ReactElement => {
 
   const prevStep = () => setStep(step - 1);
 
-  const intakeReferralText:IntakeHeaderText = {
+  const intakeReferralText: IntakeHeaderText = {
     primaryTitle: "Initate New Case",
     secondaryTitle: "Case Management",
   };
-  const intakeCourseDetailsText:IntakeHeaderText = {
+  const intakeCourseDetailsText: IntakeHeaderText = {
     primaryTitle: "Initate New Case",
     secondaryTitle: "Case Management",
   };
-  const intakePermittedIndividualText:IntakeHeaderText = {
+  const intakePermittedIndividualText: IntakeHeaderText = {
     primaryTitle: "Initate New Case",
     secondaryTitle: "Case Management",
   };
-  
 
   const renderDetailsForm = () => {
     switch (step) {
       case 1:
         return (
           <>
-          <IntakeHeader intakeHeaderText={intakeReferralText} />
-          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-            <ReferralForm
-              referralDetails={referralDetails}
-              setReferralDetails={setReferralDetails}
-              nextStep={nextStep}
-            />
-          </Box>
+            <IntakeHeader intakeHeaderText={intakeReferralText} />
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <ReferralForm
+                referralDetails={referralDetails}
+                setReferralDetails={setReferralDetails}
+                nextStep={nextStep}
+              />
+            </Box>
           </>
         );
       case 2:
         return (
           <>
-          <IntakeHeader intakeHeaderText={intakeCourseDetailsText} />
-          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-            <CourtInformationForm
-              courtDetails={courtDetails}
-              setCourtDetails={setCourtDetails}
-              nextStep={nextStep}
-              prevStep={prevStep}
-            />
-          </Box>
+            <IntakeHeader intakeHeaderText={intakeCourseDetailsText} />
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <CourtInformationForm
+                courtDetails={courtDetails}
+                setCourtDetails={setCourtDetails}
+                nextStep={nextStep}
+                prevStep={prevStep}
+              />
+            </Box>
           </>
         );
       default:
         return (
           <>
-          <IntakeHeader intakeHeaderText={intakePermittedIndividualText} />
-          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-            <PermittedIndividualsForm
-              permittedIndividualDetails={permittedIndividualDetails}
-              setPermittedIndividualDetails={setPermittedIndividualDetails}
-              prevStep={prevStep}
-            />
-          </Box>
+            <IntakeHeader intakeHeaderText={intakePermittedIndividualText} />
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <PermittedIndividualsForm
+                permittedIndividualDetails={permittedIndividualDetails}
+                setPermittedIndividualDetails={setPermittedIndividualDetails}
+                prevStep={prevStep}
+              />
+            </Box>
           </>
         );
     }
   };
 
-  return (
-    <>
-      {renderDetailsForm()}
-    </>
-  );
+  return <>{renderDetailsForm()}</>;
 };
 
 export default Intake;

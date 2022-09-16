@@ -1,24 +1,21 @@
 import React from "react";
 import { Box, Heading, Text } from "@chakra-ui/react";
 
-export type IntakeHeaderText = {
+export type IntakeHeaderProps = {
   primaryTitle: string;
   secondaryTitle: string;
 };
 
-export type IntakeHeaderProps = {
-  intakeHeaderText: IntakeHeaderText;
-};
-
 const IntakeHeader = ({
-  intakeHeaderText,
+  primaryTitle,
+  secondaryTitle,
 }: IntakeHeaderProps): React.ReactElement => {
   return (
     <Box bg="gray.50" style={{ padding: "50px 100px 25px 100px" }}>
-      <Text textStyle="title-small">{intakeHeaderText.secondaryTitle}</Text>
-      <Heading textStyle="display-medium">
-        {intakeHeaderText.primaryTitle}
-      </Heading>
+      <Text color="gray.600" textStyle="title-small">
+        {secondaryTitle}
+      </Text>
+      <Heading textStyle="display-medium">{primaryTitle}</Heading>
     </Box>
   );
 };

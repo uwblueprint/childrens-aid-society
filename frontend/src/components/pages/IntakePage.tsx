@@ -7,7 +7,7 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {
   PermittedIndividualDetails,
 } from "../intake/PermittedIndividualsForm";
-import IntakeHeader, { IntakeHeaderText } from "../intake/IntakeHeader";
+import IntakeHeader from "../intake/IntakeHeader";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -40,25 +40,15 @@ const Intake = (): React.ReactElement => {
 
   const prevStep = () => setStep(step - 1);
 
-  const intakeReferralText: IntakeHeaderText = {
-    primaryTitle: "Initate New Case",
-    secondaryTitle: "Case Management",
-  };
-  const intakeCourseDetailsText: IntakeHeaderText = {
-    primaryTitle: "Initate New Case",
-    secondaryTitle: "Case Management",
-  };
-  const intakePermittedIndividualText: IntakeHeaderText = {
-    primaryTitle: "Initate New Case",
-    secondaryTitle: "Case Management",
-  };
-
   const renderDetailsForm = () => {
     switch (step) {
       case 1:
         return (
           <>
-            <IntakeHeader intakeHeaderText={intakeReferralText} />
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <ReferralForm
                 referralDetails={referralDetails}
@@ -71,7 +61,10 @@ const Intake = (): React.ReactElement => {
       case 2:
         return (
           <>
-            <IntakeHeader intakeHeaderText={intakeCourseDetailsText} />
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <CourtInformationForm
                 courtDetails={courtDetails}
@@ -85,7 +78,10 @@ const Intake = (): React.ReactElement => {
       default:
         return (
           <>
-            <IntakeHeader intakeHeaderText={intakePermittedIndividualText} />
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <PermittedIndividualsForm
                 permittedIndividualDetails={permittedIndividualDetails}

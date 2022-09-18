@@ -3,7 +3,26 @@ import sqlalchemy.dialects.postgresql as pg
 from . import db
 from .base_mixin import BaseMixin
 
-court_status_enum = db.Enum("APPROVE", name="intakes_court_status")
+court_status_enum = db.Enum(
+    "INTERIM_CARE",
+    "FINAL_ORDER_FOR_SOCIETY_CARE",
+    "EXTENDED_SOCIETY_CARE",
+    "SUPERVISION_ORDER",
+    "KIN_SERVICE_PLACEMENT",
+    "LIVING_WITH_BIO_FAMILY",
+    "OTHER",
+    name="intakes_court_status",
+)
+
+first_nation_heritage_enum = db.Enum(
+    "FIRST_NATION_REGISTERED",
+    "ELIGIBLE_FOR_REGISTRATION",
+    "INUIT",
+    "METIS",
+    "UNKNOWN",
+    name="intake_first_nation_heritage",
+)
+
 intakes_access_weekday_enum = db.Enum(
     "MONDAY",
     "TUESDAY",
@@ -49,6 +68,7 @@ class Intake(db.Model, BaseMixin):
     court_order = db.Column(db.String, nullable=True)
     court_order_file = db.Column(db.String, nullable=True)
     is_first_nation_heritage = db.Column(db.Boolean, nullable=True)
+    first_nation_heritage = db.Column(first_nation_heritage_enum, nullable=True)
     first_nation_band = db.Column(db.String, nullable=True)
     family_strengths = db.Column(db.String, nullable=True)
     access_type = db.Column(db.String, nullable=True)

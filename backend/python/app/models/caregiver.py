@@ -3,14 +3,9 @@ from .base_mixin import BaseMixin
 
 type_enum = db.Enum("CAREGIVER", "PROVIDER", name="caregivers_type")
 relationship_to_child_enum = db.Enum(
-    "MOM",
-    "DAD",
-    "FOSTER_MOM",
-    "FOSTER_DAD",
-    "GRANDPARENT",
-    "FOSTER CAREGIVER",
-    "KINSHIP CAREGIVER",
-    "BIOLOGICAL FAMILY",
+    "FOSTER_CAREGIVER",
+    "KINSHIP_CAREGIVER",
+    "BIOLOGICAL_FAMILY",
     name="caregivers_relationship_to_child",
 )
 

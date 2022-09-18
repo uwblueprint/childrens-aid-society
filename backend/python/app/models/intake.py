@@ -4,20 +4,19 @@ from . import db
 from .base_mixin import BaseMixin
 
 court_status_enum = db.Enum(
-    "APPROVE",
-    "INTERIM CARE",
-    "FINAL ORDER FOR SOCIETY CARE",
-    "EXTENDED SOCIETY CARE",
-    "SUPERVISION ORDER",
-    "KIN SERVICE PLACEMENT",
-    "LIVING WITH BIO FAMILY",
+    "INTERIM_CARE",
+    "FINAL_ORDER_FOR_SOCIETY_CARE",
+    "EXTENDED_SOCIETY_CARE",
+    "SUPERVISION_ORDER",
+    "KIN_SERVICE_PLACEMENT",
+    "LIVING_WITH_BIO_FAMILY",
     "OTHER",
     name="intakes_court_status",
 )
 
 first_nation_heritage_enum = db.Enum(
-    "FIRST NATION REGISTERED",
-    "ELIGIBLE FOR REGISTRATION",
+    "FIRST_NATION_REGISTERED",
+    "ELIGIBLE_FOR_REGISTRATION",
     "INUIT",
     "METIS",
     "UNKNOWN",

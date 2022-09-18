@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from sqlalchemy import text
 
@@ -16,12 +16,11 @@ class Goal(db.Model, BaseMixin):
     goal = db.Column(db.String, nullable=False)
     start_date = db.Column(
         db.Date,
-        default=datetime.datetime.today(),
+        default=datetime.today(),
         nullable=True,
     )
     end_date = db.Column(
         db.Date,
-        default=datetime.datetime.today(),
         nullable=True,
     )
     is_default = db.Column(

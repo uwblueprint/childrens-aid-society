@@ -32,24 +32,63 @@ services:
         condition: service_healthy
     env_file:
       - ./.env
+  # db:
+  #   # TODO: rename container for your project
+  #   container_name: cas_db
+  #   image: postgres:12-alpine
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+  #     - ./db-init:/docker-entrypoint-initdb.d
+  #   env_file:
+  #     - ./.env
+  #   environment:
+  #     - POSTGRES_MULTIPLE_DATABASES=${POSTGRES_DB_DEV},${POSTGRES_DB_TEST}
+  #   healthcheck:
+  #     test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 5555:80
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@pgadmin.org
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
+  #     PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+
   db:
-    # TODO: rename container for your project
-    container_name: cas_db
     image: postgres:12-alpine
     ports:
       - 5432:5432
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-      - ./db-init:/docker-entrypoint-initdb.d
-    env_file:
-      - ./.env
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=${POSTGRES_DB_DEV},${POSTGRES_DB_TEST}
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: amongus
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: amongus
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+
+# https://stackoverflow.com/questions/67940204/how-can-i-connect-to-docker-postgres-server-from-pgadmin4
 volumes:
   postgres_data:

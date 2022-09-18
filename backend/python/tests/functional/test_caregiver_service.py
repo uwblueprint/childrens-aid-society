@@ -88,7 +88,7 @@ class TestCreateCaregiverValid:
             last_name="Yusuff",
             is_primary=False,
             child_id=1,
-            relationship_to_child="MOM",
+            relationship_to_child="FOSTER_CAREGIVER",
             phone_number="012442343",
             cpin_number="123",
             date_of_birth=datetime.datetime(day=27, month=11, year=2001),
@@ -109,7 +109,7 @@ class TestCreateCaregiverValid:
             first_name="Hamza",
             last_name="Yusuff",
             child_id=2,
-            relationship_to_child="MOM",
+            relationship_to_child="KINSHIP_CAREGIVER",
             phone_number="012442343",
         )
         caregiver_instance = caregiver_service.create_caregiver(param)

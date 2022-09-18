@@ -6,6 +6,7 @@ import textStyles from "./textStyles";
 import space from "./spacing";
 import Button from "./buttonStyles";
 import Input from "./inputStyles";
+import breakpoints from "./breakpoints";
 import { FormLabel, Select } from "./components";
 
 const customTheme = extendTheme({
@@ -25,6 +26,7 @@ const customTheme = extendTheme({
   colors,
   textStyles,
   space,
+  breakpoints,
   components: {
     Button,
     FormLabel,

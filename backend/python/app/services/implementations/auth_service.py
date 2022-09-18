@@ -36,8 +36,7 @@ class AuthService(IAuthService):
         except Exception as e:
             self.logger.error(
                 "Failed to generate token for user with email {email}: {error}".format(
-                    email=email,
-                    error=e
+                    email=email, error=e
                 )
             )
             raise e

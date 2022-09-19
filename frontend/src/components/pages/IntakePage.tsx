@@ -71,24 +71,26 @@ const Intake = (): React.ReactElement => {
     }
   };
 
-  return <>
-    <IntakeHeader
-      primaryTitle="Initiate New Case"
-      secondaryTitle="Case Management"
-    />
-    <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-      <Stepper
-        pages={[
-          "Case referral",
-          "Court information",
-          "Individual details",
-          "Program details",
-        ]} 
-        activePage={step - 1}
+  return (
+    <>
+      <IntakeHeader
+        primaryTitle="Initiate New Case"
+        secondaryTitle="Case Management"
       />
-      {renderDetailsForm()}
-    </Box>
-  </>;
+      <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          activePage={step - 1}
+        />
+        {renderDetailsForm()}
+      </Box>
+    </>
+  );
 };
 
 export default Intake;

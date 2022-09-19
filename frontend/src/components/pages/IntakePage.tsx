@@ -77,7 +77,7 @@ const Intake = (): React.ReactElement => {
         primaryTitle="Initiate New Case"
         secondaryTitle="Case Management"
       />
-      <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+      <Box textAlign="center" padding="30px 0 40px 0">
         <Stepper
           pages={[
             "Case referral",

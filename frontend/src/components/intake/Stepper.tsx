@@ -26,7 +26,7 @@ const Stepper = ({ pages, activePage }: StepperProps): React.ReactElement => {
           const isActive = index === activePage;
           const color = isActive ? "blue.300" : "gray.600";
           return (
-            <>
+            <React.Fragment key={index}>
               {isFirst || (
                 <>
                   {/* connector */}
@@ -51,7 +51,7 @@ const Stepper = ({ pages, activePage }: StepperProps): React.ReactElement => {
               <GridItem color={color} gridRowStart={2} fontWeight={500}>
                 {page}
               </GridItem>
-            </>
+            </React.Fragment>
           );
         })}
       </Grid>

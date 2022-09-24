@@ -6,6 +6,7 @@ import CourtInformationForm, {
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {
   PermittedIndividualDetails,
+  makeEmptyPermittedIndividual,
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 
@@ -30,10 +31,7 @@ const Intake = (): React.ReactElement => {
     permittedIndividualDetails,
     setPermittedIndividualDetails,
   ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
+    individuals: [makeEmptyPermittedIndividual()],
   });
 
   const nextStep = () => setStep(step + 1);

@@ -1,17 +1,16 @@
 import pytest
-from backend.python.app.resources.goal_dto import GoalDTO
-from backend.python.app.services.implementations.goal_service import GoalService
 from flask import current_app
-
 from app.models import db
 from app.models.goal import Goal
 from app.models.intake import Intake
 from app.resources.goal_dto import GoalDTO
+from app.services.implementations.goal_service import GoalService
 
 
 @pytest.fixture
 def goal_service():
     goal_service = GoalService(current_app.logger)
+    GoalDTO
     seed_database()
     yield goal_service
     Goal.query.delete()

@@ -1,11 +1,13 @@
+import pytest
 from backend.python.app.resources.goal_dto import GoalDTO
 from backend.python.app.services.implementations.goal_service import GoalService
-import pytest
 from flask import current_app
+
 from app.models import db
 from app.models.goal import Goal
 from app.models.intake import Intake
 from app.resources.goal_dto import GoalDTO
+
 
 @pytest.fixture
 def goal_service():
@@ -32,6 +34,7 @@ def seed_database():
     intake_instance = Intake(id=1)
     intake_instance.goals.append(goal_instances)
     db.session.bulk_save_objects(intake_instance)
+
 
 def test_get_long_term_goal_fetches_existing_goal(goal_service):
     res = goal_service.get_long_term_goal(
@@ -82,7 +85,7 @@ def test_get_all_short_term_goals_success(goal_service):
 
 
 def test_get_long_term_goal_by_intake_id_success():
-    res = goal_service.get_goals_by_intake(id=1, type= "LONG_TERM")
+    res = goal_service.get_goals_by_intake(id=1, type="LONG_TERM")
     assert type(res) == list
     goals_long_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "LONG_TERM"]
     assert len(res) == len(goals_long_term_db)
@@ -91,15 +94,19 @@ def test_get_long_term_goal_by_intake_id_success():
 
 
 def test_get_short_term_goal_by_intake_id_success():
-    res = goal_service.get_goals_by_intake(id=1, type= "SHORT_TERM")
+    res = goal_service.get_goals_by_intake(id=1, type="SHORT_TERM")
     assert type(res) == list
-    goals_short_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "SHORT_TERM"]
+    goals_short_term_db = [
+        goal for goal in DEFAULT_GOALS if goal["type"] == "SHORT_TERM"
+    ]
     assert len(res) == len(goals_short_term_db)
     assert all(type(item) == GoalDTO for item in res)
     assert all(item.type == "SHORT_TERM" for item in res)
 
+
 def test_get_goals_by_non_existent_intake_id_raises_error():
-	pass
+    pass
+
 
 def test_get_all_goals_success():
     res = goal_service.get_goals_by_intake(id=1)
@@ -115,6 +122,8 @@ def test_get_all_goals_success():
     for item in res:
         item_type = item.type
         goals_type_res_counter[item_type] = goals_type_res_counter.get(item_type, 0) + 1
- 
+
     assert goals_type_db_counter == goals_type_res_counter
-	# pass
+
+
+# pass

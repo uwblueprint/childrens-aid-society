@@ -6,11 +6,13 @@ from flask import jsonify, request
 from ..resources.create_user_dto import CreateUserDTO
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
+from ..resources.intake_dto import IntakeDTO
 
 dtos = {
     "CreateUserDTO": CreateUserDTO,
     "RegisterUserDTO": RegisterUserDTO,
     "UpdateUserDTO": UpdateUserDTO,
+    "IntakeDTO": IntakeDTO,
 }
 
 

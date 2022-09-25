@@ -82,6 +82,26 @@ def test_get_all_short_term_goals_success(goal_service):
 
 
 def test_get_long_term_goal_by_intake_id_success():
+    res = goal_service.get_goals_by_intake(id=1, type= "LONG_TERM")
+    assert type(res) == list
+    goals_long_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "LONG_TERM"]
+    assert len(res) == len(goals_long_term_db)
+    assert all(type(item) == GoalDTO for item in res)
+    assert all(item.type == "LONG_TERM" for item in res)
+
+
+def test_get_short_term_goal_by_intake_id_success():
+    res = goal_service.get_goals_by_intake(id=1, type= "SHORT_TERM")
+    assert type(res) == list
+    goals_short_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "SHORT_TERM"]
+    assert len(res) == len(goals_short_term_db)
+    assert all(type(item) == GoalDTO for item in res)
+    assert all(item.type == "SHORT_TERM" for item in res)
+
+def test_get_goals_by_non_existent_intake_id_raises_error():
+	pass
+
+def test_get_all_goals_success():
     res = goal_service.get_goals_by_intake(id=1)
     assert type(res) == list
     assert len(res) == len(DEFAULT_GOALS)
@@ -98,14 +118,3 @@ def test_get_long_term_goal_by_intake_id_success():
  
     assert goals_type_db_counter == goals_type_res_counter
 	# pass
-
-def test_get_short_term_goal_by_intake_id_success():
-	pass
-
-def test_get_goals_by_non_existent_intake_id_raises_error():
-	pass
-
-def test_get_all_goals_success():
-	pass
-
-

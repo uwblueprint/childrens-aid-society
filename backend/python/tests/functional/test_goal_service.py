@@ -1,9 +1,11 @@
+from backend.python.app.resources.goal_dto import GoalDTO
 from backend.python.app.services.implementations.goal_service import GoalService
 import pytest
 from flask import current_app
 
 from app.models import db
 from app.models.goal import Goal
+from app.models.intake import Intake
 
 @pytest.fixture
 def goal_service():
@@ -15,11 +17,27 @@ def goal_service():
 
 def seed_database():
     goal_instances = [Goal(**data) for data in DEFAULT_GOALS]
-    db.session.bulk_save_objects(goal_instances)
+    intake_instance = Intake(id=1)
+    intake_instance.goals.append(goal_instances)
+    db.session.bulk_save_objects(intake_instance)
     db.session.commit()
 
 def test_get_long_term_goal_by_intake_id_success():
-    res = goal_service.get_goals_by_intake()
+    res = goal_service.get_goals_by_intake(id=1)
+    assert type(res) == list
+    assert len(res) == len(DEFAULT_GOALS)
+    assert all(type(item) == GoalDTO for item in res)
+    goals_type_db_counter = {}
+    for goal in DEFAULT_GOALS:
+        goal_type = goal["type"]
+        goals_type_db_counter[goal_type] = goals_type_db_counter.get(goal_type, 0) + 1
+
+    goals_type_res_counter = {}
+    for item in res:
+        item_type = item.type
+        goals_type_res_counter[item_type] = goals_type_res_counter.get(item_type, 0) + 1
+ 
+    assert goals_type_db_counter == goals_type_res_counter
 	# pass
 
 def test_get_short_term_goal_by_intake_id_success():

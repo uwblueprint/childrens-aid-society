@@ -45,4 +45,7 @@ class IGoalService(ABC):
         :rtype: GoalDTO or None
         :raises Exception: if goal type is invalid
         """
+
+    @abstractmethod
+    def get_goals_by_intake(self, intake_id, type=None):
         pass

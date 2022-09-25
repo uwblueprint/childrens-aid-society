@@ -1,10 +1,9 @@
+from backend.python.app.services.implementations.goal_service import GoalService
 import pytest
 from flask import current_app
-
 from app.models import db
 from app.models.goal import Goal
 from app.resources.goal_dto import GoalDTO
-from app.services.implementations.goal_service import GoalService
 
 
 @pytest.fixture
@@ -78,3 +77,18 @@ def test_get_all_short_term_goals_success(goal_service):
     goals_db = [entry["goal"] for entry in short_term_goals]
     goals_res = [item.goal for item in res]
     assert set(goals_db) == set(goals_res)
+
+def test_get_long_term_goal_by_intake_id_success():
+    res = goal_service.get_goals_by_intake()
+	# pass
+
+def test_get_short_term_goal_by_intake_id_success():
+	pass
+
+def test_get_goals_by_non_existent_intake_id_raises_error():
+	pass
+
+def test_get_all_goals_success():
+	pass
+
+

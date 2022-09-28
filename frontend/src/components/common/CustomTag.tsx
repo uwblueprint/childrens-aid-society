@@ -28,7 +28,12 @@ const CustomTag = ({
   }
   return (
     <Container aria-pressed={pressed} onClick={handleComponentClick}>
-      <Tag border="1px solid" borderColor="gray.700" padding="8px 12px">
+      <Tag
+        border="1px solid"
+        borderColor="gray.700"
+        padding="8px 12px"
+        {...props}
+      >
         <TagLabel>{placeholder}</TagLabel>
         {icon && <TagRightIcon pointerEvents="none">{icon}</TagRightIcon>}
       </Tag>

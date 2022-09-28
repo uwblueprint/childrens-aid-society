@@ -137,7 +137,7 @@ Insert test data into the database with the provided script. Your environment va
 docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed"
 ```
 
-Nuke. Your environment variables need to be correctly configured in `.env`
+Nuke the CAS database. Your environment variables need to be correctly configured in `.env`
 
 ```
 docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed nuke"

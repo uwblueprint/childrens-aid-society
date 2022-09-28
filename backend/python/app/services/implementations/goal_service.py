@@ -1,5 +1,6 @@
 from ...models import db
 from ...models.goal import Goal
+from ...models.intake import Intake
 from ...resources.goal_dto import GoalDTO
 from ..interfaces.goal_service import IGoalService
 
@@ -53,7 +54,7 @@ class GoalService(IGoalService):
         try:
             intake = Intake.query.filter_by(id=intake_id).first()
             return [
-                GoalDTO(result.id, result.type, result.goal)
+                GoalDTO(result.id, result.goal, result.type)
                 for result in intake.goals
                 if type == result.type or type is None
             ]

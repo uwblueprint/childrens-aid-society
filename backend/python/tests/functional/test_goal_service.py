@@ -2,18 +2,20 @@ import pytest
 from flask import current_app
 from app.models import db
 from app.models.goal import Goal
-from app.models.intake import Intake
+from app.models.intake import Intake, intakes_goals
 from app.resources.goal_dto import GoalDTO
 from app.services.implementations.goal_service import GoalService
-
 
 @pytest.fixture
 def goal_service():
     goal_service = GoalService(current_app.logger)
-    GoalDTO
     seed_database()
     yield goal_service
+    db.engine.execute("DELETE FROM intakes_goals;")
+    Intake.query.delete()
+    intakes_goals.delete()
     Goal.query.delete()
+    db.session.flush()
 
 
 ## These are fake goals for testing purposes
@@ -30,9 +32,12 @@ DEFAULT_GOALS = [
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     goal_instances = [Goal(**data) for data in DEFAULT_GOALS]
+    # goal_instances = [DEFAULT_GOALS[0]]
     intake_instance = Intake(id=1)
-    intake_instance.goals.append(goal_instances)
-    db.session.bulk_save_objects(intake_instance)
+    intake_instance.goals.extend(goal_instances)
+    # db.session.bulk_save_objects(goal_instances)
+    db.session.add(intake_instance)
+    db.session.commit()
 
 
 def test_get_long_term_goal_fetches_existing_goal(goal_service):
@@ -83,17 +88,18 @@ def test_get_all_short_term_goals_success(goal_service):
     assert set(goals_db) == set(goals_res)
 
 
-def test_get_long_term_goal_by_intake_id_success():
-    res = goal_service.get_goals_by_intake(id=1, type="LONG_TERM")
+def test_get_long_term_goal_by_intake_id_success(goal_service):
+    res = goal_service.get_goals_by_intake(intake_id=1, type="LONG_TERM")
     assert type(res) == list
     goals_long_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "LONG_TERM"]
     assert len(res) == len(goals_long_term_db)
     assert all(type(item) == GoalDTO for item in res)
+    res_dict = [x.__dict__ for x in res]
     assert all(item.type == "LONG_TERM" for item in res)
 
 
-def test_get_short_term_goal_by_intake_id_success():
-    res = goal_service.get_goals_by_intake(id=1, type="SHORT_TERM")
+def test_get_short_term_goal_by_intake_id_success(goal_service):
+    res = goal_service.get_goals_by_intake(intake_id=1, type="SHORT_TERM")
     assert type(res) == list
     goals_short_term_db = [
         goal for goal in DEFAULT_GOALS if goal["type"] == "SHORT_TERM"
@@ -103,12 +109,12 @@ def test_get_short_term_goal_by_intake_id_success():
     assert all(item.type == "SHORT_TERM" for item in res)
 
 
-def test_get_goals_by_non_existent_intake_id_raises_error():
-    pass
+# def test_get_goals_by_non_existent_intake_id_raises_error():
+#     pass
 
 
-def test_get_all_goals_success():
-    res = goal_service.get_goals_by_intake(id=1)
+def test_get_all_goals_success(goal_service):
+    res = goal_service.get_goals_by_intake(intake_id=1)
     assert type(res) == list
     assert len(res) == len(DEFAULT_GOALS)
     assert all(type(item) == GoalDTO for item in res)

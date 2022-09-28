@@ -36,7 +36,7 @@ const Input: ComponentStyleConfig = {
   },
   defaultProps: {
     variant: "default",
-    size: "lg",
+    size: "md",
   },
 };
 

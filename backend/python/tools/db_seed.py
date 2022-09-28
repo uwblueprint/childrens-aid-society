@@ -9,10 +9,6 @@ from app import create_app
 db = SQLAlchemy()
 
 
-# todo: replace all ofmy serials with intger
-# todo: what is db relationship?
-
-
 def tup_to_string_commas(l):
     """
     Convert a tuple to a string with commas between elements.

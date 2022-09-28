@@ -2,8 +2,6 @@ import os
 import sys
 from ctypes import addressof
 
-# from helper import *
-
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
@@ -13,6 +11,7 @@ db = SQLAlchemy()
 
 # todo: replace all ofmy serials with intger
 # todo: what is db relationship?
+
 
 def tup_to_string_commas(l):
     """
@@ -57,7 +56,6 @@ def insert_values(db, table_name: str, column_names: tuple, values: tuple):
     db.engine.execute(
         f"INSERT INTO {table_name} ({tup_to_string_commas(column_names)}) VALUES ({tup_to_string_commas_and_quotes(values)});"
     )
-
 
 
 # fmt: off

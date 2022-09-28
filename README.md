@@ -131,6 +131,18 @@ To check the migration currently applied to your database, run:
 docker exec -it cas_py_backend /bin/bash -c "flask db current -v"
 ```
 
+Insert test data into the database with the provided script. Your environment variables need to be correctly configured in `.env`
+
+```
+docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed"
+```
+
+Nuke. Your environment variables need to be correctly configured in `.env`
+
+```
+docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed nuke"
+```
+
 Ensure that a new revision file is created in the directory [backend/python/migrations/versions](backend/python/migrations/versions). **Do not** change the alembic revision/identifiers. Generally these auto-generated revision files will encompass all schema changes, and thus do not need to be modified!
 
 # Other

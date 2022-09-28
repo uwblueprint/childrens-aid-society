@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-type_enum = db.Enum("SCHOOL", "DAYCARE", name="daytime_contacts_type")
+daytime_contact_type_enum = db.Enum("SCHOOL", "DAYCARE", name="daytime_contacts_type")
 
 
 class DaytimeContact(db.Model, BaseMixin):
@@ -13,4 +13,4 @@ class DaytimeContact(db.Model, BaseMixin):
     address_id = db.Column(db.Integer, db.ForeignKey("addresses.id"), nullable=False)
     address = db.relationship("Address")
     phone_number = db.Column(db.String, nullable=False)
-    type = db.Column(type_enum)
+    type = db.Column(daytime_contact_type_enum)

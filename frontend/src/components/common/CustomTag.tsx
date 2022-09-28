@@ -19,12 +19,7 @@ const CustomTag = ({
 }: CustomTagProps): React.ReactElement => {
   const [pressed, setPressed] = useState(false);
   function handleComponentClick() {
-    // aria-pressed=true;
-    if (pressed === false) {
-      setPressed(true);
-    } else {
-      setPressed(false);
-    }
+    setPressed(!pressed);
   }
   return (
     <Container aria-pressed={pressed} onClick={handleComponentClick}>

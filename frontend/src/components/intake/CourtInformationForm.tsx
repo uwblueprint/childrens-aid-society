@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -8,6 +9,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import { AutocompleteField } from "./Autocomplete";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -49,83 +51,89 @@ const CourtInformationForm = ({
 
   return (
     <Formik initialValues={courtDetails} onSubmit={onSubmit}>
-      {({ handleSubmit, setFieldValue }) => (
-        <Form style={{ padding: "0px 100px 30px 100px" }}>
-          <Heading textStyle="heading">Court Details</Heading>
-          <FormControl style={{ padding: "30px" }}>
-            <FormLabel pt="15px" htmlFor="currentCourtStatus">
-              Current Court Status
-            </FormLabel>
-            <Field
-              as={Select}
-              id="currentCourtStatus"
-              name="currentCourtStatus"
-              placeholder="Select Status..."
+      {({ handleSubmit, setFieldValue }) => {
+        return (
+          <Form style={{ padding: "0px 100px 30px 100px" }}>
+            <Heading textStyle="heading">Court Details</Heading>
+            <Box style={{ padding: "30px" }}>
+              <FormLabel pt="15px" htmlFor="currentCourtStatus">
+                Current Court Status
+              </FormLabel>
+              <AutocompleteField
+                id="currentCourtStatus"
+                name="currentCourtStatus"
+                placeholder="Enter or select a court status"
+                hints={[
+                  "Interim care",
+                  "Final order for Society Care",
+                  "Extended Society Care",
+                  "Supervision order",
+                  "Kin service placement",
+                  "Living with Biological family",
+                ]}
+              />
+            </Box>
+            <FormControl>
+              {/* TODO: store the uploaded file and save in backend */}
+              <Input
+                style={{ display: "none" }}
+                type="file"
+                ref={inputRef}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleFileChange(e, setFieldValue)
+                }
+                id="orderReferral"
+                name="orderReferral"
+              />
+              <Button onClick={handleClick}>Attach Order Referral</Button>
+            </FormControl>
+            <FormControl style={{ padding: "30px" }}>
+              <FormLabel pt="15px" htmlFor="firstNationHeritage">
+                First Nation Heritage
+              </FormLabel>
+              <Field
+                id="firstNationHeritage"
+                as={Select}
+                name="firstNationHeritage"
+                placeholder="Select Heritage..."
+              >
+                <option>United Arab Emirates</option>
+                <option>Nigeria</option>
+              </Field>
+            </FormControl>
+            <FormControl style={{ padding: "30px" }}>
+              <FormLabel pt="15px" htmlFor="firstNationBand">
+                First Nation Band
+              </FormLabel>
+              <Field
+                as={Select}
+                id="firstNationBand"
+                placeholder="Select Band..."
+                name="firstNationBand"
+              >
+                <option>United Arab Emirates</option>
+                <option>Nigeria</option>
+              </Field>
+            </FormControl>
+            <Button
+              onClick={() => {
+                handleSubmit();
+                prevStep();
+              }}
             >
-              <option>United Arab Emirates</option>
-              <option>Nigeria</option>
-            </Field>
-          </FormControl>
-          <FormControl>
-            {/* TODO: store the uploaded file and save in backend */}
-            <Input
-              style={{ display: "none" }}
-              type="file"
-              ref={inputRef}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleFileChange(e, setFieldValue)
-              }
-              id="orderReferral"
-              name="orderReferral"
-            />
-            <Button onClick={handleClick}>Attach Order Referral</Button>
-          </FormControl>
-          <FormControl style={{ padding: "30px" }}>
-            <FormLabel pt="15px" htmlFor="firstNationHeritage">
-              First Nation Heritage
-            </FormLabel>
-            <Field
-              id="firstNationHeritage"
-              as={Select}
-              name="firstNationHeritage"
-              placeholder="Select Heritage..."
+              Previous Button
+            </Button>
+            <Button
+              onClick={() => {
+                handleSubmit();
+                nextStep();
+              }}
             >
-              <option>United Arab Emirates</option>
-              <option>Nigeria</option>
-            </Field>
-          </FormControl>
-          <FormControl style={{ padding: "30px" }}>
-            <FormLabel pt="15px" htmlFor="firstNationBand">
-              First Nation Band
-            </FormLabel>
-            <Field
-              as={Select}
-              id="firstNationBand"
-              placeholder="Select Band..."
-              name="firstNationBand"
-            >
-              <option>United Arab Emirates</option>
-              <option>Nigeria</option>
-            </Field>
-          </FormControl>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              nextStep();
-            }}
-          >
-            Next Button
-          </Button>
-        </Form>
-      )}
+              Next Button
+            </Button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

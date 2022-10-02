@@ -63,9 +63,8 @@ const CourtInformationForm = ({
     <Formik initialValues={courtDetails} onSubmit={onSubmit}>
       {({ handleSubmit, setFieldValue, values }) => {
         return (
-          <Container maxWidth="container.xl">
-            <Form style={{ padding: "0 0 30px 0" }}>
-              <Heading textStyle="heading">Court Details</Heading>
+          <Container maxWidth="container.xl" padding="30px 96px">
+            <Form>
               <Box style={{ padding: "16px 0" }}>
                 <FormLabel pt="15px" htmlFor="currentCourtStatus">
                   COURT STATUS

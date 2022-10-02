@@ -36,17 +36,14 @@ export const AutocompleteSuggestions = ({
         {hints.map((hint, index) => (
           <Button
             width="100%"
-            height="auto"
             key={index}
-            bg="none"
-            shadow="none"
             justifyContent="left"
             padding="5px"
             borderRadius="8px"
+            variant="ghost"
             sx={{
-              "&:hover": {
+              ":hover": {
                 backgroundColor: "gray.300",
-                shadow: "none",
               },
             }}
             // if the user holds down the mouse, the input loses

@@ -49,7 +49,11 @@ export const AutocompleteSuggestions = ({
                 shadow: "none",
               },
             }}
-            onClick={() => {
+            // if the user holds down the mouse, the input loses
+            // focus and the popover is automatically dismissed;
+            // this prevents onClick from working, so we need to
+            // perform the autofill in onMouseDown instead.
+            onMouseDown={() => {
               onSelect(hint);
             }}
           >

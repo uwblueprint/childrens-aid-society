@@ -1,10 +1,12 @@
 import pytest
 from flask import current_app
+
 from app.models import db
 from app.models.goal import Goal
 from app.models.intake import Intake, intakes_goals
 from app.resources.goal_dto import GoalDTO
 from app.services.implementations.goal_service import GoalService
+
 
 @pytest.fixture
 def goal_service():
@@ -32,10 +34,8 @@ DEFAULT_GOALS = [
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     goal_instances = [Goal(**data) for data in DEFAULT_GOALS]
-    # goal_instances = [DEFAULT_GOALS[0]]
     intake_instance = Intake(id=1)
     intake_instance.goals.extend(goal_instances)
-    # db.session.bulk_save_objects(goal_instances)
     db.session.add(intake_instance)
     db.session.commit()
 
@@ -94,7 +94,6 @@ def test_get_long_term_goal_by_intake_id_success(goal_service):
     goals_long_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "LONG_TERM"]
     assert len(res) == len(goals_long_term_db)
     assert all(type(item) == GoalDTO for item in res)
-    res_dict = [x.__dict__ for x in res]
     assert all(item.type == "LONG_TERM" for item in res)
 
 
@@ -107,11 +106,6 @@ def test_get_short_term_goal_by_intake_id_success(goal_service):
     assert len(res) == len(goals_short_term_db)
     assert all(type(item) == GoalDTO for item in res)
     assert all(item.type == "SHORT_TERM" for item in res)
-
-
-# def test_get_goals_by_non_existent_intake_id_raises_error():
-#     pass
-
 
 def test_get_all_goals_success(goal_service):
     res = goal_service.get_goals_by_intake(intake_id=1)
@@ -129,6 +123,3 @@ def test_get_all_goals_success(goal_service):
         goals_type_res_counter[item_type] = goals_type_res_counter.get(item_type, 0) + 1
 
     assert goals_type_db_counter == goals_type_res_counter
-
-
-# pass

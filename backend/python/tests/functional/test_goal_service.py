@@ -107,6 +107,7 @@ def test_get_short_term_goal_by_intake_id_success(goal_service):
     assert all(type(item) == GoalDTO for item in res)
     assert all(item.type == "SHORT_TERM" for item in res)
 
+
 def test_get_all_goals_success(goal_service):
     res = goal_service.get_goals_by_intake(intake_id=1)
     assert type(res) == list

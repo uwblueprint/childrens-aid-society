@@ -59,15 +59,6 @@ class GoalService(IGoalService):
                 if type == result.type or type is None
             ]
 
-            # return [
-            #     GoalDTO(result.id, result.type, result.goal)
-
-            #     # for result in Goal.query\
-            #     #     .join(intakes_goals)\
-            #     #     .join(Intake)\
-            #     #     .filter((intakes_goals.c.intake_id == intake_id) & (intake_goals.c.goal_id == Goal.id))\
-            #     #     .all()
-            # ]
         except Exception as error:
             self.logger.error(str(error))
             raise error

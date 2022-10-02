@@ -1,9 +1,11 @@
 import React from "react";
-import { Text, Box } from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { ChevronDown, Cloud, Feather } from "react-feather";
+import CustomInput from "../common/CustomInput";
 
 const Home = (): React.ReactElement => {
   return (
-    <div style={{ textAlign: "center", paddingTop: "20px" }}>
+    <Box style={{ textAlign: "center", paddingTop: "20px" }}>
       <Text
         style={{
           marginBottom: "50px",
@@ -48,6 +50,28 @@ const Home = (): React.ReactElement => {
       <Text style={{ margin: "10px" }} textStyle="label">
         label
       </Text>
+      <Button variant="primary">Primary</Button>
+      <Button variant="primary" disabled>
+        Primary Disabled
+      </Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="secondary" disabled>
+        Secondary Disabled
+      </Button>
+      <Button variant="tertiary">Tertiary</Button>
+      <Button variant="tertiary" disabled>
+        Tertiary Disabled
+      </Button>
+      <Box p="10px">
+        <CustomInput placeholder="Text" icon={<Icon as={Feather} />} />
+      </Box>
+      <Box p="10px">
+        <CustomInput
+          isInvalid
+          placeholder="Text"
+          icon={<Icon as={ChevronDown} />}
+        />
+      </Box>
       <Box
         background="blue.500"
         width="100%"
@@ -66,7 +90,23 @@ const Home = (): React.ReactElement => {
         p="25px"
         borderRadius="0 0 5px 5px"
       />
-    </div>
+      <Icon as={Feather} />
+      <Icon as={Cloud} />
+      <Icon as={ChevronDown} />
+      <Box background="pink.400" margin={20}>
+        Test Spacing 20 (12 rem)
+      </Box>
+      <Box background="cyan.50" margin={8}>
+        Test Spacing 8 (2 rem)
+      </Box>
+      <Box background="orange.400" margin={2}>
+        Test Spacing 2 (0.5 rem)
+      </Box>
+      <Box bg="red.200" w={{ sm: 300, md: 400, base: 500 }}>
+        Breakpoint Box - Under 29em=300px width, 30em-53em=400px width, above
+        54=500px
+      </Box>
+    </Box>
   );
 };
 

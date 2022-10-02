@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -7,6 +7,8 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import PermittedIndividualsForm, {
   PermittedIndividualDetails,
 } from "../intake/PermittedIndividualsForm";
+import IntakeHeader from "../intake/IntakeHeader";
+import Stepper from "../intake/Stepper";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -34,55 +36,61 @@ const Intake = (): React.ReactElement => {
     phoneNumber: "",
     relationship: "",
   });
-  const [
-    allOtherPermittedIndividuals,
-    setAllOtherPermittedIndividuals,
-  ] = useState<PermittedIndividualDetails[]>([]);
 
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
 
-  const addOtherIndividuals = () =>
-    setAllOtherPermittedIndividuals([
-      ...allOtherPermittedIndividuals,
-      permittedIndividualDetails,
-    ]);
-
-  switch (step) {
-    case 1:
-      return (
-        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+  const renderDetailsForm = () => {
+    switch (step) {
+      case 1:
+        return (
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
           />
-          <Button onClick={nextStep}>Next Button</Button>
-        </Box>
-      );
-    case 2:
-      return (
-        <Box style={{ textAlign: "center", padding: "20px 0px 20px 0px" }}>
+        );
+      case 2:
+        return (
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={nextStep}>Next Button</Button>
-        </Box>
-      );
-    default:
-      return (
-        <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+        );
+      default:
+        return (
           <PermittedIndividualsForm
             permittedIndividualDetails={permittedIndividualDetails}
             setPermittedIndividualDetails={setPermittedIndividualDetails}
+            prevStep={prevStep}
           />
-          <Button onClick={prevStep}>Previous Button</Button>
-          <Button onClick={addOtherIndividuals}>Add</Button>
-        </Box>
-      );
-  }
+        );
+    }
+  };
+
+  return (
+    <>
+      <IntakeHeader
+        primaryTitle="Initiate New Case"
+        secondaryTitle="Case Management"
+      />
+      <Box textAlign="center" padding="30px 0 40px 0">
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          activePage={step - 1}
+        />
+        {renderDetailsForm()}
+      </Box>
+    </>
+  );
 };
 
 export default Intake;

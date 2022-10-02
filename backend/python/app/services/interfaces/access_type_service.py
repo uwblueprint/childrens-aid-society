@@ -30,12 +30,14 @@ class IAccessTypeService(ABC):
         pass
 
     @abstractmethod
-    def add_new_access_type(self, access_type):
+    def add_new_access_type(self, access_type, is_default):
         """
         Adds the specified access_type to the access_types table and returns a AccessTypeDTO of the new entry
         of the access_type just added
         :param access_type: the access type to be added
         :type access_type: string
+        :param is_default: indicates whether or not the option is shown in the form by default
+        :type is_default: bool
         :return: AccessTypeDTO
         :rtype: AccessTypeDTO
         :raises Exception: if adding record to db fails

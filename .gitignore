@@ -9,4 +9,4 @@
 .vscode
 **/*.cache
 **/*.egg-info
-*.coverage
+**/.coverage

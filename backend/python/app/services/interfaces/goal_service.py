@@ -48,4 +48,11 @@ class IGoalService(ABC):
 
     @abstractmethod
     def get_goals_by_intake(self, intake_id, type=None):
+        """Get the goals associated with a given intake id;
+        If goal type specified, only return goals of given type
+        :param intake_id: int of intake ID
+        :return: List of goals for given intake
+        :rtype: List of GoalDTOs
+        :raises Exception: if goal or intake is invalid
+        """
         pass

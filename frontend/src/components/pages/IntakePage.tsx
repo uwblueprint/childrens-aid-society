@@ -8,6 +8,7 @@ import PermittedIndividualsForm, {
   PermittedIndividualDetails,
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
+import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -26,14 +27,15 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [
-    permittedIndividualDetails,
-    setPermittedIndividualDetails,
-  ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
+  const [permittedIndividualDetails, setPermittedIndividualDetails] =
+    useState<PermittedIndividualDetails>({
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      relationship: "",
+    });
+  const [programDetails, setProgramDetails] = useState<ProgramDetails>({
+    test: "",
   });
 
   const nextStep = () => setStep(step + 1);
@@ -75,7 +77,7 @@ const Intake = (): React.ReactElement => {
             </Box>
           </>
         );
-      default:
+      case 3:
         return (
           <>
             <IntakeHeader
@@ -86,6 +88,23 @@ const Intake = (): React.ReactElement => {
               <PermittedIndividualsForm
                 permittedIndividualDetails={permittedIndividualDetails}
                 setPermittedIndividualDetails={setPermittedIndividualDetails}
+                prevStep={prevStep}
+                nextStep={nextStep}
+              />
+            </Box>
+          </>
+        );
+      default:
+        return (
+          <>
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <ProgramForm
+                programDetails={programDetails}
+                setProgramDetails={setProgramDetails}
                 prevStep={prevStep}
               />
             </Box>

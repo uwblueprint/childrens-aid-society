@@ -15,9 +15,7 @@ def goal_service():
     yield goal_service
     db.engine.execute("DELETE FROM intakes_goals;")
     Intake.query.delete()
-    intakes_goals.delete()
     Goal.query.delete()
-    db.session.flush()
 
 
 ## These are fake goals for testing purposes

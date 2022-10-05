@@ -16,17 +16,18 @@ export type ProgramDetails = {
 type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
+  nextStep: () => void;
   prevStep: () => void;
 };
 
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
+  nextStep,
   prevStep,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
-    prevStep();
   };
 
   return (
@@ -42,6 +43,14 @@ const ProgramForm = ({
             }}
           >
             Previous Button
+          </Button>
+          <Button
+            onClick={() => {
+              handleSubmit();
+              nextStep();
+            }}
+          >
+            Next Button
           </Button>
         </Form>
       )}

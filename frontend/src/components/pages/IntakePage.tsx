@@ -9,6 +9,7 @@ import PermittedIndividualsForm, {
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
+import ReviewForm, { ReviewDetails } from "../intake/ReviewCaseForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -35,6 +36,9 @@ const Intake = (): React.ReactElement => {
       relationship: "",
     });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
+    test: "",
+  });
+  const [reviewDetails, setReviewDetails] = useState<ReviewDetails>({
     test: "",
   });
 
@@ -94,7 +98,7 @@ const Intake = (): React.ReactElement => {
             </Box>
           </>
         );
-      default:
+      case 4:
         return (
           <>
             <IntakeHeader
@@ -105,6 +109,23 @@ const Intake = (): React.ReactElement => {
               <ProgramForm
                 programDetails={programDetails}
                 setProgramDetails={setProgramDetails}
+                prevStep={prevStep}
+                nextStep={nextStep}
+              />
+            </Box>
+          </>
+        );
+      default:
+        return (
+          <>
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <ReviewForm
+                reviewDetails={reviewDetails}
+                setReviewDetails={setReviewDetails}
                 prevStep={prevStep}
               />
             </Box>

@@ -4,12 +4,11 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Heading,
-  Select,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
+import { CustomSelectField } from "./Autocomplete";
 
 export type PermittedIndividualDetails = {
   firstName: string;
@@ -37,9 +36,8 @@ const PermittedIndividualsForm = ({
   return (
     <Formik initialValues={permittedIndividualDetails} onSubmit={onSubmit}>
       {({ handleSubmit }) => (
-        <Form style={{ padding: "0px 100px 70px 100px" }}>
-          <Heading textStyle="heading">Other Permitted Individuals</Heading>
-          <FormControl style={{ padding: "30px" }}>
+        <Form>
+          <FormControl>
             <SimpleGrid columns={2} spacing="70px">
               <Box>
                 <FormLabel htmlFor="firstName" style={{ marginTop: "0px" }}>
@@ -72,7 +70,7 @@ const PermittedIndividualsForm = ({
                   RELATIONSHIP TO CHILD
                 </FormLabel>
                 <Field
-                  as={Select}
+                  as={CustomSelectField}
                   name="relationship"
                   placeholder="Choose relationship..."
                   id="relationship"
@@ -94,15 +92,20 @@ const PermittedIndividualsForm = ({
               </Box>
             </SimpleGrid>
           </FormControl>
-          <Button type="submit">Add</Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
+          <Box marginTop="16px">
+            <Button type="submit" marginRight="10px">
+              Add
+            </Button>
+            <Button
+              marginLeft="10px"
+              onClick={() => {
+                handleSubmit();
+                prevStep();
+              }}
+            >
+              Previous Button
+            </Button>
+          </Box>
         </Form>
       )}
     </Formik>

@@ -4,7 +4,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Heading,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
@@ -38,9 +37,8 @@ const ReferralForm = ({
 
   return (
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
-      <Form style={{ padding: "0px 100px 30px 100px" }}>
-        <Heading textStyle="header-large">Referral Details</Heading>
-        <FormControl style={{ padding: "30px" }}>
+      <Form>
+        <FormControl>
           <SimpleGrid columns={2} spacing="70px">
             <Box>
               <FormLabel htmlFor="referringWorker" style={{ marginTop: "0px" }}>
@@ -118,7 +116,9 @@ const ReferralForm = ({
             placeholder="(ie. 223-2232-2323)"
           />
         </FormControl>
-        <Button type="submit">Next Button</Button>
+        <Button type="submit" marginTop="30px">
+          Next Button
+        </Button>
       </Form>
     </Formik>
   );

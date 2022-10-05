@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -87,7 +87,9 @@ const Intake = (): React.ReactElement => {
           ]}
           activePage={step - 1}
         />
-        {renderDetailsForm()}
+        <Container maxWidth="container.xl" padding="30px 96px">
+          {renderDetailsForm()}
+        </Container>
       </Box>
     </>
   );

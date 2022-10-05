@@ -11,7 +11,7 @@ const Container: ComponentStyleConfig = {
     },
   },
   variants: {
-    default: {
+    selectionTag: {
       maxW: "md",
       borderRadius: "8px",
       padding: "4px",

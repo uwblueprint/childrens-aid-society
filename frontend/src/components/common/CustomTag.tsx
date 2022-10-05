@@ -22,7 +22,11 @@ const CustomTag = ({
     setPressed(!pressed);
   }
   return (
-    <Container aria-pressed={pressed} onClick={handleComponentClick}>
+    <Container
+      variant="selectionTag"
+      aria-pressed={pressed}
+      onClick={handleComponentClick}
+    >
       <Tag
         border="1px solid"
         borderColor="gray.700"

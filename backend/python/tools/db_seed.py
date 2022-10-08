@@ -1,6 +1,4 @@
-import os
 import sys
-from ctypes import addressof
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -153,28 +151,6 @@ def insert_test_data():
     create_enum(db, "first_nation_heritage_enum", ('FIRST_NATION_REGISTERED', 'ELIGIBLE_FOR_REGISTRATION', 'INUIT', 'METIS', 'UNKNOWN'))
     create_enum(db, "intakes_access_weekday_enum", ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'))
 
-    # create_table(db, "intake_concerns", """
-    #     CREATE TABLE intake_concerns (
-    #         intake_id INTEGER NOT NULL,
-    #         concern_id INTEGER NOT NULL,
-    #         PRIMARY KEY (intake_id, concern_id),
-    #         FOREIGN KEY(intake_id) REFERENCES intakes(id),
-    #         FOREIGN KEY(concern_id) REFERENCES concerns(id)
-    #     );
-    # """)
-
-    # create_table(db, "intakes_goals", """
-    #     CREATE TABLE intakes_goals (
-    #         intake_id INTEGER NOT NULL,
-    #         goal_id INTEGER NOT NULL,
-    #         start_date DATE,
-    #         end_date DATE,
-    #         PRIMARY KEY (intake_id, goal_id),
-    #         FOREIGN KEY(intake_id) REFERENCES intakes(id),
-    #         FOREIGN KEY(goal_id) REFERENCES goals(id)
-    #     );
-    # """)
-
     create_table(db, "intakes", """
         CREATE TABLE intakes (
             id SERIAL PRIMARY KEY,
@@ -289,6 +265,5 @@ if __name__ == "__main__":
     app = create_app("development")
     if "nuke" in sys.argv:
         nuke_db()
-        print(type(db))
     else:
         insert_test_data()

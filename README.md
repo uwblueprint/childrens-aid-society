@@ -137,10 +137,10 @@ Insert test data into the database with the provided script. Your environment va
 docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed"
 ```
 
-Nuke the CAS database. Your environment variables need to be correctly configured in `.env`
+To clear rows from the CAS database. Your environment variables need to be correctly configured in `.env`
 
 ```
-docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed nuke"
+docker exec -it cas_py_backend /bin/bash -c "python -m tools.db_seed clear"
 ```
 
 Ensure that a new revision file is created in the directory [backend/python/migrations/versions](backend/python/migrations/versions). **Do not** change the alembic revision/identifiers. Generally these auto-generated revision files will encompass all schema changes, and thus do not need to be modified!

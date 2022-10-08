@@ -117,17 +117,22 @@ def insert_test_data():
     # fmt: on
 
 
-def nuke_db():
-    db.engine.execute("DROP SCHEMA public CASCADE;")
-    db.engine.execute("CREATE SCHEMA public;")
-    db.engine.execute("GRANT ALL ON SCHEMA public TO postgres;")
-    db.engine.execute("GRANT ALL ON SCHEMA public TO public;")
-    db.engine.execute("COMMENT ON SCHEMA public IS 'standard public schema';")
+def clear_rows():
+    # delete all rows, but not the tables
+    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE addresses RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE concerns RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
+    db.engine.execute(
+        "TRUNCATE TABLE daytime_contacts RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
 
 
 if __name__ == "__main__":
     app = create_app("development")
-    if "nuke" in sys.argv:
-        nuke_db()
+    if "clear" in sys.argv:
+        clear_rows()
     else:
         insert_test_data()

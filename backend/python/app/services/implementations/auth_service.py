@@ -35,8 +35,8 @@ class AuthService(IAuthService):
             return AuthDTO(**{**token.__dict__, **user.__dict__})
         except Exception as e:
             self.logger.error(
-                "Failed to generate token for user with email {email}".format(
-                    email=email
+                "Failed to generate token for user with email {email}: {error}".format(
+                    email=email, error=e
                 )
             )
             raise e

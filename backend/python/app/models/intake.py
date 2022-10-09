@@ -20,7 +20,7 @@ first_nation_heritage_enum = db.Enum(
     "INUIT",
     "METIS",
     "UNKNOWN",
-    name="intake_first_nation_heritage",
+    name="intakes_first_nation_heritage",
 )
 
 intakes_access_weekday_enum = db.Enum(

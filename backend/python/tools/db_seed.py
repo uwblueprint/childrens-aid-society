@@ -57,30 +57,6 @@ def insert_test_data():
     for value in values:
         insert_values(db, "addresses", ("id", "street_address", "city", "postal_code", "latitude", "longitude"), value)
 
-
-    # Concern
-    # values = [
-    #     (1, "CHILD_BEHAVIOUR",  "Physical aggression",      False),
-    #     (2, "CHILD_BEHAVIOUR",  "Inattention",              True),
-    #     (3, "FAMILIAL_CONCERN", "Parental physical health", True),
-    #     (4, "FAMILIAL_CONCERN", "Parental separation",      False),
-    # ]
-
-    # for value in values:
-    #     insert_values(db, "concerns", ("id", "type", "concern", "is_default"), value)
-
-
-    # Goal
-    # values = [
-    #     (1, "LONG_TERM", "Eat more vegetables",     "2020-01-05", "2023-05-29", False),
-    #     (2, "LONG_TERM", "Floss",                   "2020-02-15", "2023-06-30", True),
-    #     (3, "SHORT_TERM", "Learn to cook for one",  "2020-02-24", "2023-05-30", True),
-    #     (4, "SHORT_TERM", "One Amazing Cartwheel!", "2022-03-06", "2023-06-05", True),
-    # ]
-
-    # for value in values:
-    #     insert_values(db, "goals", ("id", "type", "goal", "start_date", "end_date", "is_default"), value)
-
     # Intake
     values = [
         (1, 1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', 1, "10:00", 1, "Denial reason"),

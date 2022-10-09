@@ -1,0 +1,73 @@
+import datetime
+from multiprocessing import dummy
+
+import pytest
+from flask import current_app
+
+from app.models import db
+from app.models.address import Address
+from app.resources.daytime_contact_dto import CreateDaytimeContactDTO, DaytimeContactDTO
+from app.services.implementations.daytime_contact_service import DaytimeContactService
+
+
+DUMMY_ADDRESS_DATA = {
+    "id": 1,
+    "street_address": "Lester Street",
+    "city": "waterloo",
+    "postal_code": "N2L3W6",
+}
+
+
+@pytest.fixture
+def daytime_contact_service():
+    daytime_contact_service = DaytimeContactService(current_app.logger)
+    seed_database()
+    yield daytime_contact_service
+    empty_database()
+
+
+def seed_database():
+    dummy_address = Address(**DUMMY_ADDRESS_DATA)
+    db.session.add(dummy_address)
+    db.session.commit()
+
+    DUMMY_ADDRESS_DATA["id"] = dummy_address.id
+
+
+def empty_database():
+    Address.query.delete()
+
+def test_create_new_daytime_contact_valid(daytime_contact_service):
+    param = CreateDaytimeContactDTO(
+        contact_first_name = "Juthika",
+        contact_last_name = "Hoque",
+        phone_number = "1234567890",
+        address_id=DUMMY_ADDRESS_DATA["id"]
+    )
+    daytime_contact_instance = daytime_contact_service.create_new_daytime_contact(param)
+    param.id = daytime_contact_service.id
+    assert type(daytime_contact_service) is DaytimeContactDTO
+    assert daytime_contact_instance.__dict__ == param.__dict__
+
+def test_null_case(daytime_contact_service):
+    with pytest.raises(Exception):
+        daytime_contact_service.create_new_daytime_contact(None)
+
+
+def test_empty_input_string(daytime_contact_service):
+    param = CreateDaytimeContactDTO(
+        contact_first_name="Test",
+        contact_last_name="",
+        phone_Number="1321412424"
+    )
+    with pytest.raises(Exception):
+        daytime_contact_service.create_new_daytime_contact(param)
+
+
+def test_missing_field(daytime_contact_service):
+    param = CreateDaytimeContactDTO(
+        contact_last_name="Hoque",
+        phone_Number="1321412424"
+    )
+    with pytest.raises(Exception):
+        daytime_contact_service.create_new_daytime_contact(param)

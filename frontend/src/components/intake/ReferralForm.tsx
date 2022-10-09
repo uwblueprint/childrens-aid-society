@@ -42,7 +42,7 @@ const ReferralForm = ({
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
-          <SimpleGrid columns={2} spacing="3rem">
+          <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field
@@ -52,6 +52,7 @@ const ReferralForm = ({
                 type="string"
                 placeholder="Enter name of the referring worker..."
                 icon={<Icon as={User} />}
+                fontSize="md"
               />
             </Box>
             <Box>
@@ -64,23 +65,23 @@ const ReferralForm = ({
                 id="referringWorkerContact"
                 type="string"
                 placeholder="(e.g. 555-5555-5555, ext. 123)"
+                fontSize="md"
                 icon={<Icon as={Phone} />}
               />
             </Box>
-          </SimpleGrid>
-          <SimpleGrid columns={2} spacing="3rem">
-            <Box paddingTop="10px">
+            <Box>
               <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
               <Field
                 as={CustomInput}
                 id="cpinFileNumber"
                 name="cpinFileNumber"
                 type="string"
+                fontSize="md"
                 placeholder="Enter file number of the referred case"
                 icon={<Icon as={File} />}
               />
             </Box>
-            <Box paddingTop="10px">
+            <Box>
               <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
               <Field
                 as={Select}
@@ -88,6 +89,7 @@ const ReferralForm = ({
                 name="cpinFileType"
                 type="string"
                 placeholder="Select the CPIN file type..."
+                fontSize="md"
               />
             </Box>
           </SimpleGrid>
@@ -100,11 +102,11 @@ const ReferralForm = ({
               type="string"
               placeholder="Enter family name as referenced in the case"
               icon={<Icon as={Users} />}
+              fontSize="md"
             />
           </Box>
           <Box paddingTop="10px">
             <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
-            {/* TO DO : change to date picker */}
             <Field
               as={CustomInput}
               id="referralDate"
@@ -112,6 +114,7 @@ const ReferralForm = ({
               type="string"
               placeholder="DD/MM/YYYY"
               icon={<Icon as={Calendar} />}
+              fontSize="md"
             />
           </Box>
         </FormControl>

@@ -51,8 +51,9 @@ class IGoalService(ABC):
         """Get the goals associated with a given intake id;
         If goal type specified, only return goals of given type
         :param intake_id: int of intake ID
+        :param type: string of goal type (LONG_TERM/SHORT_TERM)
         :return: List of goals for given intake
         :rtype: List of GoalDTOs
-        :raises Exception: if goal or intake is invalid
+        :raises Exception: If intake ID does not exist
         """
         pass

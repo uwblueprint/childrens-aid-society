@@ -50,6 +50,7 @@ class IConcernService(ABC):
         :rtype: list of ConcernDTO
         :raises Exception: if intake_id is invalid
         """
+
     def get_all_concerns(self, type, is_default):
         """
         :param type: the type of concern

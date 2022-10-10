@@ -73,27 +73,15 @@ class ConcernService(IConcernService):
 
     def get_concerns_by_intake(self, intake_id, type=None):
         try:
-            intake_instance = Intake.query.filter_by(id=intake_id)
-            if type:
-                # concern_instance = Concern.query.filter_by(
-                #     id=intake_instance.concerns.concern_id, type=type,
-                # )
-                concern_instance = Concern.query.filter(
-                    Concern.intakes.any(id=intake_id, type=type)
-                ).all()
-            else:
-                # concern_instance = Concern.query.filter_by(
-                #     id=intake_instance.concerns,
-                # )
-                concern_instance = Concern.query.filter(
-                    Concern.intakes.any(id=intake_id)
-                ).all()
-            concerns = []
-            for concern in concern_instance:
-                concern.append(
-                    ConcernDTO(concern_instance.id, concern_instance.concern)
-                )
-            return concerns
+            intake_instance = Intake.query.filter_by(id=intake_id).first()
+            return [
+                ConcernDTO(result.id, result.type, result.concern, result.is_default)
+                for result in intake_instance.goals
+                if type == result.type or type is None
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
 
     def get_all_concerns(self, type, is_default=True):
         try:

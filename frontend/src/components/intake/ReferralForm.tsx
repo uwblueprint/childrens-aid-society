@@ -64,7 +64,7 @@ const ReferralForm = ({
                 name="referringWorkerContact"
                 id="referringWorkerContact"
                 type="string"
-                placeholder="(e.g. 555-5555-5555, ext. 123)"
+                placeholder="(e.g. 555-555-5555, ext. 123)"
                 fontSize="md"
                 icon={<Icon as={Phone} />}
               />

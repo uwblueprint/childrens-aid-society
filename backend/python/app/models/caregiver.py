@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-type_enum = db.Enum("CAREGIVER", "PROVIDER", name="caregivers_type")
+caregiver_type_enum = db.Enum("CAREGIVER", "PROVIDER", name="caregivers_type")
 relationship_to_child_enum = db.Enum(
     "FOSTER_CAREGIVER",
     "KINSHIP_CAREGIVER",
@@ -15,7 +15,7 @@ class Caregiver(db.Model, BaseMixin):
 
     # TODO: add foreign key reference to child
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    type = db.Column(type_enum)
+    type = db.Column(caregiver_type_enum)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     is_primary = db.Column(db.Boolean, nullable=True, default=True)

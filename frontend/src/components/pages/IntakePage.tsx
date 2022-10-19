@@ -10,6 +10,7 @@ import PermittedIndividualsForm, {
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm, { ReviewDetails } from "../intake/ReviewCaseForm";
+import Stepper from "../intake/Stepper";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -50,36 +51,20 @@ const Intake = (): React.ReactElement => {
     switch (step) {
       case 1:
         return (
-          <>
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReferralForm
-                referralDetails={referralDetails}
-                setReferralDetails={setReferralDetails}
-                nextStep={nextStep}
-              />
-            </Box>
-          </>
+          <ReferralForm
+            referralDetails={referralDetails}
+            setReferralDetails={setReferralDetails}
+            nextStep={nextStep}
+          />
         );
       case 2:
         return (
-          <>
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <CourtInformationForm
-                courtDetails={courtDetails}
-                setCourtDetails={setCourtDetails}
-                nextStep={nextStep}
-                prevStep={prevStep}
-              />
-            </Box>
-          </>
+          <CourtInformationForm
+            courtDetails={courtDetails}
+            setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
         );
       case 3:
         return (
@@ -134,7 +119,26 @@ const Intake = (): React.ReactElement => {
     }
   };
 
-  return <>{renderDetailsForm()}</>;
+  return (
+    <>
+      <IntakeHeader
+        primaryTitle="Initiate New Case"
+        secondaryTitle="Case Management"
+      />
+      <Box textAlign="center" padding="30px 0 40px 0">
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          activePage={step - 1}
+        />
+        {renderDetailsForm()}
+      </Box>
+    </>
+  );
 };
 
 export default Intake;

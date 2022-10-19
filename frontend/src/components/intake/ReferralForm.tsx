@@ -52,7 +52,6 @@ const ReferralForm = ({
                 type="string"
                 placeholder="Enter name of the referring worker..."
                 icon={<Icon as={User} />}
-                fontSize="md"
               />
             </Box>
             <Box>
@@ -65,7 +64,6 @@ const ReferralForm = ({
                 id="referringWorkerContact"
                 type="string"
                 placeholder="(e.g. 555-555-5555, ext. 123)"
-                fontSize="md"
                 icon={<Icon as={Phone} />}
               />
             </Box>
@@ -76,7 +74,6 @@ const ReferralForm = ({
                 id="cpinFileNumber"
                 name="cpinFileNumber"
                 type="string"
-                fontSize="md"
                 placeholder="Enter file number of the referred case"
                 icon={<Icon as={File} />}
               />
@@ -89,7 +86,6 @@ const ReferralForm = ({
                 name="cpinFileType"
                 type="string"
                 placeholder="Select the CPIN file type..."
-                fontSize="md"
               />
             </Box>
           </SimpleGrid>
@@ -102,7 +98,6 @@ const ReferralForm = ({
               type="string"
               placeholder="Enter family name as referenced in the case"
               icon={<Icon as={Users} />}
-              fontSize="md"
             />
           </Box>
           <Box paddingTop="10px">
@@ -114,7 +109,6 @@ const ReferralForm = ({
               type="string"
               placeholder="DD/MM/YYYY"
               icon={<Icon as={Calendar} />}
-              fontSize="md"
             />
           </Box>
         </FormControl>

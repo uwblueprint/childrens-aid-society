@@ -24,10 +24,11 @@ class DaytimeContactService(IDaytimeContactService):
 
             return DaytimeContactDTO(
                 id=new_contact_entry.id,
-                contact_first_name=new_contact_entry.intake_id,
-                contact_last_name=new_contact_entry.first_name,
-                address_id=new_contact_entry.last_name,
-                phone_number=new_contact_entry.date_of_birth
+                contact_first_name=new_contact_entry.contact_first_name,
+                contact_last_name=new_contact_entry.contact_last_name,
+                address_id=new_contact_entry.address_id,
+                phone_number=new_contact_entry.phone_number,
+                type = new_contact_entry.type
             )
         except Exception as error:
             db.session.rollback()

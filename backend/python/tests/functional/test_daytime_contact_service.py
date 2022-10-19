@@ -21,10 +21,8 @@ DEFAULT_DAYTIME_CONTACT = {
     "contact_first_name": "Juthika",
     "contact_last_name": "Hoque",
     "phone_number": "1234567890",
+    "type": "SCHOOL",
 }
-
-
-
 
 @pytest.fixture
 def daytime_contact_service():
@@ -33,9 +31,7 @@ def daytime_contact_service():
     yield daytime_contact_service
     empty_database()
 
-
 def seed_database():
-    
     dummy_address = Address(**DUMMY_ADDRESS_DATA)
     db.session.add(dummy_address)
     db.session.commit()
@@ -47,20 +43,20 @@ def seed_database():
 
 
 def empty_database():
-    Address.query.delete()
     DaytimeContact.query.delete()
+    Address.query.delete()
 
 def test_create_new_daytime_contact_valid(daytime_contact_service):
     param = CreateDaytimeContactDTO(
         contact_first_name = "Juthika",
         contact_last_name = "Hoque",
         phone_number = "1234567890",
-        address_id=1
+        address_id = DEFAULT_DAYTIME_CONTACT["address_id"]
     )
 
     daytime_contact_instance = daytime_contact_service.create_new_daytime_contact(param)
-    param.id = daytime_contact_service.id
-    assert type(daytime_contact_service) is DaytimeContactDTO
+    param.id = daytime_contact_instance.id
+    assert type(daytime_contact_instance) is DaytimeContactDTO
     assert daytime_contact_instance.__dict__ == param.__dict__
 
 def test_null_case(daytime_contact_service):

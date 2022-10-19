@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  SimpleGrid,
-} from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import { Button, FormControl, Heading } from "@chakra-ui/react";
+import { Form, Formik } from "formik";
 
 export type ProgramDetails = {
   test: string;

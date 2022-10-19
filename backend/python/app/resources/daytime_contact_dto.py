@@ -6,6 +6,7 @@ class DaytimeContactDTO:
         self.address_id = kwargs.get("address_id")
         self.phone_number = kwargs.get("phone_number")
 
+
 class CreateDaytimeContactDTO(object):
     def __init__(self, **kwargs):
         self.contact_first_name = kwargs.get("contact_first_name")

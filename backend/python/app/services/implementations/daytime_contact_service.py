@@ -1,6 +1,6 @@
 from ...models import db
 from ...models.daytime_contact import DaytimeContact
-from ...resources.daytime_contact_dto import DaytimeContactDTO, CreateDaytimeContactDTO
+from ...resources.daytime_contact_dto import CreateDaytimeContactDTO, DaytimeContactDTO
 from ..interfaces.daytime_contact_service import IDaytimeContactService
 
 
@@ -17,7 +17,7 @@ class DaytimeContactService(IDaytimeContactService):
             error_list = contact.validate()
             if error_list:
                 raise Exception(error_list)
-            
+
             new_contact_entry = DaytimeContact(**contact.__dict__)
             db.session.add(new_contact_entry)
             db.session.commit()
@@ -28,7 +28,7 @@ class DaytimeContactService(IDaytimeContactService):
                 contact_last_name=new_contact_entry.contact_last_name,
                 address_id=new_contact_entry.address_id,
                 phone_number=new_contact_entry.phone_number,
-                type = new_contact_entry.type
+                type=new_contact_entry.type,
             )
         except Exception as error:
             db.session.rollback()

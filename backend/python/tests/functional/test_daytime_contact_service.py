@@ -2,6 +2,7 @@ import datetime
 from multiprocessing import dummy
 
 import pytest
+from app.models.daytime_contact import DaytimeContact
 from flask import current_app
 
 from app.models import db
@@ -11,11 +12,18 @@ from app.services.implementations.daytime_contact_service import DaytimeContactS
 
 
 DUMMY_ADDRESS_DATA = {
-    "id": 1,
     "street_address": "Lester Street",
     "city": "waterloo",
     "postal_code": "N2L3W6",
 }
+
+DEFAULT_DAYTIME_CONTACT = {
+    "contact_first_name": "Juthika",
+    "contact_last_name": "Hoque",
+    "phone_number": "1234567890",
+}
+
+
 
 
 @pytest.fixture
@@ -27,23 +35,29 @@ def daytime_contact_service():
 
 
 def seed_database():
+    
     dummy_address = Address(**DUMMY_ADDRESS_DATA)
     db.session.add(dummy_address)
     db.session.commit()
 
-    DUMMY_ADDRESS_DATA["id"] = dummy_address.id
+    DEFAULT_DAYTIME_CONTACT["address_id"] = dummy_address.id
+    dummy_daytime_contact = DaytimeContact(**DEFAULT_DAYTIME_CONTACT)
+    db.session.add(dummy_daytime_contact)
+    db.session.commit()
 
 
 def empty_database():
     Address.query.delete()
+    DaytimeContact.query.delete()
 
 def test_create_new_daytime_contact_valid(daytime_contact_service):
     param = CreateDaytimeContactDTO(
         contact_first_name = "Juthika",
         contact_last_name = "Hoque",
         phone_number = "1234567890",
-        address_id=DUMMY_ADDRESS_DATA["id"]
+        address_id=1
     )
+
     daytime_contact_instance = daytime_contact_service.create_new_daytime_contact(param)
     param.id = daytime_contact_service.id
     assert type(daytime_contact_service) is DaytimeContactDTO

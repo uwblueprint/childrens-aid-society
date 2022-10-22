@@ -23,7 +23,7 @@ def get_all_caregivers():
         return jsonify(error), 400
 
 
-# create caregiver
+# create a caregiver
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 # @validate_request("CreateCaregiverDTO")

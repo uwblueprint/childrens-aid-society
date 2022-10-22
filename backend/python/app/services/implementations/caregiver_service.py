@@ -30,7 +30,6 @@ class CaregiverService(ICaregiverService):
             raise error
 
     def get_all_caregivers(self):
-        # get all caregivers
         if not db.engine.dialect.has_table(db.engine, "caregivers"):
             return []
 

@@ -11,7 +11,8 @@ class CaregiverService(ICaregiverService):
     def create_caregiver(self, caregiver):
         try:
             if not isinstance(caregiver, CreateCaregiverDTO):
-                raise Exception("Caregiver passed is not of CreateCaregiverDTO type")
+                raise Exception(
+                    "Caregiver passed is not of CreateCaregiverDTO type")
             if not caregiver:
                 raise Exception(
                     "Empty caregiver DTO/None passed to create_caregiver function"
@@ -26,5 +27,17 @@ class CaregiverService(ICaregiverService):
             return CaregiverDTO(**new_caregiver.to_dict())
         except Exception as error:
             db.session.rollback()
+            self.logger.error(str(error))
+            raise error
+
+    # get all caregivers
+    def get_all_caregivers(self):
+        if not db.engine.dialect.has_table(db.engine, "caregivers"):
+            return []
+
+        try:
+            caregivers = Caregiver.query.all()
+            return [CaregiverDTO(**caregiver.to_dict()) for caregiver in caregivers]
+        except Exception as error:
             self.logger.error(str(error))
             raise error

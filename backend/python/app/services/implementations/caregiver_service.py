@@ -35,11 +35,10 @@ class CaregiverService(ICaregiverService):
         if not db.engine.dialect.has_table(db.engine, "caregivers"):
             return []
 
-        # try:
-        caregivers = [x for x in Caregiver.query.all()]
-        caregivers_dict = [x.to_dict() for x in caregivers]
-        caregivers_dto = [CaregiverDTO(**x) for x in caregivers_dict]
-        return caregivers_dto
-        # except Exception as error:
-        #     self.logger.error(str(error))
-        #     raise error
+        try:
+            caregivers = Caregiver.query.all()
+            caregivers_dto = [CaregiverDTO(**x.to_dict()) for x in caregivers]
+            return caregivers_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

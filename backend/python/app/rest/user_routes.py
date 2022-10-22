@@ -34,6 +34,7 @@ DEFAULT_CSV_OPTIONS = {
 
 
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
+@require_authorization_by_role({"User", "Admin"})
 def get_users():
     """
     Get all users, optionally filter by a user_id or email query parameter to retrieve a single user

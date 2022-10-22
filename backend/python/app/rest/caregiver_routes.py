@@ -14,9 +14,23 @@ blueprint = Blueprint("caregiver", __name__, url_prefix="/caregiver")
 
 # get all caregivers
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
+# @require_authorization_by_role({"Admin"})
 def get_all_caregivers():
     try:
         caregivers = caregiver_service.get_all_caregivers()
         return jsonify(list(map(lambda user: user.__dict__, caregivers))), 200
+    except Exception as error:
+        return jsonify(error), 400
+
+
+# create caregiver
+@blueprint.route("/", methods=["POST"], strict_slashes=False)
+# @require_authorization_by_role({"Admin"})
+# @validate_request("CreateCaregiverDTO")
+def create_caregiver():
+    try:
+        caregiver = CreateCaregiverDTO(**request.get_json())
+        new_caregiver = caregiver_service.create_caregiver(caregiver)
+        return jsonify(new_caregiver.__dict__), 201
     except Exception as error:
         return jsonify(error), 400

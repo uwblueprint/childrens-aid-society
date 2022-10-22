@@ -75,8 +75,7 @@ def get_users():
             except Exception as e:
                 error_message = getattr(e, "message", None)
                 return (
-                    jsonify(
-                        {"error": (error_message if error_message else str(e))}),
+                    jsonify({"error": (error_message if error_message else str(e))}),
                     500,
                 )
 
@@ -90,8 +89,7 @@ def get_users():
             except Exception as e:
                 error_message = getattr(e, "message", None)
                 return (
-                    jsonify(
-                        {"error": (error_message if error_message else str(e))}),
+                    jsonify({"error": (error_message if error_message else str(e))}),
                     500,
                 )
 
@@ -151,8 +149,7 @@ def delete_user():
             except Exception as e:
                 error_message = getattr(e, "message", None)
                 return (
-                    jsonify(
-                        {"error": (error_message if error_message else str(e))}),
+                    jsonify({"error": (error_message if error_message else str(e))}),
                     500,
                 )
 
@@ -166,8 +163,7 @@ def delete_user():
             except Exception as e:
                 error_message = getattr(e, "message", None)
                 return (
-                    jsonify(
-                        {"error": (error_message if error_message else str(e))}),
+                    jsonify({"error": (error_message if error_message else str(e))}),
                     500,
                 )
 

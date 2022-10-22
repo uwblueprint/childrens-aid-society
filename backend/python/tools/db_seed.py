@@ -33,7 +33,7 @@ def insert_values(db, table_name: str, column_names: tuple, values: tuple):
     column_names = tup_to_string_commas(column_names)
     values = tup_to_string_commas_and_quotes(values)
 
-    # equailize the number of values to the number of columns by adding None
+    # equalize the number of values to the number of columns by adding None
     # values to the end of the values tuple
     if len_column_names > len_values:
         values += ", " + ", ".join(["NULL"] * (len_column_names - len_values))
@@ -109,21 +109,22 @@ def insert_test_data():
     for value in values:
         insert_values(db, "caregivers", ("id", "type", "first_name", "last_name", "is_primary", "child_id", "address_id", "relationship_to_child", "phone_number", "cpin_number", "date_of_birth", "special_needs", "name_of_child", "kinship_worker_name", "kinship_worker_ext", "foster_care_coord_name", "foster_care_coord_ext", "limitations_for_access"), value)
 
-    # fmt: on
+# fmt: on
 
-
+# fmt: off
 def clear_rows():
     # delete all rows, but not the tables
-    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
-    db.engine.execute("TRUNCATE TABLE caregivers RESTART IDENTITY CASCADE")
-    db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE addresses RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE caregivers RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE concerns RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE daytime_contacts RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
-    db.engine.execute(
-        "TRUNCATE TABLE daytime_contacts RESTART IDENTITY CASCADE")
-    db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
+
+# fmt: on
 
 
 if __name__ == "__main__":

@@ -11,8 +11,7 @@ class CaregiverService(ICaregiverService):
     def create_caregiver(self, caregiver):
         try:
             if not isinstance(caregiver, CreateCaregiverDTO):
-                raise Exception(
-                    "Caregiver passed is not of CreateCaregiverDTO type")
+                raise Exception("Caregiver passed is not of CreateCaregiverDTO type")
             if not caregiver:
                 raise Exception(
                     "Empty caregiver DTO/None passed to create_caregiver function"

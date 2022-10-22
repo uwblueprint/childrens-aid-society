@@ -27,8 +27,19 @@ def insert_values(db, table_name: str, column_names: tuple, values: tuple):
     """
     Insert values into a table.
     """
+
+    len_column_names = len(column_names)
+    len_values = len(values)
+    column_names = tup_to_string_commas(column_names)
+    values = tup_to_string_commas_and_quotes(values)
+
+    # equailize the number of values to the number of columns by adding None
+    # values to the end of the values tuple
+    if len_column_names > len_values:
+        values += ", " + ", ".join(["NULL"] * (len_column_names - len_values))
+
     db.engine.execute(
-        f"INSERT INTO {table_name} ({tup_to_string_commas(column_names)}) VALUES ({tup_to_string_commas_and_quotes(values)});"
+        f"INSERT INTO {table_name} ({column_names}) VALUES ({values});"
     )
 
 
@@ -44,7 +55,6 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "users", ("id", "first_name", "last_name", "auth_id", "role", "branch"), value)
-
 
     # Addresses
     values = [
@@ -90,12 +100,22 @@ def insert_test_data():
     for value in values:
         insert_values(db, "children", ("id", "intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "child_service_worker_id", "daytime_contact_id", "special_needs", "has_kinship_provider", "has_foster_placement"), value)
 
+    # Caregivers
+    values = [
+        (1, "CAREGIVER", "Yor", "Forger", True, 1, 1, "FOSTER_CAREGIVER", "1234567890"),
+        (2, "CAREGIVER", "Loid", "Forger", True, 1, 1, "FOSTER_CAREGIVER", "1234567890")
+    ]
+
+    for value in values:
+        insert_values(db, "caregivers", ("id", "type", "first_name", "last_name", "is_primary", "child_id", "address_id", "relationship_to_child", "phone_number", "cpin_number", "date_of_birth", "special_needs", "name_of_child", "kinship_worker_name", "kinship_worker_ext", "foster_care_coord_name", "foster_care_coord_ext", "limitations_for_access"), value)
+
     # fmt: on
 
 
 def clear_rows():
     # delete all rows, but not the tables
     db.engine.execute("TRUNCATE TABLE children RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE caregivers RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE addresses RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE concerns RESTART IDENTITY CASCADE")

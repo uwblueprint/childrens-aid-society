@@ -36,7 +36,9 @@ class CaregiverService(ICaregiverService):
 
         try:
             caregivers = Caregiver.query.all()
-            caregivers_dto = [CaregiverDTO(**x.to_dict()) for x in caregivers]
+            caregivers_dto = [
+                CaregiverDTO(**caregiver.to_dict()) for caregiver in caregivers
+            ]
             return caregivers_dto
         except Exception as error:
             self.logger.error(str(error))

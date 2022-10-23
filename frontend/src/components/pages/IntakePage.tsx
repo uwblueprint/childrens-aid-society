@@ -9,7 +9,7 @@ import PermittedIndividualsForm, {
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
-import ReviewForm, { ReviewDetails } from "../intake/ReviewCaseForm";
+import ReviewForm from "../intake/ReviewCaseForm";
 import Stepper from "../intake/Stepper";
 
 const Intake = (): React.ReactElement => {
@@ -39,9 +39,6 @@ const Intake = (): React.ReactElement => {
     relationship: "",
   });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
-    test: "",
-  });
-  const [reviewDetails, setReviewDetails] = useState<ReviewDetails>({
     test: "",
   });
 
@@ -98,11 +95,7 @@ const Intake = (): React.ReactElement => {
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm
-                reviewDetails={reviewDetails}
-                setReviewDetails={setReviewDetails}
-                prevStep={prevStep}
-              />
+              <ReviewForm prevStep={prevStep} />
             </Box>
           </>
         );

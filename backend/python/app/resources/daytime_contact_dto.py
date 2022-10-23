@@ -1,28 +1,28 @@
 class DaytimeContactDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
-        self.contact_first_name = kwargs.get("contact_first_name")
-        self.contact_last_name = kwargs.get("contact_last_name")
+        self.name = kwargs.get("name")
         self.address_id = kwargs.get("address_id")
-        self.phone_number = kwargs.get("phone_number")
+        self.contact_information = kwargs.get("contact_information")
+        self.dismissal_time = kwargs.get("dismissal_time")
 
 
 class CreateDaytimeContactDTO(object):
     def __init__(self, **kwargs):
-        self.contact_first_name = kwargs.get("contact_first_name")
-        self.contact_last_name = kwargs.get("contact_last_name")
+        self.name = kwargs.get("name")
         self.address_id = kwargs.get("address_id")
-        self.phone_number = kwargs.get("phone_number")
+        self.contact_information = kwargs.get("contact_information")
+        self.dismissal_time = kwargs.get("dismissal_time")
 
     def validate(self):
         error_list = []
-        if not self.contact_first_name or not type(self.contact_first_name) == str:
-            error_list.append("The contact_first_name supplied is invalid")
-        if not self.contact_last_name or not type(self.contact_last_name) == str:
-            error_list.append("The contact_last_name supplied is invalid")
+        if not self.name or not type(self.name) == str:
+            error_list.append("The name supplied is invalid")
+        if not self.contact_information or not type(self.contact_information) == str:
+            error_list.append("The contact_information supplied is invalid")
         if not self.address_id or not type(self.address_id) == int:
             error_list.append("The address_id supplied is invalid")
-        if not self.phone_number or not type(self.phone_number) == str:
-            error_list.append("The phone_number supplied is invalid")
+        if not self.dismissal_time or not type(self.dismissal_time) == str:
+            error_list.append("The dismissal_time supplied is invalid")
 
         return error_list

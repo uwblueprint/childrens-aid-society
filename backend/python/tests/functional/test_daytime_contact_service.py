@@ -14,10 +14,9 @@ DUMMY_ADDRESS_DATA = {
 }
 
 DEFAULT_DAYTIME_CONTACT = {
-    "contact_first_name": "Juthika",
-    "contact_last_name": "Hoque",
-    "phone_number": "1234567890",
-    "type": "SCHOOL",
+    "name": "Juthika Hoque",
+    "contact_information": "1234567890",
+    "dismissal_time": "12:00PM",
 }
 
 
@@ -47,9 +46,9 @@ def empty_database():
 
 def test_create_new_daytime_contact_valid(daytime_contact_service):
     param = CreateDaytimeContactDTO(
-        contact_first_name="Juthika",
-        contact_last_name="Hoque",
-        phone_number="1234567890",
+        name="Juthika Hoque",
+        contact_information="1234567890",
+        dismissal_time="1:00PM",
         address_id=DEFAULT_DAYTIME_CONTACT["address_id"],
     )
 
@@ -66,15 +65,16 @@ def test_null_case(daytime_contact_service):
 
 def test_empty_input_string(daytime_contact_service):
     param = CreateDaytimeContactDTO(
-        contact_first_name="Test", contact_last_name="", phone_Number="1321412424"
+        name="Test",
+        dismissal_time="",
+        contact_information="1321412424",
+        address_id=DEFAULT_DAYTIME_CONTACT["address_id"],
     )
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)
 
 
 def test_missing_field(daytime_contact_service):
-    param = CreateDaytimeContactDTO(
-        contact_last_name="Hoque", phone_Number="1321412424"
-    )
+    param = CreateDaytimeContactDTO(name="Hoque", contact_information="1321412424")
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)

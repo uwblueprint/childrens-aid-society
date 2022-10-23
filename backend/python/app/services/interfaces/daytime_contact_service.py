@@ -11,6 +11,6 @@ class IDaytimeContactService(ABC):
         :return: DaytimeContactDTO
         :rtype: DaytimeContactDTO
         :raises Exception: if input CreateDaytimeContactDTO is not valid or if there was an error
-                           while insertion
+                           during insertion
         """
         pass

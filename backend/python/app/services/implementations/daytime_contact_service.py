@@ -11,9 +11,11 @@ class DaytimeContactService(IDaytimeContactService):
     def create_new_daytime_contact(self, contact):
         try:
             if not contact:
-                raise Exception("Empty child DTO/None passed to add_new_child function")
+                raise Exception(
+                    "Empty contact DTO/None passed to create_new_daytime_contact function"
+                )
             if not isinstance(contact, CreateDaytimeContactDTO):
-                raise Exception("Child passed is not of CreateDaytimeContactDTO type")
+                raise Exception("Contact passed is not of CreateDaytimeContactDTO type")
             error_list = contact.validate()
             if error_list:
                 raise Exception(error_list)

@@ -1,6 +1,3 @@
-import datetime
-from multiprocessing import dummy
-
 import pytest
 from flask import current_app
 

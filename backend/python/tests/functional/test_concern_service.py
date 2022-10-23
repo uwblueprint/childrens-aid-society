@@ -3,7 +3,7 @@ from flask import current_app
 
 from app.models import db
 from app.models.concern import Concern
-from app.models.intake import Intake, intakes_concerns
+from app.models.intake import Intake
 from app.resources.concern_dto import ConcernDTO
 from app.services.implementations.concern_service import ConcernService
 

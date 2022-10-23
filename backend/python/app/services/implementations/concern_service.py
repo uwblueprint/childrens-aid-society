@@ -74,12 +74,11 @@ class ConcernService(IConcernService):
     def get_concerns_by_intake(self, intake_id, type=None):
         try:
             intake_instance = Intake.query.filter_by(id=intake_id).first()
-            concerns = [
+            return [
                 ConcernDTO(result.id, result.type, result.concern, result.is_default)
                 for result in intake_instance.concerns
                 if type == result.type or type is None
             ]
-            return concerns
         except Exception as error:
             self.logger.error(str(error))
             raise error

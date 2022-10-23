@@ -12,4 +12,4 @@ class DaytimeContact(db.Model, BaseMixin):
     address_id = db.Column(db.Integer, db.ForeignKey("addresses.id"), nullable=False)
     address = db.relationship("Address")
     contact_information = db.Column(db.String, nullable=False)
-    dismissal_time = db.Column(db.String, nullable=False)
+    dismissal_time = db.Column(db.String, nullable=True)

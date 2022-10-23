@@ -65,8 +65,7 @@ def test_null_case(daytime_contact_service):
 
 def test_empty_input_string(daytime_contact_service):
     param = CreateDaytimeContactDTO(
-        name="Test",
-        dismissal_time="",
+        name="",
         contact_information="1321412424",
         address_id=DEFAULT_DAYTIME_CONTACT["address_id"],
     )
@@ -75,6 +74,6 @@ def test_empty_input_string(daytime_contact_service):
 
 
 def test_missing_field(daytime_contact_service):
-    param = CreateDaytimeContactDTO(name="Hoque", contact_information="1321412424")
+    param = CreateDaytimeContactDTO(contact_information="1321412424")
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)

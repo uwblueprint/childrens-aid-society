@@ -1,10 +1,8 @@
-import json
-
 from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
-from ..resources.caregiver_dto import CaregiverDTO, CreateCaregiverDTO
+from ..resources.caregiver_dto import CreateCaregiverDTO
 from ..services.implementations.caregiver_service import CaregiverService
 
 caregiver_service = CaregiverService(current_app.logger)
@@ -26,7 +24,7 @@ def get_all_caregivers():
 # create a caregiver
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
-# @validate_request("CreateCaregiverDTO")
+@validate_request("CreateCaregiverDTO")
 def create_caregiver():
     try:
         caregiver = CreateCaregiverDTO(**request.get_json())

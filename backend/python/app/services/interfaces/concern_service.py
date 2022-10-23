@@ -40,6 +40,17 @@ class IConcernService(ABC):
         """
         pass
 
+    def get_concerns_by_intake(self, intake_id, type=None):
+
+        """Get all the concerns from database that's tied to a given intake_id
+
+        :param intake_id: int of Intake id
+        :param type: string specifying type of Concern
+        :return: ConcernDTOs
+        :rtype: list of ConcernDTO
+        :raises Exception: if intake_id is invalid
+        """
+
     def get_all_concerns(self, type, is_default):
         """
         :param type: the type of concern
@@ -47,5 +58,4 @@ class IConcernService(ABC):
         :return: ConcernDTO
         :rtype: ConcernDTO
         :raises Exception: if type is invalid
-
         """

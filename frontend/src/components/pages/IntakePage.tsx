@@ -29,15 +29,13 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [
-    permittedIndividualDetails,
-    setPermittedIndividualDetails,
-  ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
-  });
+  const [permittedIndividualDetails, setPermittedIndividualDetails] =
+    useState<PermittedIndividualDetails>({
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      relationship: "",
+    });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
     test: "",
   });
@@ -71,10 +69,6 @@ const Intake = (): React.ReactElement => {
       case 3:
         return (
           <>
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <PermittedIndividualsForm
                 permittedIndividualDetails={permittedIndividualDetails}
@@ -88,10 +82,6 @@ const Intake = (): React.ReactElement => {
       case 4:
         return (
           <>
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <ProgramForm
                 programDetails={programDetails}
@@ -105,10 +95,6 @@ const Intake = (): React.ReactElement => {
       default:
         return (
           <>
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
               <ReviewForm
                 reviewDetails={reviewDetails}
@@ -123,20 +109,32 @@ const Intake = (): React.ReactElement => {
 
   return (
     <>
-      <IntakeHeader
-        primaryTitle="Initiate New Case"
-        secondaryTitle="Case Management"
-      />
-      <Box textAlign="center" padding="30px 0 40px 0">
-        <Stepper
-          pages={[
-            "Case referral",
-            "Court information",
-            "Individual details",
-            "Program details",
-          ]}
-          activePage={step - 1}
+      {step === 5 ? (
+        <IntakeHeader
+          primaryTitle="Review Case Details"
+          secondaryTitle="Initiate New Case"
         />
+      ) : (
+        <IntakeHeader
+          primaryTitle="Initiate New Case"
+          secondaryTitle="Case Management"
+        />
+      )}
+
+      <Box textAlign="center" padding="30px 0 40px 0">
+        {step !== 5 ? (
+          <Stepper
+            pages={[
+              "Case referral",
+              "Court information",
+              "Individual details",
+              "Program details",
+            ]}
+            activePage={step - 1}
+          />
+        ) : (
+          <></>
+        )}
         {renderDetailsForm()}
       </Box>
     </>

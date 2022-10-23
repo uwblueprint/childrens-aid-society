@@ -33,4 +33,4 @@ def create_caregiver():
         new_caregiver = caregiver_service.create_caregiver(caregiver)
         return jsonify(new_caregiver.__dict__), 201
     except Exception as error:
-        return jsonify(error), 400
+        return jsonify(str(error)), 400

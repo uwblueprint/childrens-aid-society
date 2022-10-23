@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-roles_enum = db.Enum("Driver", "User", "Admin", name="users_role")
+user_role_enum = db.Enum("User", "Admin", name="users_role")
 
 
 class User(db.Model, BaseMixin):
@@ -11,5 +11,5 @@ class User(db.Model, BaseMixin):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     auth_id = db.Column(db.String, nullable=False)
-    role = db.Column(roles_enum)
+    role = db.Column(user_role_enum)
     branch = db.Column(db.String, nullable=False, default="ALGOMA")

@@ -9,6 +9,7 @@ import PermittedIndividualsForm, {
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import Stepper from "../intake/Stepper";
+import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -60,6 +61,13 @@ const Intake = (): React.ReactElement => {
             prevStep={prevStep}
           />
         );
+      case 3:
+        return(
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )
       default:
         return (
           <PermittedIndividualsForm

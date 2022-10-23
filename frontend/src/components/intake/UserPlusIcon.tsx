@@ -1,23 +1,13 @@
-import React from 'react';
-import { Icon } from '@chakra-ui/react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from "react";
+import { IconProps, Icon } from "@chakra-ui/react";
 
-export type UserPlusIconProps = {
-  boxSize: number;
-  color: string;
-};
+export const UserPlusIcon = (props: IconProps) => 
+<Icon viewBox="0 0 18 16" {...props}>
+    <path d="M11.6667 14V12.6667C11.6667 11.9594 11.3858 11.2811 10.8857 10.781C10.3856 10.281 9.70733 10 9.00008 10H4.33341C3.62617 10 2.94789 10.281 2.4478 10.781C1.9477 11.2811 1.66675 11.9594 1.66675 12.6667V14" stroke="#00287D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M6.66667 7.33333C8.13943 7.33333 9.33333 6.13943 9.33333 4.66667C9.33333 3.19391 8.13943 2 6.66667 2C5.19391 2 4 3.19391 4 4.66667C4 6.13943 5.19391 7.33333 6.66667 7.33333Z" stroke="#00287D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14.3333 5.33301V9.33301" stroke="#00287D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16.3333 7.33301H12.3333" stroke="#00287D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+</Icon>;
 
-
-export const UserPlusIcon = (props: UserPlusIconProps) => (
-  <Icon viewBox="undefined" {...props}>
-    
-    <g clip-path="url(#a)" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.666 14.5v-1.333A2.667 2.667 0 0 0 8 10.5H3.333a2.667 2.667 0 0 0-2.666 2.667V14.5M5.667 7.833a2.667 2.667 0 1 0 0-5.333 2.667 2.667 0 0 0 0 5.333ZM13.334 5.833v4M15.334 7.833h-4"/>
-    </g>
-    <defs>
-        <clipPath id="a"><path fill="#fff" transform="translate(0 .5)" d="M0 0h16v16H0z"/></clipPath>
-    </defs>
-
-  </Icon>
-);
-
-
+export default UserPlusIcon;

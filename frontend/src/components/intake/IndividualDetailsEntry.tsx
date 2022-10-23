@@ -4,7 +4,6 @@ import {
   Heading,
   VStack
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
 import PromptBox from "./PromptBox";
 
 
@@ -24,12 +23,17 @@ const IndividualDetailsEntry = ({
         <PromptBox 
           headerText="Children" 
           descriptionText="No children have been added to the case yet. " 
-          buttonText="Add child"/>
-        <PromptBox headerText="Caregivers" descriptionText="No caregivers have been added to the case yet. " buttonText="Add caregiver"/>
+          buttonText="Add child"
+          formEntry={() => {console.log("pressed")}}/>
+
+        <PromptBox 
+          headerText="Caregivers" 
+          descriptionText="No caregivers have been added to the case yet. " 
+          buttonText="Add caregiver" 
+          formEntry={(() => {console.log("pressed")})}/>
       </VStack>
       <Button 
         onClick={() => {
-          // handleSubmit();
           prevStep();
         }}
       >
@@ -37,7 +41,6 @@ const IndividualDetailsEntry = ({
       </Button>
       <Button
         onClick={() => {
-          // handleSubmit();
           nextStep();
         }}
       >

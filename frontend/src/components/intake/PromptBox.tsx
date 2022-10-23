@@ -12,12 +12,14 @@ export type PromptBoxProps = {
   headerText: string;
   descriptionText: string;
   buttonText: string;
+  formEntry: () => void;
 };
 
 const PromptBox = ({
   headerText,
   descriptionText,
-  buttonText
+  buttonText,
+  formEntry
 }: PromptBoxProps): React.ReactElement => {
 
   return (
@@ -37,23 +39,14 @@ const PromptBox = ({
         <Text color="gray.600" textStyle="body-large">{descriptionText}</Text>
       </VStack>
       
-      <Button leftIcon={<UserPlusIcon boxSize={5} color='gray'/>}>{buttonText}</Button>
+      <Button        
+        onClick={() => {
+          formEntry();
+        }} variant="secondary" colorScheme="gray.600" leftIcon={<UserPlusIcon fillOpacity={0} boxSize='16px'/>}>{buttonText}</Button>
     </VStack>
   );
 };
 
+
+
 export default PromptBox;
-
-
-// // using `path`
-// export const UpDownIcon = createIcon({
-//   displayName: 'UpDownIcon',
-//   viewBox: '0 0 200 200',
-//   // path can also be an array of elements, if you have multiple paths, lines, shapes, etc.
-//   path: (
-//     <path
-//       fill='currentColor'
-//       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
-//     />
-//   ),
-// })

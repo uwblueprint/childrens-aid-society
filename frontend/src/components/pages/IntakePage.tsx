@@ -29,13 +29,15 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [permittedIndividualDetails, setPermittedIndividualDetails] =
-    useState<PermittedIndividualDetails>({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      relationship: "",
-    });
+  const [
+    permittedIndividualDetails,
+    setPermittedIndividualDetails,
+  ] = useState<PermittedIndividualDetails>({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    relationship: "",
+  });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
     test: "",
   });

@@ -15,6 +15,7 @@ def init_app(app):
     from .daytime_contact import DaytimeContact
     from .goal import Goal
     from .intake import Intake
+    from .other_permitted_individual import OtherPermittedIndividual
     from .transportation_method import TransportationMethod
     from .user import User
     from .visit_location import VisitLocation

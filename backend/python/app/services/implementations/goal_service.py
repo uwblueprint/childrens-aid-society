@@ -1,5 +1,6 @@
 from ...models import db
 from ...models.goal import Goal
+from ...models.intake import Intake
 from ...resources.goal_dto import GoalDTO
 from ..interfaces.goal_service import IGoalService
 
@@ -47,4 +48,17 @@ class GoalService(IGoalService):
             return GoalDTO(new_goal.id, new_goal.goal, new_goal.type)
         except Exception as error:
             db.session.rollback()
+            raise error
+
+    def get_goals_by_intake(self, intake_id, type=None):
+        try:
+            intake = Intake.query.filter_by(id=intake_id).first()
+            return [
+                GoalDTO(result.id, result.goal, result.type)
+                for result in intake.goals
+                if type == result.type or type is None
+            ]
+
+        except Exception as error:
+            self.logger.error(str(error))
             raise error

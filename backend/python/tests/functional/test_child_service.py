@@ -29,7 +29,7 @@ DUMMY_USER_DATA = {
     "first_name": "Hamza",
     "last_name": "Yusuff",
     "auth_id": "hbyusuff",
-    "role": "Driver",
+    "role": "User",
     "branch": "ALGOMA",
 }
 

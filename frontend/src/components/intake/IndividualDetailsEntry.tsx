@@ -1,10 +1,13 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import {
   Button,
   Heading,
   VStack
 } from "@chakra-ui/react";
 import PromptBox from "./PromptBox";
+import * as Routes from "../../constants/Routes";
+import IndividualDetails from "../pages/IndividualDetails";
 
 
 export type IndividualDetailsEntryProp = {
@@ -16,7 +19,6 @@ const IndividualDetailsEntry = ({
   nextStep,
   prevStep
 }: IndividualDetailsEntryProp): React.ReactElement => {
-
   return (
     <React.Fragment key="IndividualDetailsEntry">
       <VStack padding="32px" spacing='24px'>
@@ -24,13 +26,12 @@ const IndividualDetailsEntry = ({
           headerText="Children" 
           descriptionText="No children have been added to the case yet. " 
           buttonText="Add child"
-          formEntry={() => {console.log("pressed")}}/>
-
+        />
         <PromptBox 
           headerText="Caregivers" 
           descriptionText="No caregivers have been added to the case yet. " 
-          buttonText="Add caregiver" 
-          formEntry={(() => {console.log("pressed")})}/>
+          buttonText="Add caregiver"
+        />
       </VStack>
       <Button 
         onClick={() => {

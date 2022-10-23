@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 import {
   Button,
   Heading,
@@ -12,16 +13,14 @@ export type PromptBoxProps = {
   headerText: string;
   descriptionText: string;
   buttonText: string;
-  formEntry: () => void;
 };
 
 const PromptBox = ({
   headerText,
   descriptionText,
-  buttonText,
-  formEntry
+  buttonText
 }: PromptBoxProps): React.ReactElement => {
-
+  const { path, url } = useRouteMatch()
   return (
     <VStack 
       bg="gray.50" 
@@ -38,11 +37,16 @@ const PromptBox = ({
         <Text color="b&w.black" textStyle="title-large">{headerText}</Text>
         <Text color="gray.600" textStyle="body-large">{descriptionText}</Text>
       </VStack>
-      
-      <Button        
-        onClick={() => {
-          formEntry();
-        }} variant="secondary" colorScheme="gray.600" leftIcon={<UserPlusIcon fillOpacity={0} boxSize='16px'/>}>{buttonText}</Button>
+      <Link to={`${url}/individual-details`} style={{ textDecoration: 'none '}}>
+        <Button        
+          variant="secondary" 
+          colorScheme="gray.600" 
+          leftIcon={<UserPlusIcon fillOpacity={0} boxSize='16px'/>}
+        >
+          {buttonText}
+        </Button>
+      </Link>
+
     </VStack>
   );
 };

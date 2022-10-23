@@ -35,10 +35,9 @@ DUMMY_ADDRESS_DATA = {
     "postal_code": "N2L3W6",
 }
 DUMMY_DAYTIME_CONTACT_DATA = {
-    "contact_first_name": "Hamza",
-    "contact_last_name": "Yusuff",
-    "phone_number": "8790832",
-    "type": "SCHOOL",
+    "name": "Hamza Yusuff",
+    "contact_information": "8790832",
+    "dismissal_time": "1:00PM",
 }
 DUMMY_CHILD_DATA = {
     "first_name": "Hamza",

@@ -62,12 +62,9 @@ const Intake = (): React.ReactElement => {
           />
         );
       case 3:
-        return(
-          <IndividualDetailsEntry
-            nextStep={nextStep}
-            prevStep={prevStep}
-          />
-        )
+        return (
+          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+        );
       default:
         return (
           <PermittedIndividualsForm

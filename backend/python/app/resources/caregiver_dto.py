@@ -35,7 +35,8 @@ class CreateCaregiverDTO:
     def __init__(self, **kwargs):
         self.name = kwargs.get("name")
         self.date_of_birth = kwargs.get("date_of_birth")
-        self.individual_considerations = kwargs.get("individual_considerations")
+        self.individual_considerations = kwargs.get(
+            "individual_considerations")
         self.primary_phone_number = kwargs.get("primary_phone_number")
         self.secondary_phone_number = kwargs.get("secondary_phone_number")
         self.email = kwargs.get("email")
@@ -47,60 +48,77 @@ class CreateCaregiverDTO:
     def validate(self):
         error_list = []
 
-        if type(self.name) is not str:
-            error_list.append("name must be a string")
-        else:
+        if type(self.name) is str:
             if len(self.name) == 0:
                 error_list.append("name must not be empty")
             if not re.match(r"^[a-zA-Z\s-]+$", self.name):
                 error_list.append(
                     "name must only contain alphabets, spaces, and hyphens"
                 )
-
-        if type(self.date_of_birth) is not datetime.date:
-            error_list.append("date_of_birth must be a datetime.date")
         else:
+            error_list.append("name must be a string")
+
+        if type(self.date_of_birth) is datetime.date:
             if self.date_of_birth > datetime.date.today():
                 error_list.append("date_of_birth must be in the past")
+        else:
+            error_list.append("date_of_birth must be a datetime.date")
 
         if self.individual_considerations is not None:
-            if type(self.individual_considerations) is not str:
-                error_list.append("individual_considerations must be a string")
-            else:
+            if type(self.individual_considerations) is str:
                 if len(self.individual_considerations) == 0:
-                    error_list.append("individual_considerations must not be empty")
+                    error_list.append(
+                        "individual_considerations must not be empty")
+            else:
+                error_list.append("individual_considerations must be a string")
 
-        if type(self.primary_phone_number) is not str:
-            error_list.append("primary_phone_number must be a string")
-        else:
+        if type(self.primary_phone_number) is str:
             if len(self.primary_phone_number) == 0:
                 error_list.append("primary_phone_number must not be empty")
-        if (
-            self.secondary_phone_number is not None
-            and type(self.secondary_phone_number) is not str
-        ):
+            if not re.match(r"^\d{3}-\d{3}-\d{4}$", self.primary_phone_number):
+                error_list.append(
+                    "primary_phone_number must be in the format XXX-XXX-XXXX"
+                )
+        else:
+            error_list.append("primary_phone_number must be a string")
+
+        if type(self.secondary_phone_number) is str:
+            if len(self.secondary_phone_number) == 0:
+                error_list.append("secondary_phone_number must not be empty")
+            if not re.match(r"^\d{3}-\d{3}-\d{4}$", self.secondary_phone_number):
+                error_list.append(
+                    "secondary_phone_number must be in the format XXX-XXX-XXXX"
+                )
+        else:
             error_list.append("secondary_phone_number must be a string")
 
-        if type(self.email) is not str:
+        if type(self.email) is str:
+            if not re.match(
+                r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", self.email
+            ):
+                error_list.append("email must be a valid email address")
+        else:
             error_list.append("email must be a string")
-        if not re.match(
-            r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", self.email
-        ):
-            error_list.append("email must be a valid email address")
 
-        if type(self.address) is not str:
+        if type(self.address) is str:
+            if len(self.address) == 0:
+                error_list.append("address must not be empty")
+        else:
             error_list.append("address must be a string")
-        if len(self.address) == 0:
-            error_list.append("address must not be empty")
 
-        if type(self.relationship_to_child) is not str:
+        if type(self.relationship_to_child) is str:
+            if len(self.relationship_to_child) == 0:
+                error_list.append("relationship_to_child must not be empty")
+        else:
             error_list.append("relationship_to_child must be a string")
 
         if self.additional_contact_notes is not None:
-            if type(self.additional_contact_notes) is not str:
+            if type(self.additional_contact_notes) is str:
+                if len(self.additional_contact_notes) == 0:
+                    error_list.append(
+                        "additional_contact_notes must not be empty")
+            else:
                 error_list.append("additional_contact_notes must be a string")
-            if len(self.additional_contact_notes) == 0:
-                error_list.append("additional_contact_notes must not be empty")
 
         if type(self.intake_id) is not int:
             error_list.append("intake_id must be an integer")

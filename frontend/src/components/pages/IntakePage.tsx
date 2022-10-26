@@ -9,6 +9,7 @@ import PermittedIndividualsForm, {
 } from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import Stepper from "../intake/Stepper";
+import IntakeFooter from "../intake/IntakeFormFooter";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -89,6 +90,7 @@ const Intake = (): React.ReactElement => {
         />
         {renderDetailsForm()}
       </Box>
+      <IntakeFooter />
     </>
   );
 };

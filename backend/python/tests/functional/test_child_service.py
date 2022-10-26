@@ -14,10 +14,9 @@ from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
 DUMMY_DAYTIME_CONTACT_DATA = {
-    "contact_first_name": "Hamzaa",
-    "contact_last_name": "Yusuff",
-    "phone_number": "8790832",
-    "type": "SCHOOL",
+    "name": "Hamzaa Yusuff",
+    "contact_information": "8790832",
+    "dismissal_time": "4:00PM",
 }
 
 DUMMY_INTAKE_DATA = {
@@ -29,16 +28,15 @@ DUMMY_USER_DATA = {
     "first_name": "Hamza",
     "last_name": "Yusuff",
     "auth_id": "hbyusuff",
-    "role": "Driver",
+    "role": "User",
     "branch": "ALGOMA",
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
     "id": 1,
-    "contact_first_name": "Hamza",
-    "contact_last_name": "Yusuff",
-    "phone_number": "8790832",
-    "type": "SCHOOL",
+    "name": "Hamzaa Yusuff",
+    "contact_information": "8790832",
+    "dismissal_time": "4:00PM",
 }
 
 DUMMY_ADDRESS_DATA = {

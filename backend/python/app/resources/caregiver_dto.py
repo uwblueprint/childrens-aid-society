@@ -66,16 +66,15 @@ class CreateCaregiverDTO:
         if self.individual_considerations is not None:
             if type(self.individual_considerations) is not str:
                 error_list.append("individual_considerations must be a string")
-
-            # ahhh should i do an else case here
-            if (
-                hasattr(self.individual_considerations, "__len__")
-                and len(self.individual_considerations) == 0
-            ):
-                error_list.append("individual_considerations must not be empty")
+            else:
+                if len(self.individual_considerations) == 0:
+                    error_list.append("individual_considerations must not be empty")
 
         if type(self.primary_phone_number) is not str:
             error_list.append("primary_phone_number must be a string")
+        else:
+            if len(self.primary_phone_number) == 0:
+                error_list.append("primary_phone_number must not be empty")
         if (
             self.secondary_phone_number is not None
             and type(self.secondary_phone_number) is not str

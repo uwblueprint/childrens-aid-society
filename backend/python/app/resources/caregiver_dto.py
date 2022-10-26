@@ -49,18 +49,29 @@ class CreateCaregiverDTO:
 
         if type(self.name) is not str:
             error_list.append("name must be a string")
-        if not re.match(r"^[a-zA-Z\s-]+$", self.name):
-            error_list.append("name must contain only alphabets, spaces, and hyphens")
+        else:
+            if len(self.name) == 0:
+                error_list.append("name must not be empty")
+            if not re.match(r"^[a-zA-Z\s-]+$", self.name):
+                error_list.append(
+                    "name must only contain alphabets, spaces, and hyphens"
+                )
 
         if type(self.date_of_birth) is not datetime.date:
             error_list.append("date_of_birth must be a datetime.date")
-        if self.date_of_birth > datetime.date.today():
-            error_list.append("date_of_birth must be in the past")
+        else:
+            if self.date_of_birth > datetime.date.today():
+                error_list.append("date_of_birth must be in the past")
 
         if self.individual_considerations is not None:
             if type(self.individual_considerations) is not str:
                 error_list.append("individual_considerations must be a string")
-            if len(self.individual_considerations) == 0:
+
+            # ahhh should i do an else case here
+            if (
+                hasattr(self.individual_considerations, "__len__")
+                and len(self.individual_considerations) == 0
+            ):
                 error_list.append("individual_considerations must not be empty")
 
         if type(self.primary_phone_number) is not str:

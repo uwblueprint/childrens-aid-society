@@ -23,11 +23,13 @@ type PermittedIndividualFormProps = {
     React.SetStateAction<PermittedIndividualDetails>
   >;
   prevStep: () => void;
+  nextStep: () => void;
 };
 
 const PermittedIndividualsForm = ({
   permittedIndividualDetails,
   setPermittedIndividualDetails,
+  nextStep,
   prevStep,
 }: PermittedIndividualFormProps): React.ReactElement => {
   const onSubmit = (values: PermittedIndividualDetails) =>
@@ -104,6 +106,15 @@ const PermittedIndividualsForm = ({
               }}
             >
               Previous Button
+            </Button>
+            <Button
+              marginLeft="10px"
+              onClick={() => {
+                handleSubmit();
+                nextStep();
+              }}
+            >
+              Next Button
             </Button>
           </Box>
         </Form>

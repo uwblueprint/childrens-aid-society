@@ -28,3 +28,15 @@ class CaregiverService(ICaregiverService):
             db.session.rollback()
             self.logger.error(str(error))
             raise error
+
+    def get_all_caregivers(self):
+        # FIXME: change this to match spec for actual get caregivers method
+        try:
+            caregivers = Caregiver.query.all()
+            caregivers_dto = [
+                CaregiverDTO(**caregiver.to_dict()) for caregiver in caregivers
+            ]
+            return caregivers_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

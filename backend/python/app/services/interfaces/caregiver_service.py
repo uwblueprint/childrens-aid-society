@@ -17,3 +17,13 @@ class ICaregiverService(ABC):
         :raises Exception: if caregiver creation fails
         """
         pass
+
+    @abstractmethod
+    def get_all_caregivers(self):
+        """
+        Get all caregivers
+        :return: list of caregivers
+        :rtype: list of CaregiverDTO
+        :raises Exception: if get all caregivers fails
+        """
+        pass

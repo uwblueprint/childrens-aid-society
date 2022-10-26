@@ -112,7 +112,7 @@ class UserService(IUserService):
 
     def get_users(self):
         user_dtos = []
-        user_list = [result for result in User.query.all()]
+        user_list = User.query.all()
         for user in user_list:
             user_dict = UserService.__user_to_dict_and_remove_auth_id(user)
             try:

@@ -31,9 +31,6 @@ class CaregiverService(ICaregiverService):
 
     def get_all_caregivers(self):
         # FIXME: change this to match spec for actual get caregivers method
-        if not db.engine.dialect.has_table(db.engine, "caregivers"):
-            return []
-
         try:
             caregivers = Caregiver.query.all()
             caregivers_dto = [

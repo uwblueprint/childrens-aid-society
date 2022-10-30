@@ -1,16 +1,16 @@
-"""differential caregiver and provider models
+"""differentiate caregiver and provider
 
-Revision ID: 6138c8f35f13
+Revision ID: 94d5d0cd2d69
 Revises: 7343e3f6ce2b
-Create Date: 2022-10-29 05:12:30.946329
+Create Date: 2022-10-30 22:34:24.739232
 
 """
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "6138c8f35f13"
+revision = "94d5d0cd2d69"
 down_revision = "7343e3f6ce2b"
 branch_labels = None
 depends_on = None
@@ -29,6 +29,24 @@ def upgrade():
         sa.ForeignKeyConstraint(
             ["intake_id"],
             ["intakes.id"],
+        ),
+        sa.PrimaryKeyConstraint("id"),
+    )
+    op.create_table(
+        "providers",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("name", sa.String(), nullable=False),
+        sa.Column("file_number", sa.String(), nullable=False),
+        sa.Column("primary_phone_number", sa.String(), nullable=False),
+        sa.Column("secondary_phone_number", sa.String(), nullable=True),
+        sa.Column("email", sa.String(), nullable=True),
+        sa.Column("address", sa.String(), nullable=False),
+        sa.Column("relationship_to_child", sa.String(), nullable=False),
+        sa.Column("additional_contact_notes", sa.String(), nullable=True),
+        sa.Column("child_id", sa.Integer(), nullable=False),
+        sa.ForeignKeyConstraint(
+            ["child_id"],
+            ["children.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -54,21 +72,21 @@ def upgrade():
     op.drop_constraint("caregivers_address_id_fkey", "caregivers", type_="foreignkey")
     op.drop_constraint("caregivers_child_id_fkey", "caregivers", type_="foreignkey")
     op.create_foreign_key(None, "caregivers", "intakes", ["intake_id"], ["id"])
-    op.drop_column("caregivers", "limitations_for_access")
-    op.drop_column("caregivers", "kinship_worker_name")
-    op.drop_column("caregivers", "child_id")
-    op.drop_column("caregivers", "address_id")
     op.drop_column("caregivers", "foster_care_coord_name")
     op.drop_column("caregivers", "cpin_number")
-    op.drop_column("caregivers", "special_needs")
-    op.drop_column("caregivers", "foster_care_coord_ext")
-    op.drop_column("caregivers", "last_name")
-    op.drop_column("caregivers", "is_primary")
-    op.drop_column("caregivers", "first_name")
-    op.drop_column("caregivers", "type")
-    op.drop_column("caregivers", "name_of_child")
-    op.drop_column("caregivers", "phone_number")
+    op.drop_column("caregivers", "child_id")
     op.drop_column("caregivers", "kinship_worker_ext")
+    op.drop_column("caregivers", "special_needs")
+    op.drop_column("caregivers", "type")
+    op.drop_column("caregivers", "last_name")
+    op.drop_column("caregivers", "phone_number")
+    op.drop_column("caregivers", "kinship_worker_name")
+    op.drop_column("caregivers", "first_name")
+    op.drop_column("caregivers", "name_of_child")
+    op.drop_column("caregivers", "limitations_for_access")
+    op.drop_column("caregivers", "address_id")
+    op.drop_column("caregivers", "is_primary")
+    op.drop_column("caregivers", "foster_care_coord_ext")
     op.add_column(
         "daytime_contacts",
         sa.Column("contact_information", sa.String(), nullable=False),
@@ -117,7 +135,35 @@ def downgrade():
     op.add_column(
         "caregivers",
         sa.Column(
-            "kinship_worker_ext", sa.VARCHAR(), autoincrement=False, nullable=True
+            "foster_care_coord_ext", sa.VARCHAR(), autoincrement=False, nullable=True
+        ),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column("is_primary", sa.BOOLEAN(), autoincrement=False, nullable=True),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column("address_id", sa.INTEGER(), autoincrement=False, nullable=True),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column(
+            "limitations_for_access", sa.VARCHAR(), autoincrement=False, nullable=True
+        ),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column("name_of_child", sa.VARCHAR(), autoincrement=False, nullable=True),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column("first_name", sa.VARCHAR(), autoincrement=False, nullable=False),
+    )
+    op.add_column(
+        "caregivers",
+        sa.Column(
+            "kinship_worker_name", sa.VARCHAR(), autoincrement=False, nullable=True
         ),
     )
     op.add_column(
@@ -126,7 +172,7 @@ def downgrade():
     )
     op.add_column(
         "caregivers",
-        sa.Column("name_of_child", sa.VARCHAR(), autoincrement=False, nullable=True),
+        sa.Column("last_name", sa.VARCHAR(), autoincrement=False, nullable=False),
     )
     op.add_column(
         "caregivers",
@@ -139,25 +185,17 @@ def downgrade():
     )
     op.add_column(
         "caregivers",
-        sa.Column("first_name", sa.VARCHAR(), autoincrement=False, nullable=False),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column("is_primary", sa.BOOLEAN(), autoincrement=False, nullable=True),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column("last_name", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("special_needs", sa.VARCHAR(), autoincrement=False, nullable=True),
     )
     op.add_column(
         "caregivers",
         sa.Column(
-            "foster_care_coord_ext", sa.VARCHAR(), autoincrement=False, nullable=True
+            "kinship_worker_ext", sa.VARCHAR(), autoincrement=False, nullable=True
         ),
     )
     op.add_column(
         "caregivers",
-        sa.Column("special_needs", sa.VARCHAR(), autoincrement=False, nullable=True),
+        sa.Column("child_id", sa.INTEGER(), autoincrement=False, nullable=False),
     )
     op.add_column(
         "caregivers",
@@ -167,26 +205,6 @@ def downgrade():
         "caregivers",
         sa.Column(
             "foster_care_coord_name", sa.VARCHAR(), autoincrement=False, nullable=True
-        ),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column("address_id", sa.INTEGER(), autoincrement=False, nullable=True),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column("child_id", sa.INTEGER(), autoincrement=False, nullable=False),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column(
-            "kinship_worker_name", sa.VARCHAR(), autoincrement=False, nullable=True
-        ),
-    )
-    op.add_column(
-        "caregivers",
-        sa.Column(
-            "limitations_for_access", sa.VARCHAR(), autoincrement=False, nullable=True
         ),
     )
     op.drop_constraint(None, "caregivers", type_="foreignkey")
@@ -207,5 +225,6 @@ def downgrade():
     op.drop_column("caregivers", "email")
     op.drop_column("caregivers", "address")
     op.drop_column("caregivers", "additional_contact_notes")
+    op.drop_table("providers")
     op.drop_table("other_permitted_individuals")
     # ### end Alembic commands ###

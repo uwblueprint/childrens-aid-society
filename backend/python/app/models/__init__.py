@@ -16,6 +16,7 @@ def init_app(app):
     from .goal import Goal
     from .intake import Intake
     from .other_permitted_individual import OtherPermittedIndividual
+    from .provider import Provider
     from .transportation_method import TransportationMethod
     from .user import User
     from .visit_location import VisitLocation

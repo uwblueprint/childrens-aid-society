@@ -73,10 +73,6 @@ class CreateCaregiverDTO:
         if type(self.primary_phone_number) is str:
             if len(self.primary_phone_number) == 0:
                 error_list.append("primary_phone_number must not be empty")
-            # if not re.match(r"^\d{3}-\d{3}-\d{4}$", self.primary_phone_number):
-            #     error_list.append(
-            #         "primary_phone_number must be in the format XXX-XXX-XXXX"
-            #     )
         else:
             error_list.append("primary_phone_number must be a string")
 
@@ -84,10 +80,6 @@ class CreateCaregiverDTO:
             if type(self.secondary_phone_number) is str:
                 if len(self.secondary_phone_number) == 0:
                     error_list.append("secondary_phone_number must not be empty")
-                # if not re.match(r"^\d{3}-\d{3}-\d{4}$", self.secondary_phone_number):
-                #     error_list.append(
-                #         "secondary_phone_number must be in the format XXX-XXX-XXXX"
-                #     )
             else:
                 error_list.append("secondary_phone_number must be a string")
 

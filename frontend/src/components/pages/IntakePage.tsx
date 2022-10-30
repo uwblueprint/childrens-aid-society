@@ -68,9 +68,22 @@ const Intake = (): React.ReactElement => {
         );
       case 3:
         return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+          <>
+            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+              <PermittedIndividualsForm
+                permittedIndividualDetails={permittedIndividualDetails}
+                setPermittedIndividualDetails={setPermittedIndividualDetails}
+                prevStep={prevStep}
+                nextStep={nextStep}
+              />
+            </Box>
+          </>
         );
       case 4:
+        return (
+          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+        );
+      case 5:
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>

@@ -1,8 +1,9 @@
 import React from "react";
 import { Button, VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
-import { useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
+import { INDIVIDUAL_DETAILS_PAGE } from "../../constants/Routes";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;
@@ -13,7 +14,7 @@ const IndividualDetailsEntry = ({
   nextStep,
   prevStep,
 }: IndividualDetailsEntryProp): React.ReactElement => {
-  const { url } = useRouteMatch();
+  const history = useHistory();
 
   return (
     <React.Fragment key="IndividualDetailsEntry">
@@ -24,7 +25,7 @@ const IndividualDetailsEntry = ({
           buttonText="Add child"
           buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
           onButtonClick={() => {
-            window.location.assign(`${url}/individual-details`);
+            history.push(INDIVIDUAL_DETAILS_PAGE);
           }}
         />
         <PromptBox
@@ -33,7 +34,7 @@ const IndividualDetailsEntry = ({
           buttonText="Add caregiver"
           buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
           onButtonClick={() => {
-            window.location.assign(`${url}/individual-details`);
+            history.push(INDIVIDUAL_DETAILS_PAGE);
           }}
         />
       </VStack>

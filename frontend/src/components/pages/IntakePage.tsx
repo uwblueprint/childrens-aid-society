@@ -4,9 +4,6 @@ import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
-import PermittedIndividualsForm, {
-  PermittedIndividualDetails,
-} from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
@@ -29,15 +26,6 @@ const Intake = (): React.ReactElement => {
     firstNationHeritage: "",
     firstNationBand: "",
     orderReferral: null,
-  });
-  const [
-    permittedIndividualDetails,
-    setPermittedIndividualDetails,
-  ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
   });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
     test: "",
@@ -68,22 +56,9 @@ const Intake = (): React.ReactElement => {
         );
       case 3:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <PermittedIndividualsForm
-                permittedIndividualDetails={permittedIndividualDetails}
-                setPermittedIndividualDetails={setPermittedIndividualDetails}
-                prevStep={prevStep}
-                nextStep={nextStep}
-              />
-            </Box>
-          </>
-        );
-      case 4:
-        return (
           <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
         );
-      case 5:
+      case 4:
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>

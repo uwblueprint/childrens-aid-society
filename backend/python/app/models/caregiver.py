@@ -12,7 +12,6 @@ relationship_to_child_enum = db.Enum(
 class Caregiver(db.Model, BaseMixin):
     __tablename__ = "caregivers"
 
-    # TODO: add foreign key reference to child
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)

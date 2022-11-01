@@ -79,15 +79,12 @@ class Intake(db.Model, BaseMixin):
     date_accepted = db.Column(db.Date, nullable=True)
     access_start_date = db.Column(db.Date, nullable=True)
     access_weekday = db.Column(pg.ARRAY(intakes_access_weekday_enum), nullable=True)
-    access_location_id = db.Column(
-        db.Integer, db.ForeignKey("addresses.id"), nullable=True
-    )
+    access_location = db.Column(db.String, nullable=True)
     access_time = db.Column(db.Time, nullable=True)
     lead_access_worker_id = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )
     denial_reason = db.Column(db.String, nullable=True)
-    access_location = db.relationship("Address")
     referring_worker = db.relationship("User", foreign_keys=[referring_worker_id])
     lead_access_worker = db.relationship("User", foreign_keys=[lead_access_worker_id])
     concerns = db.relationship("Concern", secondary=intakes_concerns)

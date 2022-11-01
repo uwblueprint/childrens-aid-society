@@ -54,17 +54,6 @@ def insert_test_data():
     for value in values:
         insert_values(db, "users", ("first_name", "last_name", "auth_id", "role", "branch"), value)
 
-    # Addresses
-    values = [
-        ("27 King''s College Cir", "Toronto",  "M5S 1A1", 43.663, -79.397),
-        ("75 University Ave W",    "Waterloo", "N2L 3C5", 43.472, -80.544),
-        ("99 University Ave",      "Kingston", "K7L 3N6", 44.229, -76.485),
-        ("200 University Ave W",   "Waterloo", "N2L 3G1", 43.472, -80.544),
-    ]
-
-    for value in values:
-        insert_values(db, "addresses", ("street_address", "city", "postal_code", "latitude", "longitude"), value)
-
     # Intake
     values = [
         (1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', 1, "10:00", 1, "Denial reason"),

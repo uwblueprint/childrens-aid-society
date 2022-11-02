@@ -3,7 +3,7 @@ import sqlalchemy.dialects.postgresql as pg
 from . import db
 from .base_mixin import BaseMixin
 
-intake_status_enum = pg.ENUM(
+intake_status_enum = db.Enum(
     "IN PROGRESS",
     "IN REVIEW",
     "ACCEPTED",
@@ -11,7 +11,7 @@ intake_status_enum = pg.ENUM(
     name="intake_status",
 )
 
-cpin_file_type_enum = pg.ENUM(
+cpin_file_type_enum = db.Enum(
     "INVESTIGATION",
     "ONGOING",
     name="cpin_file_type",

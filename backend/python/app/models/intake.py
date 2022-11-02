@@ -28,7 +28,6 @@ court_status_enum = db.Enum(
     name="intakes_court_status",
 )
 
-
 first_nation_heritage_enum = db.Enum(
     "FIRST_NATION_REGISTERED",
     "ELIGIBLE_FOR_REGISTRATION",
@@ -72,9 +71,7 @@ class Intake(db.Model, BaseMixin):
     referral_date = db.Column(db.Date, nullable=True)
     family_name = db.Column(db.String, nullable=True)
     cpin_number = db.Column(db.String, nullable=True)
-    cpin_file_type = db.Column(
-        cpin_file_type_enum, nullable=False, default="INVESTIGATION"
-    )
+    cpin_file_type = db.Column(cpin_file_type_enum, nullable=False)
 
     """
         court_status [unchanged]

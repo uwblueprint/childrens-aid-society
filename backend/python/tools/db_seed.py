@@ -67,14 +67,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 1, 'contact info', '3:30pm'),
-        ('Shieda Kayn', 2, 'contact info', '4:00pm'),
-        ('Sarah Fortune', 3, 'contact info', '4:30pm'),
-        ('Irelia Xan', 4, 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address_id", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
 
     # Child
     values = [

@@ -21,6 +21,12 @@ DUMMY_DAYTIME_CONTACT_DATA = {
 
 DUMMY_INTAKE_DATA = {
     "id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "cpin_file_type": "INVESTIGATION",
+    "transportation_method": "Bus",
+    "access_type": "In-person",
+    "access_start_date": datetime.date(2020, 1, 1),
 }
 
 DUMMY_USER_DATA = {

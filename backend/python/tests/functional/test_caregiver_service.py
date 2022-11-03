@@ -20,7 +20,13 @@ def caregiver_service():
 
 
 DUMMY_INTAKE_DATA = {
-    "id": 999,
+    "id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "cpin_file_type": "INVESTIGATION",
+    "transportation_method": "Bus",
+    "access_type": "In-person",
+    "access_start_date": datetime.date(2020, 1, 1),
 }
 
 
@@ -46,7 +52,7 @@ class TestCreateCaregiverValid:
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
             relationship_to_child="FOSTER_CAREGIVER",
-            intake_id=999,
+            intake_id=1,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
         assert type(caregiver_instance) is CaregiverDTO
@@ -60,7 +66,7 @@ class TestCreateCaregiverValid:
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
             relationship_to_child="FOSTER_CAREGIVER",
-            intake_id=999,
+            intake_id=1,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
         assert type(caregiver_instance) is CaregiverDTO
@@ -75,7 +81,7 @@ class TestCreateCaregiverInvalidFails:
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
             relationship_to_child="FOSTER_CAREGIVER",
-            intake_id=999,
+            intake_id=1,
         )
         with pytest.raises(Exception):
             caregiver_service.create_caregiver(param)
@@ -90,7 +96,7 @@ class TestCreateCaregiverInvalidFails:
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
             relationship_to_child="FOSTER_CAREGIVER",
-            intake_id=999,
+            intake_id=1,
         )
         with pytest.raises(Exception):
             caregiver_service.create_caregiver(param)

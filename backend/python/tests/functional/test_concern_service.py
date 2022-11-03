@@ -10,7 +10,7 @@ from app.services.implementations.concern_service import ConcernService
 @pytest.fixture
 def concern_service():
     concern_service = ConcernService(current_app.logger)
-    seed_database_huh()
+    seed_database()
     yield concern_service
     Concern.query.delete()
 
@@ -101,7 +101,7 @@ DEFAULT_CONCERNS = (
 # TODO: remove this step when migrations are configured to run against test db
 
 
-def seed_database_huh():
+def seed_database():
     concern_instances = [Concern(**data) for data in DEFAULT_CONCERNS]
     db.session.add_all(concern_instances)
     db.session.commit()

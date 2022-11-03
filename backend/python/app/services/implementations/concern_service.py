@@ -1,6 +1,5 @@
 from ...models import db
 from ...models.concern import Concern
-from ...models.intake import Intake
 from ...resources.concern_dto import ConcernDTO
 from ..interfaces.concern_service import IConcernService
 

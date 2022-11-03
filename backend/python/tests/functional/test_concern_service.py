@@ -179,7 +179,9 @@ def test_get_concerns_nil_param_fails(concern_service):
 
 
 def test_get_all_concerns_success(concern_service):
-    res = concern_service.get_all_concerns('familial_concern') + concern_service.get_all_concerns('child_behaviour')
+    res = concern_service.get_all_concerns(
+        "familial_concern"
+    ) + concern_service.get_all_concerns("child_behaviour")
     assert type(res) is list
     assert len(res) == len(DEFAULT_CONCERNS)
     assert all(type(item) == ConcernDTO for item in res)

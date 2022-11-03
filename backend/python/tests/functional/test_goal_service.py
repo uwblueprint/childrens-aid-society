@@ -3,7 +3,6 @@ from flask import current_app
 
 from app.models import db
 from app.models.goal import Goal
-from app.models.intake import Intake, intakes_goals
 from app.resources.goal_dto import GoalDTO
 from app.services.implementations.goal_service import GoalService
 
@@ -13,12 +12,10 @@ def goal_service():
     goal_service = GoalService(current_app.logger)
     seed_database()
     yield goal_service
-    db.engine.execute("DELETE FROM intakes_goals;")
-    Intake.query.delete()
     Goal.query.delete()
 
 
-## These are fake goals for testing purposes
+# These are fake goals for testing purposes
 DEFAULT_GOALS = [
     {
         "goal": "Caregiver(s) encourage/allow child(ren) to demonstrate",
@@ -32,9 +29,7 @@ DEFAULT_GOALS = [
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     goal_instances = [Goal(**data) for data in DEFAULT_GOALS]
-    intake_instance = Intake(id=1)
-    intake_instance.goals.extend(goal_instances)
-    db.session.add(intake_instance)
+    db.session.add_all(goal_instances)
     db.session.commit()
 
 
@@ -86,39 +81,13 @@ def test_get_all_short_term_goals_success(goal_service):
     assert set(goals_db) == set(goals_res)
 
 
-def test_get_long_term_goal_by_intake_id_success(goal_service):
-    res = goal_service.get_goals_by_intake(intake_id=1, type="LONG_TERM")
-    assert type(res) == list
-    goals_long_term_db = [goal for goal in DEFAULT_GOALS if goal["type"] == "LONG_TERM"]
-    assert len(res) == len(goals_long_term_db)
-    assert all(type(item) == GoalDTO for item in res)
-    assert all(item.type == "LONG_TERM" for item in res)
-
-
-def test_get_short_term_goal_by_intake_id_success(goal_service):
-    res = goal_service.get_goals_by_intake(intake_id=1, type="SHORT_TERM")
-    assert type(res) == list
-    goals_short_term_db = [
-        goal for goal in DEFAULT_GOALS if goal["type"] == "SHORT_TERM"
-    ]
-    assert len(res) == len(goals_short_term_db)
-    assert all(type(item) == GoalDTO for item in res)
-    assert all(item.type == "SHORT_TERM" for item in res)
-
-
 def test_get_all_goals_success(goal_service):
-    res = goal_service.get_goals_by_intake(intake_id=1)
+    res = goal_service.get_all_goals("short_term") + goal_service.get_all_goals(
+        "long_term"
+    )
     assert type(res) == list
     assert len(res) == len(DEFAULT_GOALS)
     assert all(type(item) == GoalDTO for item in res)
-    goals_type_db_counter = {}
-    for goal in DEFAULT_GOALS:
-        goal_type = goal["type"]
-        goals_type_db_counter[goal_type] = goals_type_db_counter.get(goal_type, 0) + 1
-
-    goals_type_res_counter = {}
-    for item in res:
-        item_type = item.type
-        goals_type_res_counter[item_type] = goals_type_res_counter.get(item_type, 0) + 1
-
-    assert goals_type_db_counter == goals_type_res_counter
+    goals_db = [entry["goal"] for entry in DEFAULT_GOALS]
+    goals_res = [item.goal for item in res]
+    assert set(goals_db) == set(goals_res)

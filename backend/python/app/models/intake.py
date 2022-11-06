@@ -4,8 +4,8 @@ from . import db
 from .base_mixin import BaseMixin
 
 intake_status_enum = db.Enum(
-    "IN PROGRESS",
-    "IN REVIEW",
+    "IN_PROGRESS",
+    "IN_REVIEW",
     "ACCEPTED",
     "DENIED",
     name="intake_status",

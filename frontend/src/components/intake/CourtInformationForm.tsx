@@ -19,15 +19,11 @@ export type CourtDetails = {
 type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
-  nextStep: () => void;
-  prevStep: () => void;
 };
 
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
-  nextStep,
-  prevStep,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -49,7 +45,7 @@ const CourtInformationForm = ({
 
   return (
     <Formik initialValues={courtDetails} onSubmit={onSubmit}>
-      {({ handleSubmit, setFieldValue }) => (
+      {({ setFieldValue }) => (
         <Form style={{ padding: "0px 100px 30px 100px" }}>
           <Heading textStyle="heading">Court Details</Heading>
           <FormControl style={{ padding: "30px" }}>

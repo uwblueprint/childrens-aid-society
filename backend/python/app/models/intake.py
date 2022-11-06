@@ -68,9 +68,9 @@ class Intake(db.Model, BaseMixin):
     intake_status = db.Column(intake_status_enum, nullable=True, default="IN_PROGRESS")
     referring_worker_name = db.Column(db.String, nullable=False)
     referring_worker_contact = db.Column(db.String, nullable=False)
-    referral_date = db.Column(db.Date, nullable=True)
-    family_name = db.Column(db.String, nullable=True)
-    cpin_number = db.Column(db.String, nullable=True)
+    referral_date = db.Column(db.Date, nullable=False)
+    family_name = db.Column(db.String, nullable=False)
+    cpin_number = db.Column(db.String, nullable=False)
     cpin_file_type = db.Column(cpin_file_type_enum, nullable=False)
 
     """

@@ -108,22 +108,6 @@ const CourtInformationForm = ({
               <option>Nigeria</option>
             </Field>
           </FormControl>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              nextStep();
-            }}
-          >
-            Next Button
-          </Button>
         </Form>
       )}
     </Formik>

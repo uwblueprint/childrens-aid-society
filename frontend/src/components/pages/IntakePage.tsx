@@ -113,7 +113,7 @@ const Intake = (): React.ReactElement => {
         )}
         {renderDetailsForm()}
       </Box>
-      <IntakeFooter />
+      <IntakeFooter nextStep={nextStep} />
     </>
   );
 };

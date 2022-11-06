@@ -112,7 +112,6 @@ const ReferralForm = ({
             />
           </Box>
         </FormControl>
-        <Button type="submit">Next Button</Button>
       </Form>
     </Formik>
   );

@@ -1,106 +1,116 @@
 import datetime
+import re
 
 
 class CaregiverDTO:
     def __init__(
         self,
         id,
-        type,
-        first_name,
-        last_name,
-        child_id,
+        name,
+        date_of_birth,
+        primary_phone_number,
+        email,
+        address,
         relationship_to_child,
-        phone_number,
-        is_primary=None,
-        address_id=None,
-        cpin_number=None,
-        date_of_birth=None,
-        special_needs=None,
-        name_of_child=None,
-        kinship_worker_name=None,
-        kinship_worker_ext=None,
-        foster_care_coord_name=None,
-        foster_care_coord_ext=None,
-        limitations_for_access=None,
+        intake_id,
+        individual_considerations=None,
+        secondary_phone_number=None,
+        additional_contact_notes=None,
     ):
 
         self.id = id
-        self.type = type
-        self.first_name = first_name
-        self.last_name = last_name
-        self.is_primary = is_primary
-        self.child_id = child_id
-        self.address_id = address_id
-        self.relationship_to_child = relationship_to_child
-        self.phone_number = phone_number
-        self.cpin_number = cpin_number
+        self.name = name
         self.date_of_birth = date_of_birth
-        self.special_needs = special_needs
-        self.name_of_child = name_of_child
-        self.kinship_worker_name = kinship_worker_name
-        self.kinship_worker_ext = kinship_worker_ext
-        self.foster_care_coord_name = foster_care_coord_name
-        self.foster_care_coord_ext = foster_care_coord_ext
-        self.limitations_for_access = limitations_for_access
+        self.individual_considerations = individual_considerations
+        self.primary_phone_number = primary_phone_number
+        self.secondary_phone_number = secondary_phone_number
+        self.email = email
+        self.address = address
+        self.relationship_to_child = relationship_to_child
+        self.additional_contact_notes = additional_contact_notes
+        self.intake_id = intake_id
 
 
 class CreateCaregiverDTO:
     def __init__(self, **kwargs):
-        self.type = kwargs.get("type")
-        self.first_name = kwargs.get("first_name")
-        self.last_name = kwargs.get("last_name")
-        self.is_primary = kwargs.get("is_primary")
-        self.child_id = kwargs.get("child_id")
-        self.address_id = kwargs.get("address_id")
-        self.relationship_to_child = kwargs.get("relationship_to_child")
-        self.phone_number = kwargs.get("phone_number")
-        self.cpin_number = kwargs.get("cpin_number")
+        self.name = kwargs.get("name")
         self.date_of_birth = kwargs.get("date_of_birth")
-        self.special_needs = kwargs.get("special_needs")
-        self.name_of_child = kwargs.get("name_of_child")
-        self.kinship_worker_name = kwargs.get("kinship_worker_name")
-        self.kinship_worker_ext = kwargs.get("kinship_worker_ext")
-        self.foster_care_coord_name = kwargs.get("foster_care_coord_name")
-        self.foster_care_coord_ext = kwargs.get("foster_care_coord_ext")
-        self.limitations_for_access = kwargs.get("limitations_for_access")
+        self.individual_considerations = kwargs.get("individual_considerations")
+        self.primary_phone_number = kwargs.get("primary_phone_number")
+        self.secondary_phone_number = kwargs.get("secondary_phone_number")
+        self.email = kwargs.get("email")
+        self.address = kwargs.get("address")
+        self.relationship_to_child = kwargs.get("relationship_to_child")
+        self.additional_contact_notes = kwargs.get("additional_contact_notes")
+        self.intake_id = kwargs.get("intake_id")
 
     def validate(self):
         error_list = []
 
-        if type(self.first_name) is not str:
-            error_list.append("The first name value supplied is not a string.")
-        if type(self.first_name) is str and self.first_name == "":
-            error_list.append("The first name value supplied is empty.")
-        if type(self.last_name) is not str:
-            error_list.append("The last name value supplied is not a string.")
-        if type(self.last_name) is str and self.last_name == "":
-            error_list.append("The last name value supplied is empty.")
-        if self.child_id and type(self.child_id) is not int:
-            error_list.append("The child id field is not of integer type.")
-        if self.address_id and type(self.address_id) is not int:
-            error_list.append("The address id field is not of integer type.")
-        if self.is_primary and type(self.is_primary) is not bool:
-            error_list.append("The is_primary field is not of bool type.")
-        if self.date_of_birth and type(self.date_of_birth) is not datetime.datetime:
-            error_list.append("The datetime field is not of datetime type.")
-        if type(self.phone_number) is not str:
-            error_list.append("The phone number value is not a string.")
-        if type(self.phone_number) is str and self.phone_number == "":
-            error_list.append("Phone number cannot be empty.")
-        if self.cpin_number and type(self.cpin_number) is not str:
-            error_list.append("The cpin number is not a string.")
-        if self.special_needs and type(self.special_needs) is not str:
-            error_list.append("The special needs value is not string.")
-        if self.name_of_child and type(self.name_of_child) is not str:
-            error_list.append("The name of child value is not string.")
-        if self.kinship_worker_name and type(self.kinship_worker_name) is not str:
-            error_list.append("The kinship worker name value is not string.")
-        if self.kinship_worker_ext and type(self.kinship_worker_ext) is not str:
-            error_list.append("The kinship worker ext value is not string.")
-        if self.foster_care_coord_name and type(self.foster_care_coord_name) is not str:
-            error_list.append("The foster care coord name value is not string")
-        if self.limitations_for_access and type(self.limitations_for_access) is not str:
-            error_list.append(
-                "The limitations for access value supplied is not string."
-            )
+        if type(self.name) is str:
+            if len(self.name) == 0:
+                error_list.append("name must not be empty")
+            if not re.match(r"^[a-zA-Z\s-]+$", self.name):
+                error_list.append(
+                    "name must only contain alphabets, spaces, and hyphens"
+                )
+        else:
+            error_list.append("name must be a string")
+
+        if type(self.date_of_birth) is datetime.date:
+            if self.date_of_birth > datetime.date.today():
+                error_list.append("date_of_birth must be in the past")
+        else:
+            error_list.append("date_of_birth must be a datetime.date")
+
+        if self.individual_considerations is not None:
+            if type(self.individual_considerations) is str:
+                if len(self.individual_considerations) == 0:
+                    error_list.append("individual_considerations must not be empty")
+            else:
+                error_list.append("individual_considerations must be a string")
+
+        if type(self.primary_phone_number) is str:
+            if len(self.primary_phone_number) == 0:
+                error_list.append("primary_phone_number must not be empty")
+        else:
+            error_list.append("primary_phone_number must be a string")
+
+        if self.secondary_phone_number is not None:
+            if type(self.secondary_phone_number) is str:
+                if len(self.secondary_phone_number) == 0:
+                    error_list.append("secondary_phone_number must not be empty")
+            else:
+                error_list.append("secondary_phone_number must be a string")
+
+        if type(self.email) is str:
+            if not re.match(
+                r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", self.email
+            ):
+                error_list.append("email must be a valid email address")
+        else:
+            error_list.append("email must be a string")
+
+        if type(self.address) is str:
+            if len(self.address) == 0:
+                error_list.append("address must not be empty")
+        else:
+            error_list.append("address must be a string")
+
+        if type(self.relationship_to_child) is str:
+            if len(self.relationship_to_child) == 0:
+                error_list.append("relationship_to_child must not be empty")
+        else:
+            error_list.append("relationship_to_child must be a string")
+
+        if self.additional_contact_notes is not None:
+            if type(self.additional_contact_notes) is str:
+                if len(self.additional_contact_notes) == 0:
+                    error_list.append("additional_contact_notes must not be empty")
+            else:
+                error_list.append("additional_contact_notes must be a string")
+
+        if type(self.intake_id) is not int:
+            error_list.append("intake_id must be an integer")
+
         return error_list

@@ -89,9 +89,9 @@ class Intake(db.Model, BaseMixin):
         access_type (string)
         access_start_date (date)
     """
-    transportation_method = db.Column(db.String, nullable=False)
-    access_type = db.Column(db.String, nullable=False)
-    access_start_date = db.Column(db.Date, nullable=False)
+    transportation_requirements = db.Column(db.String, nullable=False)
+    scheduling_requirements = db.Column(db.String, nullable=False)
+    suggested_start_date = db.Column(db.Date, nullable=False)
 
     """
         date_accepted [unchanged] (nullable)

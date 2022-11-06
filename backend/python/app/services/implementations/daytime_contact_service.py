@@ -28,7 +28,7 @@ class DaytimeContactService(IDaytimeContactService):
                 id=new_contact_entry.id,
                 name=new_contact_entry.name,
                 contact_information=new_contact_entry.contact_information,
-                address_id=new_contact_entry.address_id,
+                address=new_contact_entry.address,
                 dismissal_time=new_contact_entry.dismissal_time,
             )
         except Exception as error:

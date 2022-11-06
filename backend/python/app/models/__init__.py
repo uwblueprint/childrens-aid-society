@@ -7,7 +7,6 @@ migrate = Migrate()
 
 def init_app(app):
     from .access_type import AccessType
-    from .address import Address
     from .branch import Branch
     from .caregiver import Caregiver
     from .child import Child

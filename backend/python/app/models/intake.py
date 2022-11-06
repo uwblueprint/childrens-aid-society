@@ -64,7 +64,7 @@ class Intake(db.Model, BaseMixin):
         cpin_file_type (enum 'INVESTIGATION' or 'ONGOING')
     """
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     intake_status = db.Column(intake_status_enum, nullable=True, default="IN PROGRESS")
     referring_worker_name = db.Column(db.String, nullable=False)
     referring_worker_contact = db.Column(db.String, nullable=False)

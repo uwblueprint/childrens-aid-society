@@ -79,7 +79,7 @@ class Intake(db.Model, BaseMixin):
         first_nation_heritage [unchanged]
         first_nation_band [unchanged]
     """
-    court_status = db.Column(court_status_enum, nullable=True)
+    court_status = db.Column(court_status_enum, nullable=False)
     court_order_file = db.Column(db.String, nullable=True)
     first_nation_heritage = db.Column(first_nation_heritage_enum, nullable=True)
     first_nation_band = db.Column(db.String, nullable=True)

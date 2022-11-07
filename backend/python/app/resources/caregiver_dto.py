@@ -7,8 +7,7 @@ class CaregiverDTO:
         self.id = kwargs.get("id")
         self.name = kwargs.get("name")
         self.date_of_birth = kwargs.get("date_of_birth")
-        self.individual_considerations = kwargs.get(
-            "individual_considerations")
+        self.individual_considerations = kwargs.get("individual_considerations")
         self.primary_phone_number = kwargs.get("primary_phone_number")
         self.secondary_phone_number = kwargs.get("secondary_phone_number")
         self.email = kwargs.get("email")
@@ -44,8 +43,7 @@ class CreateCaregiverDTO(CaregiverDTO):
         if self.individual_considerations is not None:
             if type(self.individual_considerations) is str:
                 if len(self.individual_considerations) == 0:
-                    error_list.append(
-                        "individual_considerations must not be empty")
+                    error_list.append("individual_considerations must not be empty")
             else:
                 error_list.append("individual_considerations must be a string")
 
@@ -58,8 +56,7 @@ class CreateCaregiverDTO(CaregiverDTO):
         if self.secondary_phone_number is not None:
             if type(self.secondary_phone_number) is str:
                 if len(self.secondary_phone_number) == 0:
-                    error_list.append(
-                        "secondary_phone_number must not be empty")
+                    error_list.append("secondary_phone_number must not be empty")
             else:
                 error_list.append("secondary_phone_number must be a string")
 
@@ -86,8 +83,7 @@ class CreateCaregiverDTO(CaregiverDTO):
         if self.additional_contact_notes is not None:
             if type(self.additional_contact_notes) is str:
                 if len(self.additional_contact_notes) == 0:
-                    error_list.append(
-                        "additional_contact_notes must not be empty")
+                    error_list.append("additional_contact_notes must not be empty")
             else:
                 error_list.append("additional_contact_notes must be a string")
 

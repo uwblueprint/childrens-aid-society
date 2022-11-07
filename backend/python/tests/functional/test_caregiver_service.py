@@ -6,6 +6,7 @@ from flask import current_app
 from app.models import db
 from app.models.caregiver import Caregiver
 from app.models.intake import Intake
+from app.models.user import User
 from app.resources.caregiver_dto import CaregiverDTO, CreateCaregiverDTO
 from app.services.implementations.caregiver_service import CaregiverService
 
@@ -19,19 +20,37 @@ def caregiver_service():
     Caregiver.query.delete()
 
 
+DUMMY_USER_DATA = {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "auth_id": "auth0|123456789",
+    "role": "User",
+    "branch": "ALGOMA",
+}
+
 DUMMY_INTAKE_DATA = {
     "id": 1,
+    "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
-    "cpin_file_type": "INVESTIGATION",
-    "transportation_method": "Bus",
-    "access_type": "In-person",
-    "access_start_date": datetime.date(2020, 1, 1),
+    "referral_date": datetime.date(2020, 1, 1),
+    "family_name": "Doe",
+    "cpin_number": "123456789",
+    "cpin_file_type": "ONGOING",
+    "court_status": "OTHER",
+    "court_order_file": "court_order.pdf",
+    "transportation_requirements": "car",
+    "scheduling_requirements": "flexible",
+    "suggested_start_date": datetime.date(2020, 1, 1),
 }
 
 
 def seed_database():
+    user = User(**DUMMY_USER_DATA)
     intake = Intake(**DUMMY_INTAKE_DATA)
+    db.session.add(user)
+    db.session.commit()
     db.session.add(intake)
     db.session.commit()
 
@@ -39,6 +58,7 @@ def seed_database():
 def teardown_database():
     Caregiver.query.delete()
     Intake.query.delete()
+    User.query.delete()
     db.session.commit()
 
 

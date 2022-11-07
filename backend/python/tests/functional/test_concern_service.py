@@ -178,9 +178,10 @@ def test_get_concerns_nil_param_fails(concern_service):
 def test_get_familial_concern_by_intake_id_success(concern_service):
     res = concern_service.get_concerns_by_intake(intake_id=1, type="FAMILIAL_CONCERN")
     assert type(res) is list
-    all_concerns = [
-        concern for concern in DEFAULT_CONCERNS if concern["type"] == "FAMILIAL_CONCERN"
-    ]
+
+    concern_ids = [item["concern_id"] for item in DUMMY_INTAKES_CONCERNS_FAMILIAL]
+    assert sorted([item.id for item in res]) == sorted(concern_ids)
+
     assert len(res) == len(DUMMY_INTAKES_CONCERNS_FAMILIAL)
     assert all(type(item) == ConcernDTO for item in res)
     assert all(item.type == "FAMILIAL_CONCERN" for item in res)

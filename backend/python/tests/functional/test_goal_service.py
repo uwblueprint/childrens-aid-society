@@ -96,7 +96,6 @@ def seed_database():
         db.session.add(goal)
         db.session.commit()
 
-    # this gives the user an id of 1 because of the autoincrement
     db.session.add(user_instance)
     db.session.commit()
     db.session.add(intake_instance)

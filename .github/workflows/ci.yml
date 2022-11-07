@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-    
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -35,24 +35,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       # installing dependencies
       - name: Install dependencies
         run: yarn --cwd ./frontend/ && yarn --cwd ./backend/python/
-      
+
       # building the docker containers
       - name: Build the docker-compose stack
         run: docker-compose -f docker-compose.ci.yml up -d
-      
+
       # check running containers
       - name: Check running containers
         run: docker ps -a
-      
+
       # running frontend tests
       - name: Run tests for frontend
         working-directory: ./frontend
         run: yarn test
-      
+
       # running backend tests
       - name: Run tests for backend
         run: docker exec cas_py_backend ./run-test.sh
+
+      - name: Run db seed
+        run: docker exec cas_py_backend /bin/bash -c "python -m tools.db_seed"

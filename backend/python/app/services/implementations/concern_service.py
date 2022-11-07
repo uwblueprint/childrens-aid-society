@@ -1,5 +1,6 @@
 from ...models import db
 from ...models.concern import Concern
+from ...models.intake import Intake, intakes_concerns
 from ...resources.concern_dto import ConcernDTO
 from ..interfaces.concern_service import IConcernService
 
@@ -68,6 +69,30 @@ class ConcernService(IConcernService):
             )
         except Exception as error:
             db.session.rollback()
+            raise error
+
+    def get_concerns_by_intake(self, intake_id, type=None):
+        try:
+            concerns = (
+                Concern.query.join(intakes_concerns)
+                .join(Intake)
+                .filter(
+                    intakes_concerns.c.intake_id == intake_id,
+                    Concern.type == type if type else True,
+                )
+                .all()
+            )
+            return [
+                ConcernDTO(
+                    concern.id,
+                    concern.type,
+                    concern.concern,
+                    concern.is_default,
+                )
+                for concern in concerns
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
             raise error
 
     def get_all_concerns(self, type, is_default=True):

@@ -32,7 +32,7 @@ DEFAULT_CONCERNS = (
 )
 
 DUMMY_USER_DATA = {
-    "id": 99,
+    "id": 1,
     "first_name": "John",
     "last_name": "Doe",
     "auth_id": "auth0|123456789",
@@ -42,7 +42,7 @@ DUMMY_USER_DATA = {
 
 DUMMY_INTAKE_DATA = {
     "id": 1,
-    "user_id": 99,
+    "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
     "referral_date": datetime.date(2020, 1, 1),

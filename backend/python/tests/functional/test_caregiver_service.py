@@ -17,7 +17,6 @@ def caregiver_service():
     seed_database()
     yield caregiver
     teardown_database()
-    Caregiver.query.delete()
 
 
 DUMMY_USER_DATA = {

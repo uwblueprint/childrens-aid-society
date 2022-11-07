@@ -16,18 +16,9 @@ class ChildDTO:
         self.has_foster_placement = kwargs.get("has_foster_placement")
 
 
-class CreateChildDTO(object):
+class CreateChildDTO(ChildDTO):
     def __init__(self, **kwargs):
-        self.intake_id = kwargs.get("intake_id")
-        self.first_name = kwargs.get("first_name")
-        self.last_name = kwargs.get("last_name")
-        self.date_of_birth = kwargs.get("date_of_birth")
-        self.cpin_number = kwargs.get("cpin_number")
-        self.child_service_worker_id = kwargs.get("child_service_worker_id")
-        self.daytime_contact_id = kwargs.get("daytime_contact_id")
-        self.special_needs = kwargs.get("special_needs")
-        self.has_kinship_provider = kwargs.get("has_kinship_provider")
-        self.has_foster_placement = kwargs.get("has_foster_placement")
+        super().__init__(**kwargs)
 
     def validate(self):
         error_list = []
@@ -45,7 +36,8 @@ class CreateChildDTO(object):
             not self.child_service_worker_id
             or not type(self.child_service_worker_id) == int
         ):
-            error_list.append("The child_service_worker_id supplied is invalid")
+            error_list.append(
+                "The child_service_worker_id supplied is invalid")
         if not self.daytime_contact_id or not type(self.daytime_contact_id) == int:
             error_list.append("The daytime_contact_id supplied is invalid")
         if not self.special_needs or not type(self.special_needs) == str:

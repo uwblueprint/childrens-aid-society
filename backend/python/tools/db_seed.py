@@ -56,14 +56,13 @@ def insert_test_data():
 
     # Intake
     values = [
-        (1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', 1, "10:00", 1, "Denial reason"),
-        (2, "2020-03-27", "Jones", "cpin2222", True, True, True, "FINAL_ORDER_FOR_SOCIETY_CARE", "22222", "c22222", True, "ELIGIBLE_FOR_REGISTRATION", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-03-27", True, "2020-03-27", "2020-03-27", '{"TUESDAY", "MONDAY"}', 1, "03:21:53", 1, "Denial reason"),
-        (3, "2020-04-01", "Williams", "cpin3333", False, True, False, "EXTENDED_SOCIETY_CARE", "33333", "c33333", True, "INUIT", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-04-01", True, "2020-04-01", "2020-04-01", '{"WEDNESDAY", "THURSDAY"}', 1, "23:31:02", 1, "Denial reason"),
-        (4, "2020-04-01", "Brown", "cpin4444", False, False, False, "SUPERVISION_ORDER", "44444", "c44444", True, "METIS", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-05-23", True, "2020-06-01", "2020-04-01", '{"THURSDAY", "WEDNESDAY", "SATURDAY"}', 1, "13:21:02", 1, "Denial reason"),
-    ]
+        (1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', "ACCESS_LOC", "10:00", 1, "Denial reason"),
+        (2, "2020-03-27", "Jones", "cpin2222", True, True, True, "FINAL_ORDER_FOR_SOCIETY_CARE", "22222", "c22222", True, "ELIGIBLE_FOR_REGISTRATION", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-03-27", True, "2020-03-27", "2020-03-27", '{"TUESDAY", "MONDAY"}', "ACCESS_LOC", "03:21:53", 1, "Denial reason"),
+        (3, "2020-04-01", "Williams", "cpin3333", False, True, False, "EXTENDED_SOCIETY_CARE", "33333", "c33333", True, "INUIT", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-04-01", True, "2020-04-01", "2020-04-01", '{"WEDNESDAY", "THURSDAY"}', "ACCESS_LOC", "23:31:02", 1, "Denial reason"),
+        (4, "2020-04-01", "Brown", "cpin4444", False, False, False, "SUPERVISION_ORDER", "44444", "c44444", True, "METIS", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-05-23", True, "2020-06-01", "2020-04-01", '{"THURSDAY", "WEDNESDAY", "SATURDAY"}', "ACCESS_LOC", "13:21:02", 1, "Denial reason"),    ]
 
     for value in values:
-        insert_values(db, "intakes", ("referring_worker_id", "referral_date", "family_name", "cpin_number", "is_investigation", "is_ongoing", "is_court_involved", "court_status", "court_order", "court_order_file", "is_first_nation_heritage", "first_nation_heritage", "first_nation_band", "family_strengths", "access_type", "transportation", "limitations", "case_date", "is_accepted", "date_accepted", "access_start_date", "access_weekday", "access_location_id", "access_time", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("referring_worker_id", "referral_date", "family_name", "cpin_number", "is_investigation", "is_ongoing", "is_court_involved", "court_status", "court_order", "court_order_file", "is_first_nation_heritage", "first_nation_heritage", "first_nation_band", "family_strengths", "access_type", "transportation", "limitations", "case_date", "is_accepted", "date_accepted", "access_start_date", "access_weekday", "access_location", "access_time", "lead_access_worker_id", "denial_reason"), value)
 
     # Daytime Contact
     values = [

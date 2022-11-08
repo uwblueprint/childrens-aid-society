@@ -57,5 +57,8 @@ jobs:
       - name: Run tests for backend
         run: docker exec cas_py_backend ./run-test.sh
 
+      - name: Flask db migrate
+        run: docker exec cas_py_backend /bin/bash -c "flask db upgrade"
+
       - name: Run db seed
         run: docker exec cas_py_backend /bin/bash -c "python -m tools.db_seed"

@@ -1,6 +1,6 @@
 from ...models import db
 from ...models.concern import Concern
-from ...models.intake import Intake, intakes_concerns
+from ...models.intake import Intake
 from ...resources.concern_dto import ConcernDTO
 from ..interfaces.concern_service import IConcernService
 
@@ -73,23 +73,11 @@ class ConcernService(IConcernService):
 
     def get_concerns_by_intake(self, intake_id, type=None):
         try:
-            concerns = (
-                Concern.query.join(intakes_concerns)
-                .join(Intake)
-                .filter(
-                    intakes_concerns.c.intake_id == intake_id,
-                    Concern.type == type if type else True,
-                )
-                .all()
-            )
+            intake_instance = Intake.query.filter_by(id=intake_id).first()
             return [
-                ConcernDTO(
-                    concern.id,
-                    concern.type,
-                    concern.concern,
-                    concern.is_default,
-                )
-                for concern in concerns
+                ConcernDTO(result.id, result.type, result.concern, result.is_default)
+                for result in intake_instance.concerns
+                if type == result.type or type is None
             ]
         except Exception as error:
             self.logger.error(str(error))

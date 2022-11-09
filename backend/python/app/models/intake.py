@@ -92,3 +92,5 @@ class Intake(db.Model, BaseMixin):
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )
     denial_reason = db.Column(db.String, nullable=True)
+    concerns = db.relationship("Concern", secondary=intakes_concerns)
+    goals = db.relationship("Goal", secondary=intakes_goals)

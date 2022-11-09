@@ -7,12 +7,9 @@ class DaytimeContactDTO:
         self.dismissal_time = kwargs.get("dismissal_time")
 
 
-class CreateDaytimeContactDTO(object):
+class CreateDaytimeContactDTO(DaytimeContactDTO):
     def __init__(self, **kwargs):
-        self.name = kwargs.get("name")
-        self.address = kwargs.get("address")
-        self.contact_information = kwargs.get("contact_information")
-        self.dismissal_time = kwargs.get("dismissal_time")
+        super().__init__(**kwargs)
 
     def validate(self):
         error_list = []

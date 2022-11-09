@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  py-backend:
+    container_name: cas_py_backend
+    restart: always
+    build:
+      context: ./backend/python
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    dns:
+      - 8.8.8.8
+    volumes:
+      - ./backend/python:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - POSTGRES_DB_TEST
+      - DB_HOST
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - FIREBASE_SVC_ACCOUNT_AUTH_URI
+      - FIREBASE_SVC_ACCOUNT_CLIENT_ID
+      - FIREBASE_SVC_ACCOUNT_TOKEN_URI
+      - FIREBASE_STORAGE_DEFAULT_BUCKET
+      - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY
+      - FIREBASE_SVC_ACCOUNT_CLIENT_EMAIL
+      - FIREBASE_SVC_ACCOUNT_PRIVATE_KEY_ID
+      - FIREBASE_SVC_ACCOUNT_CLIENT_X509_CERT_URL
+      - FIREBASE_SVC_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
+  db:
+    # TODO: rename container for your project
+    container_name: cas_db
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./db-init:/docker-entrypoint-initdb.d
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=${POSTGRES_DB_DEV},${POSTGRES_DB_TEST}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

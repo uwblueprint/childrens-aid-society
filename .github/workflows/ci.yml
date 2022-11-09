@@ -61,7 +61,7 @@ jobs:
         run: docker-compose down -v
 
       - name: bruh2
-        run: docker-compose up -d -f docker-compose.yml
+        run: docker-compose up -d -f dc.yml
 
       - name: Flask db migrate
         run: docker exec cas_py_backend /bin/bash -c "flask db upgrade"

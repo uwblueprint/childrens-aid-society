@@ -29,15 +29,13 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [
-    permittedIndividualDetails,
-    setPermittedIndividualDetails,
-  ] = useState<PermittedIndividualDetails>({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    relationship: "",
-  });
+  const [permittedIndividualDetails, setPermittedIndividualDetails] =
+    useState<PermittedIndividualDetails>({
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      relationship: "",
+    });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
     test: "",
   });
@@ -45,6 +43,8 @@ const Intake = (): React.ReactElement => {
   const nextStep = () => setStep(step + 1);
 
   const prevStep = () => setStep(step - 1);
+
+  const setTheStep = (index: number) => setStep(index + 1);
 
   const renderDetailsForm = () => {
     switch (step) {
@@ -125,6 +125,7 @@ const Intake = (): React.ReactElement => {
               "Individual details",
               "Program details",
             ]}
+            setTheStep={setTheStep}
             activePage={step - 1}
           />
         ) : (

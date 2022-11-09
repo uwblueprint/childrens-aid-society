@@ -39,10 +39,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - ./db-init:/docker-entrypoint-initdb.d
-    env_file:
-      - ./.env
+    # set some env vars and their values
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=${POSTGRES_DB_DEV},${POSTGRES_DB_TEST}
+      - POSTGRES_DB_DEV
+      - POSTGRES_DB_TEST
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

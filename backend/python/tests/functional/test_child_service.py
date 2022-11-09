@@ -18,10 +18,6 @@ DUMMY_DAYTIME_CONTACT_DATA = {
     "dismissal_time": "4:00PM",
 }
 
-DUMMY_INTAKE_DATA = {
-    "id": 1,
-}
-
 DUMMY_USER_DATA = {
     "id": 1,
     "first_name": "Hamza",
@@ -29,6 +25,22 @@ DUMMY_USER_DATA = {
     "auth_id": "hbyusuff",
     "role": "User",
     "branch": "ALGOMA",
+}
+
+DUMMY_INTAKE_DATA = {
+    "id": 1,
+    "user_id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "referral_date": datetime.date(2020, 1, 1),
+    "family_name": "Doe",
+    "cpin_number": "123456789",
+    "cpin_file_type": "ONGOING",
+    "court_status": "OTHER",
+    "court_order_file": "court_order.pdf",
+    "transportation_requirements": "car",
+    "scheduling_requirements": "flexible",
+    "suggested_start_date": datetime.date(2020, 1, 1),
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
@@ -49,12 +61,12 @@ def child_service():
 
 
 def seed_database():
-    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
-    db.session.add(dummy_intake)
-    db.session.commit()
-
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
+    db.session.commit()
+
+    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
+    db.session.add(dummy_intake)
     db.session.commit()
 
     dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)

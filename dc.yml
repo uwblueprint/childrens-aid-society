@@ -39,12 +39,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - ./db-init:/docker-entrypoint-initdb.d
-    # set some env vars and their values
+    # set some env vars and their values without using secrets
     environment:
-      - POSTGRES_DB_DEV
-      - POSTGRES_DB_TEST
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+      POSTGRES_DB_DEV: cas
+      POSTGRES_DB_TEST: cas_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: cas_db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

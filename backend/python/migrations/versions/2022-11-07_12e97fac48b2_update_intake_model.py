@@ -26,7 +26,7 @@ def upgrade():
         "intakes",
         sa.Column(
             "cpin_file_type",
-            sa.Enum("INVESTIGATION", "ONGOING", name="cpin_file_type"),
+            cpin_file_type,
             nullable=False,
         ),
     )
@@ -40,9 +40,7 @@ def upgrade():
         "intakes",
         sa.Column(
             "intake_status",
-            sa.Enum(
-                "IN PROGRESS", "IN REVIEW", "ACCEPTED", "DENIED", name="intake_status"
-            ),
+            intake_status,
             nullable=True,
         ),
     )

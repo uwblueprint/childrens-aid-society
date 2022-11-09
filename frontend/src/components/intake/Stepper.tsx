@@ -36,8 +36,6 @@ const Stepper = ({
             <React.Fragment key={index}>
               <div
                 onClick={() => {
-                  console.log({ page });
-                  console.log({ index });
                   setTheStep(index);
                 }}
                 style={{ display: "contents" }}

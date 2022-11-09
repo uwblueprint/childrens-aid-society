@@ -8,11 +8,13 @@ class IIntakeService(ABC):
 
     @abstractmethod
     def create_intake(self, intake):
-        """Create a new Intake object
-
-        :param intake: dictionary of intake fields
-        :return: dictionary of Intake object
-        :rtype: dictionary
-        :raises Exception: if intake fields are invalid
+        """Adds the specified intake to the intake table and returns
+            an IntakeDTO of the new entry
+        :param intake: the intake to be added
+        :type intake: CreateIntakeDTO
+        :return: IntakeDTO
+        :rtype: IntakeDTO
+        :raises Exception: if input CreateIntakeDTO is not valid or if there was an error
+                           during insertion
         """
         pass

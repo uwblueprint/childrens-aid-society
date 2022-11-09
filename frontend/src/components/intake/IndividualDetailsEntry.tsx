@@ -3,7 +3,7 @@ import { Button, VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
-import { INDIVIDUAL_DETAILS_PAGE } from "../../constants/Routes";
+import { ADD_CHILD_PAGE, INDIVIDUAL_DETAILS_PAGE } from "../../constants/Routes";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;
@@ -25,7 +25,7 @@ const IndividualDetailsEntry = ({
           buttonText="Add child"
           buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
           onButtonClick={() => {
-            history.push(INDIVIDUAL_DETAILS_PAGE);
+            history.push(ADD_CHILD_PAGE);
           }}
         />
         <PromptBox

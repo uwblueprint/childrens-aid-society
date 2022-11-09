@@ -4,13 +4,11 @@ import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
 import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
-import PermittedIndividualsForm, {
-  PermittedIndividualDetails,
-} from "../intake/PermittedIndividualsForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import Stepper from "../intake/Stepper";
+import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(1);
@@ -29,13 +27,6 @@ const Intake = (): React.ReactElement => {
     firstNationBand: "",
     orderReferral: null,
   });
-  const [permittedIndividualDetails, setPermittedIndividualDetails] =
-    useState<PermittedIndividualDetails>({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      relationship: "",
-    });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
     test: "",
   });
@@ -67,16 +58,7 @@ const Intake = (): React.ReactElement => {
         );
       case 3:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <PermittedIndividualsForm
-                permittedIndividualDetails={permittedIndividualDetails}
-                setPermittedIndividualDetails={setPermittedIndividualDetails}
-                prevStep={prevStep}
-                nextStep={nextStep}
-              />
-            </Box>
-          </>
+          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
         );
       case 4:
         return (

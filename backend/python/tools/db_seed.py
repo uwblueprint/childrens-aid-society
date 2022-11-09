@@ -54,17 +54,6 @@ def insert_test_data():
     for value in values:
         insert_values(db, "users", ("first_name", "last_name", "auth_id", "role", "branch"), value)
 
-    # Addresses
-    values = [
-        ("27 King''s College Cir", "Toronto",  "M5S 1A1", 43.663, -79.397),
-        ("75 University Ave W",    "Waterloo", "N2L 3C5", 43.472, -80.544),
-        ("99 University Ave",      "Kingston", "K7L 3N6", 44.229, -76.485),
-        ("200 University Ave W",   "Waterloo", "N2L 3G1", 43.472, -80.544),
-    ]
-
-    for value in values:
-        insert_values(db, "addresses", ("street_address", "city", "postal_code", "latitude", "longitude"), value)
-
     # Intake
     values = [
         (1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', 1, "10:00", 1, "Denial reason"),
@@ -78,14 +67,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen', 'Crownguard', 1, '555-555-5555', 'SCHOOL'),
-        ('Shieda', 'Kayn', 2, '555-555-5555', 'DAYCARE'),
-        ('Sarah', 'Fortune', 3, '555-555-5555', 'SCHOOL'),
-        ('Irelia', 'Xan', 4, '555-555-5555', 'DAYCARE'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("contact_first_name", "contact_last_name", "address_id", "phone_number", "type"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
 
     # Child
     values = [
@@ -100,12 +89,12 @@ def insert_test_data():
 
     # Caregivers
     values = [
-        ("CAREGIVER", "Yor", "Forger", True, 1, 1, "FOSTER_CAREGIVER", "1234567890"),
-        ("CAREGIVER", "Loid", "Forger", True, 1, 1, "FOSTER_CAREGIVER", "1234567890")
+        ('Yor Forger', '1999-01-01', 'considerations', '555-555-5555', '777-777-7777', 'email@email.com', 'address', 'FOSTER_CAREGIVER', 'NULL', 1),
+        ('Loid Forger', '1999-01-01', 'considerations', '777-777-7777', '555-555-5555', 'email@email.com', 'address', 'FOSTER_CAREGIVER', 'NULL', 1)
     ]
 
     for value in values:
-        insert_values(db, "caregivers", ("type", "first_name", "last_name", "is_primary", "child_id", "address_id", "relationship_to_child", "phone_number", "cpin_number", "date_of_birth", "special_needs", "name_of_child", "kinship_worker_name", "kinship_worker_ext", "foster_care_coord_name", "foster_care_coord_ext", "limitations_for_access"), value)
+        insert_values(db, "caregivers", ("name", "date_of_birth", "individual_considerations", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "intake_id"), value)
 
 # fmt: on
 

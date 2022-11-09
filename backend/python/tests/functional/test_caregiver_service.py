@@ -4,11 +4,8 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.address import Address
 from app.models.caregiver import Caregiver
-from app.models.child import Child
-from app.models.daytime_contact import DaytimeContact
-from app.models.user import User
+from app.models.intake import Intake
 from app.resources.caregiver_dto import CaregiverDTO, CreateCaregiverDTO
 from app.services.implementations.caregiver_service import CaregiverService
 
@@ -22,94 +19,48 @@ def caregiver_service():
     Caregiver.query.delete()
 
 
-DUMMY_USER_DATA = {
-    "first_name": "Hamza",
-    "last_name": "Yusuff",
-    "auth_id": "hbyusuff",
-    "role": "User",
-    "branch": "ALGOMA",
-}
-DUMMY_ADDRESS_DATA = {
-    "street_address": "Lester Street",
-    "city": "waterloo",
-    "postal_code": "N2L3W6",
-}
-DUMMY_DAYTIME_CONTACT_DATA = {
-    "name": "Hamza Yusuff",
-    "contact_information": "8790832",
-    "dismissal_time": "1:00PM",
-}
-DUMMY_CHILD_DATA = {
-    "first_name": "Hamza",
-    "last_name": "Yusuff",
-    "child_service_worker_id": 1,
-    "daytime_contact_id": 1,
-    "special_needs": "None",
-    "has_kinship_provider": False,
-    "has_foster_placement": False,
+DUMMY_INTAKE_DATA = {
+    "id": 999,
 }
 
 
 def seed_database():
-    new_user = User(**DUMMY_USER_DATA)
-    db.session.add(new_user)
-    db.session.commit()
-
-    new_address = Address(**DUMMY_ADDRESS_DATA)
-    db.session.add(new_address)
-    db.session.commit()
-
-    DUMMY_DAYTIME_CONTACT_DATA["address_id"] = new_address.id
-    new_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
-    db.session.add(new_daytime_contact)
-    db.session.commit()
-
-    DUMMY_CHILD_DATA["child_service_worker_id"] = new_user.id
-    DUMMY_CHILD_DATA["daytime_contact_id"] = new_daytime_contact.id
-    new_child = Child(**DUMMY_CHILD_DATA)
-    db.session.add(new_child)
+    intake = Intake(**DUMMY_INTAKE_DATA)
+    db.session.add(intake)
     db.session.commit()
 
 
 def teardown_database():
     Caregiver.query.delete()
-    Child.query.delete()
-    DaytimeContact.query.delete()
-    Address.query.delete()
-    User.query.delete()
+    Intake.query.delete()
+    db.session.commit()
 
 
 class TestCreateCaregiverValid:
     def test_normal_case(self, caregiver_service):
         param = CreateCaregiverDTO(
-            type="CAREGIVER",
-            first_name="Hamza",
-            last_name="Yusuff",
-            is_primary=False,
-            child_id=1,
+            name="Hamza Yusuff",
+            date_of_birth=datetime.date(1999, 1, 1),
+            primary_phone_number="1234567890",
+            secondary_phone_number="2345678901",
+            email="test123@uwaterloo.ca",
+            address="1234 Lester Street",
             relationship_to_child="FOSTER_CAREGIVER",
-            phone_number="012442343",
-            cpin_number="123",
-            date_of_birth=datetime.datetime(day=27, month=11, year=2001),
-            special_needs="None",
-            name_of_child="Hisan",
-            kinship_worker_name="Blueprint",
-            kinship_worker_ext="CS",
-            foster_care_coord_name="MathSoc",
-            foster_care_coord_ext="EntSoc",
-            limitations_for_access="UWPM",
+            intake_id=999,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
         assert type(caregiver_instance) is CaregiverDTO
 
     def test_nullable_false_case(self, caregiver_service):
+        # include only the required fields
         param = CreateCaregiverDTO(
-            type="CAREGIVER",
-            first_name="Hamza",
-            last_name="Yusuff",
-            child_id=2,
-            relationship_to_child="KINSHIP_CAREGIVER",
-            phone_number="012442343",
+            name="Hamza Yusuff",
+            date_of_birth=datetime.date(1999, 1, 1),
+            primary_phone_number="1234567890",
+            email="test123@uwaterloo.ca",
+            address="1234 Lester Street",
+            relationship_to_child="FOSTER_CAREGIVER",
+            intake_id=999,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
         assert type(caregiver_instance) is CaregiverDTO
@@ -117,24 +68,29 @@ class TestCreateCaregiverValid:
 
 class TestCreateCaregiverInvalidFails:
     def test_missing_field(self, caregiver_service):
+        # missing "name", a required field
         param = CreateCaregiverDTO(
-            type="PROVIDER",
-            first_name="Hamza",
-            child_id=1,
-            relationship_to_child="DAD",
-            phone_number="980332434",
+            date_of_birth=datetime.date(1999, 1, 1),
+            primary_phone_number="1234567890",
+            email="test123@uwaterloo.ca",
+            address="1234 Lester Street",
+            relationship_to_child="FOSTER_CAREGIVER",
+            intake_id=999,
         )
         with pytest.raises(Exception):
             caregiver_service.create_caregiver(param)
 
     def test_empty_input_string(self):
+        # empty string for "name", which fails the regex check
         param = CreateCaregiverDTO(
-            type="PROVIDER",
-            first_name="Hamza",
-            last_name="",
-            child_id=1,
-            relationship_to_child="DAD",
-            phone_number="980332434",
+            name="",
+            date_of_birth=datetime.date(1999, 1, 1),
+            primary_phone_number="1234567890",
+            secondary_phone_number="2345678901",
+            email="test123@uwaterloo.ca",
+            address="1234 Lester Street",
+            relationship_to_child="FOSTER_CAREGIVER",
+            intake_id=999,
         )
         with pytest.raises(Exception):
             caregiver_service.create_caregiver(param)

@@ -58,7 +58,7 @@ jobs:
         run: docker exec cas_py_backend ./run-test.sh
 
       - name: bruh
-        run: docker-compose down -v
+        run: docker-compose down -v -f docker-compose.ci.yml
 
       - name: bruh2
         run: docker-compose up -d -f dc.yml

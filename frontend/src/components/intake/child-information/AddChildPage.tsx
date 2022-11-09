@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ChevronLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import IntakeHeader from "../IntakeHeader";
-import ChildInformation from "./ChildInformationForm";
+import ChildInformationForm from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm from "./SchoolDaycareForm";
@@ -15,7 +15,7 @@ const AddChild = (): React.ReactElement => {
   const renderChildForm = () => {
     switch (activeFormIndex) {
       case 0:
-        return <ChildInformation />;
+        return <ChildInformationForm />;
       case 1:
         return <SchoolDaycareForm />;
       case 2:

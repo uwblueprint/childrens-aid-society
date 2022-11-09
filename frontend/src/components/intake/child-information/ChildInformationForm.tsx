@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 
-const ChildInformation = (): React.ReactElement => {
+const ChildInformationForm = (): React.ReactElement => {
   return (
     <Box>
       <Text>Child Information</Text>
@@ -9,4 +9,4 @@ const ChildInformation = (): React.ReactElement => {
   );
 };
 
-export default ChildInformation;
+export default ChildInformationForm;

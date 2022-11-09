@@ -3,7 +3,10 @@ import { Button, VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
-import { ADD_CHILD_PAGE, INDIVIDUAL_DETAILS_PAGE } from "../../constants/Routes";
+import {
+  ADD_CHILD_PAGE,
+  INDIVIDUAL_DETAILS_PAGE,
+} from "../../constants/Routes";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;

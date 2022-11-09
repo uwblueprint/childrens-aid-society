@@ -37,9 +37,8 @@ const App = (): React.ReactElement => {
     AUTHENTICATED_USER_KEY,
   );
 
-  const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(
-    currentUser,
-  );
+  const [authenticatedUser, setAuthenticatedUser] =
+    useState<AuthenticatedUser>(currentUser);
 
   // Some sort of global state. Context API replaces redux.
   // Split related states into different contexts as necessary.
@@ -71,7 +70,11 @@ const App = (): React.ReactElement => {
                   path={Routes.INDIVIDUAL_DETAILS_PAGE}
                   component={IndividualDetails}
                 />
-                <Route exact path={Routes.ADD_CHILD_PAGE} component={AddChild} />
+                <Route
+                  exact
+                  path={Routes.ADD_CHILD_PAGE}
+                  component={AddChild}
+                />
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </Router>

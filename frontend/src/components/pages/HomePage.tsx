@@ -1,10 +1,12 @@
 import React from "react";
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { ChevronDown, Cloud, Feather } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import CustomTag from "../common/CustomTag";
+import ExistingProvider from "../intake/ExistingProviderModal";
 
 const Home = (): React.ReactElement => {
+  const { onOpen, isOpen, onClose } = useDisclosure();
   return (
     <Box style={{ textAlign: "center", paddingTop: "20px" }}>
       <Text
@@ -108,6 +110,8 @@ const Home = (): React.ReactElement => {
         54=500px
       </Box>
       <CustomTag placeholder="Option Name" icon={<Icon as={Feather} />} />
+      <Button onClick={onOpen}>Existing Providers Modal</Button>
+      <ExistingProvider isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };

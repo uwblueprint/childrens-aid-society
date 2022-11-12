@@ -9,8 +9,8 @@ def init_app(app):
     from .access_type import AccessType
     from .branch import Branch
     from .caregiver import Caregiver
-    from .child_behavior import ChildBehavior
     from .child import Child
+    from .child_behavior import ChildBehavior
     from .daytime_contact import DaytimeContact
     from .familial_concern import FamilialConcern
     from .goal import Goal

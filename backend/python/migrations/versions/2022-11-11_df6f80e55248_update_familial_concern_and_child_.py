@@ -5,8 +5,8 @@ Revises: 12e97fac48b2
 Create Date: 2022-11-11 23:30:38.982452
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
@@ -80,8 +80,7 @@ def downgrade():
             autoincrement=False,
             nullable=False,
         ),
-        sa.Column("concern", sa.VARCHAR(),
-                  autoincrement=False, nullable=False),
+        sa.Column("concern", sa.VARCHAR(), autoincrement=False, nullable=False),
         sa.Column(
             "is_default",
             sa.BOOLEAN(),

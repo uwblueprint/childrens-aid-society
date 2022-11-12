@@ -12,11 +12,6 @@ from app.models.user import User
 from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
-DUMMY_DAYTIME_CONTACT_DATA = {
-    "name": "Hamzaa Yusuff",
-    "contact_information": "8790832",
-    "dismissal_time": "4:00PM",
-}
 
 DUMMY_USER_DATA = {
     "id": 1,

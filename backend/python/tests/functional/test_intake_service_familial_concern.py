@@ -99,22 +99,14 @@ def teardown_database():
 
 def test_get_familial_concern_success(familial_concern_service):
     res = familial_concern_service.get_familial_concern("CONCERN 1")
-    desired = FamilialConcernDTO(
-        id=1,
-        concern="CONCERN 1",
-        is_default=True,
-    )
+    desired = FamilialConcernDTO(id=1, concern="CONCERN 1", is_default=True)
     assert type(res) is FamilialConcernDTO
     assert res.__dict__ == desired.__dict__
 
 
 def test_get_familial_concern_fail(familial_concern_service):
-    try:
-        _ = familial_concern_service.get_familial_concern(999)
-    except Exception as e:
-        return
-
-    assert False
+    res = familial_concern_service.get_familial_concern("I DON'T EXIST")
+    assert res is None
 
 
 def test_add_familial_concern_success(familial_concern_service):

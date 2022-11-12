@@ -1,7 +1,10 @@
 from ...models import db
 from ...models.child import Child
+from ...models.child_behavior import ChildBehavior
 from ...resources.child_dto import ChildDTO, CreateChildDTO
+from ...resources.child_behavior_dto import ChildBehaviorDTO, CreateChildBehaviorDTO
 from ..interfaces.child_service import IChildService
+from ..interfaces.child_service import IChildBehaviorService
 
 
 class ChildService(IChildService):
@@ -11,7 +14,8 @@ class ChildService(IChildService):
     def add_new_child(self, child):
         try:
             if not child:
-                raise Exception("Empty child DTO/None passed to add_new_child function")
+                raise Exception(
+                    "Empty child DTO/None passed to add_new_child function")
             if not isinstance(child, CreateChildDTO):
                 raise Exception("Child passed is not of CreateChildDTO type")
             error_list = child.validate()
@@ -35,4 +39,70 @@ class ChildService(IChildService):
             )
         except Exception as error:
             db.session.rollback()
+            raise error
+
+
+class ChildBehaviorService(IChildBehaviorService):
+    def __init__(self, logger):
+        self.logger = logger
+
+    def get_child_behavior(self, behavior):
+        try:
+            child_behavior_entry = ChildBehavior.query.filter_by(
+                behavior=behavior.upper(),
+            ).first()
+            return (
+                ChildBehaviorDTO(
+                    id=child_behavior_entry.id,
+                    behavior=child_behavior_entry.behavior,
+                    is_default=child_behavior_entry.is_default,
+                )
+                if child_behavior_entry
+                else None
+            )
+
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def add_child_behavior(self, behavior, is_default=False):
+        try:
+            new_child_behavior_entry = ChildBehavior(
+                behavior=behavior.upper(),
+                is_default=is_default,
+            )
+            db.session.add(new_child_behavior_entry)
+            db.session.commit()
+            return ChildBehaviorDTO(
+                id=new_child_behavior_entry.id,
+                behavior=new_child_behavior_entry.behavior,
+                is_default=new_child_behavior_entry.is_default,
+            )
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def get_child_behaviors_by_child(self, child_id):
+        try:
+            child = Child.query.filter_by(id=child_id).first()
+            return [
+                ChildBehaviorDTO(
+                    id=result.id, behavior=result.behavior, is_default=result.is_default
+                )
+                for result in child.behaviors
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_all_child_behaviors(self, is_default=True):
+        try:
+            return [
+                ChildBehaviorDTO(
+                    id=result.id, behavior=result.behavior, is_default=result.is_default
+                )
+                for result in ChildBehavior.query.filter_by(is_default=is_default)
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
             raise error

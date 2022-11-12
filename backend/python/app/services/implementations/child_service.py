@@ -1,10 +1,9 @@
 from ...models import db
 from ...models.child import Child
 from ...models.child_behavior import ChildBehavior
-from ...resources.child_dto import ChildDTO, CreateChildDTO
 from ...resources.child_behavior_dto import ChildBehaviorDTO, CreateChildBehaviorDTO
-from ..interfaces.child_service import IChildService
-from ..interfaces.child_service import IChildBehaviorService
+from ...resources.child_dto import ChildDTO, CreateChildDTO
+from ..interfaces.child_service import IChildBehaviorService, IChildService
 
 
 class ChildService(IChildService):
@@ -14,8 +13,7 @@ class ChildService(IChildService):
     def add_new_child(self, child):
         try:
             if not child:
-                raise Exception(
-                    "Empty child DTO/None passed to add_new_child function")
+                raise Exception("Empty child DTO/None passed to add_new_child function")
             if not isinstance(child, CreateChildDTO):
                 raise Exception("Child passed is not of CreateChildDTO type")
             error_list = child.validate()

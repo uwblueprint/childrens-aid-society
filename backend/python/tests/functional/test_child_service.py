@@ -12,7 +12,6 @@ from app.models.user import User
 from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
-
 DUMMY_USER_DATA = {
     "id": 1,
     "first_name": "Hamza",

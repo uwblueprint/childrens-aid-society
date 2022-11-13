@@ -112,9 +112,7 @@ const CourtInformationForm = ({
                 />
                 <Button
                   onClick={handleClick}
-                  variant="ghost"
-                  padding="24px 20px"
-                  color="blue.400"
+                  variant="tertiary"
                   leftIcon={<FilePlus />}
                 >
                   Attach document

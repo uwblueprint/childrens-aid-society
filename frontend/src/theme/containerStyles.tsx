@@ -12,7 +12,7 @@ const Container: ComponentStyleConfig = {
   },
   variants: {
     selectionTag: {
-      maxW: "md",
+      width: "100%",
       borderRadius: "8px",
       padding: "4px",
       background: "gray.100",

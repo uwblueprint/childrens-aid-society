@@ -9,7 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { FilePlus } from "react-feather";
-import { AutocompleteField, CustomSelectField } from "./Autocomplete";
+import { AutocompleteField } from "./Autocomplete";
+import { CustomSelectField } from "./Select";
 import CustomInput from "../common/CustomInput";
 
 export type CourtDetails = {
@@ -27,7 +28,7 @@ type CourtInformationFormProps = {
 };
 
 const optional = (
-  <Box display="inline" color="gray.600">
+  <Box as="span" color="gray.600">
     (OPTIONAL)
   </Box>
 );

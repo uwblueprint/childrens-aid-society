@@ -2,18 +2,16 @@
 
 import React, { useState } from "react";
 import {
-  Box,
-  Button,
   FormControl,
   Popover,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  Select,
-  SelectProps,
+  Box,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 import CustomInput, { CustomInputProps } from "../common/CustomInput";
+import CustomTag from "../common/CustomTag";
 
 export type AutocompleteFieldProps = CustomInputProps & {
   name: string;
@@ -38,38 +36,20 @@ export const AutocompleteSuggestions = ({
     >
       <PopoverBody padding="8px">
         {hints.map((hint, index) => (
-          <Button
-            width="100%"
+          // if the user holds down the mouse, the input loses
+          // focus and the popover is automatically dismissed;
+          // this prevents onClick from working, so we need to
+          // perform the autofill in onMouseDown instead.
+          <Box
             key={index}
-            justifyContent="left"
-            padding="5px"
-            borderRadius="8px"
-            variant="ghost"
-            sx={{
-              ":hover": {
-                backgroundColor: "gray.300",
-              },
-            }}
-            // if the user holds down the mouse, the input loses
-            // focus and the popover is automatically dismissed;
-            // this prevents onClick from working, so we need to
-            // perform the autofill in onMouseDown instead.
             onMouseDown={() => {
               onSelect(hint);
             }}
           >
-            <Box
-              bg="blue.50"
-              color="gray.700"
-              padding="8px 12px"
-              borderRadius="4px"
-              borderColor="gray.700"
-              borderWidth="1px"
-              fontSize="12px"
-            >
+            <CustomTag controlled pressed={false} setPressed={() => {}}>
               {hint}
-            </Box>
-          </Button>
+            </CustomTag>
+          </Box>
         ))}
       </PopoverBody>
     </PopoverContent>
@@ -107,34 +87,5 @@ export const AutocompleteField = ({
         onSelect={(value) => helpers.setValue(value)}
       />
     </Popover>
-  );
-};
-
-export type SelectFieldProps = SelectProps & {
-  name: string;
-};
-
-export const CustomSelectField = ({
-  name,
-  children,
-  ...props
-}: SelectFieldProps): React.ReactElement => {
-  const [field] = useField<string>(name);
-
-  return (
-    <Select
-      {...{ ...field, ...props }}
-      name={name}
-      variant="filled"
-      height="48px"
-      backgroundColor="gray.50"
-      borderColor="gray.100"
-      borderWidth="1px"
-      fontSize="18px"
-      color={field.value ? "black" : "gray.600"}
-      sx={{ ":hover, :focus": { backgroundColor: "gray.100" } }}
-    >
-      {children}
-    </Select>
   );
 };

@@ -125,20 +125,18 @@ const CourtInformationForm = ({
                 <FormLabel pt="15px" htmlFor="firstNationHeritage">
                   FIRST NATION HERITAGE {optional}
                 </FormLabel>
-                <Field
+                <CustomSelectField
                   id="firstNationHeritage"
-                  as={CustomSelectField}
                   name="firstNationHeritage"
+                  defaultValue=""
                 >
-                  <option value="" selected>
-                    Select First Nation heritage status
-                  </option>
+                  <option value="">Select First Nation heritage status</option>
                   <option>First Nation Registered</option>
                   <option>Eligible for Registration</option>
                   <option>Inuit</option>
                   <option>Metis</option>
                   <option>Unknown</option>
-                </Field>
+                </CustomSelectField>
               </FormControl>
               <FormControl>
                 <FormLabel pt="15px" htmlFor="firstNationBand">

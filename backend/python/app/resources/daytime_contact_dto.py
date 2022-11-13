@@ -7,12 +7,9 @@ class DaytimeContactDTO:
         self.dismissal_time = kwargs.get("dismissal_time")
 
 
-class CreateDaytimeContactDTO(object):
+class CreateDaytimeContactDTO(DaytimeContactDTO):
     def __init__(self, **kwargs):
-        self.name = kwargs.get("name")
-        self.address = kwargs.get("address")
-        self.contact_information = kwargs.get("contact_information")
-        self.dismissal_time = kwargs.get("dismissal_time")
+        super().__init__(**kwargs)
 
     def validate(self):
         error_list = []
@@ -22,7 +19,9 @@ class CreateDaytimeContactDTO(object):
             error_list.append("The contact_information supplied is invalid")
         if not self.address or not type(self.address) == str:
             error_list.append("The address supplied is invalid")
-        if not self.dismissal_time or not type(self.dismissal_time) == str:
+
+        # optional fields
+        if self.dismissal_time and not type(self.dismissal_time) == str:
             error_list.append("The dismissal_time supplied is invalid")
 
         return error_list

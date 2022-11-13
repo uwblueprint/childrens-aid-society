@@ -13,6 +13,16 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_other_permitted_individuals(self):
+        try:
+            return [
+                OtherPermittedIndividualDTO(**other_permitted_individual.__dict__)
+                for other_permitted_individual in OtherPermittedIndividual.query.all()
+            ]
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def create_new_other_permitted_individual(self, other_permitted_individual):
         try:
             if not other_permitted_individual:
@@ -36,13 +46,19 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
             db.session.commit()
 
             return OtherPermittedIndividualDTO(
-                id=new_other_permitted_individual_entry.id,
-                name=new_other_permitted_individual_entry.name,
-                phone_number=new_other_permitted_individual_entry.phone_number,
-                relationship_to_child=new_other_permitted_individual_entry.relationship_to_child,
-                notes=new_other_permitted_individual_entry.notes,
-                intake_id=new_other_permitted_individual_entry.intake_id,
+                **new_other_permitted_individual_entry.__dict__
             )
         except Exception as error:
             db.session.rollback()
             raise error
+
+
+"""
+name = db.Column(db.String, nullable=False)
+phone_number = db.Column(db.String, nullable=False)
+relationship_to_child = db.Column(db.String, nullable=False)
+notes = db.Column(db.String, nullable=False)
+intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=False)
+
+curl -X POST "http://localhost:5000/other_permitted_individual" -H "Content-Type: application/json" -d '{"name":"bruh","phone_number":"bruh","relationship_to_child":"bruh","notes":"bruh","intake_id":1}'
+"""

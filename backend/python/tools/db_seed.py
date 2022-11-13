@@ -97,6 +97,14 @@ def insert_test_data():
     for value in values:
         insert_values(db, "caregivers", ("name", "date_of_birth", "individual_considerations", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "intake_id"), value)
 
+    values = [
+        ('Yor Forger', '555-555-5555', 'relationship', 'notes', 1),
+        ('Loid Forger', '777-777-7777', 'relationship', 'notes', 1)
+    ]
+
+    for value in values:
+        insert_values(db, "other_permitted_individuals", ("name", "phone_number", "relationship_to_child", "notes", "intake_id"), value)
+
 # fmt: on
 
 # fmt: off

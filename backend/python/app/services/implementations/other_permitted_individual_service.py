@@ -16,7 +16,8 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
     def get_all_other_permitted_individuals(self):
         try:
             return [
-                OtherPermittedIndividualDTO(**other_permitted_individual.__dict__)
+                OtherPermittedIndividualDTO(
+                    **other_permitted_individual.__dict__)
                 for other_permitted_individual in OtherPermittedIndividual.query.all()
             ]
         except Exception as error:
@@ -51,14 +52,3 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
         except Exception as error:
             db.session.rollback()
             raise error
-
-
-"""
-name = db.Column(db.String, nullable=False)
-phone_number = db.Column(db.String, nullable=False)
-relationship_to_child = db.Column(db.String, nullable=False)
-notes = db.Column(db.String, nullable=False)
-intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=False)
-
-curl -X POST "http://localhost:5000/other_permitted_individual" -H "Content-Type: application/json" -d '{"name":"bruh","phone_number":"bruh","relationship_to_child":"bruh","notes":"bruh","intake_id":1}'
-"""

@@ -12,6 +12,7 @@ import { FilePlus } from "react-feather";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./Select";
 import CustomInput from "../common/CustomInput";
+import OptionalLabel from "./OptionalLabel";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -26,12 +27,6 @@ type CourtInformationFormProps = {
   nextStep: () => void;
   prevStep: () => void;
 };
-
-const optional = (
-  <Box as="span" color="gray.600">
-    (OPTIONAL)
-  </Box>
-);
 
 const CourtInformationForm = ({
   courtDetails,
@@ -122,7 +117,7 @@ const CourtInformationForm = ({
             <HStack alignItems="end" padding="16px 0" spacing={10}>
               <FormControl>
                 <FormLabel pt="15px" htmlFor="firstNationHeritage">
-                  FIRST NATION HERITAGE {optional}
+                  FIRST NATION HERITAGE <OptionalLabel />
                 </FormLabel>
                 <CustomSelectField
                   id="firstNationHeritage"
@@ -139,7 +134,7 @@ const CourtInformationForm = ({
               </FormControl>
               <FormControl>
                 <FormLabel pt="15px" htmlFor="firstNationBand">
-                  FIRST NATION BAND {optional}
+                  FIRST NATION BAND <OptionalLabel />
                 </FormLabel>
                 <Field
                   as={CustomInput}

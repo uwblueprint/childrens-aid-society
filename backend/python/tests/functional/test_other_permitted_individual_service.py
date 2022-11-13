@@ -1,9 +1,12 @@
+import datetime
+
 import pytest
 from flask import current_app
 
 from app.models import db
 from app.models.intake import Intake
 from app.models.other_permitted_individual import OtherPermittedIndividual
+from app.models.user import User
 from app.resources.other_permitted_individual_dto import (
     CreateOtherPermittedIndividualDTO,
     OtherPermittedIndividualDTO,
@@ -24,8 +27,27 @@ def opi_service():
     OtherPermittedIndividual.query.delete()
 
 
+USER_DATA = {
+    "first_name": "John",
+    "last_name": "Doe",
+    "auth_id": "auth0|123456789",
+    "role": "User",
+    "branch": "ALGOMA",
+}
+
 INTAKE_DATA = {
-    # todo
+    "user_id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "referral_date": datetime.date(2020, 1, 1),
+    "family_name": "Doe",
+    "cpin_number": "123456789",
+    "cpin_file_type": "ONGOING",
+    "court_status": "OTHER",
+    "court_order_file": "court_order.pdf",
+    "transportation_requirements": "car",
+    "scheduling_requirements": "flexible",
+    "suggested_start_date": datetime.date(2020, 1, 1),
 }
 
 OPI_DATA = {
@@ -38,6 +60,10 @@ OPI_DATA = {
 
 
 def seed_database():
+    user = User(**USER_DATA)
+    db.session.add(user)
+    db.session.commit()
+
     intake = Intake(**INTAKE_DATA)
     db.session.add(intake)
     db.session.commit()
@@ -50,18 +76,16 @@ def seed_database():
 def teardown_database():
     OtherPermittedIndividual.query.delete()
     Intake.query.delete()
-    db.session.commit()
-
+    User.query.delete()
     db.session.execute(
-        "ALTER SEQUENCE other_permitted_individual_id_seq RESTART WITH 1"
+        "ALTER SEQUENCE other_permitted_individuals_id_seq RESTART WITH 1"
     )
+    db.session.execute("ALTER SEQUENCE intakes_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
     db.session.commit()
 
-    db.session.execute("ALTER SEQUENCE intake_id_seq RESTART WITH 1")
-    db.session.commit()
 
-
-def test_normal_case(self, caregiver_service):
+def test_normal_case(opi_service):
     param = CreateOtherPermittedIndividualDTO(
         name="Angela Martin",
         phone_number="1234567890",
@@ -69,7 +93,7 @@ def test_normal_case(self, caregiver_service):
         notes="note note note",
         intake_id=1,
     )
-    opi_instance = opi_service.create_opi(param)
+    opi_instance = opi_service.create_new_other_permitted_individual(param)
     assert type(opi_instance) is OtherPermittedIndividualDTO
 
 

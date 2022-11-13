@@ -107,7 +107,7 @@ const Intake = (): React.ReactElement => {
               "Individual details",
               "Program details",
             ]}
-            setTheStep={setTheStep}
+            setStep={setTheStep}
             activePage={step - 1}
           />
         ) : (

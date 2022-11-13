@@ -4,7 +4,6 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.address import Address
 from app.models.caregiver import Caregiver
 from app.models.child import Child
 from app.models.daytime_contact import DaytimeContact
@@ -19,10 +18,6 @@ DUMMY_DAYTIME_CONTACT_DATA = {
     "dismissal_time": "4:00PM",
 }
 
-DUMMY_INTAKE_DATA = {
-    "id": 1,
-}
-
 DUMMY_USER_DATA = {
     "id": 1,
     "first_name": "Hamza",
@@ -32,17 +27,28 @@ DUMMY_USER_DATA = {
     "branch": "ALGOMA",
 }
 
+DUMMY_INTAKE_DATA = {
+    "id": 1,
+    "user_id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "referral_date": datetime.date(2020, 1, 1),
+    "family_name": "Doe",
+    "cpin_number": "123456789",
+    "cpin_file_type": "ONGOING",
+    "court_status": "OTHER",
+    "court_order_file": "court_order.pdf",
+    "transportation_requirements": "car",
+    "scheduling_requirements": "flexible",
+    "suggested_start_date": datetime.date(2020, 1, 1),
+}
+
 DUMMY_DAYTIME_CONTACT_DATA = {
     "id": 1,
     "name": "Hamzaa Yusuff",
+    "address": "123 Main St",
     "contact_information": "8790832",
     "dismissal_time": "4:00PM",
-}
-
-DUMMY_ADDRESS_DATA = {
-    "street_address": "Lester Street",
-    "city": "waterloo",
-    "postal_code": "N2L3W6",
 }
 
 
@@ -55,19 +61,14 @@ def child_service():
 
 
 def seed_database():
-    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
-    db.session.add(dummy_intake)
-    db.session.commit()
-
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
     db.session.commit()
 
-    dummy_address = Address(**DUMMY_ADDRESS_DATA)
-    db.session.add(dummy_address)
+    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
+    db.session.add(dummy_intake)
     db.session.commit()
 
-    DUMMY_DAYTIME_CONTACT_DATA["address_id"] = dummy_address.id
     dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
     db.session.add(dummy_daytime_contact)
     db.session.commit()
@@ -77,7 +78,6 @@ def empty_database():
     Child.query.delete()
     Intake.query.delete()
     DaytimeContact.query.delete()
-    Address.query.delete()
     User.query.delete()
 
 

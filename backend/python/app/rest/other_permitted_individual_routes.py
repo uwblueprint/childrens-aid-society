@@ -34,13 +34,13 @@ def get_all_other_permitted_individuals():
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 @validate_request("CreateOtherPermittedIndividualDTO")
-def create_other_permitted_individual():
+def create_new_other_permitted_individual():
     try:
         other_permitted_individual = CreateOtherPermittedIndividualDTO(
             **request.get_json()
         )
         new_other_permitted_individual = (
-            other_permitted_individual_service.create_other_permitted_individual(
+            other_permitted_individual_service.create_new_other_permitted_individual(
                 other_permitted_individual
             )
         )

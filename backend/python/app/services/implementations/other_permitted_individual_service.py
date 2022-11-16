@@ -16,8 +16,7 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
     def get_all_other_permitted_individuals(self):
         try:
             return [
-                OtherPermittedIndividualDTO(
-                    **other_permitted_individual.__dict__)
+                OtherPermittedIndividualDTO(**other_permitted_individual.__dict__)
                 for other_permitted_individual in OtherPermittedIndividual.query.all()
             ]
         except Exception as error:

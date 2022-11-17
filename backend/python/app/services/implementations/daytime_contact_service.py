@@ -8,6 +8,15 @@ class DaytimeContactService(IDaytimeContactService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_daytime_contacts(self):
+        try:
+            daytime_contacts = DaytimeContact.query.all()
+            return [
+                DaytimeContactDTO(**contact.__dict__) for contact in daytime_contacts
+            ]
+        except Exception as error:
+            raise error
+
     def create_new_daytime_contact(self, contact):
         try:
             if not contact:

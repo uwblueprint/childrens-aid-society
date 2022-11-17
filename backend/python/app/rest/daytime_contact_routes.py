@@ -35,3 +35,14 @@ def create_daytime_contact():
         return jsonify(new_daytime_contact.__dict__), 201
     except Exception as error:
         return jsonify(str(error)), 400
+
+
+# delete a daytime_contact by id
+@blueprint.route("/<int:daytime_contact_id>", methods=["DELETE"], strict_slashes=False)
+# @require_authorization_by_role({"Admin"})
+def delete_daytime_contact(daytime_contact_id):
+    try:
+        daytime_contact_service.delete_daytime_contact(daytime_contact_id)
+        return jsonify({"message": "daytime_contact deleted"}), 204
+    except Exception as error:
+        return jsonify(str(error)), 400

@@ -22,3 +22,15 @@ class IDaytimeContactService(ABC):
                            during insertion
         """
         pass
+
+    @abstractmethod
+    def delete_daytime_contact(self, daytime_contact_id):
+        """Deletes the specified contact from the daytime_contact table
+        :param daytime_contact_id: the id of the contact to be deleted
+        :type daytime_contact_id: int
+        :return: None
+        :rtype: None
+        :raises Exception: if input daytime_contact_id is not valid or if there was an error
+                           during deletion
+        """
+        pass

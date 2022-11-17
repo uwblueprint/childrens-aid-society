@@ -43,3 +43,26 @@ class DaytimeContactService(IDaytimeContactService):
         except Exception as error:
             db.session.rollback()
             raise error
+
+    def delete_daytime_contact(self, daytime_contact_id):
+        try:
+            if not daytime_contact_id:
+                raise Exception(
+                    "Empty daytime_contact_id/None passed to delete_daytime_contact function"
+                )
+            if not isinstance(daytime_contact_id, int):
+                raise Exception("daytime_contact_id passed is not of int type")
+
+            contact_to_delete = DaytimeContact.query.get(daytime_contact_id)
+            if not contact_to_delete:
+                raise Exception(
+                    "daytime_contact with id {} does not exist".format(
+                        daytime_contact_id
+                    )
+                )
+
+            db.session.delete(contact_to_delete)
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            raise error

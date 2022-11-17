@@ -28,8 +28,7 @@ class CreateChildDTO(ChildDTO):
             error_list.append("The first_name supplied is invalid")
         if not self.last_name or not type(self.last_name) == str:
             error_list.append("The last_name supplied is invalid")
-        # if self.date_of_birth and not isinstance(self.date_of_birth, datetime.date):
-        if self.date_of_birth and not type(self.date_of_birth) == str:
+        if self.date_of_birth and not type(self.date_of_birth) in [str, datetime.date]:
             error_list.append("The date_of_birth supplied is invalid")
         if self.cpin_number and not type(self.cpin_number) == str:
             error_list.append("The cpin_number supplied is invalid")

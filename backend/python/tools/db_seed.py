@@ -39,8 +39,7 @@ def insert_values(db, table_name: str, column_names: tuple, values: tuple):
     if len_column_names > len_values:
         values += ", " + ", ".join(["NULL"] * (len_column_names - len_values))
 
-    db.engine.execute(
-        f"INSERT INTO {table_name} ({column_names}) VALUES ({values});")
+    db.engine.execute(f"INSERT INTO {table_name} ({column_names}) VALUES ({values});")
 
 
 # fmt: off

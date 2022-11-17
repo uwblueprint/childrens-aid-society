@@ -26,8 +26,7 @@ class ProviderService(IProviderService):
                     "Empty provider DTO/None passed to create_new_provider function"
                 )
             if not isinstance(provider, CreateProviderDTO):
-                raise Exception(
-                    "Provider passed is not of CreateProviderDTO type")
+                raise Exception("Provider passed is not of CreateProviderDTO type")
             error_list = provider.validate()
             if error_list:
                 raise Exception(error_list)
@@ -37,9 +36,7 @@ class ProviderService(IProviderService):
             db.session.commit()
 
             provider.id = new_provider_entry.id
-            return ProviderDTO(
-                **provider.__dict__
-            )
+            return ProviderDTO(**provider.__dict__)
         except Exception as error:
             db.session.rollback()
             raise error
@@ -48,8 +45,7 @@ class ProviderService(IProviderService):
         try:
             provider = Provider.query.filter_by(id=provider_id).first()
             if not provider:
-                raise Exception(
-                    "Provider with id {} not found".format(provider_id))
+                raise Exception("Provider with id {} not found".format(provider_id))
             db.session.delete(provider)
             db.session.commit()
         except Exception as error:

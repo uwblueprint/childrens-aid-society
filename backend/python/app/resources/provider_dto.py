@@ -50,7 +50,6 @@ class CreateProviderDTO(ProviderDTO):
             self.additional_contact_notes
             and not type(self.additional_contact_notes) == str
         ):
-            error_list.append(
-                "The additional contact notes supplied is invalid")
+            error_list.append("The additional contact notes supplied is invalid")
 
         return error_list

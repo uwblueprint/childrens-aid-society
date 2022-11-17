@@ -22,3 +22,12 @@ class IOtherPermittedIndividualService(ABC):
                            during insertion
         """
         pass
+
+    @abstractmethod
+    def delete_other_permitted_individual(self, other_permitted_individual_id):
+        """Deletes the other_permitted_individual with the specified id
+        :param other_permitted_individual_id: the id of the other_permitted_individual to be deleted
+        :type other_permitted_individual_id: int
+        :raises Exception: if no other_permitted_individual with the specified id exists
+        """
+        pass

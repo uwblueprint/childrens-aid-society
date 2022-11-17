@@ -45,9 +45,25 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
             db.session.add(new_other_permitted_individual_entry)
             db.session.commit()
 
-            return OtherPermittedIndividualDTO(
-                **new_other_permitted_individual_entry.__dict__
+            other_permitted_individual.id = new_other_permitted_individual_entry.id
+            return OtherPermittedIndividualDTO(**other_permitted_individual.__dict__)
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_other_permitted_individual(self, other_permitted_individual_id):
+        try:
+            other_permitted_individual = OtherPermittedIndividual.query.get(
+                other_permitted_individual_id
             )
+            if not other_permitted_individual:
+                raise Exception(
+                    "No other_permitted_individual found with id {}".format(
+                        other_permitted_individual_id
+                    )
+                )
+            db.session.delete(other_permitted_individual)
+            db.session.commit()
         except Exception as error:
             db.session.rollback()
             raise error

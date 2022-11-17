@@ -47,3 +47,18 @@ def create_new_other_permitted_individual():
         return jsonify(new_other_permitted_individual.__dict__), 201
     except Exception as error:
         return jsonify(str(error)), 400
+
+
+# delete an other_permitted_individual by id
+@blueprint.route(
+    "/<other_permitted_individual_id>", methods=["DELETE"], strict_slashes=False
+)
+# @require_authorization_by_role({"Admin"})
+def delete_other_permitted_individual(other_permitted_individual_id):
+    try:
+        other_permitted_individual_service.delete_other_permitted_individual(
+            other_permitted_individual_id
+        )
+        return jsonify({"message": "other_permitted_individual deleted"}), 204
+    except Exception as error:
+        return jsonify(str(error)), 400

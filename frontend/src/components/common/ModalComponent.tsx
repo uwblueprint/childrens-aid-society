@@ -13,6 +13,7 @@ export type ModalProps = {
   primaryTitle: string;
   secondaryTitle: string;
   modalContent: React.ReactElement;
+  disabled: boolean;
   primaryButtonTitle: string;
   onClick: () => void;
   isOpen: boolean;
@@ -22,6 +23,7 @@ export type ModalProps = {
 const ModalComponent = ({
   primaryTitle,
   modalContent,
+  disabled,
   onClick,
   primaryButtonTitle,
   secondaryTitle,
@@ -48,7 +50,7 @@ const ModalComponent = ({
           <Button variant="tertiary" onClick={onClose}>
             Cancel
           </Button>
-          <Button variant="primary" disabled onClick={onClick}>
+          <Button variant="primary" disabled={disabled} onClick={onClick}>
             {primaryButtonTitle}
           </Button>
         </ModalFooter>

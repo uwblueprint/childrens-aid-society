@@ -43,6 +43,7 @@ const AddChild = (): React.ReactElement => {
           variant="link"
           onClick={() => {
             history.goBack();
+            // TODO: Fix route to navigate back to individual details entry intake page
           }}
           leftIcon={<Icon as={ChevronLeft} h="16px" />}
         >
@@ -55,6 +56,7 @@ const AddChild = (): React.ReactElement => {
         />
       </VStack>
       {renderChildForm()}
+      {/* TODO: Add footer component */}
     </>
   );
 };

@@ -28,6 +28,7 @@ import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
 import IndividualDetails from "./components/pages/IndividualDetails";
+import AddChild from "./components/intake/child-information/AddChildPage";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -69,6 +70,11 @@ const App = (): React.ReactElement => {
                   exact
                   path={Routes.INDIVIDUAL_DETAILS_PAGE}
                   component={IndividualDetails}
+                />
+                <Route
+                  exact
+                  path={Routes.ADD_CHILD_PAGE}
+                  component={AddChild}
                 />
                 <Route exact path="*" component={NotFound} />
               </Switch>

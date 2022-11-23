@@ -22,7 +22,7 @@ export type ChildDetails = {
 type ChildFormProps = {
   childDetails: ChildDetails;
   setChildDetails: React.Dispatch<React.SetStateAction<ChildDetails>>;
-};  
+};
 
 const ChildInformationForm = ({
   childDetails,

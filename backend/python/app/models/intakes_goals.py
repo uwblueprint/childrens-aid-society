@@ -1,6 +1,5 @@
 from . import db
 
-
 intakes_goals = db.Table(
     "intakes_goals",
     db.metadata,

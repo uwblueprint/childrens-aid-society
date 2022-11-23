@@ -1,6 +1,5 @@
 from . import db
 
-
 intakes_concerns = db.Table(
     "intakes_concerns",
     db.metadata,

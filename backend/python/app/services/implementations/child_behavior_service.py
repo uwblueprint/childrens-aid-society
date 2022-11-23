@@ -15,9 +15,7 @@ class ChildBehaviorService(IChildBehaviorService):
                 behavior=behavior.upper(),
             ).first()
             return (
-                ChildBehaviorDTO(
-                    **child_behavior_entry.to_dict()
-                )
+                ChildBehaviorDTO(**child_behavior_entry.to_dict())
                 if child_behavior_entry
                 else None
             )
@@ -35,9 +33,7 @@ class ChildBehaviorService(IChildBehaviorService):
             db.session.add(new_child_behavior_entry)
             db.session.commit()
 
-            return ChildBehaviorDTO(
-                **new_child_behavior_entry.to_dict()
-            )
+            return ChildBehaviorDTO(**new_child_behavior_entry.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error
@@ -45,12 +41,7 @@ class ChildBehaviorService(IChildBehaviorService):
     def get_child_behaviors_by_child(self, child_id):
         try:
             child = Child.query.filter_by(id=child_id).first()
-            return [
-                ChildBehaviorDTO(
-                    **result.to_dict()
-                )
-                for result in child.behaviors
-            ]
+            return [ChildBehaviorDTO(**result.to_dict()) for result in child.behaviors]
         except Exception as error:
             self.logger.error(str(error))
             raise error
@@ -58,9 +49,7 @@ class ChildBehaviorService(IChildBehaviorService):
     def get_all_child_behaviors(self, is_default=True):
         try:
             return [
-                ChildBehaviorDTO(
-                    **result.to_dict()
-                )
+                ChildBehaviorDTO(**result.to_dict())
                 for result in ChildBehavior.query.filter_by(is_default=is_default)
             ]
         except Exception as error:

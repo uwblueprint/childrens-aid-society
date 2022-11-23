@@ -6,19 +6,16 @@ migrate = Migrate()
 
 
 def init_app(app):
-    from . import (
+    from . import (  # children_child_behaviors,; intakes_concerns,; intakes_goals,
         access_type,
         branch,
         caregiver,
         child,
         child_behavior,
-        # children_child_behaviors,
         daytime_contact,
         familial_concern,
         goal,
         intake,
-        # intakes_concerns,
-        # intakes_goals,
         other_permitted_individual,
         provider,
         transportation_method,

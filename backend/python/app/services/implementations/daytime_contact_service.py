@@ -24,13 +24,8 @@ class DaytimeContactService(IDaytimeContactService):
             db.session.add(new_contact_entry)
             db.session.commit()
 
-            return DaytimeContactDTO(
-                id=new_contact_entry.id,
-                name=new_contact_entry.name,
-                contact_information=new_contact_entry.contact_information,
-                address=new_contact_entry.address,
-                dismissal_time=new_contact_entry.dismissal_time,
-            )
+            contact.id = new_contact_entry.id
+            return DaytimeContactDTO(**contact.__dict__)
         except Exception as error:
             db.session.rollback()
             raise error

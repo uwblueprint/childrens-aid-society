@@ -64,8 +64,7 @@ class FamilialConcernService(IFamilialConcernService):
                 concern=concern.upper(),
             ).first()
             if not familial_concern_entry:
-                raise Exception(
-                    "Familial concern {} not found".format(concern))
+                raise Exception("Familial concern {} not found".format(concern))
             db.session.delete(familial_concern_entry)
             db.session.commit()
         except Exception as error:

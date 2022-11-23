@@ -158,9 +158,9 @@ def test_add_child_behavior_success(child_behavior_service):
 
 
 def test_delete_child_behavior_success(child_behavior_service):
-    res = child_behavior_service.delete_child_behavior('BEHAVIOR 2')
+    res = child_behavior_service.delete_child_behavior("BEHAVIOR 2")
     assert res is None
-    assert child_behavior_service.get_child_behavior('BEHAVIOR 2') is None
+    assert child_behavior_service.get_child_behavior("BEHAVIOR 2") is None
 
 
 def test_delete_child_behavior_fail(child_behavior_service):

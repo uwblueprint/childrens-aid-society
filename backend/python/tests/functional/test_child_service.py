@@ -56,7 +56,7 @@ DUMMY_CHILD_DATA = {
 }
 
 
-@ pytest.fixture
+@pytest.fixture
 def child_service():
     child_service = ChildService(current_app.logger)
     seed_database()

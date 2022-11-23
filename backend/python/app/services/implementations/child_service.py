@@ -11,7 +11,8 @@ class ChildService(IChildService):
     def add_new_child(self, child):
         try:
             if not child:
-                raise Exception("Empty child DTO/None passed to add_new_child function")
+                raise Exception(
+                    "Empty child DTO/None passed to add_new_child function")
             if not isinstance(child, CreateChildDTO):
                 raise Exception("Child passed is not of CreateChildDTO type")
             error_list = child.validate()
@@ -20,9 +21,18 @@ class ChildService(IChildService):
             new_child_entry = Child(**child.__dict__)
             db.session.add(new_child_entry)
             db.session.commit()
+            return ChildDTO(**new_child_entry.__dict__)
+        except Exception as error:
+            db.session.rollback()
+            raise error
 
-            child.id = new_child_entry.id
-            return ChildDTO(**child.__dict__)
+    def delete_child(self, child_id):
+        try:
+            child = Child.query.filter_by(id=child_id).first()
+            if not child:
+                raise Exception("Child with id {} not found".format(child_id))
+            db.session.delete(child)
+            db.session.commit()
         except Exception as error:
             db.session.rollback()
             raise error

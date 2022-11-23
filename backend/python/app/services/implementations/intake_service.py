@@ -1,5 +1,3 @@
-from ...models import db
-from ...models.intake import Intake
 from ..interfaces.intake_service import IIntakeService
 
 

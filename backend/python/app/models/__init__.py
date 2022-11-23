@@ -6,7 +6,7 @@ migrate = Migrate()
 
 
 def init_app(app):
-    from . import (  # children_child_behaviors,; intakes_concerns,; intakes_goals,
+    from . import (
         access_type,
         branch,
         caregiver,

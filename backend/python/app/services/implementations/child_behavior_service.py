@@ -9,9 +9,9 @@ class ChildBehaviorService(IChildBehaviorService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_child_behavior(self, behavior):
+    def get_child_behavior(self, behavior: str):
         try:
-            child_behavior_entry: ChildBehavior = ChildBehavior.query.filter_by(
+            child_behavior_entry = ChildBehavior.query.filter_by(
                 behavior=behavior.upper(),
             ).first()
             return (
@@ -24,21 +24,7 @@ class ChildBehaviorService(IChildBehaviorService):
             self.logger.error(str(error))
             raise error
 
-    def add_child_behavior(self, behavior, is_default=False):
-        try:
-            new_child_behavior_entry = ChildBehavior(
-                behavior=behavior.upper(),
-                is_default=is_default,
-            )
-            db.session.add(new_child_behavior_entry)
-            db.session.commit()
-
-            return ChildBehaviorDTO(**new_child_behavior_entry.to_dict())
-        except Exception as error:
-            db.session.rollback()
-            raise error
-
-    def get_child_behaviors_by_child(self, child_id):
+    def get_child_behaviors_by_child(self, child_id: int):
         try:
             child = Child.query.filter_by(id=child_id).first()
             return [ChildBehaviorDTO(**result.to_dict()) for result in child.behaviors]
@@ -54,4 +40,32 @@ class ChildBehaviorService(IChildBehaviorService):
             ]
         except Exception as error:
             self.logger.error(str(error))
+            raise error
+
+    def add_child_behavior(self, behavior: str, is_default=False):
+        try:
+            new_child_behavior_entry = ChildBehavior(
+                behavior=behavior.upper(),
+                is_default=is_default,
+            )
+            db.session.add(new_child_behavior_entry)
+            db.session.commit()
+
+            return ChildBehaviorDTO(**new_child_behavior_entry.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_child_behavior(self, behavior: str):
+        try:
+            child_behavior_entry = ChildBehavior.query.filter_by(
+                behavior=behavior.upper(),
+            ).first()
+            if not child_behavior_entry:
+                raise Exception("Child behavior {} not found".format(behavior))
+            db.session.delete(child_behavior_entry)
+            db.session.commit()
+            return child_behavior_entry
+        except Exception as error:
+            db.session.rollback()
             raise error

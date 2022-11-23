@@ -14,7 +14,7 @@ const AddChild = (): React.ReactElement => {
   const [childDetails, setChildDetails] = useState<ChildDetails>({
     childName: "",
     cpinFileNumber: "",
-    phoneNumber: "",
+    dateOfBirth: "",
     workerName: "",
     specialNeeds: "",
     childBehaviours: "",

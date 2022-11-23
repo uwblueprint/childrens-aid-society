@@ -13,7 +13,7 @@ import CustomInput from "../../common/CustomInput";
 export type ChildDetails = {
   childName: string;
   cpinFileNumber: string;
-  phoneNumber: string;
+  dateOfBirth: string;
   workerName: string;
   specialNeeds: string;
   childBehaviours: string;
@@ -95,7 +95,6 @@ const ChildInformationForm = ({
               name="specialNeeds"
               type="string"
               placeholder="Enter any special needs of the child"
-              icon={<Icon as={Users} />}
             />
           </Box>
           <Box paddingTop="10px">

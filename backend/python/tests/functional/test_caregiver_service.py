@@ -72,9 +72,9 @@ def teardown_database():
     Caregiver.query.delete()
     Intake.query.delete()
     User.query.delete()
-    db.session.execute("ALTER SEQUENCE caregiver_id_seq RESTART WITH 1")
-    db.session.execute("ALTER SEQUENCE intake_id_seq RESTART WITH 1")
-    db.session.execute("ALTER SEQUENCE user_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE caregivers_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE intakes_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
     db.session.commit()
 
 

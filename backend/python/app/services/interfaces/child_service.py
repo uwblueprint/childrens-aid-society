@@ -14,3 +14,14 @@ class IChildService(ABC):
                            while insertion
         """
         pass
+
+    @abstractmethod
+    def delete_child(self, child_id):
+        """Deletes the child with the specified id from the child table
+        :param child_id: the id of the child to be deleted
+        :type child_id: int
+        :return: None
+        :rtype: None
+        :raises Exception: if there was an error on the database side
+        """
+        pass

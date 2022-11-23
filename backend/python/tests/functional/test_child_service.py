@@ -168,8 +168,8 @@ def test_missing_field(child_service):
 
 
 def test_delete_success(child_service):
-    child_instance = child_service.delete_child(1)
-    assert child_instance is True
+    child_service.delete_child(1)
+    assert Child.query.get(1) is None
 
 
 def test_delete_fail(child_service):

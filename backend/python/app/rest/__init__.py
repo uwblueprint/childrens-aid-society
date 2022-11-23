@@ -5,7 +5,6 @@ def init_app(app):
         child_routes,
         documentation_routes,
         intake_routes,
-        other_permitted_individual_routes,
         user_routes,
         visit_routes,
     )
@@ -15,6 +14,5 @@ def init_app(app):
     app.register_blueprint(child_routes.blueprint)
     app.register_blueprint(documentation_routes.blueprint)
     app.register_blueprint(intake_routes.blueprint)
-    app.register_blueprint(other_permitted_individual_routes.blueprint)
     app.register_blueprint(user_routes.blueprint)
     app.register_blueprint(visit_routes.blueprint)

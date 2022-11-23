@@ -121,3 +121,13 @@ def test_missing_field(opi_service):
     )
     with pytest.raises(Exception):
         opi_service.create_new_other_permitted_individual(param)
+
+
+def test_delete_existing_success(opi_service):
+    opi_service.delete_other_permitted_individual(1)
+    assert OtherPermittedIndividual.query.get(1) is None
+
+
+def test_delete_non_existing(opi_service):
+    with pytest.raises(Exception):
+        opi_service.delete_other_permitted_individual(2)

@@ -1,16 +1,16 @@
 """update familial_concern and child_behavior
 
-Revision ID: df6f80e55248
+Revision ID: 2ba84d84b1b7
 Revises: 12e97fac48b2
-Create Date: 2022-11-11 23:30:38.982452
+Create Date: 2022-11-23 08:00:22.511433
 
 """
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "df6f80e55248"
+revision = "2ba84d84b1b7"
 down_revision = "12e97fac48b2"
 branch_labels = None
 depends_on = None
@@ -80,7 +80,8 @@ def downgrade():
             autoincrement=False,
             nullable=False,
         ),
-        sa.Column("concern", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("concern", sa.VARCHAR(),
+                  autoincrement=False, nullable=False),
         sa.Column(
             "is_default",
             sa.BOOLEAN(),

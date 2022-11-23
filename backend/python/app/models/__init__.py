@@ -6,20 +6,25 @@ migrate = Migrate()
 
 
 def init_app(app):
-    from .access_type import AccessType
-    from .branch import Branch
-    from .caregiver import Caregiver
-    from .child import Child
-    from .child_behavior import ChildBehavior
-    from .daytime_contact import DaytimeContact
-    from .familial_concern import FamilialConcern
-    from .goal import Goal
-    from .intake import Intake
-    from .other_permitted_individual import OtherPermittedIndividual
-    from .provider import Provider
-    from .transportation_method import TransportationMethod
-    from .user import User
-    from .visit_location import VisitLocation
+    from . import (
+        access_type,
+        branch,
+        caregiver,
+        child,
+        child_behavior,
+        children_child_behaviors,
+        daytime_contact,
+        familial_concern,
+        goal,
+        intake,
+        intakes_concerns,
+        intakes_goals,
+        other_permitted_individual,
+        provider,
+        transportation_method,
+        user,
+        visit_location,
+    )
 
     app.app_context().push()
     db.init_app(app)

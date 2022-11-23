@@ -7,7 +7,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { User, File, Users, Calendar } from "react-feather";
+import { User, File, Calendar } from "react-feather";
 import CustomInput from "../../common/CustomInput";
 
 export type ChildDetails = {
@@ -22,7 +22,7 @@ export type ChildDetails = {
 type ChildFormProps = {
   childDetails: ChildDetails;
   setChildDetails: React.Dispatch<React.SetStateAction<ChildDetails>>;
-};
+};  
 
 const ChildInformationForm = ({
   childDetails,

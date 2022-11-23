@@ -54,10 +54,16 @@ DUMMY_CHILD = {
     "has_foster_placement": False,
 }
 
-DUMMY_CHILD_BEHAVIOR = {
-    "behavior": "BEHAVIOR 1",
-    "is_default": True,
-}
+DUMMY_CHILD_BEHAVIOR = [
+    {
+        "behavior": "BEHAVIOR 1",
+        "is_default": True,
+    },
+    {
+        "behavior": "BEHAVIOR 2",
+        "is_default": False,
+    },
+]
 
 DUMMY_CHILD_JOIN_CHILD_BEHAVIOR = [
     {"child_id": 1, "child_behavior_id": 1},
@@ -89,9 +95,10 @@ def seed_database():
     db.session.add(dummy_child)
     db.session.commit()
 
-    dummy_child_behavior = ChildBehavior(**DUMMY_CHILD_BEHAVIOR)
-    db.session.add(dummy_child_behavior)
-    db.session.commit()
+    for behavior in DUMMY_CHILD_BEHAVIOR:
+        dummy_child_behavior = ChildBehavior(**behavior)
+        db.session.add(dummy_child_behavior)
+        db.session.commit()
 
     for child_join_child_behavior in DUMMY_CHILD_JOIN_CHILD_BEHAVIOR:
         db.session.execute(
@@ -129,13 +136,6 @@ def test_get_child_behavior_fail(child_behavior_service):
     assert res is None
 
 
-def test_add_child_behavior_success(child_behavior_service):
-    res = child_behavior_service.add_child_behavior("bEHaVIoR 2")
-    desired = ChildBehaviorDTO(id=2, behavior="BEHAVIOR 2", is_default=False)
-    assert type(res) is ChildBehaviorDTO
-    assert res.__dict__ == desired.__dict__
-
-
 def test_get_child_behaviors_by_child_success(child_behavior_service):
     res = child_behavior_service.get_child_behaviors_by_child(1)
     desired = [ChildBehaviorDTO(id=1, behavior="BEHAVIOR 1", is_default=True)]
@@ -148,3 +148,22 @@ def test_get_all_child_behaviors_success(child_behavior_service):
     desired = [ChildBehaviorDTO(id=1, behavior="BEHAVIOR 1", is_default=True)]
     assert type(res) is list
     assert all([x.__dict__ == y.__dict__ for x, y in zip(res, desired)])
+
+
+def test_add_child_behavior_success(child_behavior_service):
+    res = child_behavior_service.add_child_behavior("bEHaVIoR 3")
+    desired = ChildBehaviorDTO(id=3, behavior="BEHAVIOR 3", is_default=False)
+    assert type(res) is ChildBehaviorDTO
+    assert res.__dict__ == desired.__dict__
+
+
+def test_delete_child_behavior_success(child_behavior_service):
+    res = child_behavior_service.delete_child_behavior('BEHAVIOR 2')
+    assert res is None
+    assert child_behavior_service.get_child_behavior('BEHAVIOR 2') is None
+
+
+def test_delete_child_behavior_fail(child_behavior_service):
+    with pytest.raises(Exception) as e:
+        child_behavior_service.delete_child_behavior(999)
+        assert str(e.value) == "Child behavior 999 not found"

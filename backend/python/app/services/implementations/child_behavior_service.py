@@ -2,7 +2,7 @@ from ...models import db
 from ...models.child import Child
 from ...models.child_behavior import ChildBehavior
 from ...resources.child_behavior_dto import ChildBehaviorDTO
-from ..interfaces.child_service import IChildBehaviorService
+from ..interfaces.child_behavior_service import IChildBehaviorService
 
 
 class ChildBehaviorService(IChildBehaviorService):
@@ -64,7 +64,6 @@ class ChildBehaviorService(IChildBehaviorService):
                 raise Exception("Child behavior {} not found".format(behavior))
             db.session.delete(child_behavior_entry)
             db.session.commit()
-            return child_behavior_entry
         except Exception as error:
             db.session.rollback()
             raise error

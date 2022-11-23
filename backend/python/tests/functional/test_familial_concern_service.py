@@ -128,3 +128,15 @@ def test_get_all_familial_concerns_success(familial_concern_service):
     desired = [FamilialConcernDTO(id=1, concern="CONCERN 1", is_default=True)]
     assert type(res) is list
     assert all([x.__dict__ == y.__dict__ for x, y in zip(res, desired)])
+
+
+def test_delete_familial_concern_success(familial_concern_service):
+    res = familial_concern_service.delete_familial_concern('CONCERN 2')
+    assert res is None
+    assert FamilialConcern.query.get(2) is None
+
+
+def test_delete_familial_concern_fail(familial_concern_service):
+    with pytest.raises(Exception) as e:
+        familial_concern_service.delete_familial_concern('999')
+        assert e == "Familial concern 999 not found"

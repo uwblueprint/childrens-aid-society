@@ -2,7 +2,7 @@ from ...models import db
 from ...models.familial_concern import FamilialConcern
 from ...models.intake import Intake
 from ...resources.familial_concern_dto import FamilialConcernDTO
-from ..interfaces.intake_service import IFamilialConcernService
+from ..interfaces.familial_concern_service import IFamilialConcernService
 
 
 class FamilialConcernService(IFamilialConcernService):
@@ -64,10 +64,10 @@ class FamilialConcernService(IFamilialConcernService):
                 concern=concern.upper(),
             ).first()
             if not familial_concern_entry:
-                raise Exception("Familial concern {} not found".format(concern))
+                raise Exception(
+                    "Familial concern {} not found".format(concern))
             db.session.delete(familial_concern_entry)
             db.session.commit()
-            return familial_concern_entry
         except Exception as error:
             db.session.rollback()
             raise error

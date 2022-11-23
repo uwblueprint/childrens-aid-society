@@ -32,14 +32,3 @@ def create_caregiver():
         return jsonify(new_caregiver.__dict__), 201
     except Exception as error:
         return jsonify(str(error)), 400
-
-
-# delete a caregiver by id
-@blueprint.route("/<int:caregiver_id>", methods=["DELETE"], strict_slashes=False)
-# @require_authorization_by_role({"Admin"})
-def delete_caregiver(caregiver_id):
-    try:
-        caregiver_service.delete_caregiver(caregiver_id)
-        return jsonify({"message": "Caregiver successfully deleted"}), 204
-    except Exception as error:
-        return jsonify(str(error)), 400

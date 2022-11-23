@@ -3,7 +3,6 @@ def init_app(app):
         auth_routes,
         caregiver_routes,
         child_routes,
-        daytime_contact_routes,
         documentation_routes,
         intake_routes,
         user_routes,
@@ -13,7 +12,6 @@ def init_app(app):
     app.register_blueprint(auth_routes.blueprint)
     app.register_blueprint(caregiver_routes.blueprint)
     app.register_blueprint(child_routes.blueprint)
-    app.register_blueprint(daytime_contact_routes.blueprint)
     app.register_blueprint(documentation_routes.blueprint)
     app.register_blueprint(intake_routes.blueprint)
     app.register_blueprint(user_routes.blueprint)

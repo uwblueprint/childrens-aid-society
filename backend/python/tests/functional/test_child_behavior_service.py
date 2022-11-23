@@ -10,12 +10,8 @@ from app.models.child_behavior import ChildBehavior
 from app.models.daytime_contact import DaytimeContact
 from app.models.intake import Intake
 from app.models.user import User
-from app.resources.child_behavior_dto import ChildBehaviorDTO, CreateChildBehaviorDTO
-from app.resources.child_dto import ChildDTO, CreateChildDTO
-from app.services.implementations.child_service import (
-    ChildBehaviorService,
-    ChildService,
-)
+from app.resources.child_behavior_dto import ChildBehaviorDTO
+from app.services.implementations.child_behavior_service import ChildBehaviorService
 
 DUMMY_USER_DATA = {
     "first_name": "Hamza",

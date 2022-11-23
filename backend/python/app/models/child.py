@@ -1,7 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 
-from . import children_child_behaviors
+from .children_child_behaviors import children_child_behaviors
 
 
 class Child(db.Model, BaseMixin):

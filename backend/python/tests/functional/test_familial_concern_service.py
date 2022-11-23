@@ -8,7 +8,7 @@ from app.models.familial_concern import FamilialConcern
 from app.models.intake import Intake
 from app.models.user import User
 from app.resources.familial_concern_dto import FamilialConcernDTO
-from app.services.implementations.intake_service import FamilialConcernService
+from app.services.implementations.familial_concern_service import FamilialConcernService
 
 DUMMY_FAMILIAL_CONCERN = [
     {

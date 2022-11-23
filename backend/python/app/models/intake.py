@@ -3,8 +3,8 @@ import sqlalchemy.dialects.postgresql as pg
 from . import db
 from .base_mixin import BaseMixin
 
-from . import intakes_concerns
-from . import intakes_goals
+from .intakes_concerns import intakes_concerns
+from .intakes_goals import intakes_goals
 
 intake_status_enum = db.Enum(
     "IN_PROGRESS",

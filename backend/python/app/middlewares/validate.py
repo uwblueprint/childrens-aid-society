@@ -4,7 +4,6 @@ from functools import wraps
 from flask import jsonify, request
 
 from ..resources.caregiver_dto import CreateCaregiverDTO
-from ..resources.child_dto import CreateChildDTO
 from ..resources.create_user_dto import CreateUserDTO
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
@@ -14,7 +13,6 @@ dtos = {
     "RegisterUserDTO": RegisterUserDTO,
     "UpdateUserDTO": UpdateUserDTO,
     "CreateCaregiverDTO": CreateCaregiverDTO,
-    "CreateChildDTO": CreateChildDTO,
 }
 
 

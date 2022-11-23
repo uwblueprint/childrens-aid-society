@@ -19,7 +19,6 @@ class ChildBehaviorService(IChildBehaviorService):
                 if child_behavior_entry
                 else None
             )
-
         except Exception as error:
             self.logger.error(str(error))
             raise error

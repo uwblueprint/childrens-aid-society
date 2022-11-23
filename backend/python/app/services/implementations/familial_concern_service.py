@@ -15,11 +15,7 @@ class FamilialConcernService(IFamilialConcernService):
                 concern=concern.upper(),
             ).first()
             return (
-                FamilialConcernDTO(
-                    id=familial_concern_entry.id,
-                    concern=familial_concern_entry.concern,
-                    is_default=familial_concern_entry.is_default,
-                )
+                FamilialConcernDTO(**familial_concern_entry.to_dict())
                 if familial_concern_entry
                 else None
             )
@@ -32,9 +28,7 @@ class FamilialConcernService(IFamilialConcernService):
         try:
             intake_instance = Intake.query.filter_by(id=intake_id).first()
             return [
-                FamilialConcernDTO(
-                    id=result.id, concern=result.concern, is_default=result.is_default
-                )
+                FamilialConcernDTO(**result.to_dict())
                 for result in intake_instance.concerns
             ]
         except Exception as error:
@@ -44,9 +38,7 @@ class FamilialConcernService(IFamilialConcernService):
     def get_all_familial_concerns(self, is_default=True):
         try:
             return [
-                FamilialConcernDTO(
-                    id=result.id, concern=result.concern, is_default=result.is_default
-                )
+                FamilialConcernDTO(**result.to_dict())
                 for result in FamilialConcern.query.filter_by(is_default=is_default)
             ]
         except Exception as error:
@@ -61,11 +53,7 @@ class FamilialConcernService(IFamilialConcernService):
             )
             db.session.add(new_familial_concern_entry)
             db.session.commit()
-            return FamilialConcernDTO(
-                id=new_familial_concern_entry.id,
-                concern=new_familial_concern_entry.concern,
-                is_default=new_familial_concern_entry.is_default,
-            )
+            return FamilialConcernDTO(**new_familial_concern_entry.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error
@@ -76,8 +64,7 @@ class FamilialConcernService(IFamilialConcernService):
                 concern=concern.upper(),
             ).first()
             if not familial_concern_entry:
-                raise Exception(
-                    "Familial concern {} not found".format(concern))
+                raise Exception("Familial concern {} not found".format(concern))
             db.session.delete(familial_concern_entry)
             db.session.commit()
             return familial_concern_entry

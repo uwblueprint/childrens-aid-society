@@ -149,4 +149,4 @@ class TestDeletion:
 
     def test_delete_fail(self, caregiver_service):
         with pytest.raises(Exception):
-            caregiver_service.delete_caregiver(2)
+            caregiver_service.delete_caregiver(999)

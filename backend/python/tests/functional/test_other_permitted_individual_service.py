@@ -130,4 +130,4 @@ def test_delete_existing_success(opi_service):
 
 def test_delete_non_existing(opi_service):
     with pytest.raises(Exception):
-        opi_service.delete_other_permitted_individual(2)
+        opi_service.delete_other_permitted_individual(999)

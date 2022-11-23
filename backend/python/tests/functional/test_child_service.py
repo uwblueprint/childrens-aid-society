@@ -71,6 +71,8 @@ def child_service():
 
 
 def seed_database():
+    empty_database()
+
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
     db.session.commit()
@@ -90,6 +92,8 @@ def seed_database():
 
 def empty_database():
     Child.query.delete()
+    db.session.commit()
+
     Intake.query.delete()
     DaytimeContact.query.delete()
     User.query.delete()

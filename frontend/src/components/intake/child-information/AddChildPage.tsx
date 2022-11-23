@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ChevronLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import IntakeHeader from "../IntakeHeader";
-import ChildInformationForm from "./ChildInformationForm";
+import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm from "./SchoolDaycareForm";
@@ -11,11 +11,24 @@ import SchoolDaycareForm from "./SchoolDaycareForm";
 const AddChild = (): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
   const history = useHistory();
+  const [childDetails, setChildDetails] = useState<ChildDetails>({
+    childName: "",
+    cpinFileNumber: "",
+    phoneNumber: "",
+    workerName: "",
+    specialNeeds: "",
+    childBehaviours: "",
+  });
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
       case 0:
-        return <ChildInformationForm />;
+        return (
+          <ChildInformationForm
+            childDetails={childDetails}
+            setChildDetails={setChildDetails}
+          />
+        );
       case 1:
         return <SchoolDaycareForm />;
       case 2:

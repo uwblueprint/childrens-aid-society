@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Grid, GridItem, Icon } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Icon } from "@chakra-ui/react";
 import { CheckCircle, Circle } from "react-feather";
 
 export type StepperProps = {
@@ -33,7 +33,8 @@ const Stepper = ({
           const isComplete = index < activePage;
           const color = isActive ? "blue.300" : "gray.600";
           return (
-            <Button
+            <Box
+              as="button"
               key={index}
               style={{ display: "contents" }}
               onClick={() => {
@@ -62,7 +63,7 @@ const Stepper = ({
               <GridItem color={color} gridRowStart={2} fontWeight={500}>
                 {page}
               </GridItem>
-            </Button>
+            </Box>
           );
         })}
       </Grid>

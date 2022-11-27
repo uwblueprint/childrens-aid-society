@@ -147,6 +147,6 @@ class TestDeletion:
         caregiver_service.delete_caregiver(1)
         assert Caregiver.query.get(1) is None
 
-    def test_delete_fail(self, caregiver_service):
+    def test_delete_nonexistent_id_fail(self, caregiver_service):
         with pytest.raises(Exception):
             caregiver_service.delete_caregiver(999)

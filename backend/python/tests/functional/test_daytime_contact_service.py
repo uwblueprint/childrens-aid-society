@@ -30,6 +30,8 @@ def seed_database():
 
 def empty_database():
     DaytimeContact.query.delete()
+    db.session.execute("ALTER SEQUENCE daytime_contacts_id_seq RESTART WITH 1")
+    db.session.commit()
 
 
 def test_create_new_daytime_contact_valid(daytime_contact_service):
@@ -65,3 +67,13 @@ def test_missing_field(daytime_contact_service):
     param = CreateDaytimeContactDTO(contact_information="1321412424")
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)
+
+
+def test_delete_daytime_contact_success(daytime_contact_service):
+    daytime_contact_service.delete_daytime_contact(1)
+    assert DaytimeContact.query.get(1) is None
+
+
+def test_delete_daytime_contact_failure(daytime_contact_service):
+    with pytest.raises(Exception):
+        daytime_contact_service.delete_daytime_contact(999)

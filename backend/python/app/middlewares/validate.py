@@ -5,10 +5,6 @@ from flask import jsonify, request
 
 from ..resources.caregiver_dto import CreateCaregiverDTO
 from ..resources.create_user_dto import CreateUserDTO
-from ..resources.other_permitted_individual_dto import (
-    CreateOtherPermittedIndividualDTO,
-    OtherPermittedIndividualDTO,
-)
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
 
@@ -17,7 +13,6 @@ dtos = {
     "RegisterUserDTO": RegisterUserDTO,
     "UpdateUserDTO": UpdateUserDTO,
     "CreateCaregiverDTO": CreateCaregiverDTO,
-    "CreateOtherPermittedIndividualDTO": CreateOtherPermittedIndividualDTO,
 }
 
 

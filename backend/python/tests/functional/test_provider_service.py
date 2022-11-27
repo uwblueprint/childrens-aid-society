@@ -132,6 +132,6 @@ def test_delete_success(provider_service):
     assert db.session.query(Provider).filter_by(id=1).first() is None
 
 
-def test_delete_failure(provider_service):
+def test_delete_nonexistent_id_failure(provider_service):
     with pytest.raises(Exception):
         provider_service.delete_provider(999)

@@ -176,6 +176,6 @@ def test_delete_success(child_service):
     assert Child.query.get(1) is None
 
 
-def test_delete_fail(child_service):
+def test_delete_invalid_id_fail(child_service):
     with pytest.raises(Exception):
         child_service.delete_child(999)

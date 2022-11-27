@@ -37,7 +37,7 @@ def upgrade():
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
-        "child_join_child_behavior",
+        "children_child_behaviors",
         sa.Column("child_id", sa.Integer(), nullable=True),
         sa.Column("child_behavior_id", sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(
@@ -90,7 +90,7 @@ def downgrade():
         ),
         sa.PrimaryKeyConstraint("id", name="concerns_pkey"),
     )
-    op.drop_table("child_join_child_behavior")
+    op.drop_table("children_child_behaviors")
     op.drop_table("familial_concerns")
     op.drop_table("child_behaviors")
     # ### end Alembic commands ###

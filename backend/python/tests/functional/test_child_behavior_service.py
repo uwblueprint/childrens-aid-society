@@ -65,7 +65,7 @@ DUMMY_CHILD_BEHAVIOR = [
     },
 ]
 
-DUMMY_CHILD_JOIN_CHILD_BEHAVIOR = [
+DUMMY_CHILDREN_CHILD_BEHAVIORS = [
     {"child_id": 1, "child_behavior_id": 1},
 ]
 
@@ -100,16 +100,16 @@ def seed_database():
         db.session.add(dummy_child_behavior)
         db.session.commit()
 
-    for child_join_child_behavior in DUMMY_CHILD_JOIN_CHILD_BEHAVIOR:
+    for children_child_behaviors in DUMMY_CHILDREN_CHILD_BEHAVIORS:
         db.session.execute(
-            "INSERT INTO child_join_child_behavior (child_id, child_behavior_id) VALUES (:child_id, :child_behavior_id)",
-            child_join_child_behavior,
+            "INSERT INTO children_child_behaviors (child_id, child_behavior_id) VALUES (:child_id, :child_behavior_id)",
+            children_child_behaviors,
         )
     db.session.commit()
 
 
 def teardown_database():
-    db.engine.execute("DELETE FROM child_join_child_behavior")
+    db.engine.execute("DELETE FROM children_child_behaviors")
     db.engine.execute("DELETE FROM child_behaviors")
     db.engine.execute("DELETE FROM children")
     db.engine.execute("DELETE FROM daytime_contacts")

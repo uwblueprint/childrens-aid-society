@@ -7,6 +7,15 @@ class IIntakeService(ABC):
     """
 
     @abstractmethod
+    def get_all_intakes(self):
+        """
+        Returns all intakes
+        :rtype: list of IntakeDTO
+        :raises Exception: if error occurs while querying database
+        """
+        pass
+
+    @abstractmethod
     def create_intake(self, intake):
         """Adds the specified intake to the intake table and returns
             an IntakeDTO of the new entry

@@ -8,6 +8,16 @@ class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_intakes(self):
+        # FIXME: change this to match spec for actual get intakes method
+        try:
+            intakes = Intake.query.all()
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
+            return intakes_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def create_intake(self, intake):
         try:
             if not intake:

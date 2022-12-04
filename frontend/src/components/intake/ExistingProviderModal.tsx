@@ -58,7 +58,10 @@ const ExistingProvider = ({
         disabled={!isSelected} // if modal button disabled or not
         onClick={() => {}} // empty for now
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          setIsSelected(false);
+          onClose();
+        }}
         secondaryTitle="Individual Details"
         primaryButtonTitle="Select providers"
       />

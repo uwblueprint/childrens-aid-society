@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Box,
@@ -20,6 +20,8 @@ const ExistingProvider = ({
   isOpen,
   onClose,
 }: ExistingProviderProps): React.ReactElement => {
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <Box>
       <ModalComponent
@@ -40,7 +42,12 @@ const ExistingProvider = ({
                 Add new provider
               </Button>
             </Flex>
-            <Select placeholder="Select provider">
+            <Select
+              placeholder="Select provider"
+              onChange={(event) =>
+                event.target.value ? setIsSelected(true) : setIsSelected(false)
+              }
+            >
               <option>First Last</option>
               <option>AFirst ALast</option>
               <option>BFirst BLast</option>
@@ -48,9 +55,13 @@ const ExistingProvider = ({
             </Select>
           </Box>
         }
+        disabled={!isSelected} // if modal button disabled or not
         onClick={() => {}} // empty for now
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => {
+          setIsSelected(false);
+          onClose();
+        }}
         secondaryTitle="Individual Details"
         primaryButtonTitle="Select providers"
       />

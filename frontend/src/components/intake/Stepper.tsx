@@ -5,9 +5,14 @@ import { CheckCircle, Circle } from "react-feather";
 export type StepperProps = {
   pages: string[];
   activePage: number;
+  setStep: (index: number) => void;
 };
 
-const Stepper = ({ pages, activePage }: StepperProps): React.ReactElement => {
+const Stepper = ({
+  pages,
+  activePage,
+  setStep,
+}: StepperProps): React.ReactElement => {
   return (
     <Box
       bg="gray.50"
@@ -28,7 +33,14 @@ const Stepper = ({ pages, activePage }: StepperProps): React.ReactElement => {
           const isComplete = index < activePage;
           const color = isActive ? "blue.300" : "gray.600";
           return (
-            <React.Fragment key={index}>
+            <Box
+              as="button"
+              key={index}
+              style={{ display: "contents" }}
+              onClick={() => {
+                setStep(index);
+              }}
+            >
               {isFirst || (
                 <>
                   {/* connector */}
@@ -51,7 +63,7 @@ const Stepper = ({ pages, activePage }: StepperProps): React.ReactElement => {
               <GridItem color={color} gridRowStart={2} fontWeight={500}>
                 {page}
               </GridItem>
-            </React.Fragment>
+            </Box>
           );
         })}
       </Grid>

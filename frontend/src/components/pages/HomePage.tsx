@@ -107,7 +107,7 @@ const Home = (): React.ReactElement => {
         Breakpoint Box - Under 29em=300px width, 30em-53em=400px width, above
         54=500px
       </Box>
-      <CustomTag placeholder="Option Name" icon={<Icon as={Feather} />} />
+      <CustomTag icon={<Icon as={Feather} />}>Option Name</CustomTag>
     </Box>
   );
 };

@@ -3,6 +3,14 @@ from abc import ABC, abstractmethod
 
 class IChildService(ABC):
     @abstractmethod
+    def get_all_children(self):
+        """Get all children
+        :rtype: list of ChildDTO
+        :raises Exception: if error occurs in the database layer
+        """
+        pass
+
+    @abstractmethod
     def add_new_child(self, child):
         """Adds the specified child to the child table and returns
             a ChildDTO of the new entry

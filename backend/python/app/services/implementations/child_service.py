@@ -8,6 +8,20 @@ class ChildService(IChildService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_children(self):
+        try:
+            children = Child.query.all()
+            return list(
+                map(
+                    lambda child: ChildDTO(
+                        **child.__dict__,
+                    ),
+                    children,
+                )
+            )
+        except Exception as error:
+            raise error
+
     def add_new_child(self, child: CreateChildDTO):
         try:
             if not child:
@@ -20,6 +34,7 @@ class ChildService(IChildService):
             new_child_entry = Child(**child.__dict__)
             db.session.add(new_child_entry)
             db.session.commit()
+
             return ChildDTO(**new_child_entry.to_dict())
         except Exception as error:
             db.session.rollback()

@@ -125,3 +125,13 @@ def test_missing_field(provider_service):
     param = CreateProviderDTO(name="John Doe")  # missing some required fields
     with pytest.raises(Exception):
         provider_service.create_new_provider(param)
+
+
+def test_delete_success(provider_service):
+    provider_service.delete_provider(1)
+    assert db.session.query(Provider).filter_by(id=1).first() is None
+
+
+def test_delete_nonexistent_id_failure(provider_service):
+    with pytest.raises(Exception):
+        provider_service.delete_provider(999)

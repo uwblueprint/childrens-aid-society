@@ -13,10 +13,11 @@ const Tag: ComponentStyleConfig = {
   },
   variants: {
     default: {
-      field: {
-        color: "black.default",
-        background: "gray.50",
-        border: "1px solid #E2E1EC",
+      container: {
+        color: "gray.700",
+        background: "blue.50",
+        borderWidth: "1px",
+        borderColor: "gray.700",
         borderRadius: "4px",
         _placeholder: {
           color: "gray.600",

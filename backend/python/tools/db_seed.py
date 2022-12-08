@@ -58,9 +58,9 @@ def insert_test_data():
     # Intakes
     values = [
         (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Bran Stark", "branstark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Jon Snow", "jonsnow@mail.com", datetime.date(2020, 1, 1), "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Samwell Tarly", "samwelltarly@mail.com", datetime.date(2020, 1, 1), "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
     ]
 
     for value in values:

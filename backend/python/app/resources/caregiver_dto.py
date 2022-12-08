@@ -34,11 +34,11 @@ class CreateCaregiverDTO(CaregiverDTO):
         else:
             error_list.append("name must be a string")
 
-        if type(self.date_of_birth) is datetime.date:
-            if self.date_of_birth > datetime.date.today():
-                error_list.append("date_of_birth must be in the past")
+        if type(self.date_of_birth) is str:
+            # todo: check if date is in the past
+            pass
         else:
-            error_list.append("date_of_birth must be a datetime.date")
+            error_list.append("date_of_birth must be a string")
 
         if self.individual_considerations is not None:
             if type(self.individual_considerations) is str:

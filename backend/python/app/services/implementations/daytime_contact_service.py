@@ -17,7 +17,7 @@ class DaytimeContactService(IDaytimeContactService):
         except Exception as error:
             raise error
 
-    def create_new_daytime_contact(self, contact):
+    def create_new_daytime_contact(self, contact: CreateDaytimeContactDTO):
         try:
             if not contact:
                 raise Exception(

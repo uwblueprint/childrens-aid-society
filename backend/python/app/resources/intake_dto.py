@@ -44,7 +44,7 @@ class CreateIntakeDTO(IntakeDTO):
             self.referring_worker_contact, str
         ):
             error_list.append("referring_worker_contact is invalid")
-        if not self.referral_date or not isinstance(self.referral_date, datetime.date):
+        if not self.referral_date or not isinstance(self.referral_date, str):
             error_list.append("referral_date is invalid")
         if not self.family_name or not isinstance(self.family_name, str):
             error_list.append("family_name is invalid")
@@ -65,7 +65,7 @@ class CreateIntakeDTO(IntakeDTO):
         ):
             error_list.append("scheduling_requirements is invalid")
         if not self.suggested_start_date or not isinstance(
-            self.suggested_start_date, datetime.date
+            self.suggested_start_date, str
         ):
             error_list.append("suggested_start_date is invalid")
 
@@ -78,7 +78,7 @@ class CreateIntakeDTO(IntakeDTO):
             error_list.append("first_nation_heritage is invalid")
         if self.first_nation_band and not isinstance(self.first_nation_band, str):
             error_list.append("first_nation_band is invalid")
-        if self.date_accepted and not isinstance(self.date_accepted, datetime.date):
+        if self.date_accepted and not isinstance(self.date_accepted, str):
             error_list.append("date_accepted is invalid")
         if self.access_weekday and not isinstance(self.access_weekday, list):
             error_list.append("access_weekday is invalid")

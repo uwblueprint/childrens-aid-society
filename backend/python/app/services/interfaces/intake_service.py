@@ -27,3 +27,12 @@ class IIntakeService(ABC):
                            during insertion
         """
         pass
+
+    @abstractmethod
+    def delete_intake(self, intake_id):
+        """Deletes the intake with the specified intake_id
+        :param intake_id: the intake_id of the intake to be deleted
+        :type intake_id: int
+        :raises Exception: if intake_id is not valid or if there was an error during deletion
+        """
+        pass

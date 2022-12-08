@@ -18,7 +18,7 @@ class IntakeService(IIntakeService):
             self.logger.error(str(error))
             raise error
 
-    def create_intake(self, intake):
+    def create_intake(self, intake: CreateIntakeDTO):
         try:
             if not intake:
                 raise Exception(
@@ -34,30 +34,24 @@ class IntakeService(IIntakeService):
             db.session.add(new_intake_entry)
             db.session.commit()
 
-            return IntakeDTO(
-                id=new_intake_entry.id,
-                user_id=new_intake_entry.user_id,
-                intake_status=new_intake_entry.intake_status,
-                referring_worker_name=new_intake_entry.referring_worker_name,
-                referring_worker_contact=new_intake_entry.referring_worker_contact,
-                referral_date=new_intake_entry.referral_date,
-                family_name=new_intake_entry.family_name,
-                cpin_number=new_intake_entry.cpin_number,
-                cpin_file_type=new_intake_entry.cpin_file_type,
-                court_status=new_intake_entry.court_status,
-                court_order_file=new_intake_entry.court_order_file,
-                first_nation_heritage=new_intake_entry.first_nation_heritage,
-                first_nation_band=new_intake_entry.first_nation_band,
-                transportation_requirements=new_intake_entry.transportation_requirements,
-                scheduling_requirements=new_intake_entry.scheduling_requirements,
-                suggested_start_date=new_intake_entry.suggested_start_date,
-                date_accepted=new_intake_entry.date_accepted,
-                access_weekday=new_intake_entry.access_weekday,
-                access_location=new_intake_entry.access_location,
-                access_time=new_intake_entry.access_time,
-                lead_access_worker_id=new_intake_entry.lead_access_worker_id,
-                denial_reason=new_intake_entry.denial_reason,
-            )
+            return IntakeDTO(**new_intake_entry.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_intake(self, intake_id: int):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to delete_intake function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+
+            intake = Intake.query.filter_by(id=intake_id).first()
+            if not intake:
+                raise Exception("Intake with id {} not found".format(intake_id))
+
+            db.session.delete(intake)
+            db.session.commit()
         except Exception as error:
             db.session.rollback()
             raise error

@@ -3,7 +3,14 @@ from flask import Blueprint, current_app, jsonify, request
 
 # from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
+from ..resources.caregiver_dto import CreateCaregiverDTO
+from ..resources.child_dto import CreateChildDTO
+from ..resources.daytime_contact_dto import CreateDaytimeContactDTO
+from ..resources.familial_concern_dto import CreateFamilialConcernDTO
+from ..resources.goal_dto import CreateGoalDTO
 from ..resources.intake_dto import CreateIntakeDTO
+from ..resources.other_permitted_individual_dto import CreateOtherPermittedIndividualDTO
+from ..resources.provider_dto import CreateProviderDTO
 from ..services.implementations.caregiver_service import CaregiverService
 from ..services.implementations.child_service import ChildService
 from ..services.implementations.daytime_contact_service import DaytimeContactService
@@ -42,7 +49,7 @@ def get_all_intakes():
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
-@validate_request("IntakeDTO")
+# @validate_request("CreateIntakeDTO")
 def create_intake():
     undos = []
 
@@ -55,6 +62,47 @@ def create_intake():
     intake_response = intake_service.get_all_intakes()
     intake_id = len(intake_response) + 1
 
+    # intake
+    intake = {
+        "user_id": 1,  # ?
+        "intake_status": "ACCEPTED",
+        "referring_worker_name": request.json["caseReferral"]["referringWorker"],
+        "referring_worker_contact": request.json["caseReferral"][
+            "referringWorkerContact"
+        ],
+        "referral_date": request.json["caseReferral"]["referralDate"],
+        "family_name": request.json["caseReferral"]["familyName"],
+        "cpin_number": request.json["caseReferral"]["cpinFileNumber"],
+        "cpin_file_type": request.json["caseReferral"]["cpinFileType"],
+        "court_status": request.json["courtInformation"]["courtStatus"],
+        "court_order_file": request.json["courtInformation"]["orderReferral"],
+        "first_nation_heritage": request.json["courtInformation"][
+            "firstNationHeritage"
+        ],
+        "first_nation_band": request.json["courtInformation"]["firstNationBand"],
+        "transportation_requirements": request.json["programDetails"][
+            "transportRequirements"
+        ],
+        "scheduling_requirements": request.json["programDetails"][
+            "schedulingRequirements"
+        ],
+        "suggested_start_date": request.json["programDetails"]["suggestedStartDate"],
+        "date_accepted": "2020-01-01",  # ?
+        "access_weekday": None,  # ?
+        "access_location": None,  # ?
+        "access_time": None,  # ?
+        "lead_access_worker_id": 1,  # ?
+        "denial_reason": None,  # ?
+    }
+
+    try:
+        intake = CreateIntakeDTO(**intake)
+        new_intake = intake_service.create_intake(intake)
+        undos.append((intake_service, "delete_intake", new_intake.id))
+    except Exception as error:
+        run_undos()
+        return jsonify(str(error)), 400
+
     # caregivers
     caregivers = request.json["caregivers"]
     for caregiver in caregivers:
@@ -65,12 +113,13 @@ def create_intake():
             "individual_considerations": caregiver["individualConsiderations"],
             "primary_phone_number": caregiver["primaryPhoneNumber"],
             "secondary_phone_number": caregiver["secondaryPhoneNumber"],
-            "email": caregiver["email"],
+            "email": "test@mail.com",
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
             "intake_id": intake_id,
         }
+        caregiver = CreateCaregiverDTO(**caregiver)
         try:
             caregiver_response = caregiver_service.create_caregiver(caregiver)
             undos.append((caregiver_service, "delete_caregiver", caregiver_response.id))
@@ -90,14 +139,14 @@ def create_intake():
         }
         try:
             permittedIndividual_response = (
-                permittedIndividual_service.create_permittedIndividual(
-                    permittedIndividual
+                permittedIndividual_service.create_new_other_permitted_individual(
+                    CreateOtherPermittedIndividualDTO(**permittedIndividual)
                 )
             )
             undos.append(
                 (
                     permittedIndividual_service,
-                    "delete_permittedIndividual",
+                    "delete_other_permitted_individual",
                     permittedIndividual_response.id,
                 )
             )
@@ -113,13 +162,13 @@ def create_intake():
             "is_default": False,  # ?
         }
         try:
-            familialConcern_response = familialConcern_service.create_familialConcern(
-                familialConcern
+            familialConcern_response = familialConcern_service.add_familial_concern(
+                **familialConcern
             )
             undos.append(
                 (
                     familialConcern_service,
-                    "delete_familialConcern",
+                    "delete_familial_concern",
                     familialConcern_response.id,
                 )
             )
@@ -135,12 +184,12 @@ def create_intake():
         shortTermGoal = {
             "type": "SHORT_TERM",
             "goal": shortTermGoal,
-            "start_date": None,
-            "end_date": None,
-            "is_default": False,
+            # "start_date": None,
+            # "end_date": None,
+            # "is_default": False,
         }
         try:
-            shortTermGoal_response = goal_service.create_goal(shortTermGoal)
+            shortTermGoal_response = goal_service.add_new_goal(**shortTermGoal)
             undos.append((goal_service, "delete_goal", shortTermGoal_response.id))
         except Exception as error:
             run_undos()
@@ -152,12 +201,12 @@ def create_intake():
         longTermGoal = {
             "type": "LONG_TERM",
             "goal": longTermGoal,
-            "start_date": None,
-            "end_date": None,
-            "is_default": False,
+            # "start_date": None,
+            # "end_date": None,
+            # "is_default": False,
         }
         try:
-            longTermGoal_response = goal_service.create_goal(longTermGoal)
+            longTermGoal_response = goal_service.add_new_goal(**longTermGoal)
             undos.append((goal_service, "delete_goal", longTermGoal_response.id))
         except Exception as error:
             run_undos()
@@ -174,13 +223,13 @@ def create_intake():
             "dismissal_time": daytimeContact["dismissalTime"],
         }
         try:
-            daytimeContact_response = daytimeContact_service.create_daytimeContact(
-                daytimeContact
+            daytimeContact_response = daytimeContact_service.create_new_daytime_contact(
+                CreateDaytimeContactDTO(**daytimeContact)
             )
             undos.append(
                 (
                     daytimeContact_service,
-                    "delete_daytimeContact",
+                    "delete_daytime_contact",
                     daytimeContact_response.id,
                 )
             )
@@ -189,7 +238,7 @@ def create_intake():
             return jsonify(error), 400
 
         # children
-        child = {
+        child_obj = {
             "intake_id": intake_id,
             "first_name": child["childInfo"]["name"].rsplit(" ", 1)[0],
             "last_name": child["childInfo"]["name"].rsplit(" ", 1)[1],
@@ -198,11 +247,11 @@ def create_intake():
             "child_service_worker_id": 1,  # ?
             "daytime_contact_id": 1,  # ?
             "special_needs": child["childInfo"]["specialNeeds"],
-            "has_kinship_provider": False,  # ?
+            "has_kinship_provider": True,  # ?
             "has_foster_placement": False,  # ?
         }
         try:
-            child_response = child_service.create_child(child)
+            child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
             undos.append((child_service, "delete_child", child_response.id))
         except Exception as error:
             run_undos()
@@ -211,19 +260,21 @@ def create_intake():
         # provider
         providers = child["provider"]
         for provider in providers:
-            provider = {
+            provider_obj = {
                 "name": provider["name"],
                 "file_number": provider["fileNumber"],
                 "primary_phone_number": provider["primaryPhoneNumber"],
                 "secondary_phone_number": provider["secondaryPhoneNumber"],
-                "email": provider["email"],
-                "address": provider["address"],
+                "email": "test@mail.com",
+                "address": "1234 Test St",
                 "relationship_to_child": provider["relationshipToChild"],
                 "additional_contact_notes": provider["additionalContactNotes"],
-                "child_id": child_response.json()["id"],
+                "child_id": child_response.id,
             }
             try:
-                provider_response = provider_service.create_provider(provider)
+                provider_response = provider_service.create_new_provider(
+                    CreateProviderDTO(**provider_obj)
+                )
                 undos.append(
                     (provider_service, "delete_provider", provider_response.id)
                 )
@@ -232,47 +283,9 @@ def create_intake():
                 return jsonify(error), 400
 
         # concerns
-        concerns = child["concerns"]
+        concerns = child["childInfo"]["concerns"]
         for concern in concerns:
             continue
             # ?
 
-    # intake
-    intake = {
-        "user_id": 1,  # ?
-        "intake_status": "IN_PROGRESS",
-        "referring_worker_name": request.json["caseReferral"]["referringWorker"],
-        "referring_worker_contact": request.json["caseReferral"]["cpinFileNumber"],
-        "referral_date": request.json["caseReferral"]["referralDate"],
-        "family_name": request.json["caseReferral"]["familyName"],
-        "cpin_number": request.json["caseReferral"]["cpinFileNumber"],
-        "cpin_file_type": request.json["caseReferral"]["cpinFileType"],
-        "court_status": request.json["courtInformation"]["courtStatus"],
-        "court_order_file": request.json["courtInformation"]["orderReferral"],
-        "first_nation_heritage": request.json["courtInformation"][
-            "firstNationHeritage"
-        ],
-        "first_nation_band": request.json["courtInformation"]["firstNationBand"],
-        "transportation_requirements": request.json["programDetails"][
-            "transportationRequirements"
-        ],
-        "scheduling_requirements": request.json["programDetails"][
-            "schedulingRequirements"
-        ],
-        "suggested_start_date": request.json["programDetails"]["suggestedStartDate"],
-        "date_accepted": "2020-01-01",  # ?
-        "access_weekday": None,  # ?
-        "access_location": None,  # ?
-        "access_time": None,  # ?
-        "lead_access_worker_id": 1,  # ?
-        "denial_reason": None,  # ?
-    }
-
-    try:
-        intake = CreateIntakeDTO(intake)
-        new_intake = intake_service.create_intake(intake)
-        undos.append((intake_service, "delete_intake", new_intake.id))
-        return jsonify(new_intake.__dict__), 201
-    except Exception as error:
-        run_undos()
-        return jsonify(str(error)), 400
+    return jsonify(new_intake.__dict__), 201

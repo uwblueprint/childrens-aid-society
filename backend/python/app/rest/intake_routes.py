@@ -4,9 +4,25 @@ from flask import Blueprint, current_app, jsonify, request
 # from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
 from ..resources.intake_dto import CreateIntakeDTO
+from ..services.implementations.caregiver_service import CaregiverService
+from ..services.implementations.child_service import ChildService
+from ..services.implementations.daytime_contact_service import DaytimeContactService
+from ..services.implementations.familial_concern_service import FamilialConcernService
+from ..services.implementations.goal_service import GoalService
 from ..services.implementations.intake_service import IntakeService
+from ..services.implementations.other_permitted_individual_service import (
+    OtherPermittedIndividualService,
+)
+from ..services.implementations.provider_service import ProviderService
 
 intake_service = IntakeService(current_app.logger)
+caregiver_service = CaregiverService(current_app.logger)
+permittedIndividual_service = OtherPermittedIndividualService(current_app.logger)
+familialConcern_service = FamilialConcernService(current_app.logger)
+goal_service = GoalService(current_app.logger)
+daytimeContact_service = DaytimeContactService(current_app.logger)
+child_service = ChildService(current_app.logger)
+provider_service = ProviderService(current_app.logger)
 
 # defines a shared URL prefix for all routes
 blueprint = Blueprint("intake", __name__, url_prefix="/intake")
@@ -218,16 +234,8 @@ def create_intake():
         # concerns
         concerns = child["concerns"]
         for concern in concerns:
-            concern = {
-                "concern": concern,
-                "is_default": False,  # ?
-            }
-            try:
-                concern_response = concern_service.create_concern(concern)
-                undos.append((concern_service, "delete_concern", concern_response.id))
-            except Exception as error:
-                run_undos()
-                return jsonify(error), 400
+            continue
+            # ?
 
     # intake
     intake = {

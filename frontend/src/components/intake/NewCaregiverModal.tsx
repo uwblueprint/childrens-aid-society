@@ -4,7 +4,6 @@ import { Calendar, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
-import { CustomSelectField } from "./Select";
 
 type NewCaregiverProps = {
   isOpen: boolean;

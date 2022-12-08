@@ -144,26 +144,25 @@ const CourtInformationForm = ({
                 />
               </FormControl>
             </HStack>
-            <Box marginTop="16px"
->
-            <Button
-              onClick={() => {
-                handleSubmit();
-                prevStep();
-              }}
-              marginRight="10px"
-            >
-              Previous Button
-            </Button>
-            <Button
-              onClick={() => {
-                handleSubmit();
-                nextStep();
-              }}
-              marginLeft="10px"
-            >
-              Next Button
-            </Button>
+            <Box marginTop="16px">
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                  prevStep();
+                }}
+                marginRight="10px"
+              >
+                Previous Button
+              </Button>
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                  nextStep();
+                }}
+                marginLeft="10px"
+              >
+                Next Button
+              </Button>
             </Box>
           </Form>
         );

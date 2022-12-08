@@ -5,12 +5,12 @@ import {
   FormControl,
   FormLabel,
   Icon,
-  Select,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";
+import { CustomSelectField } from "./Select";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
@@ -42,7 +42,7 @@ const ReferralForm = ({
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
       <Form>
         <FormControl>
-          <SimpleGrid columns={2} spacing="70px">
+          <SimpleGrid columns={2} spacing="10px">
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field
@@ -80,13 +80,15 @@ const ReferralForm = ({
             </Box>
             <Box>
               <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
-              <Field
-                as={Select}
+              <CustomSelectField
                 id="cpinFileType"
                 name="cpinFileType"
-                type="string"
-                placeholder="Select the CPIN file type..."
-              />
+                defaultValue=""
+              >
+                <option value="">Select the CPIN file type...</option>
+                <option>Investigation</option>
+                <option>Ongoing</option>
+              </CustomSelectField>
             </Box>
           </SimpleGrid>
           <Box paddingTop="10px">

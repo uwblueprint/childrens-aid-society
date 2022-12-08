@@ -8,6 +8,17 @@ class ProviderService(IProviderService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_providers(self):
+        try:
+            providers = Provider.query.all()
+            providers_dto = [
+                ProviderDTO(**provider.to_dict()) for provider in providers
+            ]
+            return providers_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def create_new_provider(self, provider):
         try:
             if not provider:
@@ -24,18 +35,19 @@ class ProviderService(IProviderService):
             db.session.add(new_provider_entry)
             db.session.commit()
 
-            return ProviderDTO(
-                id=new_provider_entry.id,
-                name=new_provider_entry.name,
-                file_number=new_provider_entry.file_number,
-                primary_phone_number=new_provider_entry.primary_phone_number,
-                secondary_phone_number=new_provider_entry.secondary_phone_number,
-                email=new_provider_entry.email,
-                address=new_provider_entry.address,
-                relationship_to_child=new_provider_entry.relationship_to_child,
-                additional_contact_notes=new_provider_entry.additional_contact_notes,
-                child_id=new_provider_entry.child_id,
-            )
+            provider.id = new_provider_entry.id
+            return ProviderDTO(**provider.__dict__)
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_provider(self, provider_id):
+        try:
+            provider = Provider.query.filter_by(id=provider_id).first()
+            if not provider:
+                raise Exception("Provider with id {} not found".format(provider_id))
+            db.session.delete(provider)
+            db.session.commit()
         except Exception as error:
             db.session.rollback()
             raise error

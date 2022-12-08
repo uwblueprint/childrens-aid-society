@@ -15,17 +15,9 @@ class ProviderDTO:
         self.child_id = kwargs.get("child_id")
 
 
-class CreateProviderDTO(object):
+class CreateProviderDTO(ProviderDTO):
     def __init__(self, **kwargs):
-        self.name = kwargs.get("name")
-        self.file_number = kwargs.get("file_number")
-        self.primary_phone_number = kwargs.get("primary_phone_number")
-        self.secondary_phone_number = kwargs.get("secondary_phone_number")
-        self.email = kwargs.get("email")
-        self.address = kwargs.get("address")
-        self.relationship_to_child = kwargs.get("relationship_to_child")
-        self.additional_contact_notes = kwargs.get("additional_contact_notes")
-        self.child_id = kwargs.get("child_id")
+        super().__init__(**kwargs)
 
     def validate(self):
         error_list = []

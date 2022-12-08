@@ -44,13 +44,27 @@ DUMMY_INTAKE_DATA = {
     "suggested_start_date": datetime.date(2020, 1, 1),
 }
 
+DUMMY_CAREGIVER_DATA = {
+    "name": "John Doe",
+    "date_of_birth": datetime.date(1999, 1, 1),
+    "primary_phone_number": "1234567890",
+    "secondary_phone_number": "2345678901",
+    "email": "test123@uwaterloo.ca",
+    "address": "123 Fake Street",
+    "relationship_to_child": "FOSTER_CAREGIVER",
+    "intake_id": 1,
+}
+
 
 def seed_database():
     user = User(**DUMMY_USER_DATA)
     intake = Intake(**DUMMY_INTAKE_DATA)
+    caregiver = Caregiver(**DUMMY_CAREGIVER_DATA)
     db.session.add(user)
     db.session.commit()
     db.session.add(intake)
+    db.session.commit()
+    db.session.add(caregiver)
     db.session.commit()
 
 
@@ -58,6 +72,9 @@ def teardown_database():
     Caregiver.query.delete()
     Intake.query.delete()
     User.query.delete()
+    db.session.execute("ALTER SEQUENCE caregivers_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE intakes_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
     db.session.commit()
 
 
@@ -123,3 +140,13 @@ class TestCreateCaregiverInvalidFails:
     def test_empty_param(self):
         with pytest.raises(Exception):
             caregiver_service.create_caregiver(None)
+
+
+class TestDeletion:
+    def test_delete_success(self, caregiver_service):
+        caregiver_service.delete_caregiver(1)
+        assert Caregiver.query.get(1) is None
+
+    def test_delete_nonexistent_id_fail(self, caregiver_service):
+        with pytest.raises(Exception):
+            caregiver_service.delete_caregiver(999)

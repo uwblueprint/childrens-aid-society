@@ -24,6 +24,7 @@ def auth_service():
     auth_service = AuthService(current_app.logger, user_service)
     yield auth_service
     User.query.delete()
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
 
 
 class FirebaseUser:

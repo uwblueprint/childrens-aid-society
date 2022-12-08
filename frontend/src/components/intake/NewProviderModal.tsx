@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Icon, SimpleGrid, FormLabel } from "@chakra-ui/react";
 import { File, Mail, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
@@ -14,6 +14,11 @@ const NewProviderModal = ({
   isOpen,
   onClose,
 }: ExistingProviderProps): React.ReactElement => {
+  const [providerName, setProviderName] = useState("");
+  const [providerFileNo, setProviderFileNo] = useState("");
+  const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
+  const [address, setAddress] = useState("");
+  const [relationship, setRelationship] = useState("");
   return (
     <Box>
       <ModalComponent
@@ -29,6 +34,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="Enter full name of provider..."
                   icon={<Icon as={User} />}
+                  onChange={(event) => {
+                    setProviderName(event.target.value);
+                  }}
                 />
               </Box>
               <Box>
@@ -41,6 +49,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="e.g. 123456789"
                   icon={<Icon as={File} />}
+                  onChange={(event) => {
+                    setProviderFileNo(event.target.value);
+                  }}
                 />
               </Box>
               <Box>
@@ -53,6 +64,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="e.g. 555-555-5555"
                   icon={<Icon as={Phone} />}
+                  onChange={(event) => {
+                    setPrimaryPhoneNo(event.target.value);
+                  }}
                 />
               </Box>
               <Box>
@@ -87,6 +101,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="Enter address of provider"
                   icon={<Icon as={Navigation} />}
+                  onChange={(event) => {
+                    setAddress(event.target.value);
+                  }}
                 />
               </Box>
             </SimpleGrid>
@@ -112,14 +129,32 @@ const NewProviderModal = ({
                 name="relationship"
                 type="string"
                 placeholder="Describe provider's relationship to children"
+                onChange={(event) => {
+                  setRelationship(event.target.value);
+                }}
               />
             </Box>
           </Box>
         }
         onClick={() => {}} // empty for now
         isOpen={isOpen}
-        onClose={onClose}
-        disabled={false}
+        onClose={() => {
+          setProviderName("");
+          setProviderFileNo("");
+          setPrimaryPhoneNo("");
+          setAddress("");
+          setRelationship("");
+          onClose();
+        }}
+        disabled={
+          !(
+            providerName &&
+            providerFileNo &&
+            primaryPhoneNo &&
+            address &&
+            relationship
+          )
+        }
         secondaryTitle="Individual Details"
         primaryButtonTitle="Add provider"
       />

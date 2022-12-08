@@ -144,6 +144,8 @@ const CourtInformationForm = ({
                 />
               </FormControl>
             </HStack>
+            <Box marginTop="16px"
+>
             <Button
               onClick={() => {
                 handleSubmit();
@@ -162,6 +164,7 @@ const CourtInformationForm = ({
             >
               Next Button
             </Button>
+            </Box>
           </Form>
         );
       }}

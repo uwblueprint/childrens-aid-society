@@ -42,7 +42,7 @@ const ReferralForm = ({
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
       <Form>
         <FormControl>
-          <SimpleGrid columns={2} spacing="10px">
+          <SimpleGrid columns={2} spacing="32px">
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field
@@ -91,7 +91,7 @@ const ReferralForm = ({
               </CustomSelectField>
             </Box>
           </SimpleGrid>
-          <Box paddingTop="10px">
+          <Box paddingTop="32px">
             <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
             <Field
               as={CustomInput}
@@ -102,7 +102,7 @@ const ReferralForm = ({
               icon={<Icon as={Users} />}
             />
           </Box>
-          <Box paddingTop="10px">
+          <Box paddingTop="32px">
             <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
             <Field
               as={CustomInput}
@@ -114,7 +114,7 @@ const ReferralForm = ({
             />
           </Box>
         </FormControl>
-        <Button type="submit" marginTop="30px">
+        <Button type="submit" marginTop="32px">
           Next Button
         </Button>
       </Form>

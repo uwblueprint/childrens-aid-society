@@ -178,4 +178,3 @@ def test_delete_child_fail(child_service):
     with pytest.raises(Exception) as e:
         child_service.delete_child(999)
         assert e.value == "Child 999 not found"
-

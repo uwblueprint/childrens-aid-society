@@ -5,7 +5,7 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
-type ExistingProviderProps = {
+type NewProviderProps = {
   isOpen: boolean;
   onClose: () => void;
 };
@@ -13,7 +13,7 @@ type ExistingProviderProps = {
 const NewProviderModal = ({
   isOpen,
   onClose,
-}: ExistingProviderProps): React.ReactElement => {
+}: NewProviderProps): React.ReactElement => {
   const [providerName, setProviderName] = useState("");
   const [providerFileNo, setProviderFileNo] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");

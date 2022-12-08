@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-type CustomInputProps = InputProps & {
+export type CustomInputProps = InputProps & {
   icon?: JSX.Element;
 };
 

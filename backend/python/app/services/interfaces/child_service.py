@@ -25,9 +25,11 @@ class IChildService(ABC):
 
     @abstractmethod
     def delete_child(self, child_id):
-        """Deletes the child with the specified id
+        """Deletes the child with the specified id from the child table
         :param child_id: the id of the child to be deleted
         :type child_id: int
-        :raises Exception: if child with the specified id does not exist
+        :return: None
+        :rtype: None
+        :raises Exception: if there was an error on the database side
         """
         pass

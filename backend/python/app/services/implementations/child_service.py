@@ -22,7 +22,7 @@ class ChildService(IChildService):
         except Exception as error:
             raise error
 
-    def add_new_child(self, child):
+    def add_new_child(self, child: CreateChildDTO):
         try:
             if not child:
                 raise Exception("Empty child DTO/None passed to add_new_child function")
@@ -35,10 +35,7 @@ class ChildService(IChildService):
             db.session.add(new_child_entry)
             db.session.commit()
 
-            child.id = new_child_entry.id
-            return ChildDTO(
-                **child.__dict__,
-            )
+            return ChildDTO(**new_child_entry.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error

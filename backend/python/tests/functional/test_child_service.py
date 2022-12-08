@@ -12,12 +12,6 @@ from app.models.user import User
 from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
-DUMMY_DAYTIME_CONTACT_DATA = {
-    "name": "Hamzaa Yusuff",
-    "contact_information": "8790832",
-    "dismissal_time": "4:00PM",
-}
-
 DUMMY_USER_DATA = {
     "first_name": "Hamza",
     "last_name": "Yusuff",
@@ -50,7 +44,7 @@ DUMMY_DAYTIME_CONTACT_DATA = {
 
 DUMMY_CHILD_DATA = {
     "intake_id": 1,
-    "first_name": "Roths",
+    "first_name": "Test",
     "last_name": "Child",
     "date_of_birth": datetime.date(2020, 5, 17),
     "cpin_number": "1",
@@ -83,6 +77,9 @@ def seed_database():
 
     dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
     db.session.add(dummy_daytime_contact)
+    db.session.commit()
+    dummy_child = Child(**DUMMY_CHILD_DATA)
+    db.session.add(dummy_child)
     db.session.commit()
 
     dummy_child = Child(**DUMMY_CHILD_DATA)
@@ -171,11 +168,14 @@ def test_missing_field(child_service):
         child_service.add_new_child(param)
 
 
-def test_delete_success(child_service):
-    child_service.delete_child(1)
-    assert Child.query.get(1) is None
+def test_delete_child_success(child_service):
+    res = child_service.delete_child(1)
+    assert res == None
+    assert Child.query.filter_by(id=1).first() is None
 
 
-def test_delete_invalid_id_fail(child_service):
-    with pytest.raises(Exception):
+def test_delete_child_fail(child_service):
+    with pytest.raises(Exception) as e:
         child_service.delete_child(999)
+        assert e.value == "Child 999 not found"
+

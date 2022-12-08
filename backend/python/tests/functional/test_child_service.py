@@ -12,14 +12,7 @@ from app.models.user import User
 from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
-DUMMY_DAYTIME_CONTACT_DATA = {
-    "name": "Hamzaa Yusuff",
-    "contact_information": "8790832",
-    "dismissal_time": "4:00PM",
-}
-
 DUMMY_USER_DATA = {
-    "id": 1,
     "first_name": "Hamza",
     "last_name": "Yusuff",
     "auth_id": "hbyusuff",
@@ -28,7 +21,6 @@ DUMMY_USER_DATA = {
 }
 
 DUMMY_INTAKE_DATA = {
-    "id": 1,
     "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
@@ -44,11 +36,23 @@ DUMMY_INTAKE_DATA = {
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
-    "id": 1,
     "name": "Hamzaa Yusuff",
     "address": "123 Main St",
     "contact_information": "8790832",
     "dismissal_time": "4:00PM",
+}
+
+DUMMY_CHILD_DATA = {
+    "intake_id": 1,
+    "first_name": "Test",
+    "last_name": "Child",
+    "date_of_birth": datetime.date(2020, 5, 17),
+    "cpin_number": "1",
+    "child_service_worker_id": 1,
+    "daytime_contact_id": 1,
+    "special_needs": "None",
+    "has_foster_placement": True,
+    "has_kinship_provider": False,
 }
 
 
@@ -72,6 +76,9 @@ def seed_database():
     dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
     db.session.add(dummy_daytime_contact)
     db.session.commit()
+    dummy_child = Child(**DUMMY_CHILD_DATA)
+    db.session.add(dummy_child)
+    db.session.commit()
 
 
 def empty_database():
@@ -79,6 +86,11 @@ def empty_database():
     Intake.query.delete()
     DaytimeContact.query.delete()
     User.query.delete()
+    db.session.execute("ALTER SEQUENCE children_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE intakes_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE daytime_contacts_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
+    db.session.commit()
 
 
 def test_add_new_child_valid(child_service):
@@ -146,3 +158,15 @@ def test_missing_field(child_service):
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)
+
+
+def test_delete_child_success(child_service):
+    res = child_service.delete_child(1)
+    assert res == None
+    assert Child.query.filter_by(id=1).first() is None
+
+
+def test_delete_child_fail(child_service):
+    with pytest.raises(Exception) as e:
+        child_service.delete_child(999)
+        assert e.value == "Child 999 not found"

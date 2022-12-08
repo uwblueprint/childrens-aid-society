@@ -1,5 +1,6 @@
 from . import db
 from .base_mixin import BaseMixin
+from .children_child_behaviors import children_child_behaviors
 
 
 class Child(db.Model, BaseMixin):
@@ -24,3 +25,4 @@ class Child(db.Model, BaseMixin):
     intake = db.relationship("Intake")
     child_service_worker = db.relationship("User")
     daytime_contact = db.relationship("DaytimeContact")
+    behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)

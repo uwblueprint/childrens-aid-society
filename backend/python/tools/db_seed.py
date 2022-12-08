@@ -97,6 +97,16 @@ def insert_test_data():
     for value in values:
         insert_values(db, "caregivers", ("name", "date_of_birth", "individual_considerations", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "intake_id"), value)
 
+    # Providers
+    values = [
+        ('Provider One', '111', '555-555-5555', '777-777-7777', 'provider1@mail.com', 'address', 'KINSHIP_PROVIDER', 'NULL', 1),
+        ('Provider Two', '222', '777-777-7777', '555-555-5555', 'provider@mail.com', 'address', 'KINSHIP_PROVIDER', 'NULL', 1)
+    ]
+
+    for value in values:
+        insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
+
+
 # fmt: on
 
 # fmt: off

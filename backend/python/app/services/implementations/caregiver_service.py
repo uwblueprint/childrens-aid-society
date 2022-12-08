@@ -40,3 +40,15 @@ class CaregiverService(ICaregiverService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
+
+    def delete_caregiver(self, caregiver_id):
+        try:
+            caregiver = Caregiver.query.filter_by(id=caregiver_id).first()
+            if not caregiver:
+                raise Exception("Caregiver with id {} not found".format(caregiver_id))
+            db.session.delete(caregiver)
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            self.logger.error(str(error))
+            raise error

@@ -3,6 +3,7 @@ import { Box, Icon, SimpleGrid, FormLabel } from "@chakra-ui/react";
 import { File, Mail, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
+import OptionalLabel from "./OptionalLabel";
 
 type ExistingProviderProps = {
   isOpen: boolean;
@@ -56,7 +57,7 @@ const NewProviderModal = ({
               </Box>
               <Box>
                 <FormLabel htmlFor="secondaryPhoneNumber">
-                  SECONDARY PHONE NUMBER
+                  SECONDARY PHONE NUMBER <OptionalLabel />
                 </FormLabel>
                 <CustomInput
                   id="secondaryPhoneNumber"
@@ -67,7 +68,9 @@ const NewProviderModal = ({
                 />
               </Box>
               <Box>
-                <FormLabel htmlFor="email">EMAIL (OPTIONAL)</FormLabel>
+                <FormLabel htmlFor="email">
+                  EMAIL <OptionalLabel />
+                </FormLabel>
                 <CustomInput
                   id="email"
                   name="email"
@@ -89,7 +92,7 @@ const NewProviderModal = ({
             </SimpleGrid>
             <Box marginTop="0.75rem">
               <FormLabel htmlFor="address">
-                ADDITIONAL CONTACT NOTES (OPTIONAL)
+                ADDITIONAL CONTACT NOTES <OptionalLabel />
               </FormLabel>
               <CustomInput
                 id="contactNotes"
@@ -116,6 +119,7 @@ const NewProviderModal = ({
         onClick={() => {}} // empty for now
         isOpen={isOpen}
         onClose={onClose}
+        disabled={false}
         secondaryTitle="Individual Details"
         primaryButtonTitle="Add provider"
       />

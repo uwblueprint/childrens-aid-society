@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, FormControl, Heading } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  Heading,
+  Text,
+  Flex,
+  Icon,
+} from "@chakra-ui/react";
+import { Feather } from "react-feather";
 import { Form, Formik } from "formik";
 
 export type ProgramDetails = {
@@ -26,9 +34,18 @@ const ProgramForm = ({
   return (
     <Formik initialValues={programDetails} onSubmit={onSubmit}>
       {({ handleSubmit }) => (
-        <Form style={{ padding: "0px 100px 30px 100px" }}>
-          <Heading textStyle="header-large">Program Details</Heading>
-          <FormControl style={{ padding: "30px" }}>Basic Form</FormControl>
+        <Form style={{ padding: "2rem 12rem" }}>
+          <Heading textStyle="heading">Program Details</Heading>
+          <FormControl style={{ padding: "30px" }}>
+            <Flex style={{ padding: "30px" }}>
+              <Text align="left" flex="1" textStyle="title-medium">
+                Other permitted individuals
+              </Text>
+              <Button leftIcon={<Icon as={Feather} />} variant="secondary">
+                Add
+              </Button>
+            </Flex>
+          </FormControl>
           <Button
             onClick={() => {
               handleSubmit();

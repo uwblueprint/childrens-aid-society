@@ -6,6 +6,7 @@ import {
   Text,
   ModalFooter,
   ModalCloseButton,
+  ModalBody,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -44,15 +45,17 @@ const ModalComponent = ({
         {primaryTitle}
       </Text>
       <ModalCloseButton marginTop="40px" marginRight="20px" size="sm" />
-      {modalContent}
-      <ModalFooter paddingTop="68px">
-        <Button variant="tertiary" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button variant="primary" disabled={disabled} onClick={onClick}>
-          {primaryButtonTitle}
-        </Button>
-      </ModalFooter>
+      <ModalBody>
+        {modalContent}
+        <ModalFooter paddingTop="56px" paddingRight="0px" paddingBottom="0px">
+          <Button variant="tertiary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" disabled={disabled} onClick={onClick}>
+            {primaryButtonTitle}
+          </Button>
+        </ModalFooter>
+      </ModalBody>
     </ModalContent>
   </Modal>
 );

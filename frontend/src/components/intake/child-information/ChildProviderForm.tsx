@@ -4,18 +4,28 @@ import ExistingProvider from "../ExistingProviderModal";
 import NewProviderModal from "../NewProviderModal";
 
 const ChildProviderForm = (): React.ReactElement => {
-  const { onOpen, isOpen, onClose } = useDisclosure();
   const {
-    onOpen: onOpen2,
-    isOpen: isOpen2,
-    onClose: onClose2,
+    onOpen: onOpenExistingProviders,
+    isOpen: isOpenExistingProviders,
+    onClose: onCloseExistingProviders,
+  } = useDisclosure();
+  const {
+    onOpen: onOpenNewProviders,
+    isOpen: isOpenNewProviders,
+    onClose: onCloseNewProviders,
   } = useDisclosure();
   return (
     <Box>
-      <Button onClick={onOpen}>Select providers</Button>
-      <ExistingProvider isOpen={isOpen} onClose={onClose} />
-      <Button onClick={onOpen2}>New providers</Button>
-      <NewProviderModal isOpen={isOpen2} onClose={onClose2} />
+      <Button onClick={onOpenExistingProviders}>Select providers</Button>
+      <ExistingProvider
+        isOpen={isOpenExistingProviders}
+        onClose={onCloseExistingProviders}
+      />
+      <Button onClick={onOpenNewProviders}>New providers</Button>
+      <NewProviderModal
+        isOpen={isOpenNewProviders}
+        onClose={onCloseNewProviders}
+      />
     </Box>
   );
 };

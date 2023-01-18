@@ -19,9 +19,18 @@ export const Select: ComponentStyleConfig = {
   variants: {
     solid: {
       field: {
-        background: "#EEECF2",
-        borderRadius: "0px",
-        color: "#888897",
+        height: "48px",
+        backgroundColor: "gray.50",
+        borderColor: "gray.100",
+        borderWidth: "1px",
+        fontSize: "18px",
+        _hover: {
+          backgroundColor: "gray.100",
+        },
+        _focus: {
+          backgroundColor: "gray.100",
+          borderColor: "#5D5E67",
+        },
       },
     },
   },

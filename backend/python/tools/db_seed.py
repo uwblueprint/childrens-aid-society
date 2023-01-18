@@ -1,3 +1,4 @@
+import datetime
 import sys
 
 from flask_sqlalchemy import SQLAlchemy
@@ -54,38 +55,27 @@ def insert_test_data():
     for value in values:
         insert_values(db, "users", ("first_name", "last_name", "auth_id", "role", "branch"), value)
 
-    # Addresses
+    # Intakes
     values = [
-        ("27 King''s College Cir", "Toronto",  "M5S 1A1", 43.663, -79.397),
-        ("75 University Ave W",    "Waterloo", "N2L 3C5", 43.472, -80.544),
-        ("99 University Ave",      "Kingston", "K7L 3N6", 44.229, -76.485),
-        ("200 University Ave W",   "Waterloo", "N2L 3G1", 43.472, -80.544),
+        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
     ]
 
     for value in values:
-        insert_values(db, "addresses", ("street_address", "city", "postal_code", "latitude", "longitude"), value)
-
-    # Intake
-    values = [
-        (1, "2020-01-01", "Smith", "cpin1111", True, True, True, "INTERIM_CARE", "11111", "c11111", True, "FIRST_NATION_REGISTERED", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-01-01", True, "2020-01-01", "2020-01-01", '{"MONDAY", "TUESDAY"}', 1, "10:00", 1, "Denial reason"),
-        (2, "2020-03-27", "Jones", "cpin2222", True, True, True, "FINAL_ORDER_FOR_SOCIETY_CARE", "22222", "c22222", True, "ELIGIBLE_FOR_REGISTRATION", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-03-27", True, "2020-03-27", "2020-03-27", '{"TUESDAY", "MONDAY"}', 1, "03:21:53", 1, "Denial reason"),
-        (3, "2020-04-01", "Williams", "cpin3333", False, True, False, "EXTENDED_SOCIETY_CARE", "33333", "c33333", True, "INUIT", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-04-01", True, "2020-04-01", "2020-04-01", '{"WEDNESDAY", "THURSDAY"}', 1, "23:31:02", 1, "Denial reason"),
-        (4, "2020-04-01", "Brown", "cpin4444", False, False, False, "SUPERVISION_ORDER", "44444", "c44444", True, "METIS", "First Nation", "Family strengths", "In person", "Transportation", "Limitations", "2020-05-23", True, "2020-06-01", "2020-04-01", '{"THURSDAY", "WEDNESDAY", "SATURDAY"}', 1, "13:21:02", 1, "Denial reason"),
-    ]
-
-    for value in values:
-        insert_values(db, "intakes", ("referring_worker_id", "referral_date", "family_name", "cpin_number", "is_investigation", "is_ongoing", "is_court_involved", "court_status", "court_order", "court_order_file", "is_first_nation_heritage", "first_nation_heritage", "first_nation_band", "family_strengths", "access_type", "transportation", "limitations", "case_date", "is_accepted", "date_accepted", "access_start_date", "access_weekday", "access_location_id", "access_time", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_weekday", "access_location", "access_time", "lead_access_worker_id", "denial_reason"), value)
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 1, 'contact info', '3:30pm'),
-        ('Shieda Kayn', 2, 'contact info', '4:00pm'),
-        ('Sarah Fortune', 3, 'contact info', '4:30pm'),
-        ('Irelia Xan', 4, 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address_id", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
 
     # Child
     values = [
@@ -106,6 +96,25 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "caregivers", ("name", "date_of_birth", "individual_considerations", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "intake_id"), value)
+
+    # Other Permitted Individuals
+    values = [
+        ('Yor Forger', '555-555-5555', 'relationship', 'notes', 1),
+        ('Loid Forger', '777-777-7777', 'relationship', 'notes', 1)
+    ]
+
+    for value in values:
+        insert_values(db, "other_permitted_individuals", ("name", "phone_number", "relationship_to_child", "notes", "intake_id"), value)
+
+    # Providers
+    values = [
+        ('Provider One', '111', '555-555-5555', '777-777-7777', 'provider1@mail.com', 'address', 'KINSHIP_PROVIDER', 'NULL', 1),
+        ('Provider Two', '222', '777-777-7777', '555-555-5555', 'provider@mail.com', 'address', 'KINSHIP_PROVIDER', 'NULL', 1)
+    ]
+
+    for value in values:
+        insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
+
 
 # fmt: on
 

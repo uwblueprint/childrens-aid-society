@@ -4,7 +4,6 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.address import Address
 from app.models.caregiver import Caregiver
 from app.models.child import Child
 from app.models.daytime_contact import DaytimeContact
@@ -13,18 +12,7 @@ from app.models.user import User
 from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
-DUMMY_DAYTIME_CONTACT_DATA = {
-    "name": "Hamzaa Yusuff",
-    "contact_information": "8790832",
-    "dismissal_time": "4:00PM",
-}
-
-DUMMY_INTAKE_DATA = {
-    "id": 1,
-}
-
 DUMMY_USER_DATA = {
-    "id": 1,
     "first_name": "Hamza",
     "last_name": "Yusuff",
     "auth_id": "hbyusuff",
@@ -32,17 +20,39 @@ DUMMY_USER_DATA = {
     "branch": "ALGOMA",
 }
 
+DUMMY_INTAKE_DATA = {
+    "user_id": 1,
+    "referring_worker_name": "John Doe",
+    "referring_worker_contact": "johndoe@mail.com",
+    "referral_date": datetime.date(2020, 1, 1),
+    "family_name": "Doe",
+    "cpin_number": "123456789",
+    "cpin_file_type": "ONGOING",
+    "court_status": "OTHER",
+    "court_order_file": "court_order.pdf",
+    "transportation_requirements": "car",
+    "scheduling_requirements": "flexible",
+    "suggested_start_date": datetime.date(2020, 1, 1),
+}
+
 DUMMY_DAYTIME_CONTACT_DATA = {
-    "id": 1,
     "name": "Hamzaa Yusuff",
+    "address": "123 Main St",
     "contact_information": "8790832",
     "dismissal_time": "4:00PM",
 }
 
-DUMMY_ADDRESS_DATA = {
-    "street_address": "Lester Street",
-    "city": "waterloo",
-    "postal_code": "N2L3W6",
+DUMMY_CHILD_DATA = {
+    "intake_id": 1,
+    "first_name": "Test",
+    "last_name": "Child",
+    "date_of_birth": datetime.date(2020, 5, 17),
+    "cpin_number": "1",
+    "child_service_worker_id": 1,
+    "daytime_contact_id": 1,
+    "special_needs": "None",
+    "has_foster_placement": True,
+    "has_kinship_provider": False,
 }
 
 
@@ -55,30 +65,40 @@ def child_service():
 
 
 def seed_database():
-    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
-    db.session.add(dummy_intake)
-    db.session.commit()
+    empty_database()
 
     dummy_user = User(**DUMMY_USER_DATA)
     db.session.add(dummy_user)
     db.session.commit()
 
-    dummy_address = Address(**DUMMY_ADDRESS_DATA)
-    db.session.add(dummy_address)
+    dummy_intake = Intake(**DUMMY_INTAKE_DATA)
+    db.session.add(dummy_intake)
     db.session.commit()
 
-    DUMMY_DAYTIME_CONTACT_DATA["address_id"] = dummy_address.id
     dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
     db.session.add(dummy_daytime_contact)
+    db.session.commit()
+    dummy_child = Child(**DUMMY_CHILD_DATA)
+    db.session.add(dummy_child)
+    db.session.commit()
+
+    dummy_child = Child(**DUMMY_CHILD_DATA)
+    db.session.add(dummy_child)
     db.session.commit()
 
 
 def empty_database():
     Child.query.delete()
+    db.session.commit()
+
     Intake.query.delete()
     DaytimeContact.query.delete()
-    Address.query.delete()
     User.query.delete()
+    db.session.execute("ALTER SEQUENCE children_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE intakes_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE daytime_contacts_id_seq RESTART WITH 1")
+    db.session.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
+    db.session.commit()
 
 
 def test_add_new_child_valid(child_service):
@@ -146,3 +166,15 @@ def test_missing_field(child_service):
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)
+
+
+def test_delete_child_success(child_service):
+    res = child_service.delete_child(1)
+    assert res == None
+    assert Child.query.filter_by(id=1).first() is None
+
+
+def test_delete_child_fail(child_service):
+    with pytest.raises(Exception) as e:
+        child_service.delete_child(999)
+        assert e.value == "Child 999 not found"

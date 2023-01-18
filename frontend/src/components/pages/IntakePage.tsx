@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -12,7 +12,7 @@ import IntakeFooter from "../intake/IntakeFormFooter";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 
 const Intake = (): React.ReactElement => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -38,7 +38,7 @@ const Intake = (): React.ReactElement => {
 
   const renderDetailsForm = () => {
     switch (step) {
-      case 1:
+      case 0:
         return (
           <ReferralForm
             referralDetails={referralDetails}
@@ -46,18 +46,18 @@ const Intake = (): React.ReactElement => {
             nextStep={nextStep}
           />
         );
-      case 2:
+      case 1:
         return (
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
           />
         );
-      case 3:
+      case 2:
         return (
           <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
         );
-      case 4:
+      case 3:
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
@@ -83,7 +83,7 @@ const Intake = (): React.ReactElement => {
 
   return (
     <>
-      {step === 5 ? (
+      {step === 4 ? (
         <IntakeHeader
           primaryTitle="Review Case Details"
           secondaryTitle="Initiate New Case"
@@ -96,7 +96,7 @@ const Intake = (): React.ReactElement => {
       )}
 
       <Box textAlign="center" padding="30px 0 40px 0">
-        {step !== 5 ? (
+        {step !== 4 ? (
           <Stepper
             pages={[
               "Case referral",
@@ -104,12 +104,15 @@ const Intake = (): React.ReactElement => {
               "Individual details",
               "Program details",
             ]}
-            activePage={step - 1}
+            setStep={setStep}
+            activePage={step}
           />
         ) : (
           <></>
         )}
-        {renderDetailsForm()}
+        <Container maxWidth="container.xl" padding="30px 96px">
+          {renderDetailsForm()}
+        </Container>
       </Box>
       <IntakeFooter nextStep={nextStep} />
     </>

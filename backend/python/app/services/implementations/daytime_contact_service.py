@@ -8,6 +8,15 @@ class DaytimeContactService(IDaytimeContactService):
     def __init__(self, logger):
         self.logger = logger
 
+    def get_all_daytime_contacts(self):
+        try:
+            daytime_contacts = DaytimeContact.query.all()
+            return [
+                DaytimeContactDTO(**contact.__dict__) for contact in daytime_contacts
+            ]
+        except Exception as error:
+            raise error
+
     def create_new_daytime_contact(self, contact):
         try:
             if not contact:
@@ -24,13 +33,31 @@ class DaytimeContactService(IDaytimeContactService):
             db.session.add(new_contact_entry)
             db.session.commit()
 
-            return DaytimeContactDTO(
-                id=new_contact_entry.id,
-                name=new_contact_entry.name,
-                contact_information=new_contact_entry.contact_information,
-                address_id=new_contact_entry.address_id,
-                dismissal_time=new_contact_entry.dismissal_time,
-            )
+            contact.id = new_contact_entry.id
+            return DaytimeContactDTO(**contact.__dict__)
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_daytime_contact(self, daytime_contact_id):
+        try:
+            if not daytime_contact_id:
+                raise Exception(
+                    "Empty daytime_contact_id/None passed to delete_daytime_contact function"
+                )
+            if not isinstance(daytime_contact_id, int):
+                raise Exception("daytime_contact_id passed is not of int type")
+
+            contact_to_delete = DaytimeContact.query.get(daytime_contact_id)
+            if not contact_to_delete:
+                raise Exception(
+                    "daytime_contact with id {} does not exist".format(
+                        daytime_contact_id
+                    )
+                )
+
+            db.session.delete(contact_to_delete)
+            db.session.commit()
         except Exception as error:
             db.session.rollback()
             raise error

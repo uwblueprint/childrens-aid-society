@@ -2,19 +2,13 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.address import Address
 from app.models.daytime_contact import DaytimeContact
 from app.resources.daytime_contact_dto import CreateDaytimeContactDTO, DaytimeContactDTO
 from app.services.implementations.daytime_contact_service import DaytimeContactService
 
-DUMMY_ADDRESS_DATA = {
-    "street_address": "Lester Street",
-    "city": "waterloo",
-    "postal_code": "N2L3W6",
-}
-
 DEFAULT_DAYTIME_CONTACT = {
     "name": "Juthika Hoque",
+    "address": "123 Main St",
     "contact_information": "1234567890",
     "dismissal_time": "12:00PM",
 }
@@ -29,11 +23,6 @@ def daytime_contact_service():
 
 
 def seed_database():
-    dummy_address = Address(**DUMMY_ADDRESS_DATA)
-    db.session.add(dummy_address)
-    db.session.commit()
-
-    DEFAULT_DAYTIME_CONTACT["address_id"] = dummy_address.id
     dummy_daytime_contact = DaytimeContact(**DEFAULT_DAYTIME_CONTACT)
     db.session.add(dummy_daytime_contact)
     db.session.commit()
@@ -41,15 +30,16 @@ def seed_database():
 
 def empty_database():
     DaytimeContact.query.delete()
-    Address.query.delete()
+    db.session.execute("ALTER SEQUENCE daytime_contacts_id_seq RESTART WITH 1")
+    db.session.commit()
 
 
 def test_create_new_daytime_contact_valid(daytime_contact_service):
     param = CreateDaytimeContactDTO(
         name="Juthika Hoque",
+        address="123 Main St",
         contact_information="1234567890",
         dismissal_time="1:00PM",
-        address_id=DEFAULT_DAYTIME_CONTACT["address_id"],
     )
 
     daytime_contact_instance = daytime_contact_service.create_new_daytime_contact(param)
@@ -67,7 +57,7 @@ def test_empty_input_string(daytime_contact_service):
     param = CreateDaytimeContactDTO(
         name="",
         contact_information="1321412424",
-        address_id=DEFAULT_DAYTIME_CONTACT["address_id"],
+        address="123 Main St",
     )
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)
@@ -77,3 +67,13 @@ def test_missing_field(daytime_contact_service):
     param = CreateDaytimeContactDTO(contact_information="1321412424")
     with pytest.raises(Exception):
         daytime_contact_service.create_new_daytime_contact(param)
+
+
+def test_delete_daytime_contact_success(daytime_contact_service):
+    daytime_contact_service.delete_daytime_contact(1)
+    assert DaytimeContact.query.get(1) is None
+
+
+def test_delete_daytime_contact_failure(daytime_contact_service):
+    with pytest.raises(Exception):
+        daytime_contact_service.delete_daytime_contact(999)

@@ -56,6 +56,8 @@ const Intake = (): React.ReactElement => {
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
       case 2:

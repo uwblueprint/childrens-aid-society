@@ -24,11 +24,15 @@ export type CourtDetails = {
 type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
+  nextStep: () => void;
+  prevStep: () => void;
 };
 
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
+  nextStep,
+  prevStep,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {

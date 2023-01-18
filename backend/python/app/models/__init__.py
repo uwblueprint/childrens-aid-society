@@ -8,10 +8,11 @@ migrate = Migrate()
 def init_app(app):
     from .access_type import AccessType
     from .branch import Branch
-    from .caregiver import Caregiver
+    from .caregiver import Caregiver, relationship_to_child_enum
     from .child import Child
-    from .concern import Concern
+    from .child_behavior import ChildBehavior
     from .daytime_contact import DaytimeContact
+    from .familial_concern import FamilialConcern
     from .goal import Goal
     from .intake import Intake
     from .other_permitted_individual import OtherPermittedIndividual

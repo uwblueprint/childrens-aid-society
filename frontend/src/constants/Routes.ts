@@ -1,6 +1,5 @@
 export const HOME_PAGE = "/";
 export const INTAKE_PAGE = "/intake";
-export const INDIVIDUAL_DETAILS_PAGE = "/intake/individual-details";
 export const ADD_CHILD_PAGE = "/intake/add-child";
 export const VISIT_PAGE = "/visit";
 export const LOGIN_PAGE = "/login";

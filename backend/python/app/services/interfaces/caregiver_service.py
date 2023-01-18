@@ -27,3 +27,13 @@ class ICaregiverService(ABC):
         :raises Exception: if get all caregivers fails
         """
         pass
+
+    @abstractmethod
+    def delete_caregiver(self, caregiver_id):
+        """
+        Delete a caregiver
+        :param caregiver_id: the id of the caregiver to be deleted
+        :type caregiver_id: int
+        :raises Exception: if delete caregiver fails
+        """
+        pass

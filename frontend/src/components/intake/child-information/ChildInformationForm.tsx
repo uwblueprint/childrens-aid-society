@@ -9,6 +9,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import { User, File, Calendar } from "react-feather";
 import CustomInput from "../../common/CustomInput";
+import OptionalLabel from "../OptionalLabel";
 
 export type ChildDetails = {
   childName: string;
@@ -74,7 +75,7 @@ const ChildInformationForm = ({
             </Box>
             <Box>
               <FormLabel htmlFor="workerName">
-                CHILDREN SERVICES OR KINSHIP WORKER (OPTIONAL)
+                CHILDREN SERVICES OR KINSHIP WORKER <OptionalLabel/>
               </FormLabel>
               <Field
                 as={CustomInput}
@@ -87,7 +88,7 @@ const ChildInformationForm = ({
           </SimpleGrid>
           <Box paddingTop="10px">
             <FormLabel htmlFor="specialNeeds">
-              SPECIAL NEEDS (OPTIONAL)
+              SPECIAL NEEDS <OptionalLabel/>
             </FormLabel>
             <Field
               as={CustomInput}
@@ -99,7 +100,7 @@ const ChildInformationForm = ({
           </Box>
           <Box paddingTop="10px">
             <FormLabel htmlFor="childBehaviours">
-              CHILD BEHAVIOURS AND CONCERNS (OPTIONAL)
+              CHILD BEHAVIOURS AND CONCERNS <OptionalLabel/>
             </FormLabel>
             <Field
               as={CustomInput}

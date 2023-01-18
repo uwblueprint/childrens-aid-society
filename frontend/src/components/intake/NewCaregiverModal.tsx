@@ -116,8 +116,8 @@ const NewCaregiverModal = ({
                     setRelationship(event.target.value);
                   }}
                 >
-                  <option>Hello</option>
-                  <option>Again</option>
+                  <option>TO DO:</option>
+                  <option>Add proper list options</option>
                 </Select>
               </Box>
             </SimpleGrid>

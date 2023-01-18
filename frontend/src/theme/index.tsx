@@ -9,6 +9,7 @@ import Input from "./inputStyles";
 import Container from "./containerStyles";
 import breakpoints from "./breakpoints";
 import { FormLabel, Select } from "./components";
+import Tag from "./tagStyles";
 
 const customTheme = extendTheme({
   styles: {
@@ -34,6 +35,7 @@ const customTheme = extendTheme({
     Input,
     Select,
     Container,
+    Tag,
   },
 });
 

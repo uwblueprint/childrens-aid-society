@@ -4,7 +4,7 @@ from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
-from ..resources.child_dto import ChildDTO
+from ..resources.child_dto import ChildDTO, CreateChildDTO
 from ..services.implementations.child_service import ChildService
 
 child_service = ChildService(current_app.logger)

@@ -40,9 +40,9 @@ const ReferralForm = ({
 
   return (
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
-      <Form style={{ padding: "2rem 12rem" }}>
-        <FormControl style={{ padding: "30px" }}>
-          <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
+      <Form>
+        <FormControl>
+          <SimpleGrid columns={2} spacing="70px">
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field
@@ -112,7 +112,9 @@ const ReferralForm = ({
             />
           </Box>
         </FormControl>
-        <Button type="submit">Next Button</Button>
+        <Button type="submit" marginTop="30px">
+          Next Button
+        </Button>
       </Form>
     </Formik>
   );

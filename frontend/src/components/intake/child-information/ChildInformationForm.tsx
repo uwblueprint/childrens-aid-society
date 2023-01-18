@@ -75,7 +75,7 @@ const ChildInformationForm = ({
             </Box>
             <Box>
               <FormLabel htmlFor="workerName">
-                CHILDREN SERVICES OR KINSHIP WORKER <OptionalLabel/>
+                CHILDREN SERVICES OR KINSHIP WORKER <OptionalLabel />
               </FormLabel>
               <Field
                 as={CustomInput}
@@ -88,7 +88,7 @@ const ChildInformationForm = ({
           </SimpleGrid>
           <Box paddingTop="10px">
             <FormLabel htmlFor="specialNeeds">
-              SPECIAL NEEDS <OptionalLabel/>
+              SPECIAL NEEDS <OptionalLabel />
             </FormLabel>
             <Field
               as={CustomInput}
@@ -100,7 +100,7 @@ const ChildInformationForm = ({
           </Box>
           <Box paddingTop="10px">
             <FormLabel htmlFor="childBehaviours">
-              CHILD BEHAVIOURS AND CONCERNS <OptionalLabel/>
+              CHILD BEHAVIOURS AND CONCERNS <OptionalLabel />
             </FormLabel>
             <Field
               as={CustomInput}

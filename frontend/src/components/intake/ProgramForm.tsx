@@ -7,7 +7,7 @@ import {
   Flex,
   Icon,
 } from "@chakra-ui/react";
-import { Feather } from "react-feather";
+import { UserPlus } from "react-feather";
 import { Form, Formik } from "formik";
 
 export type ProgramDetails = {
@@ -41,7 +41,7 @@ const ProgramForm = ({
               <Text align="left" flex="1" textStyle="title-medium">
                 Other permitted individuals
               </Text>
-              <Button leftIcon={<Icon as={Feather} />} variant="secondary">
+              <Button leftIcon={<Icon as={UserPlus} />} variant="secondary">
                 Add
               </Button>
             </Flex>

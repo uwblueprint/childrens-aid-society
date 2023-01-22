@@ -26,6 +26,8 @@ type ProgramFormProps = {
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
+  nextStep,
+  prevStep
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);

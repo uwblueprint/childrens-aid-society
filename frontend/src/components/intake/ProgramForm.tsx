@@ -6,14 +6,27 @@ import {
   Icon,
   SimpleGrid,
   Box,
-  FormLabel
+  FormLabel,
 } from "@chakra-ui/react";
-import { Truck, Clipboard, Calendar, CheckSquare, TrendingUp, UserPlus} from "react-feather";
+import {
+  Truck,
+  Clipboard,
+  Calendar,
+  CheckSquare,
+  TrendingUp,
+  UserPlus,
+} from "react-feather";
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
+import OptionalLabel from "./OptionalLabel";
 
 export type ProgramDetails = {
-  test: string;
+  transportationRequirements: string;
+  schedulingRequirements: string;
+  suggestedStartDate: string;
+  shortTermGoals: string;
+  longTermGoals: string;
+  familialConcerns: string;
 };
 
 type ProgramFormProps = {
@@ -27,7 +40,7 @@ const ProgramForm = ({
   programDetails,
   setProgramDetails,
   nextStep,
-  prevStep
+  prevStep,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
@@ -37,69 +50,84 @@ const ProgramForm = ({
     <Formik initialValues={programDetails} onSubmit={onSubmit}>
       {({ handleSubmit }) => (
         <Form>
-          <Text textAlign="left" fontSize="2xl">Logistic Needs</Text>
+          <Text textAlign="left" textStyle="title-medium">
+            Logistic Needs
+          </Text>
           <FormControl>
-            <SimpleGrid columns={3} spacing ="30px">
-                <Box>
-                  <FormLabel htmlFor="transportationRequirements">TRANSPORTATION REQUIREMENTS</FormLabel>
-                  <Field
+            <SimpleGrid columns={3} spacing="30px">
+              <Box>
+                <FormLabel htmlFor="transportationRequirements">
+                  TRANSPORTATION REQUIREMENTS
+                </FormLabel>
+                <Field
                   as={CustomInput}
+                  // TODO change to list selector component
                   id="transportationRequirements"
                   name="transportationRequirements"
                   type="string"
                   placeholder="Select an option..."
                   icon={<Icon as={Truck} />}
-                  />
-                </Box>
-                <Box>
-                  <FormLabel htmlFor="schedulingRequirements">SCHEDULING REQUIREMENTS</FormLabel>
-                    <Field
-                      as={CustomInput}
-                      name="schedulingRequirements"
-                      id="transportationRequirements"
-                      type="string"
-                      placeholder="Select a start date..."
-                      icon={<Icon as={Clipboard} />}
-                    />
-                </Box>
-                <Box>
-                  <FormLabel htmlFor="suggestedStartDate">SUGGESTED START DATE</FormLabel>
-                    <Field
-                      as={CustomInput}
-                      name="suggestedStartDate"
-                      id="suggestedStartDate"
-                      type="string"
-                      placeholder="Select a start date..."
-                      icon={<Icon as={Calendar} />}
-                    />
-                </Box>
+                />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="schedulingRequirements">
+                  SCHEDULING REQUIREMENTS
+                </FormLabel>
+                <Field
+                  as={CustomInput}
+                  // TODO change to list selector component
+                  name="schedulingRequirements"
+                  id="schedulingRequirements"
+                  type="string"
+                  placeholder="Select a start date..."
+                  icon={<Icon as={Clipboard} />}
+                />
+              </Box>
+              <Box>
+                <FormLabel htmlFor="suggestedStartDate">
+                  SUGGESTED START DATE
+                </FormLabel>
+                <Field
+                  as={CustomInput}
+                  // TODO change to list selector component
+                  name="suggestedStartDate"
+                  id="suggestedStartDate"
+                  type="string"
+                  placeholder="Select an option..."
+                  icon={<Icon as={Calendar} />}
+                />
+              </Box>
             </SimpleGrid>
-            <Text textAlign="left" paddingTop="35px" fontSize="2xl">Program goals</Text>
+            <Text textAlign="left" paddingTop="35px" textStyle="title-medium">
+              Program goals
+            </Text>
             <SimpleGrid columns={2} spacing="30px">
               <Box>
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
                 <Field
-                    as={CustomInput}
-                    id="shortTermGoals"
-                    name="shortTermGoals"
-                    placeholder="Select goals..."
-                    icon={<Icon as={CheckSquare} />}
+                  as={CustomInput}
+                  // TODO change to list selector component
+                  id="shortTermGoals"
+                  name="shortTermGoals"
+                  placeholder="Select goals..."
+                  icon={<Icon as={CheckSquare} />}
                 />
               </Box>
               <Box>
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <Field
-                    as={CustomInput}
-                    id="longTermGoals"
-                    name="longTermGoals"
-                    placeholder="Select goals..."
-                    icon={<Icon as={TrendingUp} />}
+                  as={CustomInput}
+                  id="longTermGoals"
+                  name="longTermGoals"
+                  placeholder="Select goals..."
+                  icon={<Icon as={TrendingUp} />}
                 />
               </Box>
-
             </SimpleGrid>
             <Box paddingTop="10px">
-              <FormLabel htmlFor="familialConcerns">FAMILIAL CONCERNS (OPTIONAL)</FormLabel>
+              <FormLabel htmlFor="familialConcerns">
+                FAMILIAL CONCERNS <OptionalLabel />
+              </FormLabel>
               <Field
                 as={CustomInput}
                 id="familialConcerns"
@@ -109,16 +137,35 @@ const ProgramForm = ({
             </Box>
           </FormControl>
           <Box display="flex" justifyContent="space-between" paddingTop="35px">
-            <Text alignSelf="start" fontSize="2xl">
+            <Text alignSelf="start" textStyle="title-medium">
               Other permitted individuals
             </Text>
-            <Button alignSelf="end" leftIcon={<Icon as={UserPlus}/>} variant="outline" colorScheme="Facebook" mr={2}>
+            <Button
+              alignSelf="end"
+              leftIcon={<Icon as={UserPlus} />}
+              variant="secondary"
+              mr={2}
+            >
               Add
             </Button>
           </Box>
-
+          <Button
+            onClick={() => {
+              handleSubmit();
+              prevStep();
+            }}
+          >
+            Previous Button
+          </Button>
+          <Button
+            onClick={() => {
+              handleSubmit();
+              nextStep();
+            }}
+          >
+            Next Button
+          </Button>
         </Form>
-
       )}
     </Formik>
   );

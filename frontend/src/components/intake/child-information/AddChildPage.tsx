@@ -25,6 +25,7 @@ const AddChild = (): React.ReactElement => {
     !childDetails.childName || 
     !childDetails.cpinFileNumber ||
     !childDetails.dateOfBirth 
+    // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
     console.log(childDetails)

@@ -21,7 +21,7 @@ const AddChild = (): React.ReactElement => {
     childBehaviours: "",
   });
 
-  const requiredInfomationMissing : boolean = 
+  const requiredInfomationMissing : boolean =
     !childDetails.childName || 
     !childDetails.cpinFileNumber ||
     !childDetails.dateOfBirth 
@@ -82,7 +82,12 @@ const AddChild = (): React.ReactElement => {
       </VStack>
       {renderChildForm()}
 
-      <Box bg="white" height="87px" display="flex" justifyContent="flex-end" alignItems="center"
+      <Box 
+        bg="white"
+        height="87px"
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
         shadow="0px -4px 12px rgba(226, 225, 236, 0.4), 0px -8px 24px rgba(226, 225, 236, 0.25)"
       >
         <Button

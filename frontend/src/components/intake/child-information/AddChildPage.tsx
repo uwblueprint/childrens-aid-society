@@ -1,4 +1,4 @@
-import { Button, Icon, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Icon, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ChevronLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,7 @@ import SchoolDaycareForm from "./SchoolDaycareForm";
 const AddChild = (): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
   const history = useHistory();
+
   const [childDetails, setChildDetails] = useState<ChildDetails>({
     childName: "",
     cpinFileNumber: "",
@@ -19,6 +20,16 @@ const AddChild = (): React.ReactElement => {
     specialNeeds: "",
     childBehaviours: "",
   });
+
+  const requiredInfomationMissing : boolean = 
+    !childDetails.childName || 
+    !childDetails.cpinFileNumber ||
+    !childDetails.dateOfBirth 
+
+  const childFormSubmitHandler = () => {
+    console.log(childDetails)
+    // TODO: Do something with the information
+  }
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -69,7 +80,19 @@ const AddChild = (): React.ReactElement => {
         />
       </VStack>
       {renderChildForm()}
-      {/* TODO: Add footer component */}
+
+      <Box bg="white" height="87px" display="flex" justifyContent="flex-end" alignItems="center"
+        shadow="0px -4px 12px rgba(226, 225, 236, 0.4), 0px -8px 24px rgba(226, 225, 236, 0.25)"
+      >
+        <Button
+          type="submit"
+          mr="96px"
+          disabled={requiredInfomationMissing}
+          onClick={childFormSubmitHandler}
+        >
+          Save child information
+        </Button>
+      </Box>
     </>
   );
 };

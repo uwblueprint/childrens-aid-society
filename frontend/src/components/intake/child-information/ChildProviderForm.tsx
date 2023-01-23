@@ -3,7 +3,7 @@ import React from "react";
 import { UserPlus } from "react-feather";
 import ExistingProvider from "../ExistingProviderModal";
 import NewProviderModal from "../NewProviderModal";
-import { DoublePromptBox } from "../PromptBox";
+import PromptBox from "../PromptBox";
 
 const ChildProviderForm = (): React.ReactElement => {
   const {
@@ -19,15 +19,14 @@ const ChildProviderForm = (): React.ReactElement => {
   return (
     <>
       <VStack padding="100px">
-        <DoublePromptBox
+        <PromptBox
           headerText="Providers"
           descriptionText="At least one provider must be indicated for each child"
-          buttonText1="Add new provider"
-          buttonIcon1={<Icon as={UserPlus} w="16px" h="16px" />}
-          onButtonClick1={onOpenNewProviders}
-          buttonText2="Select providers"
-          buttonIcon2={<Icon as={UserPlus} w="0px" margin="0px" />}
-          onButtonClick2={onOpenExistingProviders}
+          buttonText="Add new provider"
+          buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+          onButtonClick={onOpenNewProviders}
+          secondaryButtonText="Select providers"
+          secondaryOnButtonClick={onOpenExistingProviders}
         />
         <Box>
           <ExistingProvider

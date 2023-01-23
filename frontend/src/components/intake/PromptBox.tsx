@@ -5,8 +5,11 @@ export type PromptBoxProps = {
   headerText: string;
   descriptionText: string;
   buttonText: string;
-  buttonIcon: ReactElement;
+  buttonIcon?: ReactElement;
   onButtonClick: () => void;
+  secondaryButtonText?: string;
+  secondaryButtonIcon?: ReactElement;
+  secondaryOnButtonClick?: () => void;
 };
 
 const PromptBox = ({
@@ -15,60 +18,10 @@ const PromptBox = ({
   buttonText,
   buttonIcon,
   onButtonClick,
+  secondaryButtonText,
+  secondaryButtonIcon,
+  secondaryOnButtonClick,
 }: PromptBoxProps): React.ReactElement => {
-  return (
-    <VStack
-      bg="gray.50"
-      borderRadius="14px"
-      borderWidth="1px"
-      borderColor="gray.100"
-      align="flex-end"
-      w="full"
-      maxW={816}
-      padding="32px"
-      spacing="16px"
-    >
-      <VStack align="flex-start" w="full" spacing="8px">
-        <Text color="b&w.black" textStyle="title-large">
-          {headerText}
-        </Text>
-        <Text color="gray.600" textStyle="body-large">
-          {descriptionText}
-        </Text>
-      </VStack>
-      <Button
-        variant="secondary"
-        colorScheme="gray.600"
-        leftIcon={buttonIcon}
-        onClick={onButtonClick}
-      >
-        {buttonText}
-      </Button>
-    </VStack>
-  );
-};
-
-export type DoublePromptBoxProps = {
-  headerText: string;
-  descriptionText: string;
-  buttonText1: string;
-  buttonIcon1: ReactElement;
-  onButtonClick1: () => void;
-  buttonText2: string;
-  buttonIcon2: ReactElement;
-  onButtonClick2: () => void;
-};
-
-export const DoublePromptBox = ({
-  headerText,
-  descriptionText,
-  buttonText1,
-  buttonIcon1,
-  onButtonClick1,
-  buttonText2,
-  buttonIcon2,
-  onButtonClick2,
-}: DoublePromptBoxProps): React.ReactElement => {
   return (
     <VStack
       bg="gray.50"
@@ -93,18 +46,18 @@ export const DoublePromptBox = ({
         <Button
           variant="tertiary"
           colorScheme="gray.600"
-          leftIcon={buttonIcon1}
-          onClick={onButtonClick1}
+          leftIcon={buttonIcon}
+          onClick={onButtonClick}
         >
-          {buttonText1}
+          {buttonText}
         </Button>
         <Button
           variant="secondary"
           colorScheme="gray.600"
-          leftIcon={buttonIcon2}
-          onClick={onButtonClick2}
+          leftIcon={secondaryButtonIcon}
+          onClick={secondaryOnButtonClick}
         >
-          {buttonText2}
+          {secondaryButtonText}
         </Button>
       </HStack>
     </VStack>

@@ -51,14 +51,16 @@ const PromptBox = ({
         >
           {buttonText}
         </Button>
-        <Button
-          variant="secondary"
-          colorScheme="gray.600"
-          leftIcon={secondaryButtonIcon}
-          onClick={secondaryOnButtonClick}
-        >
-          {secondaryButtonText}
-        </Button>
+        {secondaryButtonText && (
+          <Button
+            variant="secondary"
+            colorScheme="gray.600"
+            leftIcon={secondaryButtonIcon}
+            onClick={secondaryOnButtonClick}
+          >
+            {secondaryButtonText}
+          </Button>
+        )}
       </HStack>
     </VStack>
   );

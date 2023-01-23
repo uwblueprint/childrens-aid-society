@@ -1,7 +1,9 @@
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure, Icon, VStack } from "@chakra-ui/react";
 import React from "react";
+import { UserPlus } from "react-feather";
 import ExistingProvider from "../ExistingProviderModal";
 import NewProviderModal from "../NewProviderModal";
+import PromptBox from "../PromptBox";
 
 const ChildProviderForm = (): React.ReactElement => {
   const {
@@ -15,18 +17,29 @@ const ChildProviderForm = (): React.ReactElement => {
     onClose: onCloseNewProviders,
   } = useDisclosure();
   return (
-    <Box>
-      <Button onClick={onOpenExistingProviders}>Select providers</Button>
-      <ExistingProvider
-        isOpen={isOpenExistingProviders}
-        onClose={onCloseExistingProviders}
-      />
-      <Button onClick={onOpenNewProviders}>New providers</Button>
-      <NewProviderModal
-        isOpen={isOpenNewProviders}
-        onClose={onCloseNewProviders}
-      />
-    </Box>
+    <>
+      <VStack padding="100px">
+        <PromptBox
+          headerText="Providers"
+          descriptionText="At least one provider must be indicated for each child"
+          buttonText="Add new provider"
+          buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+          onButtonClick={onOpenNewProviders}
+          secondaryButtonText="Select providers"
+          secondaryOnButtonClick={onOpenExistingProviders}
+        />
+        <Box>
+          <ExistingProvider
+            isOpen={isOpenExistingProviders}
+            onClose={onCloseExistingProviders}
+          />
+          <NewProviderModal
+            isOpen={isOpenNewProviders}
+            onClose={onCloseNewProviders}
+          />
+        </Box>
+      </VStack>
+    </>
   );
 };
 

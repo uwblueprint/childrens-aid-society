@@ -1,12 +1,15 @@
 import React, { ReactElement } from "react";
-import { Button, VStack, Text } from "@chakra-ui/react";
+import { Button, VStack, Text, HStack } from "@chakra-ui/react";
 
 export type PromptBoxProps = {
   headerText: string;
   descriptionText: string;
   buttonText: string;
-  buttonIcon: ReactElement;
+  buttonIcon?: ReactElement;
   onButtonClick: () => void;
+  secondaryButtonText?: string;
+  secondaryButtonIcon?: ReactElement;
+  secondaryOnButtonClick?: () => void;
 };
 
 const PromptBox = ({
@@ -15,6 +18,9 @@ const PromptBox = ({
   buttonText,
   buttonIcon,
   onButtonClick,
+  secondaryButtonText,
+  secondaryButtonIcon,
+  secondaryOnButtonClick,
 }: PromptBoxProps): React.ReactElement => {
   return (
     <VStack
@@ -36,14 +42,26 @@ const PromptBox = ({
           {descriptionText}
         </Text>
       </VStack>
-      <Button
-        variant="secondary"
-        colorScheme="gray.600"
-        leftIcon={buttonIcon}
-        onClick={onButtonClick}
-      >
-        {buttonText}
-      </Button>
+      <HStack>
+        <Button
+          variant="tertiary"
+          colorScheme="gray.600"
+          leftIcon={buttonIcon}
+          onClick={onButtonClick}
+        >
+          {buttonText}
+        </Button>
+        {secondaryButtonText && (
+          <Button
+            variant="secondary"
+            colorScheme="gray.600"
+            leftIcon={secondaryButtonIcon}
+            onClick={secondaryOnButtonClick}
+          >
+            {secondaryButtonText}
+          </Button>
+        )}
+      </HStack>
     </VStack>
   );
 };

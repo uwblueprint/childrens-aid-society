@@ -61,7 +61,6 @@ const ProgramForm = ({
                 </FormLabel>
                 <Field
                   as={CustomInput}
-                  // TODO change to list selector component
                   id="transportationRequirements"
                   name="transportationRequirements"
                   type="string"
@@ -79,7 +78,7 @@ const ProgramForm = ({
                   name="schedulingRequirements"
                   id="schedulingRequirements"
                   type="string"
-                  placeholder="Select a start date..."
+                  placeholder="Select an option..."
                   icon={<Icon as={Clipboard} />}
                 />
               </Box>
@@ -89,11 +88,10 @@ const ProgramForm = ({
                 </FormLabel>
                 <Field
                   as={CustomInput}
-                  // TODO change to list selector component
                   name="suggestedStartDate"
                   id="suggestedStartDate"
                   type="string"
-                  placeholder="Select an option..."
+                  placeholder="DD/MM/YYYY"
                   icon={<Icon as={Calendar} />}
                 />
               </Box>
@@ -117,6 +115,7 @@ const ProgramForm = ({
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <Field
                   as={CustomInput}
+                  // TODO change to list selector component
                   id="longTermGoals"
                   name="longTermGoals"
                   placeholder="Select goals..."
@@ -130,6 +129,7 @@ const ProgramForm = ({
               </FormLabel>
               <Field
                 as={CustomInput}
+                // TODO change to multi option list selector component
                 id="familialConcerns"
                 name="familialConcerns"
                 placeholder="Select familial concerns..."

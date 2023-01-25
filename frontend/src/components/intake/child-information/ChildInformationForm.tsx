@@ -50,8 +50,9 @@ const ChildInformationForm = ({
                 onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setChildDetails({
                     ...childDetails,
-                    childName: e.target.value
-                  })}
+                    childName: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -66,8 +67,9 @@ const ChildInformationForm = ({
                 onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setChildDetails({
                     ...childDetails,
-                    dateOfBirth: e.target.value
-                  })}
+                    dateOfBirth: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -84,8 +86,9 @@ const ChildInformationForm = ({
                 onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setChildDetails({
                     ...childDetails,
-                    cpinFileNumber: e.target.value
-                  })}
+                    cpinFileNumber: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -101,8 +104,9 @@ const ChildInformationForm = ({
                 onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setChildDetails({
                     ...childDetails,
-                    workerName: e.target.value
-                  })}
+                    workerName: e.target.value,
+                  })
+                }
               />
             </Box>
           </SimpleGrid>
@@ -119,8 +123,9 @@ const ChildInformationForm = ({
               onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setChildDetails({
                   ...childDetails,
-                  specialNeeds: e.target.value
-                })}
+                  specialNeeds: e.target.value,
+                })
+              }
             />
           </Box>
           <Box paddingTop="10px">
@@ -136,8 +141,9 @@ const ChildInformationForm = ({
               onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setChildDetails({
                   ...childDetails,
-                  childBehaviours: e.target.value
-                })}
+                  childBehaviours: e.target.value,
+                })
+              }
             />
           </Box>
         </FormControl>

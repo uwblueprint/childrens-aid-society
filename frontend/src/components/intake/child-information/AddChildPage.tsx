@@ -21,16 +21,16 @@ const AddChild = (): React.ReactElement => {
     childBehaviours: "",
   });
 
-  const requiredInfomationMissing : boolean =
-    !childDetails.childName || 
+  const requiredInfomationMissing: boolean =
+    !childDetails.childName ||
     !childDetails.cpinFileNumber ||
-    !childDetails.dateOfBirth 
-    // TODO: Check other required fields
+    !childDetails.dateOfBirth;
+
+  // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    console.log(childDetails)
     // TODO: Do something with the information
-  }
+  };
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -82,7 +82,7 @@ const AddChild = (): React.ReactElement => {
       </VStack>
       {renderChildForm()}
 
-      <Box 
+      <Box
         bg="white"
         height="87px"
         display="flex"

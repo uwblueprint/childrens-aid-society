@@ -16,6 +16,7 @@ const ChildProviderForm = (): React.ReactElement => {
     isOpen: isOpenNewProviders,
     onClose: onCloseNewProviders,
   } = useDisclosure();
+
   return (
     <>
       <VStack padding="100px">

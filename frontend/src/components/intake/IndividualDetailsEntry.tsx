@@ -2,7 +2,7 @@ import React from "react";
 import { Button, VStack, Icon, useDisclosure } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
-import PromptBox from "./PromptBox";
+import PromptBox, { IndividualDetailsOverview } from "./PromptBox";
 import { ADD_CHILD_PAGE } from "../../constants/Routes";
 import NewCaregiverModal from "./NewCaregiverModal";
 
@@ -23,6 +23,10 @@ const IndividualDetailsEntry = ({
     onClose: onCloseAddCaregivers,
   } = useDisclosure();
 
+  const testCaregivers: [IndividualDetailsOverview] = [
+    { firstName: "First", lastName: "Last", fileNumber: "2347892349" },
+  ];
+
   return (
     <React.Fragment key="IndividualDetailsEntry">
       <VStack padding="32px" spacing="24px">
@@ -41,6 +45,7 @@ const IndividualDetailsEntry = ({
           buttonText="Add caregiver"
           buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
           onButtonClick={onOpenAddCaregivers}
+          individualDetails={testCaregivers}
         />
         <NewCaregiverModal
           isOpen={isOpenAddCaregivers}

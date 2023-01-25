@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { ArrowRight } from "react-feather";
+import { ArrowRight, Trash } from "react-feather";
 
 export type IndividualDetailsOverview = {
   firstName: string;
@@ -55,9 +55,21 @@ const PromptBox = ({
             <VStack key={i} w="full">
               <HStack w="full">
                 <VStack align="flex-start" w="full" spacing="0px">
-                  <Text textStyle="title-small">
-                    {indiv.firstName} {indiv.lastName}
-                  </Text>
+                  <HStack>
+                    <Text textStyle="title-small">
+                      {indiv.firstName} {indiv.lastName}
+                    </Text>
+                    <Icon
+                      onClick={() => {
+                        history.goBack();
+                        // TODO: deletes details, history.goBack() is just a placeholder, replace when ready
+                      }}
+                      as={Trash}
+                      h="16px"
+                      color="grey.600"
+                      cursor="pointer"
+                    />
+                  </HStack>
                   <Text color="gray.600" textStyle="body-medium">
                     {indiv.fileNumber}
                   </Text>
@@ -68,7 +80,7 @@ const PromptBox = ({
                   variant="link"
                   onClick={() => {
                     history.goBack();
-                    // TODO
+                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >

@@ -28,7 +28,12 @@ const Intake = (): React.ReactElement => {
     orderReferral: null,
   });
   const [programDetails, setProgramDetails] = useState<ProgramDetails>({
-    test: "",
+    transportationRequirements: "",
+    schedulingRequirements: "",
+    suggestedStartDate: "",
+    shortTermGoals: "",
+    longTermGoals: "",
+    familialConcerns: "",
   });
 
   const nextStep = () => setStep(step + 1);

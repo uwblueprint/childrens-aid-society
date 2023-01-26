@@ -77,7 +77,7 @@ const PromptBox = ({
                 <Button
                   color="blue.300"
                   textStyle="button-small"
-                  variant="link"
+                  variant="tertiary"
                   onClick={() => {
                     history.goBack();
                     // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready

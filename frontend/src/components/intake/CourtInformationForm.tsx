@@ -24,15 +24,11 @@ export type CourtDetails = {
 type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
-  nextStep: () => void;
-  prevStep: () => void;
 };
 
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
-  nextStep,
-  prevStep,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -54,27 +50,24 @@ const CourtInformationForm = ({
 
   return (
     <Formik initialValues={courtDetails} onSubmit={onSubmit}>
-      {({ handleSubmit, setFieldValue, values }) => {
-        return (
-          <Form>
-            <Box style={{ paddingBottom: "16px" }}>
-              <FormLabel pt="15px" htmlFor="currentCourtStatus">
-                COURT STATUS
-              </FormLabel>
-              <AutocompleteField
-                id="currentCourtStatus"
-                name="currentCourtStatus"
-                placeholder="Enter or select a court status"
-                hints={[
-                  "Interim care",
-                  "Final order for Society Care",
-                  "Extended Society Care",
-                  "Supervision order",
-                  "Kin service placement",
-                  "Living with Biological family",
-                ]}
-              />
-            </Box>
+      {({ setFieldValue }) => (
+        <Form style={{ padding: "0px 100px 30px 100px" }}>
+          <Heading textStyle="heading">Court Details</Heading>
+          <FormControl style={{ padding: "30px" }}>
+            <FormLabel pt="15px" htmlFor="currentCourtStatus">
+              Current Court Status
+            </FormLabel>
+            <Field
+              as={Select}
+              id="currentCourtStatus"
+              name="currentCourtStatus"
+              placeholder="Select Status..."
+            >
+              <option>United Arab Emirates</option>
+              <option>Nigeria</option>
+            </Field>
+          </FormControl>
+          <FormControl>
             {/* TODO: store the uploaded file and save in backend */}
             <Input
               display="none"

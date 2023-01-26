@@ -18,7 +18,7 @@ export type PromptBoxProps = {
   secondaryButtonText?: string;
   secondaryButtonIcon?: ReactElement;
   secondaryOnButtonClick?: () => void;
-  individualDetails?: [IndividualDetailsOverview];
+  individualDetails?: IndividualDetailsOverview[];
 };
 
 const PromptBox = ({
@@ -97,17 +97,9 @@ const PromptBox = ({
         )}
       </VStack>
       <HStack>
-        <Button
-          variant="tertiary"
-          colorScheme="gray.600"
-          leftIcon={buttonIcon}
-          onClick={onButtonClick}
-        >
-          {buttonText}
-        </Button>
         {secondaryButtonText && (
           <Button
-            variant="secondary"
+            variant="tertiary"
             colorScheme="gray.600"
             leftIcon={secondaryButtonIcon}
             onClick={secondaryOnButtonClick}
@@ -115,6 +107,14 @@ const PromptBox = ({
             {secondaryButtonText}
           </Button>
         )}
+        <Button
+          variant="secondary"
+          colorScheme="gray.600"
+          leftIcon={buttonIcon}
+          onClick={onButtonClick}
+        >
+          {buttonText}
+        </Button>
       </HStack>
     </VStack>
   );

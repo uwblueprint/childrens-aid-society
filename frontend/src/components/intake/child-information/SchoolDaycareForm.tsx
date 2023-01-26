@@ -1,4 +1,10 @@
-import { Box, FormControl, FormLabel, Icon, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Icon,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
@@ -10,12 +16,12 @@ export type SchoolDetails = {
   schoolPhoneNo: string;
   schoolAddress: string;
   dismissalTime: string;
-}
+};
 
 type SchoolDaycareFormProps = {
   schoolDetails: SchoolDetails;
   setSchoolDetails: React.Dispatch<React.SetStateAction<SchoolDetails>>;
-}
+};
 
 const SchoolDaycareForm = ({
   schoolDetails,
@@ -43,7 +49,8 @@ const SchoolDaycareForm = ({
             </Box>
             <Box>
               <FormLabel htmlFor="schoolPhoneNo">
-                SCHOOL/DAYCARE CONTACT INFORMATION</FormLabel>
+                SCHOOL/DAYCARE CONTACT INFORMATION
+              </FormLabel>
               <Field
                 as={CustomInput}
                 name="schoolPhoneNo"

@@ -1,5 +1,5 @@
 import React from "react";
-import { VStack, Icon } from "@chakra-ui/react";
+import { VStack, Icon, useDisclosure } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";

@@ -22,22 +22,18 @@ enum IntakeSteps {
 const intakeStepLayout = new Map<IntakeSteps, CurStepLayout>();
 intakeStepLayout.set(IntakeSteps.CASE_REFERAL, {
   nextBtnTxt: "Next Section",
-  backBtnTxt: "Back",
   showClearPageBtn: true,
 });
 intakeStepLayout.set(IntakeSteps.COURT_INFORMATION, {
   nextBtnTxt: "Next Section",
-  backBtnTxt: "Back",
   showClearPageBtn: true,
 });
 intakeStepLayout.set(IntakeSteps.INDIVIDUAL_DETAILS, {
   nextBtnTxt: "Next Section",
-  backBtnTxt: "Back",
   showClearPageBtn: true,
 });
 intakeStepLayout.set(IntakeSteps.PROGRAM_DETAILS, {
   nextBtnTxt: "Review case details",
-  backBtnTxt: "Back",
   showClearPageBtn: false,
 });
 
@@ -69,8 +65,6 @@ const Intake = (): React.ReactElement => {
 
   const nextStep = () => setStep(step + 1);
 
-  const prevStep = () => setStep(step - 1);
-
   const renderDetailsForm = () => {
     switch (step) {
       case 0:
@@ -86,14 +80,10 @@ const Intake = (): React.ReactElement => {
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
-            nextStep={nextStep}
-            prevStep={prevStep}
           />
         );
       case 2:
-        return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
-        );
+        return <IndividualDetailsEntry />;
       case 3:
         return (
           <>
@@ -101,8 +91,6 @@ const Intake = (): React.ReactElement => {
               <ProgramForm
                 programDetails={programDetails}
                 setProgramDetails={setProgramDetails}
-                prevStep={prevStep}
-                nextStep={nextStep}
               />
             </Box>
           </>
@@ -111,13 +99,12 @@ const Intake = (): React.ReactElement => {
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm prevStep={prevStep} />
+              <ReviewForm />
             </Box>
           </>
         );
     }
   };
-
   return (
     <>
       {step === 4 ? (
@@ -132,15 +119,18 @@ const Intake = (): React.ReactElement => {
         />
       )}
 
-      <Box textAlign="center" padding="30px 0 40px 0"
-      pb={{ sm: "170px", md: "128px", lg: "184px" }}>
+      <Box
+        textAlign="center"
+        padding="30px 0 40px 0"
+        pb={{ sm: "170px", md: "128px", lg: "184px" }}
+      >
         {step !== 4 ? (
           <Stepper
             pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
+              { name: "Case referral" },
+              { name: "Court information" },
+              { name: "Individual details" },
+              { name: "Program details" },
             ]}
             setStep={setStep}
             activePage={step}
@@ -158,7 +148,6 @@ const Intake = (): React.ReactElement => {
         isStepComplete={() => true}
         registrationLoading={false}
         nextStepCallBack={nextStep}
-        prevStepCallBack={prevStep}
       />
     </>
   );

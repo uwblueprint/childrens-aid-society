@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -16,9 +16,10 @@ import {
   TrendingUp,
   UserPlus,
 } from "react-feather";
-import { Field, Form, Formik } from "formik";
+import { Field, Form,  FormikProvider, useFormik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -32,23 +33,29 @@ export type ProgramDetails = {
 type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
-  nextStep: () => void;
-  prevStep: () => void;
 };
 
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
-  nextStep,
-  prevStep,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
   };
 
+  const formik = useFormik({
+    initialValues: programDetails,
+    onSubmit: (values: ProgramDetails) => {
+      onSubmit(values);
+    },
+  });
+  useEffect(() => {
+    setProgramDetails(formik.values);
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <Formik initialValues={programDetails} onSubmit={onSubmit}>
-      {({ handleSubmit }) => (
+<FormikProvider value={formik}>
         <Form>
           <Text textAlign="left" textStyle="title-medium">
             Logistic Needs
@@ -140,34 +147,9 @@ const ProgramForm = ({
             <Text alignSelf="start" textStyle="title-medium">
               Other permitted individuals
             </Text>
-            <Button
-              alignSelf="end"
-              leftIcon={<Icon as={UserPlus} />}
-              variant="secondary"
-              mr={2}
-            >
-              Add
-            </Button>
           </Box>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              nextStep();
-            }}
-          >
-            Next Button
-          </Button>
         </Form>
-      )}
-    </Formik>
+    </FormikProvider>
   );
 };
 

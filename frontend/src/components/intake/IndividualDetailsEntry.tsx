@@ -1,20 +1,12 @@
 import React from "react";
-import { Button, VStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
 import { ADD_CHILD_PAGE } from "../../constants/Routes";
 import NewCaregiverModal from "./NewCaregiverModal";
 
-export type IndividualDetailsEntryProp = {
-  nextStep: () => void;
-  prevStep: () => void;
-};
-
-const IndividualDetailsEntry = ({
-  nextStep,
-  prevStep,
-}: IndividualDetailsEntryProp): React.ReactElement => {
+const IndividualDetailsEntry = (): React.ReactElement => {
   const history = useHistory();
 
   const {
@@ -47,20 +39,6 @@ const IndividualDetailsEntry = ({
           onClose={onCloseAddCaregivers}
         />
       </VStack>
-      <Button
-        onClick={() => {
-          prevStep();
-        }}
-      >
-        Previous Button
-      </Button>
-      <Button
-        onClick={() => {
-          nextStep();
-        }}
-      >
-        Next Button
-      </Button>
     </React.Fragment>
   );
 };

@@ -8,11 +8,41 @@ import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import Stepper from "../intake/Stepper";
+import IntakeFooter, { CurStepLayout } from "../intake/IntakeFormFooter";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
-import IntakeFooter from "../intake/IntakeFormFooter";
+
+enum IntakeSteps {
+  CASE_REFERAL,
+  COURT_INFORMATION,
+  INDIVIDUAL_DETAILS,
+  PROGRAM_DETAILS,
+  REVIEW_CASE_DETAILS,
+}
+
+const intakeStepLayout = new Map<IntakeSteps, CurStepLayout>();
+intakeStepLayout.set(IntakeSteps.CASE_REFERAL, {
+  nextBtnTxt: "Next Section",
+  backBtnTxt: "Back",
+  showClearPageBtn: true,
+});
+intakeStepLayout.set(IntakeSteps.COURT_INFORMATION, {
+  nextBtnTxt: "Next Section",
+  backBtnTxt: "Back",
+  showClearPageBtn: true,
+});
+intakeStepLayout.set(IntakeSteps.INDIVIDUAL_DETAILS, {
+  nextBtnTxt: "Next Section",
+  backBtnTxt: "Back",
+  showClearPageBtn: true,
+});
+intakeStepLayout.set(IntakeSteps.PROGRAM_DETAILS, {
+  nextBtnTxt: "Review case details",
+  backBtnTxt: "Back",
+  showClearPageBtn: false,
+});
 
 const Intake = (): React.ReactElement => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<IntakeSteps>(IntakeSteps.CASE_REFERAL);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -102,7 +132,8 @@ const Intake = (): React.ReactElement => {
         />
       )}
 
-      <Box textAlign="center" padding="30px 0 40px 0">
+      <Box textAlign="center" padding="30px 0 40px 0"
+      pb={{ sm: "170px", md: "128px", lg: "184px" }}>
         {step !== 4 ? (
           <Stepper
             pages={[
@@ -121,7 +152,14 @@ const Intake = (): React.ReactElement => {
           {renderDetailsForm()}
         </Container>
       </Box>
-      <IntakeFooter nextStep={nextStep} />
+      <IntakeFooter
+        currentStep={step}
+        curStepLayout={intakeStepLayout}
+        isStepComplete={() => true}
+        registrationLoading={false}
+        nextStepCallBack={nextStep}
+        prevStepCallBack={prevStep}
+      />
     </>
   );
 };

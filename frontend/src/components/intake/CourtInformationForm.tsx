@@ -160,11 +160,12 @@ const CourtInformationForm = ({
               }}
               marginLeft="10px"
             >
-              Next Button
-            </Button>
-          </Form>
-        );
-      }}
+              <option>United Arab Emirates</option>
+              <option>Nigeria</option>
+            </Field>
+          </FormControl>
+        </Form>
+      )}
     </Formik>
   );
 };

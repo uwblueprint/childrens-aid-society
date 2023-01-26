@@ -121,7 +121,7 @@ const Intake = (): React.ReactElement => {
           {renderDetailsForm()}
         </Container>
       </Box>
-      <IntakeFooter />
+      <IntakeFooter nextStep={nextStep} />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, VStack, Icon } from "@chakra-ui/react";
+import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
@@ -8,15 +8,7 @@ import {
   INDIVIDUAL_DETAILS_PAGE,
 } from "../../constants/Routes";
 
-export type IndividualDetailsEntryProp = {
-  nextStep: () => void;
-  prevStep: () => void;
-};
-
-const IndividualDetailsEntry = ({
-  nextStep,
-  prevStep,
-}: IndividualDetailsEntryProp): React.ReactElement => {
+const IndividualDetailsEntry = (): React.ReactElement => {
   const history = useHistory();
 
   return (
@@ -41,20 +33,6 @@ const IndividualDetailsEntry = ({
           }}
         />
       </VStack>
-      <Button
-        onClick={() => {
-          prevStep();
-        }}
-      >
-        Previous Button
-      </Button>
-      <Button
-        onClick={() => {
-          nextStep();
-        }}
-      >
-        Next Button
-      </Button>
     </React.Fragment>
   );
 };

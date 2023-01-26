@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  Button,
   FormControl,
   FormLabel,
   Icon,
@@ -112,9 +111,6 @@ const ReferralForm = ({
             />
           </Box>
         </FormControl>
-        <Button type="submit" marginTop="30px">
-          Next Button
-        </Button>
       </Form>
     </Formik>
   );

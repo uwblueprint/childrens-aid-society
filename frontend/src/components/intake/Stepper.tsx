@@ -3,9 +3,14 @@ import { Box, Grid, GridItem, Icon } from "@chakra-ui/react";
 import { CheckCircle, Circle } from "react-feather";
 
 export type StepperProps = {
-  pages: string[];
+  pages: PageStepperData[];
   activePage: number;
   setStep: (index: number) => void;
+};
+
+export type PageStepperData = {
+  name: string;
+  cb?: () => void;
 };
 
 const Stepper = ({
@@ -38,6 +43,7 @@ const Stepper = ({
               key={index}
               style={{ display: "contents" }}
               onClick={() => {
+                if (page.cb) page.cb();
                 setStep(index);
               }}
             >
@@ -61,7 +67,7 @@ const Stepper = ({
                 />
               </GridItem>
               <GridItem color={color} gridRowStart={2} fontWeight={500}>
-                {page}
+                {page.name}
               </GridItem>
             </Box>
           );

@@ -3,7 +3,6 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 
 export type CurStepLayout = {
   nextBtnTxt: string;
-  backBtnTxt: string;
   showClearPageBtn: boolean;
 };
 
@@ -14,7 +13,6 @@ export type IntakeFooterProps = {
   isStepComplete: () => boolean;
   registrationLoading: boolean;
   nextStepCallBack: () => void;
-  prevStepCallBack: () => void;
 };
 
 const IntakeFooter = ({
@@ -24,7 +22,6 @@ const IntakeFooter = ({
   isStepComplete,
   registrationLoading,
   nextStepCallBack,
-  prevStepCallBack,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
   const onNextStep = () => {
@@ -41,9 +38,6 @@ const IntakeFooter = ({
         position: "top",
       });
     }
-  };
-  const onPrevStep = () => {
-    prevStepCallBack();
   };
 
   return (
@@ -73,21 +67,6 @@ const IntakeFooter = ({
       ) : (
         ""
       )}
-      <Button
-        ref={nextBtnRef}
-        width={{ sm: "95vw", md: "45vw", lg: "auto" }}
-        height="48px"
-        loadingText="Submitting"
-        type="submit"
-        isLoading={registrationLoading}
-        mb={{ sm: 4, md: 0 }}
-        mr={{ sm: 0, md: 4 }}
-        onClick={() => {
-          onPrevStep();
-        }}
-      >
-        {curStepLayout.get(currentStep)?.backBtnTxt}
-      </Button>
 
       <Button
         ref={nextBtnRef}

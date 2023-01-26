@@ -9,6 +9,7 @@ import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import Stepper from "../intake/Stepper";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
+import IntakeFooter from "../intake/IntakeFormFooter";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
@@ -120,6 +121,7 @@ const Intake = (): React.ReactElement => {
           {renderDetailsForm()}
         </Container>
       </Box>
+      <IntakeFooter />
     </>
   );
 };

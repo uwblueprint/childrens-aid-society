@@ -33,7 +33,7 @@ DUMMY_INTAKE_DATA = {
     "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
-    "referral_date": datetime.date(2020, 1, 1),
+    "referral_date": "2020-01-01",
     "family_name": "Doe",
     "cpin_number": "123456789",
     "cpin_file_type": "ONGOING",
@@ -41,12 +41,12 @@ DUMMY_INTAKE_DATA = {
     "court_order_file": "court_order.pdf",
     "transportation_requirements": "car",
     "scheduling_requirements": "flexible",
-    "suggested_start_date": datetime.date(2020, 1, 1),
+    "suggested_start_date": "2020-01-01",
 }
 
 DUMMY_CAREGIVER_DATA = {
     "name": "John Doe",
-    "date_of_birth": datetime.date(1999, 1, 1),
+    "date_of_birth": "1999-01-01",
     "primary_phone_number": "1234567890",
     "secondary_phone_number": "2345678901",
     "email": "test123@uwaterloo.ca",
@@ -82,7 +82,7 @@ class TestCreateCaregiverValid:
     def test_normal_case(self, caregiver_service):
         param = CreateCaregiverDTO(
             name="Hamza Yusuff",
-            date_of_birth=datetime.date(1999, 1, 1),
+            date_of_birth="1999-01-01",
             primary_phone_number="1234567890",
             secondary_phone_number="2345678901",
             email="test123@uwaterloo.ca",
@@ -97,7 +97,7 @@ class TestCreateCaregiverValid:
         # include only the required fields
         param = CreateCaregiverDTO(
             name="Hamza Yusuff",
-            date_of_birth=datetime.date(1999, 1, 1),
+            date_of_birth="1999-01-01",
             primary_phone_number="1234567890",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
@@ -112,7 +112,7 @@ class TestCreateCaregiverInvalidFails:
     def test_missing_field(self, caregiver_service):
         # missing "name", a required field
         param = CreateCaregiverDTO(
-            date_of_birth=datetime.date(1999, 1, 1),
+            date_of_birth="1999-01-01",
             primary_phone_number="1234567890",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
@@ -126,7 +126,7 @@ class TestCreateCaregiverInvalidFails:
         # empty string for "name", which fails the regex check
         param = CreateCaregiverDTO(
             name="",
-            date_of_birth=datetime.date(1999, 1, 1),
+            date_of_birth="1999-01-01",
             primary_phone_number="1234567890",
             secondary_phone_number="2345678901",
             email="test123@uwaterloo.ca",

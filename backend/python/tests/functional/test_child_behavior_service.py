@@ -25,7 +25,7 @@ DUMMY_INTAKE_DATA = {
     "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
-    "referral_date": datetime.date(2020, 1, 1),
+    "referral_date": "2020-01-01",
     "family_name": "Doe",
     "cpin_number": "123456789",
     "cpin_file_type": "ONGOING",
@@ -33,7 +33,7 @@ DUMMY_INTAKE_DATA = {
     "court_order_file": "court_order.pdf",
     "transportation_requirements": "car",
     "scheduling_requirements": "flexible",
-    "suggested_start_date": datetime.date(2020, 1, 1),
+    "suggested_start_date": "2020-01-01",
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {

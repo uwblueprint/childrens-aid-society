@@ -6,7 +6,7 @@ import IntakeHeader from "../IntakeHeader";
 import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
-import SchoolDaycareForm from "./SchoolDaycareForm";
+import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
 
 const AddChild = (): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
@@ -19,6 +19,12 @@ const AddChild = (): React.ReactElement => {
     specialNeeds: "",
     childBehaviours: "",
   });
+  const [schoolDetails, setSchoolDetails] = useState<SchoolDetails>({
+    schoolName: "",
+    schoolPhoneNo: "",
+    schoolAddress: "",
+    dismissalTime: "",
+  });
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -30,7 +36,12 @@ const AddChild = (): React.ReactElement => {
           />
         );
       case 1:
-        return <SchoolDaycareForm />;
+        return (
+          <SchoolDaycareForm
+            schoolDetails={schoolDetails}
+            setSchoolDetails={setSchoolDetails}
+          />
+        );
       case 2:
         return <ChildProviderForm />;
       default:

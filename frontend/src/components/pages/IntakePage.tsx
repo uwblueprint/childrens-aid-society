@@ -80,7 +80,7 @@ const Intake = (): React.ReactElement => {
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm prevStep={prevStep} />
+              <ReviewForm prevStep={prevStep} title="Individual details" />
             </Box>
           </>
         );

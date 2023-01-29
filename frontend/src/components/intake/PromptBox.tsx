@@ -1,5 +1,13 @@
 import React, { ReactElement } from "react";
-import { Button, VStack, Text, HStack } from "@chakra-ui/react";
+import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { ArrowRight, Trash } from "react-feather";
+
+export type IndividualDetailsOverview = {
+  firstName: string;
+  lastName: string;
+  fileNumber: string;
+};
 
 export type PromptBoxProps = {
   headerText: string;
@@ -10,6 +18,7 @@ export type PromptBoxProps = {
   secondaryButtonText?: string;
   secondaryButtonIcon?: ReactElement;
   secondaryOnButtonClick?: () => void;
+  individualDetails?: IndividualDetailsOverview[];
 };
 
 const PromptBox = ({
@@ -21,7 +30,10 @@ const PromptBox = ({
   secondaryButtonText,
   secondaryButtonIcon,
   secondaryOnButtonClick,
+  individualDetails,
 }: PromptBoxProps): React.ReactElement => {
+  const history = useHistory();
+
   return (
     <VStack
       bg="gray.50"
@@ -38,22 +50,56 @@ const PromptBox = ({
         <Text color="b&w.black" textStyle="title-large">
           {headerText}
         </Text>
-        <Text color="gray.600" textStyle="body-large">
-          {descriptionText}
-        </Text>
+        {individualDetails ? (
+          individualDetails.map((indiv, i) => (
+            <VStack key={i} w="full">
+              <HStack w="full">
+                <VStack align="flex-start" w="full" spacing="0px">
+                  <HStack>
+                    <Text textStyle="title-small">
+                      {indiv.firstName} {indiv.lastName}
+                    </Text>
+                    <Icon
+                      onClick={() => {
+                        history.goBack();
+                        // TODO: deletes details, history.goBack() is just a placeholder, replace when ready
+                      }}
+                      as={Trash}
+                      h="16px"
+                      color="grey.600"
+                      cursor="pointer"
+                    />
+                  </HStack>
+                  <Text color="gray.600" textStyle="body-medium">
+                    {indiv.fileNumber}
+                  </Text>
+                </VStack>
+                <Button
+                  color="blue.300"
+                  textStyle="button-small"
+                  variant="tertiary"
+                  onClick={() => {
+                    history.goBack();
+                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
+                  }}
+                  rightIcon={<Icon as={ArrowRight} h="16px" />}
+                >
+                  View and edit details
+                </Button>
+              </HStack>
+              <Divider orientation="horizontal" w="full" />
+            </VStack>
+          ))
+        ) : (
+          <Text color="gray.600" textStyle="body-large">
+            {descriptionText}
+          </Text>
+        )}
       </VStack>
       <HStack>
-        <Button
-          variant="tertiary"
-          colorScheme="gray.600"
-          leftIcon={buttonIcon}
-          onClick={onButtonClick}
-        >
-          {buttonText}
-        </Button>
         {secondaryButtonText && (
           <Button
-            variant="secondary"
+            variant="tertiary"
             colorScheme="gray.600"
             leftIcon={secondaryButtonIcon}
             onClick={secondaryOnButtonClick}
@@ -61,6 +107,14 @@ const PromptBox = ({
             {secondaryButtonText}
           </Button>
         )}
+        <Button
+          variant="secondary"
+          colorScheme="gray.600"
+          leftIcon={buttonIcon}
+          onClick={onButtonClick}
+        >
+          {buttonText}
+        </Button>
       </HStack>
     </VStack>
   );

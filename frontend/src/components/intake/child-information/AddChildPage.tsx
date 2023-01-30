@@ -85,9 +85,12 @@ const AddChild = (): React.ReactElement => {
       <Box
         bg="white"
         height="87px"
+        bottom="0"
+        width="100%"
         display="flex"
         justifyContent="flex-end"
         alignItems="center"
+        position="fixed"
         shadow="0px -4px 12px rgba(226, 225, 236, 0.4), 0px -8px 24px rgba(226, 225, 236, 0.25)"
       >
         <Button
@@ -98,6 +101,7 @@ const AddChild = (): React.ReactElement => {
         >
           Save child information
         </Button>
+        {/* TODO: Add cancel button */}
       </Box>
     </>
   );

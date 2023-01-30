@@ -7,6 +7,8 @@ migrate = Migrate()
 
 def init_app(app):
     from .access_type import AccessType
+    from .attendance_records import AttendanceRecords
+    from .attendence_sheets import AttendanceSheets
     from .branch import Branch
     from .caregiver import Caregiver, relationship_to_child_enum
     from .child import Child

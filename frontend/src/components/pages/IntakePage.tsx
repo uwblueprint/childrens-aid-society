@@ -10,18 +10,6 @@ import ReviewForm from "../intake/ReviewCaseForm";
 import Stepper from "../intake/Stepper";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 
-import { IndividualDetailsOverview } from "../intake/PromptBox";
-
-const testChildrenDetails: IndividualDetailsOverview[] = [
-  { firstName: "First", lastName: "Last", fileNumber: "23123214214124" },
-  { firstName: "foo", lastName: "bar", fileNumber: "2932813901283" },
-];
-
-const testCaretakerDetails: IndividualDetailsOverview[] = [
-  { firstName: "First", lastName: "Last", fileNumber: "23123214214124" },
-  { firstName: "foo", lastName: "bar", fileNumber: "2932813901283" },
-];
-
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
@@ -95,8 +83,8 @@ const Intake = (): React.ReactElement => {
               <ReviewForm
                 prevStep={prevStep}
                 title="Individual details"
-                childrenDetails={testChildrenDetails}
-                caregiverDetails={testCaretakerDetails}
+                childrenDetails={[]}
+                caregiverDetails={[]}
               />
             </Box>
           </>

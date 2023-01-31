@@ -24,10 +24,10 @@ const ChildProviderForm = (): React.ReactElement => {
           headerText="Providers"
           descriptionText="At least one provider must be indicated for each child"
           buttonText="Select providers"
-          onButtonClick={onOpenNewProviders}
+          onButtonClick={onOpenExistingProviders}
           secondaryButtonText="Add new provider"
           secondaryButtonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
-          secondaryOnButtonClick={onOpenExistingProviders}
+          secondaryOnButtonClick={onOpenNewProviders}
         />
         <Box>
           <ExistingProvider

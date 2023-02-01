@@ -5,13 +5,25 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
+export type ProviderDetails = {
+  providerName: string;
+  providerFileNo: string;
+  primaryPhoneNo: string;
+  address: string;
+  relationship: string;
+};
+
+export type Providers = ProviderDetails[];
+
 type NewProviderProps = {
   isOpen: boolean;
+  onClick: (newProvider: ProviderDetails) => void;
   onClose: () => void;
 };
 
 const NewProviderModal = ({
   isOpen,
+  onClick,
   onClose,
 }: NewProviderProps): React.ReactElement => {
   const [providerName, setProviderName] = useState("");
@@ -136,7 +148,17 @@ const NewProviderModal = ({
             </Box>
           </Box>
         }
-        onClick={() => {}} // empty for now
+        onClick={() => {
+          const newProvider: ProviderDetails = {
+            providerName,
+            providerFileNo,
+            primaryPhoneNo,
+            address,
+            relationship,
+          };
+          onClick(newProvider);
+          onClose();
+        }}
         isOpen={isOpen}
         onClose={() => {
           setProviderName("");

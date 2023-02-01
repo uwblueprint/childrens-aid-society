@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ChevronLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import IntakeHeader from "../IntakeHeader";
+import { Providers } from "../NewProviderModal";
 import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
@@ -25,6 +26,7 @@ const AddChild = (): React.ReactElement => {
     schoolAddress: "",
     dismissalTime: "",
   });
+  const [providers, setProviders] = useState<Providers>([]);
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -43,7 +45,12 @@ const AddChild = (): React.ReactElement => {
           />
         );
       case 2:
-        return <ChildProviderForm />;
+        return (
+          <ChildProviderForm
+            providers={providers}
+            setProviders={setProviders}
+          />
+        );
       default:
         return <Text>Error</Text>;
     }

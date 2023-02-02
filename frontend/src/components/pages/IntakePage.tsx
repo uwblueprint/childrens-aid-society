@@ -48,6 +48,7 @@ const Intake = (): React.ReactElement => {
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
+            readOnly={false}
           />
         );
       case 1:
@@ -80,7 +81,12 @@ const Intake = (): React.ReactElement => {
         return (
           <>
             <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm prevStep={prevStep} />
+              <ReviewForm
+                referralDetails={referralDetails}
+                setReferralDetails={setReferralDetails}
+                nextStep={nextStep}
+                prevStep={prevStep}
+              />
             </Box>
           </>
         );

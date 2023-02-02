@@ -15,10 +15,12 @@ import {
   CheckSquare,
   TrendingUp,
   UserPlus,
+  ChevronDown,
 } from "react-feather";
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import { CustomSelectField } from "./Select";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -59,27 +61,34 @@ const ProgramForm = ({
                 <FormLabel htmlFor="transportationRequirements">
                   TRANSPORTATION REQUIREMENTS
                 </FormLabel>
-                <Field
-                  as={CustomInput}
-                  id="transportationRequirements"
+                <CustomSelectField
                   name="transportationRequirements"
-                  type="string"
+                  id="transportationRequirements"
+                  options={[
+                    "Agency driver needed",
+                    "Kin provider will transport",
+                    "Foster provider will transport",
+                  ]}
                   placeholder="Select an option..."
                   icon={<Icon as={Truck} />}
+                  iconRight={<Icon as={ChevronDown} />}
                 />
               </Box>
               <Box>
                 <FormLabel htmlFor="schedulingRequirements">
                   SCHEDULING REQUIREMENTS
                 </FormLabel>
-                <Field
-                  as={CustomInput}
-                  // TODO change to list selector component
+                <CustomSelectField
                   name="schedulingRequirements"
                   id="schedulingRequirements"
-                  type="string"
                   placeholder="Select an option..."
+                  options={[
+                    "Weekly and time",
+                    "Weekly after school",
+                    "Standard (2x per week)",
+                  ]}
                   icon={<Icon as={Clipboard} />}
+                  iconRight={<Icon as={ChevronDown} />}
                 />
               </Box>
               <Box>
@@ -104,7 +113,7 @@ const ProgramForm = ({
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
                 <Field
                   as={CustomInput}
-                  // TODO change to list selector component
+                  // TODO change to multi-list selector component
                   id="shortTermGoals"
                   name="shortTermGoals"
                   placeholder="Select goals..."
@@ -115,7 +124,7 @@ const ProgramForm = ({
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <Field
                   as={CustomInput}
-                  // TODO change to list selector component
+                  // TODO change to multi-list selector component
                   id="longTermGoals"
                   name="longTermGoals"
                   placeholder="Select goals..."
@@ -129,7 +138,7 @@ const ProgramForm = ({
               </FormLabel>
               <Field
                 as={CustomInput}
-                // TODO change to multi option list selector component
+                // TODO change to multi-list selector component
                 id="familialConcerns"
                 name="familialConcerns"
                 placeholder="Select familial concerns..."

@@ -122,15 +122,15 @@ const CourtInformationForm = ({
                 <CustomSelectField
                   id="firstNationHeritage"
                   name="firstNationHeritage"
-                  defaultValue=""
-                >
-                  <option value="">Select First Nation heritage status</option>
-                  <option>First Nation Registered</option>
-                  <option>Eligible for Registration</option>
-                  <option>Inuit</option>
-                  <option>Metis</option>
-                  <option>Unknown</option>
-                </CustomSelectField>
+                  placeholder="Select First Nation heritage status"
+                  options={[
+                    "First Nation Registered",
+                    "Eligible for Registration",
+                    "Inuit",
+                    "Metis",
+                    "Unknown",
+                  ]}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel pt="15px" htmlFor="firstNationBand">

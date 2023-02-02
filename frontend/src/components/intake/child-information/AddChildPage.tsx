@@ -80,7 +80,8 @@ const AddChild = (): React.ReactElement => {
           onClick={setActiveFormIndex}
         />
       </VStack>
-      {renderChildForm()}
+
+      <Box marginBottom="100px">{renderChildForm()}</Box>
 
       <Box
         bg="white"

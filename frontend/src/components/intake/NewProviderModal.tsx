@@ -9,6 +9,9 @@ export type ProviderDetails = {
   providerName: string;
   providerFileNo: string;
   primaryPhoneNo: string;
+  secondaryPhoneNo?: string;
+  email?: string;
+  contactNotes?: string;
   address: string;
   relationship: string;
 };
@@ -29,6 +32,9 @@ const NewProviderModal = ({
   const [providerName, setProviderName] = useState("");
   const [providerFileNo, setProviderFileNo] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
+  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
   const [address, setAddress] = useState("");
   const [relationship, setRelationship] = useState("");
   return (
@@ -91,6 +97,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="e.g. 555-555-5555"
                   icon={<Icon as={Phone} />}
+                  onChange={(event) => {
+                    setSecondaryPhoneNo(event.target.value);
+                  }}
                 />
               </Box>
               <Box>
@@ -103,6 +112,9 @@ const NewProviderModal = ({
                   type="string"
                   placeholder="Enter email address of provider"
                   icon={<Icon as={Mail} />}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
                 />
               </Box>
               <Box>
@@ -130,6 +142,9 @@ const NewProviderModal = ({
                 placeholder="Note any preferences or additional channels of communication."
                 height="10rem"
                 paddingBottom="7rem"
+                onChange={(event) => {
+                  setContactNotes(event.target.value);
+                }}
               />
             </Box>
             <Box marginTop="0.75rem">
@@ -153,6 +168,9 @@ const NewProviderModal = ({
             providerName,
             providerFileNo,
             primaryPhoneNo,
+            secondaryPhoneNo,
+            email,
+            contactNotes,
             address,
             relationship,
           };
@@ -164,6 +182,9 @@ const NewProviderModal = ({
           setProviderName("");
           setProviderFileNo("");
           setPrimaryPhoneNo("");
+          setSecondaryPhoneNo("");
+          setEmail("");
+          setContactNotes("");
           setAddress("");
           setRelationship("");
           onClose();

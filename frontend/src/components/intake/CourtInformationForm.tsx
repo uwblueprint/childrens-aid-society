@@ -6,11 +6,12 @@ import {
   FormLabel,
   HStack,
   Input,
+  Icon,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { FilePlus } from "react-feather";
+import { FilePlus, ChevronDown } from "react-feather";
 import { AutocompleteField } from "./Autocomplete";
-import { CustomSelectField } from "./Select";
+import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
@@ -130,6 +131,7 @@ const CourtInformationForm = ({
                     "Metis",
                     "Unknown",
                   ]}
+                  iconRight={<Icon as={ChevronDown} />}
                 />
               </FormControl>
               <FormControl>

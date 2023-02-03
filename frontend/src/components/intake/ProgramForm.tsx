@@ -20,7 +20,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
-import { CustomSelectField } from "./Select";
+import { CustomSelectField } from "./CustomSelectField";
 
 export type ProgramDetails = {
   transportationRequirements: string;

@@ -48,7 +48,6 @@ const Intake = (): React.ReactElement => {
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
-            readOnly={false}
           />
         );
       case 1:

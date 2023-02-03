@@ -26,7 +26,7 @@ type ReferralFormProps = {
   referralDetails: ReferralDetails;
   setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
-  readOnly: boolean;
+  readOnly?: true;
 };
 
 const ReferralForm = ({

@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
-import { CustomSelectField } from "./Select";
+import { CustomSelectField } from "./CustomSelectField";
 
 export type PermittedIndividualDetails = {
   firstName: string;

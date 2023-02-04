@@ -26,12 +26,14 @@ type ReferralFormProps = {
   referralDetails: ReferralDetails;
   setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
+  readOnly?: true;
 };
 
 const ReferralForm = ({
   referralDetails,
   setReferralDetails,
   nextStep,
+  readOnly,
 }: ReferralFormProps): React.ReactElement => {
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
@@ -46,6 +48,7 @@ const ReferralForm = ({
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field
+                disabled={readOnly}
                 as={CustomInput}
                 id="referringWorker"
                 name="referringWorker"
@@ -59,6 +62,7 @@ const ReferralForm = ({
                 REFERRING WORKER CONTACT
               </FormLabel>
               <Field
+                disabled={readOnly}
                 as={CustomInput}
                 name="referringWorkerContact"
                 id="referringWorkerContact"
@@ -70,6 +74,7 @@ const ReferralForm = ({
             <Box>
               <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
               <Field
+                disabled={readOnly}
                 as={CustomInput}
                 id="cpinFileNumber"
                 name="cpinFileNumber"
@@ -81,6 +86,7 @@ const ReferralForm = ({
             <Box>
               <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
               <Field
+                disabled={readOnly}
                 as={Select}
                 id="cpinFileType"
                 name="cpinFileType"
@@ -92,6 +98,7 @@ const ReferralForm = ({
           <Box paddingTop="10px">
             <FormLabel htmlFor="familyName">FAMILY NAME</FormLabel>
             <Field
+              disabled={readOnly}
               as={CustomInput}
               id="familyName"
               name="familyName"
@@ -103,6 +110,7 @@ const ReferralForm = ({
           <Box paddingTop="10px">
             <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
             <Field
+              disabled={readOnly}
               as={CustomInput}
               id="referralDate"
               name="referralDate"
@@ -112,9 +120,11 @@ const ReferralForm = ({
             />
           </Box>
         </FormControl>
-        <Button type="submit" marginTop="30px">
-          Next Button
-        </Button>
+        {!readOnly && (
+          <Button type="submit" marginTop="30px">
+            Next Button
+          </Button>
+        )}
       </Form>
     </Formik>
   );

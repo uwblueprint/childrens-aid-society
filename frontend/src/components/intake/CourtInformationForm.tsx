@@ -6,11 +6,12 @@ import {
   FormLabel,
   HStack,
   Input,
+  Icon,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { FilePlus } from "react-feather";
+import { FilePlus, ChevronDown } from "react-feather";
 import { AutocompleteField } from "./Autocomplete";
-import { CustomSelectField } from "./Select";
+import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
@@ -122,15 +123,16 @@ const CourtInformationForm = ({
                 <CustomSelectField
                   id="firstNationHeritage"
                   name="firstNationHeritage"
-                  defaultValue=""
-                >
-                  <option value="">Select First Nation heritage status</option>
-                  <option>First Nation Registered</option>
-                  <option>Eligible for Registration</option>
-                  <option>Inuit</option>
-                  <option>Metis</option>
-                  <option>Unknown</option>
-                </CustomSelectField>
+                  placeholder="Select First Nation heritage status"
+                  options={[
+                    "First Nation Registered",
+                    "Eligible for Registration",
+                    "Inuit",
+                    "Metis",
+                    "Unknown",
+                  ]}
+                  iconRight={<Icon as={ChevronDown} />}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel pt="15px" htmlFor="firstNationBand">

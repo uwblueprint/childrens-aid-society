@@ -44,7 +44,7 @@ const ReferralForm = ({
     <Formik initialValues={referralDetails} onSubmit={onSubmit}>
       <Form>
         <FormControl>
-          <SimpleGrid columns={2} spacing="70px">
+          <SimpleGrid columns={2} spacingX="48px" spacingY="10px">
             <Box>
               <FormLabel htmlFor="referringWorker">REFERRING WORKER</FormLabel>
               <Field

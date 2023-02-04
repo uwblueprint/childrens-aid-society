@@ -46,9 +46,7 @@ const IndividualDetails = ({
             <HStack w="full">
               <VStack align="flex-start" w="full" spacing="0px">
                 <HStack>
-                  <Text textStyle="title-small">
-                    {indiv.firstName} {indiv.lastName}
-                  </Text>
+                  <Text textStyle="title-small">{indiv.name}</Text>
                 </HStack>
                 <Text color="gray.600" textStyle="body-medium">
                   {indiv.fileNumber}
@@ -86,9 +84,7 @@ const IndividualDetails = ({
             <HStack w="full">
               <VStack align="flex-start" w="full" spacing="0px">
                 <HStack>
-                  <Text textStyle="title-small">
-                    {indiv.firstName} {indiv.lastName}
-                  </Text>
+                  <Text textStyle="title-small">{indiv.name}</Text>
                 </HStack>
                 <Text color="gray.600" textStyle="body-medium">
                   {indiv.fileNumber}

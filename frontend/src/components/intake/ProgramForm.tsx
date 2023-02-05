@@ -198,7 +198,7 @@ const ProgramForm = ({
         </Form>
       </FormikProvider>
       <IntakeFooter
-        currentStep={IntakeSteps.CASE_REFERAL}
+        currentStep={IntakeSteps.CASE_REFERRAL}
         nextBtnTxt="Next"
         showClearPageBtn={!!true}
         isStepComplete={() => true}

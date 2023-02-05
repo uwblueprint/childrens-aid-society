@@ -66,7 +66,7 @@ const ReferralForm = ({
           "Program details",
         ]}
         setStep={setStep}
-        activePage={IntakeSteps.CASE_REFERAL}
+        activePage={IntakeSteps.CASE_REFERRAL}
         onClickCallback={() => {
           setReferralDetails(formik.values);
         }}
@@ -155,7 +155,7 @@ const ReferralForm = ({
         </Form>
       </FormikProvider>
       <IntakeFooter
-        currentStep={IntakeSteps.CASE_REFERAL}
+        currentStep={IntakeSteps.CASE_REFERRAL}
         nextBtnTxt="Next"
         showClearPageBtn={!!true}
         isStepComplete={() => true}

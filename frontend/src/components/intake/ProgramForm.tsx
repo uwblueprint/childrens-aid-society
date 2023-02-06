@@ -42,12 +42,13 @@ type ProgramFormProps = {
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
-  readOnly,
+  readOnly = false,
   nextStep,
   prevStep,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
+    nextStep();
   };
 
   return (
@@ -74,7 +75,7 @@ const ProgramForm = ({
                   placeholder="Select an option..."
                   icon={<Icon as={Truck} />}
                   iconRight={<Icon as={ChevronDown} />}
-                  readOnly
+                  readOnly={readOnly}
                 />
               </Box>
               <Box>
@@ -92,7 +93,7 @@ const ProgramForm = ({
                   ]}
                   icon={<Icon as={Clipboard} />}
                   iconRight={<Icon as={ChevronDown} />}
-                  readOnly
+                  readOnly={readOnly}
                 />
               </Box>
               <Box>
@@ -166,22 +167,27 @@ const ProgramForm = ({
               Add
             </Button>
           </Box>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              nextStep();
-            }}
-          >
-            Next Button
-          </Button>
+          {!readOnly && (
+            <Button
+              onClick={() => {
+                handleSubmit();
+                prevStep();
+              }}
+            >
+              Previous Button
+            </Button>
+          )}
+
+          {!readOnly && (
+            <Button
+              onClick={() => {
+                handleSubmit();
+                nextStep();
+              }}
+            >
+              Next Button
+            </Button>
+          )}
         </Form>
       )}
     </Formik>

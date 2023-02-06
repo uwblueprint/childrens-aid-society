@@ -51,27 +51,27 @@ const ReviewForm = ({
         caregiverDetails={[]}
       />
 
-    <Stack padding="32px" spacing="16px">
+      <Stack padding="32px" spacing="16px">
         <HStack w="full" display="flex" justifyContent="space-between">
-            <Text color="b&w.black" textStyle="header-large">
-                Program Details
-            </Text>
-            <Button
-                textStyle="button-medium"
-                variant="primary"
-                rightIcon={<Icon as={Edit2} h="16px" />}
-            >
-                Edit {/* TODO: implement edit button */}
-            </Button>
+          <Text color="b&w.black" textStyle="header-large">
+            Program Details
+          </Text>
+          <Button
+            textStyle="button-medium"
+            variant="primary"
+            rightIcon={<Icon as={Edit2} h="16px" />}
+          >
+            Edit {/* TODO: implement edit button */}
+          </Button>
         </HStack>
         <ProgramForm
-            programDetails={programDetails}
-            setProgramDetails={setProgramDetails}
-            nextStep={nextStep}
-            prevStep={prevStep}
-            readOnly
+          programDetails={programDetails}
+          setProgramDetails={setProgramDetails}
+          nextStep={nextStep}
+          prevStep={prevStep}
+          readOnly
         />
-    </Stack>
+      </Stack>
 
       <Box>
         <Button

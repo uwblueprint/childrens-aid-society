@@ -67,7 +67,7 @@ export const CustomSelectField = ({
   placeholder,
   icon,
   iconRight,
-  readOnly=false,
+  readOnly = false,
   ...props
 }: CustomSelectProps): React.ReactElement => {
   const [field, , helpers] = useField<string>(name);
@@ -89,11 +89,12 @@ export const CustomSelectField = ({
           />
         </FormControl>
       </PopoverTrigger>
-      {!readOnly && <CustomSelectDropDown
-
+      {!readOnly && (
+        <CustomSelectDropDown
           options={options}
           onSelect={(value) => helpers.setValue(value)}
-      />}
+        />
+      )}
     </Popover>
   );
 };

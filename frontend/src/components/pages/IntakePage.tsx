@@ -61,16 +61,12 @@ const Intake = (): React.ReactElement => {
         return <IndividualDetailsEntry nextStep={nextStep} setStep={setStep} />;
       case 3:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ProgramForm
-                programDetails={programDetails}
-                setProgramDetails={setProgramDetails}
-                nextStep={nextStep}
-                setStep={setStep}
-              />
-            </Box>
-          </>
+          <ProgramForm
+            programDetails={programDetails}
+            setProgramDetails={setProgramDetails}
+            nextStep={nextStep}
+            setStep={setStep}
+          />
         );
       default:
         return (

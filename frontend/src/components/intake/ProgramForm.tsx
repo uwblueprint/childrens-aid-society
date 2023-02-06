@@ -36,11 +36,13 @@ type ProgramFormProps = {
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   prevStep: () => void;
+  readOnly?: boolean;
 };
 
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
+  readOnly,
   nextStep,
   prevStep,
 }: ProgramFormProps): React.ReactElement => {
@@ -72,6 +74,7 @@ const ProgramForm = ({
                   placeholder="Select an option..."
                   icon={<Icon as={Truck} />}
                   iconRight={<Icon as={ChevronDown} />}
+                  readOnly
                 />
               </Box>
               <Box>
@@ -89,6 +92,7 @@ const ProgramForm = ({
                   ]}
                   icon={<Icon as={Clipboard} />}
                   iconRight={<Icon as={ChevronDown} />}
+                  readOnly
                 />
               </Box>
               <Box>
@@ -96,6 +100,7 @@ const ProgramForm = ({
                   SUGGESTED START DATE
                 </FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
                   name="suggestedStartDate"
                   id="suggestedStartDate"
@@ -112,6 +117,7 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
                   // TODO change to multi-list selector component
                   id="shortTermGoals"
@@ -123,6 +129,7 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
                   // TODO change to multi-list selector component
                   id="longTermGoals"
@@ -137,6 +144,7 @@ const ProgramForm = ({
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
               <Field
+                disabled={readOnly}
                 as={CustomInput}
                 // TODO change to multi-list selector component
                 id="familialConcerns"

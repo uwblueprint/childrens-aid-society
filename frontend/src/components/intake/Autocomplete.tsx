@@ -16,6 +16,7 @@ import CustomTag from "../common/CustomTag";
 export type AutocompleteFieldProps = CustomInputProps & {
   name: string;
   hints: string[];
+  readOnly?: boolean;
 };
 
 export const AutocompleteSuggestions = ({
@@ -59,6 +60,7 @@ export const AutocompleteSuggestions = ({
 export const AutocompleteField = ({
   name,
   hints,
+  readOnly = false,
   ...props
 }: AutocompleteFieldProps): React.ReactElement => {
   const [field, , helpers] = useField<string>(name);
@@ -79,13 +81,16 @@ export const AutocompleteField = ({
             type="string"
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
+            isReadOnly={readOnly}
           />
         </FormControl>
       </PopoverTrigger>
-      <AutocompleteSuggestions
-        hints={filtered}
-        onSelect={(value) => helpers.setValue(value)}
-      />
+      {!readOnly && (
+        <AutocompleteSuggestions
+          hints={filtered}
+          onSelect={(value) => helpers.setValue(value)}
+        />
+      )}
     </Popover>
   );
 };

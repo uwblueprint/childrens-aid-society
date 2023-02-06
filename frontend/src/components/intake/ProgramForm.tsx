@@ -19,6 +19,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import { MultiTextField } from "../common/MultiTextField";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -127,12 +128,16 @@ const ProgramForm = ({
               <FormLabel htmlFor="familialConcerns">
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
-              <Field
-                as={CustomInput}
-                // TODO change to multi option list selector component
+              <MultiTextField
                 id="familialConcerns"
                 name="familialConcerns"
                 placeholder="Select familial concerns..."
+                hints={[
+                  "Familial conflict",
+                  "Isolation",
+                  "Child abuse",
+                  "Sexual abuse",
+                ]}
               />
             </Box>
           </FormControl>

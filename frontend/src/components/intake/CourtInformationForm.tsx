@@ -9,7 +9,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { FilePlus, ChevronDown } from "react-feather";
+import { ChevronDown, Download, FilePlus } from "react-feather";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
@@ -27,6 +27,7 @@ type CourtInformationFormProps = {
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   prevStep: () => void;
+  readOnly?: boolean;
 };
 
 const CourtInformationForm = ({
@@ -34,6 +35,7 @@ const CourtInformationForm = ({
   setCourtDetails,
   nextStep,
   prevStep,
+  readOnly,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -74,6 +76,7 @@ const CourtInformationForm = ({
                   "Kin service placement",
                   "Living with Biological family",
                 ]}
+                readOnly={readOnly}
               />
             </Box>
             {/* TODO: store the uploaded file and save in backend */}
@@ -86,6 +89,7 @@ const CourtInformationForm = ({
               }
               id="orderReferral"
               name="orderReferral"
+              disabled={readOnly}
             />
             <FormControl padding="16px 0">
               <FormLabel
@@ -106,13 +110,19 @@ const CourtInformationForm = ({
                   marginRight="10px"
                   style={{ cursor: "pointer" }}
                 />
-                <Button
-                  onClick={handleClick}
-                  variant="tertiary"
-                  leftIcon={<FilePlus />}
-                >
-                  Attach document
-                </Button>
+                {readOnly ? (
+                  <Button variant="tertiary" leftIcon={<Icon as={Download} />}>
+                    Download attachment {/* TODO: implement download button */}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleClick}
+                    variant="tertiary"
+                    leftIcon={<FilePlus />}
+                  >
+                    Attach document
+                  </Button>
+                )}
               </HStack>
             </FormControl>
             <HStack alignItems="end" padding="16px 0" spacing={10}>
@@ -132,6 +142,7 @@ const CourtInformationForm = ({
                     "Unknown",
                   ]}
                   iconRight={<Icon as={ChevronDown} />}
+                  readOnly={readOnly}
                 />
               </FormControl>
               <FormControl>
@@ -143,27 +154,32 @@ const CourtInformationForm = ({
                   id="firstNationBand"
                   placeholder="Enter First Nation Band"
                   name="firstNationBand"
+                  disabled={readOnly}
                 />
               </FormControl>
             </HStack>
-            <Button
-              onClick={() => {
-                handleSubmit();
-                prevStep();
-              }}
-              marginRight="10px"
-            >
-              Previous Button
-            </Button>
-            <Button
-              onClick={() => {
-                handleSubmit();
-                nextStep();
-              }}
-              marginLeft="10px"
-            >
-              Next Button
-            </Button>
+            {!readOnly && (
+              <>
+                <Button
+                  onClick={() => {
+                    handleSubmit();
+                    prevStep();
+                  }}
+                  marginRight="10px"
+                >
+                  Previous Button
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleSubmit();
+                    nextStep();
+                  }}
+                  marginLeft="10px"
+                >
+                  Next Button
+                </Button>
+              </>
+            )}
           </Form>
         );
       }}

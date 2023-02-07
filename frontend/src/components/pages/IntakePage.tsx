@@ -83,6 +83,8 @@ const Intake = (): React.ReactElement => {
               <ReviewForm
                 referralDetails={referralDetails}
                 setReferralDetails={setReferralDetails}
+                programDetails={programDetails}
+                setProgramDetails={setProgramDetails}
                 nextStep={nextStep}
                 prevStep={prevStep}
               />

@@ -6,7 +6,7 @@ export type StepperProps = {
   pages: string[];
   activePage: number;
   setStep: (index: number) => void;
-  onClickCallback: () => void;
+  onClickCallback?: () => void;
 };
 
 const Stepper = ({
@@ -40,7 +40,7 @@ const Stepper = ({
               key={index}
               style={{ display: "contents" }}
               onClick={() => {
-                onClickCallback();
+                if (onClickCallback) onClickCallback();
                 setStep(index);
               }}
             >

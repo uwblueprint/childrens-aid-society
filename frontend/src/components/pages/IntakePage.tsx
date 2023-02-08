@@ -60,12 +60,7 @@ const Intake = (): React.ReactElement => {
           />
         );
       case 2:
-        return (
-          <IndividualDetailsEntry
-            nextStep={nextStep}
-            setStep={setStep}
-          />
-        );
+        return <IndividualDetailsEntry nextStep={nextStep} setStep={setStep} />;
       case 3:
         return (
           <>

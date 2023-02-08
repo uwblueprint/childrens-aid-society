@@ -5,6 +5,8 @@ import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
 import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import IntakeSteps from "./intakeSteps";
+import IntakeFooter from "./IntakeFormFooter";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;
@@ -29,6 +31,10 @@ const ReviewForm = ({
   prevStep,
   setStep,
 }: ReviewFormProps): React.ReactElement => {
+  const onNextStep = () => {
+    nextStep();
+  };
+
   return (
     <>
       <Stack padding="32px" spacing="16px">
@@ -70,7 +76,7 @@ const ReviewForm = ({
           courtDetails={courtDetails}
           setCourtDetails={setCourtDetails}
           nextStep={nextStep}
-          prevStep={prevStep}
+          setStep={setStep}
           readOnly
         />
       </Stack>
@@ -98,7 +104,7 @@ const ReviewForm = ({
           programDetails={programDetails}
           setProgramDetails={setProgramDetails}
           nextStep={nextStep}
-          prevStep={prevStep}
+          setStep={setStep}
           readOnly
         />
       </Stack>
@@ -112,6 +118,15 @@ const ReviewForm = ({
           Previous Button
         </Button>
       </Box>
+
+      <IntakeFooter
+        currentStep={IntakeSteps.REVIEW_CASE_DETAILS}
+        nextBtnTxt="Next"
+        showClearPageBtn={!!true}
+        isStepComplete={() => true}
+        registrationLoading={false}
+        nextStepCallBack={onNextStep}
+      />
     </>
   );
 };

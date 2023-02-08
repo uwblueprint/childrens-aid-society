@@ -1,24 +1,25 @@
 import React from "react";
-import { Button, Flex, useToast } from "@chakra-ui/react";
+import { ArrowRight } from "react-feather";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 
-export type CurStepLayout = {
+export type CurrentStepLayout = {
   nextBtnTxt: string;
   showClearPageBtn: boolean;
 };
 
 export type IntakeFooterProps = {
-  nextBtnRef?: React.RefObject<HTMLButtonElement>;
+  nextButtonRef?: React.RefObject<HTMLButtonElement>;
   currentStep: number;
-  nextBtnTxt: string;
-  showClearPageBtn: boolean;
+  nextButtonText: string;
+  showClearPageBtn?: boolean;
   isStepComplete: () => boolean;
   registrationLoading: boolean;
   nextStepCallBack: () => void;
 };
 
 const IntakeFooter = ({
-  nextBtnRef,
-  nextBtnTxt,
+  nextButtonRef,
+  nextButtonText,
   showClearPageBtn,
   isStepComplete,
   registrationLoading,
@@ -56,7 +57,7 @@ const IntakeFooter = ({
       bottom="0"
       zIndex="5"
     >
-      {showClearPageBtn ? (
+      {showClearPageBtn && (
         <Button
           width={{ sm: "95vw", md: "45vw", lg: "auto" }}
           variant="tertiary"
@@ -66,12 +67,10 @@ const IntakeFooter = ({
         >
           Clear page
         </Button>
-      ) : (
-        ""
       )}
 
       <Button
-        ref={nextBtnRef}
+        ref={nextButtonRef}
         width={{ sm: "95vw", md: "45vw", lg: "auto" }}
         height="48px"
         loadingText="Submitting"
@@ -81,7 +80,8 @@ const IntakeFooter = ({
           onNextStep();
         }}
       >
-        {nextBtnTxt}
+        <Box pr="5px">{nextButtonText}</Box>
+        <ArrowRight />
       </Button>
     </Flex>
   );

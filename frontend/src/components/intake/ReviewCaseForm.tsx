@@ -30,7 +30,7 @@ const ReviewForm = ({
   setStep,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
-    nextStep();
+    nextStep(); // TODO: Add functionality for nextStep (Currently we pass in empty nextStep() prop)
   };
 
   return (
@@ -111,9 +111,8 @@ const ReviewForm = ({
 
       <IntakeFooter
         currentStep={IntakeSteps.REVIEW_CASE_DETAILS}
-        nextBtnTxt="Next"
-        showClearPageBtn={!!true}
-        isStepComplete={() => true}
+        nextButtonText="Submit case"
+        isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}
         nextStepCallBack={onNextStep}
       />

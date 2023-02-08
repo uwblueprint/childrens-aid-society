@@ -206,9 +206,9 @@ const ProgramForm = ({
       {!hideFooter && (
         <IntakeFooter
           currentStep={IntakeSteps.CASE_REFERRAL}
-          nextBtnTxt="Next"
-          showClearPageBtn={!!true}
-          isStepComplete={() => true}
+          nextButtonText="Next section"
+          showClearPageBtn
+          isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
         />

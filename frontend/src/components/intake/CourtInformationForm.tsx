@@ -195,9 +195,9 @@ const CourtInformationForm = ({
       {!hideFooter && (
         <IntakeFooter
           currentStep={IntakeSteps.COURT_INFORMATION}
-          nextBtnTxt="Next"
-          showClearPageBtn={!!true}
-          isStepComplete={() => true}
+          nextButtonText="Next section"
+          showClearPageBtn
+          isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
         />

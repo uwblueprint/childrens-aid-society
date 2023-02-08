@@ -77,9 +77,9 @@ const IndividualDetailsEntry = ({
       {!hideFooter && (
         <IntakeFooter
           currentStep={IntakeSteps.INDIVIDUAL_DETAILS}
-          nextBtnTxt="Next"
-          showClearPageBtn={!!true}
-          isStepComplete={() => true}
+          nextButtonText="Next section"
+          showClearPageBtn
+          isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
         />

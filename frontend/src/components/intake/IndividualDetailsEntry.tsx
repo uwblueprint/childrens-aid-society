@@ -5,15 +5,19 @@ import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
 import { ADD_CHILD_PAGE } from "../../constants/Routes";
 import NewCaregiverModal from "./NewCaregiverModal";
+import Stepper from "./Stepper";
+import IntakeSteps from "./intakeSteps";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;
-  prevStep: () => void;
+  prevStep: () => void
+  setStep: React.Dispatch<React.SetStateAction<number>>
 };
 
 const IndividualDetailsEntry = ({
   nextStep,
   prevStep,
+  setStep
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const history = useHistory();
 
@@ -24,6 +28,18 @@ const IndividualDetailsEntry = ({
   } = useDisclosure();
 
   return (
+    <>
+      <Stepper
+            pages={[
+              "Case referral",
+              "Court information",
+              "Individual details",
+              "Program details",
+            ]}
+            setStep={setStep}
+            activePage={IntakeSteps.INDIVIDUAL_DETAILS}
+            onClickCallback={() => {}} // TODO: SET UP SAVING INVIDUAL DETAILS
+          />
     <React.Fragment key="IndividualDetailsEntry">
       <VStack padding="32px" spacing="24px">
         <PromptBox
@@ -62,6 +78,7 @@ const IndividualDetailsEntry = ({
         Next Button
       </Button>
     </React.Fragment>
+    </>
   );
 };
 

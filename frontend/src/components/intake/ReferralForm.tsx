@@ -8,9 +8,11 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikProvider, useFormik } from "formik";
 import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";
+import Stepper from "./Stepper";
+import IntakeSteps from "./intakeSteps";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
@@ -27,6 +29,7 @@ type ReferralFormProps = {
   setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
   readOnly?: true;
+  setStep: React.Dispatch<React.SetStateAction<number>>
 };
 
 const ReferralForm = ({
@@ -34,14 +37,34 @@ const ReferralForm = ({
   setReferralDetails,
   nextStep,
   readOnly,
+  setStep
 }: ReferralFormProps): React.ReactElement => {
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
     nextStep();
   };
 
+  const formik = useFormik({
+    initialValues: referralDetails,
+    onSubmit: (values: ReferralDetails) => {
+      onSubmit(values);
+    },
+  });
+
   return (
-    <Formik initialValues={referralDetails} onSubmit={onSubmit}>
+    <>
+      <Stepper
+            pages={[
+              "Case referral",
+              "Court information",
+              "Individual details",
+              "Program details",
+            ]}
+            setStep={setStep}
+            activePage={IntakeSteps.CASE_REFERAL}
+            onClickCallback={() => {setReferralDetails(formik.values)}}
+          />
+     <FormikProvider value={formik}>
       <Form>
         <FormControl>
           <SimpleGrid columns={2} spacingX="48px" spacingY="10px">
@@ -126,7 +149,8 @@ const ReferralForm = ({
           </Button>
         )}
       </Form>
-    </Formik>
+    </FormikProvider>
+    </>
   );
 };
 

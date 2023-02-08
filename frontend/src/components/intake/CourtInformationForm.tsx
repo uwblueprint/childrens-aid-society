@@ -8,12 +8,14 @@ import {
   Input,
   Icon,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
 import { ChevronDown, Download, FilePlus } from "react-feather";
+import { Field, Form, Formik, FormikProvider, useFormik } from "formik";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import Stepper from "./Stepper";
+import IntakeSteps from "./intakeSteps";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -25,17 +27,15 @@ export type CourtDetails = {
 type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
-  nextStep: () => void;
-  prevStep: () => void;
   readOnly?: boolean;
+  setStep: React.Dispatch<React.SetStateAction<number>>
 };
 
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
-  nextStep,
-  prevStep,
   readOnly,
+  setStep
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -55,10 +55,29 @@ const CourtInformationForm = ({
   };
   const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
+  const formik = useFormik({
+    initialValues: courtDetails,
+    onSubmit: (values: CourtDetails) => {
+      onSubmit(values);
+    },
+  });
+
+
   return (
-    <Formik initialValues={courtDetails} onSubmit={onSubmit}>
-      {({ handleSubmit, setFieldValue, values }) => {
-        return (
+
+    <>
+      <Stepper
+            pages={[
+              "Case referral",
+              "Court information",
+              "Individual details",
+              "Program details",
+            ]}
+            setStep={setStep}
+            activePage={IntakeSteps.COURT_INFORMATION}
+            onClickCallback={() => {setCourtDetails(formik.values)}}
+          />
+    <FormikProvider value={formik}>
           <Form>
             <Box style={{ paddingBottom: "16px" }}>
               <FormLabel pt="15px" htmlFor="currentCourtStatus">
@@ -85,7 +104,7 @@ const CourtInformationForm = ({
               type="file"
               ref={inputRef}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleFileChange(e, setFieldValue)
+                handleFileChange(e, formik.setFieldValue)
               }
               id="orderReferral"
               name="orderReferral"
@@ -105,7 +124,7 @@ const CourtInformationForm = ({
                   isReadOnly
                   id="documentDisplay"
                   placeholder="No document attached"
-                  value={values.orderReferral?.name}
+                  value={formik.values.orderReferral?.name}
                   onClick={handleClick}
                   marginRight="10px"
                   style={{ cursor: "pointer" }}
@@ -154,36 +173,12 @@ const CourtInformationForm = ({
                   id="firstNationBand"
                   placeholder="Enter First Nation Band"
                   name="firstNationBand"
-                  disabled={readOnly}
-                />
+            />
               </FormControl>
             </HStack>
-            {!readOnly && (
-              <>
-                <Button
-                  onClick={() => {
-                    handleSubmit();
-                    prevStep();
-                  }}
-                  marginRight="10px"
-                >
-                  Previous Button
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleSubmit();
-                    nextStep();
-                  }}
-                  marginLeft="10px"
-                >
-                  Next Button
-                </Button>
-              </>
-            )}
           </Form>
-        );
-      }}
-    </Formik>
+    </FormikProvider>
+    </>
   );
 };
 

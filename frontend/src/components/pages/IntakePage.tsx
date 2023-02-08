@@ -48,6 +48,7 @@ const Intake = (): React.ReactElement => {
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
+            setStep={setStep}
           />
         );
       case 1:
@@ -56,12 +57,12 @@ const Intake = (): React.ReactElement => {
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
             nextStep={nextStep}
-            prevStep={prevStep}
+            setStep={setStep}
           />
         );
       case 2:
         return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} setStep={setStep}/>
         );
       case 3:
         return (
@@ -70,8 +71,8 @@ const Intake = (): React.ReactElement => {
               <ProgramForm
                 programDetails={programDetails}
                 setProgramDetails={setProgramDetails}
-                prevStep={prevStep}
                 nextStep={nextStep}
+                setStep={setStep}
               />
             </Box>
           </>
@@ -89,6 +90,7 @@ const Intake = (): React.ReactElement => {
                 setProgramDetails={setProgramDetails}
                 nextStep={nextStep}
                 prevStep={prevStep}
+                setStep={setStep}
               />
             </Box>
           </>
@@ -111,20 +113,6 @@ const Intake = (): React.ReactElement => {
       )}
 
       <Box textAlign="center" padding="30px 0 40px 0">
-        {step !== 4 ? (
-          <Stepper
-            pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
-            ]}
-            setStep={setStep}
-            activePage={step}
-          />
-        ) : (
-          <></>
-        )}
         <Container maxWidth="container.xl" padding="30px 96px">
           {renderDetailsForm()}
         </Container>

@@ -15,6 +15,7 @@ type ReviewFormProps = {
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   prevStep: () => void;
+  setStep: React.Dispatch<React.SetStateAction<number>>
 };
 
 const ReviewForm = ({
@@ -26,6 +27,7 @@ const ReviewForm = ({
   setProgramDetails,
   nextStep,
   prevStep,
+  setStep,
 }: ReviewFormProps): React.ReactElement => {
   return (
     <>
@@ -46,6 +48,7 @@ const ReviewForm = ({
           referralDetails={referralDetails}
           setReferralDetails={setReferralDetails}
           nextStep={nextStep}
+          setStep={setStep}
           readOnly
         />
       </Stack>

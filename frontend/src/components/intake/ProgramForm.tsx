@@ -23,6 +23,7 @@ import OptionalLabel from "./OptionalLabel";
 import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
+import IntakeFooter from "./IntakeFormFooter";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -46,7 +47,7 @@ const ProgramForm = ({
   setProgramDetails,
   readOnly = false,
   nextStep,
-  setStep
+  setStep,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
@@ -60,20 +61,27 @@ const ProgramForm = ({
     },
   });
 
+  const onNextStep = () => {
+    nextStep();
+    setProgramDetails(formik.values);
+  };
+
   return (
     <>
       <Stepper
-            pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
-            ]}
-            setStep={setStep}
-            activePage={IntakeSteps.PROGRAM_DETAILS}
-            onClickCallback={() => {setProgramDetails(formik.values)}} 
-          />
-     <FormikProvider value={formik}>
+        pages={[
+          "Case referral",
+          "Court information",
+          "Individual details",
+          "Program details",
+        ]}
+        setStep={setStep}
+        activePage={IntakeSteps.PROGRAM_DETAILS}
+        onClickCallback={() => {
+          setProgramDetails(formik.values);
+        }}
+      />
+      <FormikProvider value={formik}>
         <Form>
           <Text textAlign="left" textStyle="title-medium">
             Logistic Needs
@@ -188,9 +196,16 @@ const ProgramForm = ({
             </Button>
           </Box>
         </Form>
-    </FormikProvider>
+      </FormikProvider>
+      <IntakeFooter
+        currentStep={IntakeSteps.CASE_REFERAL}
+        nextBtnTxt="Next"
+        showClearPageBtn={!!true}
+        isStepComplete={() => true}
+        registrationLoading={false}
+        nextStepCallBack={onNextStep}
+      />
     </>
-
   );
 };
 

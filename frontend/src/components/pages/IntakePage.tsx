@@ -7,7 +7,6 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
-import Stepper from "../intake/Stepper";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 
 const Intake = (): React.ReactElement => {
@@ -62,7 +61,10 @@ const Intake = (): React.ReactElement => {
         );
       case 2:
         return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} setStep={setStep}/>
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            setStep={setStep}
+          />
         );
       case 3:
         return (

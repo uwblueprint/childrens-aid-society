@@ -15,7 +15,7 @@ type ReviewFormProps = {
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   prevStep: () => void;
-  setStep: React.Dispatch<React.SetStateAction<number>>
+  setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const ReviewForm = ({

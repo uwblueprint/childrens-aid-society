@@ -13,7 +13,7 @@ const Stepper = ({
   pages,
   activePage,
   setStep,
-  onClickCallback
+  onClickCallback,
 }: StepperProps): React.ReactElement => {
   return (
     <Box
@@ -40,7 +40,7 @@ const Stepper = ({
               key={index}
               style={{ display: "contents" }}
               onClick={() => {
-                onClickCallback()
+                onClickCallback();
                 setStep(index);
               }}
             >

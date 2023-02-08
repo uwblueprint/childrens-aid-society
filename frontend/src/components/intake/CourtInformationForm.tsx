@@ -9,13 +9,14 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { ChevronDown, Download, FilePlus } from "react-feather";
-import { Field, Form, Formik, FormikProvider, useFormik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
+import IntakeFooter from "./IntakeFormFooter";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -28,14 +29,16 @@ type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   readOnly?: boolean;
-  setStep: React.Dispatch<React.SetStateAction<number>>
+  nextStep: () => void;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
   readOnly,
-  setStep
+  setStep,
+  nextStep,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -62,23 +65,27 @@ const CourtInformationForm = ({
     },
   });
 
-
+  const onNextStep = () => {
+    nextStep();
+    setCourtDetails(formik.values);
+  };
   return (
-
     <>
       <Stepper
-            pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
-            ]}
-            setStep={setStep}
-            activePage={IntakeSteps.COURT_INFORMATION}
-            onClickCallback={() => {setCourtDetails(formik.values)}}
-          />
-    <FormikProvider value={formik}>
-          <Form>
+        pages={[
+          "Case referral",
+          "Court information",
+          "Individual details",
+          "Program details",
+        ]}
+        setStep={setStep}
+        activePage={IntakeSteps.COURT_INFORMATION}
+        onClickCallback={() => {
+          setCourtDetails(formik.values);
+        }}
+      />
+      <FormikProvider value={formik}>
+      <Form>
             <Box style={{ paddingBottom: "16px" }}>
               <FormLabel pt="15px" htmlFor="currentCourtStatus">
                 COURT STATUS
@@ -173,11 +180,20 @@ const CourtInformationForm = ({
                   id="firstNationBand"
                   placeholder="Enter First Nation Band"
                   name="firstNationBand"
-            />
+                  disabled={readOnly}
+                />
               </FormControl>
             </HStack>
           </Form>
-    </FormikProvider>
+      </FormikProvider>
+      <IntakeFooter
+        currentStep={IntakeSteps.COURT_INFORMATION}
+        nextBtnTxt="Next"
+        showClearPageBtn={!!true}
+        isStepComplete={() => true}
+        registrationLoading={false}
+        nextStepCallBack={onNextStep}
+      />
     </>
   );
 };

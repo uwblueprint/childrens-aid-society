@@ -9,7 +9,8 @@ export type CurStepLayout = {
 export type IntakeFooterProps = {
   nextBtnRef?: React.RefObject<HTMLButtonElement>;
   currentStep: number;
-  curStepLayout: Map<number, CurStepLayout>;
+  nextBtnTxt: string;
+  showClearPageBtn: boolean;
   isStepComplete: () => boolean;
   registrationLoading: boolean;
   nextStepCallBack: () => void;
@@ -17,8 +18,8 @@ export type IntakeFooterProps = {
 
 const IntakeFooter = ({
   nextBtnRef,
-  currentStep,
-  curStepLayout,
+  nextBtnTxt,
+  showClearPageBtn,
   isStepComplete,
   registrationLoading,
   nextStepCallBack,
@@ -50,11 +51,12 @@ const IntakeFooter = ({
       justify={{ sm: "center", md: "end" }}
       flexWrap="wrap"
       padding="20px"
+      left="0"
       position="fixed"
       bottom="0"
       zIndex="5"
     >
-      {curStepLayout.get(currentStep)?.showClearPageBtn ? (
+      {showClearPageBtn ? (
         <Button
           width={{ sm: "95vw", md: "45vw", lg: "auto" }}
           variant="tertiary"
@@ -79,7 +81,7 @@ const IntakeFooter = ({
           onNextStep();
         }}
       >
-        {curStepLayout.get(currentStep)?.nextBtnTxt}
+        {nextBtnTxt}
       </Button>
     </Flex>
   );

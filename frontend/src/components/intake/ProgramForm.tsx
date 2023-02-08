@@ -39,7 +39,9 @@ type ProgramFormProps = {
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   readOnly?: boolean;
-  setStep: React.Dispatch<React.SetStateAction<number>>
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const ProgramForm = ({
@@ -48,6 +50,8 @@ const ProgramForm = ({
   readOnly = false,
   nextStep,
   setStep,
+  hideStepper,
+  hideFooter,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
@@ -68,19 +72,21 @@ const ProgramForm = ({
 
   return (
     <>
-      <Stepper
-        pages={[
-          "Case referral",
-          "Court information",
-          "Individual details",
-          "Program details",
-        ]}
-        setStep={setStep}
-        activePage={IntakeSteps.PROGRAM_DETAILS}
-        onClickCallback={() => {
-          setProgramDetails(formik.values);
-        }}
-      />
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.PROGRAM_DETAILS}
+          onClickCallback={() => {
+            setProgramDetails(formik.values);
+          }}
+        />
+      )}
       <FormikProvider value={formik}>
         <Form>
           <Text textAlign="left" textStyle="title-medium">
@@ -197,14 +203,16 @@ const ProgramForm = ({
           </Box>
         </Form>
       </FormikProvider>
-      <IntakeFooter
-        currentStep={IntakeSteps.CASE_REFERRAL}
-        nextBtnTxt="Next"
-        showClearPageBtn={!!true}
-        isStepComplete={() => true}
-        registrationLoading={false}
-        nextStepCallBack={onNextStep}
-      />
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.CASE_REFERRAL}
+          nextBtnTxt="Next"
+          showClearPageBtn={!!true}
+          isStepComplete={() => true}
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
+      )}
     </>
   );
 };

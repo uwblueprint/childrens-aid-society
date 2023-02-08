@@ -31,6 +31,8 @@ type CourtInformationFormProps = {
   readOnly?: boolean;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const CourtInformationForm = ({
@@ -39,6 +41,8 @@ const CourtInformationForm = ({
   readOnly,
   setStep,
   nextStep,
+  hideStepper,
+  hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -71,19 +75,21 @@ const CourtInformationForm = ({
   };
   return (
     <>
-      <Stepper
-        pages={[
-          "Case referral",
-          "Court information",
-          "Individual details",
-          "Program details",
-        ]}
-        setStep={setStep}
-        activePage={IntakeSteps.COURT_INFORMATION}
-        onClickCallback={() => {
-          setCourtDetails(formik.values);
-        }}
-      />
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.COURT_INFORMATION}
+          onClickCallback={() => {
+            setCourtDetails(formik.values);
+          }}
+        />
+      )}
       <FormikProvider value={formik}>
       <Form>
             <Box style={{ paddingBottom: "16px" }}>
@@ -186,14 +192,16 @@ const CourtInformationForm = ({
             </HStack>
           </Form>
       </FormikProvider>
-      <IntakeFooter
-        currentStep={IntakeSteps.COURT_INFORMATION}
-        nextBtnTxt="Next"
-        showClearPageBtn={!!true}
-        isStepComplete={() => true}
-        registrationLoading={false}
-        nextStepCallBack={onNextStep}
-      />
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.COURT_INFORMATION}
+          nextBtnTxt="Next"
+          showClearPageBtn={!!true}
+          isStepComplete={() => true}
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
+      )}
     </>
   );
 };

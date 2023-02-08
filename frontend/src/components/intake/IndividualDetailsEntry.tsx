@@ -12,11 +12,15 @@ import IntakeFooter from "./IntakeFormFooter";
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const IndividualDetailsEntry = ({
   nextStep,
   setStep,
+  hideStepper,
+  hideFooter,
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const history = useHistory();
 
@@ -33,17 +37,19 @@ const IndividualDetailsEntry = ({
 
   return (
     <>
-      <Stepper
-        pages={[
-          "Case referral",
-          "Court information",
-          "Individual details",
-          "Program details",
-        ]}
-        setStep={setStep}
-        activePage={IntakeSteps.INDIVIDUAL_DETAILS}
-        onClickCallback={() => {}} // TODO: SET UP SAVING INVIDUAL DETAILS
-      />
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.INDIVIDUAL_DETAILS}
+          onClickCallback={() => {}} // TODO: SET UP SAVING INVIDUAL DETAILS
+        />
+      )}
       <React.Fragment key="IndividualDetailsEntry">
         <VStack padding="32px" spacing="24px">
           <PromptBox
@@ -68,14 +74,16 @@ const IndividualDetailsEntry = ({
           />
         </VStack>
       </React.Fragment>
-      <IntakeFooter
-        currentStep={IntakeSteps.INDIVIDUAL_DETAILS}
-        nextBtnTxt="Next"
-        showClearPageBtn={!!true}
-        isStepComplete={() => true}
-        registrationLoading={false}
-        nextStepCallBack={onNextStep}
-      />
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.INDIVIDUAL_DETAILS}
+          nextBtnTxt="Next"
+          showClearPageBtn={!!true}
+          isStepComplete={() => true}
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
+      )}
     </>
   );
 };

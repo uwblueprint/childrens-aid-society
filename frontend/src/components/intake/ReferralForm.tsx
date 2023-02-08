@@ -30,6 +30,8 @@ type ReferralFormProps = {
   nextStep: () => void;
   readOnly?: true;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const ReferralForm = ({
@@ -38,6 +40,8 @@ const ReferralForm = ({
   nextStep,
   readOnly,
   setStep,
+  hideStepper,
+  hideFooter,
 }: ReferralFormProps): React.ReactElement => {
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
@@ -58,19 +62,21 @@ const ReferralForm = ({
 
   return (
     <>
-      <Stepper
-        pages={[
-          "Case referral",
-          "Court information",
-          "Individual details",
-          "Program details",
-        ]}
-        setStep={setStep}
-        activePage={IntakeSteps.CASE_REFERRAL}
-        onClickCallback={() => {
-          setReferralDetails(formik.values);
-        }}
-      />
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.CASE_REFERRAL}
+          onClickCallback={() => {
+            setReferralDetails(formik.values);
+          }}
+        />
+      )}
       <FormikProvider value={formik}>
         <Form>
           <FormControl>
@@ -154,14 +160,16 @@ const ReferralForm = ({
           </FormControl>
         </Form>
       </FormikProvider>
-      <IntakeFooter
-        currentStep={IntakeSteps.CASE_REFERRAL}
-        nextBtnTxt="Next"
-        showClearPageBtn={!!true}
-        isStepComplete={() => true}
-        registrationLoading={false}
-        nextStepCallBack={onNextStep}
-      />
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.CASE_REFERRAL}
+          nextBtnTxt="Next"
+          showClearPageBtn={!!true}
+          isStepComplete={() => true}
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
+      )}
     </>
   );
 };

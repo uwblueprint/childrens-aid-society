@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, HStack, Text, Icon, Stack } from "@chakra-ui/react";
+import { Button, HStack, Text, Icon, Stack, Box } from "@chakra-ui/react";
 import { Edit2 } from "react-feather";
 import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
@@ -16,6 +16,7 @@ type ReviewFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
+  prevStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -27,6 +28,7 @@ const ReviewForm = ({
   programDetails,
   setProgramDetails,
   nextStep,
+  prevStep,
   setStep,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
@@ -116,6 +118,16 @@ const ReviewForm = ({
         registrationLoading={false}
         nextStepCallBack={onNextStep}
       />
+      <Box>
+        <Button
+          onClick={() => {
+            prevStep();
+          }}
+        >
+          Previous Button
+        </Button>
+      </Box>
+
     </>
   );
 };

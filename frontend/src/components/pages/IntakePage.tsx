@@ -36,6 +36,7 @@ const Intake = (): React.ReactElement => {
   });
 
   const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
 
   const renderDetailsForm = () => {
     switch (step) {
@@ -80,6 +81,7 @@ const Intake = (): React.ReactElement => {
                 programDetails={programDetails}
                 setProgramDetails={setProgramDetails}
                 nextStep={nextStep}
+                prevStep={prevStep}
                 setStep={setStep}
               />
             </Box>

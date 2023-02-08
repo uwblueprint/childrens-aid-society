@@ -17,10 +17,13 @@ import {
   UserPlus,
   ChevronDown,
 } from "react-feather";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 import { CustomSelectField } from "./CustomSelectField";
+import Stepper from "./Stepper";
+import IntakeSteps from "./intakeSteps";
+import IntakeFooter from "./IntakeFormFooter";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -35,8 +38,10 @@ type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
-  prevStep: () => void;
   readOnly?: boolean;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const ProgramForm = ({
@@ -44,16 +49,45 @@ const ProgramForm = ({
   setProgramDetails,
   readOnly = false,
   nextStep,
-  prevStep,
+  setStep,
+  hideStepper,
+  hideFooter,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
     nextStep();
   };
 
+  const formik = useFormik({
+    initialValues: programDetails,
+    onSubmit: (values: ProgramDetails) => {
+      onSubmit(values);
+    },
+  });
+
+  const onNextStep = () => {
+    nextStep();
+    setProgramDetails(formik.values);
+  };
+
   return (
-    <Formik initialValues={programDetails} onSubmit={onSubmit}>
-      {({ handleSubmit }) => (
+    <>
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.PROGRAM_DETAILS}
+          onClickCallback={() => {
+            setProgramDetails(formik.values);
+          }}
+        />
+      )}
+      <FormikProvider value={formik}>
         <Form>
           <Text textAlign="left" textStyle="title-medium">
             Logistic Needs
@@ -167,30 +201,19 @@ const ProgramForm = ({
               Add
             </Button>
           </Box>
-          {!readOnly && (
-            <Button
-              onClick={() => {
-                handleSubmit();
-                prevStep();
-              }}
-            >
-              Previous Button
-            </Button>
-          )}
-
-          {!readOnly && (
-            <Button
-              onClick={() => {
-                handleSubmit();
-                nextStep();
-              }}
-            >
-              Next Button
-            </Button>
-          )}
         </Form>
+      </FormikProvider>
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.CASE_REFERRAL}
+          nextButtonText="Review case details"
+          showClearPageBtn
+          isStepComplete={() => true} // TODO: validate form
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
       )}
-    </Formik>
+    </>
   );
 };
 

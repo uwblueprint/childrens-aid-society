@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { VStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
 import { ADD_CHILD_PAGE } from "../../constants/Routes";
-import NewCaregiverModal, { Caregivers } from "./NewCaregiverModal";
+import { Caregivers } from "./NewCaregiverModal";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";

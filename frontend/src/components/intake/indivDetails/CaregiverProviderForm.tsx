@@ -1,4 +1,4 @@
-import { Box, useDisclosure, Icon, VStack } from "@chakra-ui/react";
+import { useDisclosure, Icon } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { UserPlus } from "react-feather";
 import NewCaregiverModal, {

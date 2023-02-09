@@ -2,7 +2,6 @@ import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
 
-
 export type IntakeResponse = {
   user_id: string | number;
   caseReferral: {
@@ -27,14 +26,14 @@ export type IntakeResponse = {
         cpinFileNumber: number;
         serviceWorker: string;
         specialNeeds: string;
-        concerns: string [];
-      }
+        concerns: string[];
+      };
       daytimeContact: {
         name: string;
         contactInfo: string;
         address: string;
         dismissalTime: string;
-      }
+      };
       provider: [
         {
           name: string;
@@ -45,10 +44,10 @@ export type IntakeResponse = {
           address: string;
           additionalContactNotes: string;
           relationshipToChild: string;
-        }
-      ]
-    }
-  ]
+        },
+      ];
+    },
+  ];
   caregivers: [
     {
       name: string;
@@ -59,24 +58,24 @@ export type IntakeResponse = {
       address: string;
       relationshipToChild: string;
       individualConsiderations: string;
-    }
-  ]
+    },
+  ];
   programDetails: {
     transportRequirements: string;
     schedulingRequirements: string;
     suggestedStartDate: string;
-    shortTermGoals: string [];
-    longTermGoals: string [];
-    familialConcerns: string [];
+    shortTermGoals: string[];
+    longTermGoals: string[];
+    familialConcerns: string[];
     permittedIndividuals: [
       {
         name: string;
         phoneNumber: number;
         relationshipToChildren: string;
         additionalNotes: string;
-      }
-    ]
-  }
+      },
+    ];
+  };
 };
 
 const post = async ({

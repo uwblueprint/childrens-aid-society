@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, HStack, Text, Icon, Stack, Box } from "@chakra-ui/react";
+import { Button, HStack, Icon, Stack, Text } from "@chakra-ui/react";
 import { Edit2 } from "react-feather";
 import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
@@ -18,6 +18,7 @@ type ReviewFormProps = {
   nextStep: () => void;
   prevStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReviewForm = ({
@@ -30,6 +31,7 @@ const ReviewForm = ({
   nextStep,
   prevStep,
   setStep,
+  setReviewHeader,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
     nextStep(); // TODO: Add functionality for nextStep (Currently we pass in empty nextStep() prop)
@@ -46,8 +48,12 @@ const ReviewForm = ({
             textStyle="button-medium"
             variant="primary"
             rightIcon={<Icon as={Edit2} h="16px" />}
+            onClick={() => {
+              setStep(IntakeSteps.CASE_REFERRAL);
+              setReviewHeader(true);
+            }}
           >
-            Edit {/* TODO: implement edit button */}
+            Edit
           </Button>
         </HStack>
         <ReferralForm
@@ -70,8 +76,12 @@ const ReviewForm = ({
             textStyle="button-medium"
             variant="primary"
             rightIcon={<Icon as={Edit2} h="16px" />}
+            onClick={() => {
+              setStep(IntakeSteps.COURT_INFORMATION);
+              setReviewHeader(true);
+            }}
           >
-            Edit {/* TODO: implement edit button */}
+            Edit
           </Button>
         </HStack>
         <CourtInformationForm
@@ -85,23 +95,45 @@ const ReviewForm = ({
         />
       </Stack>
 
-      <IndividualDetails
-        title="Individual details"
-        childrenDetails={[]}
-        caregiverDetails={[]}
-      />
-
       <Stack padding="32px" spacing="16px">
         <HStack w="full" display="flex" justifyContent="space-between">
           <Text color="b&w.black" textStyle="header-large">
-            Program Details
+            Individual details
           </Text>
           <Button
             textStyle="button-medium"
             variant="primary"
             rightIcon={<Icon as={Edit2} h="16px" />}
+            onClick={() => {
+              setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+              setReviewHeader(true);
+            }}
           >
-            Edit {/* TODO: implement edit button */}
+            Edit
+          </Button>
+        </HStack>
+        <IndividualDetails
+          title="Individual details"
+          childrenDetails={[]}
+          caregiverDetails={[]}
+        />
+      </Stack>
+
+      <Stack padding="32px" spacing="16px">
+        <HStack w="full" display="flex" justifyContent="space-between">
+          <Text color="b&w.black" textStyle="header-large">
+            Program details
+          </Text>
+          <Button
+            textStyle="button-medium"
+            variant="primary"
+            rightIcon={<Icon as={Edit2} h="16px" />}
+            onClick={() => {
+              setStep(IntakeSteps.PROGRAM_DETAILS);
+              setReviewHeader(true);
+            }}
+          >
+            Edit
           </Button>
         </HStack>
         <ProgramForm
@@ -122,15 +154,6 @@ const ReviewForm = ({
         registrationLoading={false}
         nextStepCallBack={onNextStep}
       />
-      <Box>
-        <Button
-          onClick={() => {
-            prevStep();
-          }}
-        >
-          Previous Button
-        </Button>
-      </Box>
     </>
   );
 };

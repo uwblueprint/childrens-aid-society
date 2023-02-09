@@ -9,9 +9,11 @@ import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../intake/NewCaregiverModal";
+import IntakeSteps from "../intake/intakeSteps";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
+  const [reviewHeader, setReviewHeader] = useState(false);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -43,7 +45,7 @@ const Intake = (): React.ReactElement => {
 
   const renderDetailsForm = () => {
     switch (step) {
-      case 0:
+      case IntakeSteps.CASE_REFERRAL:
         return (
           <ReferralForm
             referralDetails={referralDetails}
@@ -52,7 +54,7 @@ const Intake = (): React.ReactElement => {
             setStep={setStep}
           />
         );
-      case 1:
+      case IntakeSteps.COURT_INFORMATION:
         return (
           <CourtInformationForm
             courtDetails={courtDetails}
@@ -61,16 +63,9 @@ const Intake = (): React.ReactElement => {
             setStep={setStep}
           />
         );
-      case 2:
-        return (
-          <IndividualDetailsEntry
-            nextStep={nextStep}
-            setStep={setStep}
-            caregivers={caregivers}
-            setCaregivers={setCaregivers}
-          />
-        );
-      case 3:
+      case IntakeSteps.INDIVIDUAL_DETAILS:
+        return <IndividualDetailsEntry nextStep={nextStep} setStep={setStep} />;
+      case IntakeSteps.PROGRAM_DETAILS:
         return (
           <ProgramForm
             programDetails={programDetails}
@@ -93,6 +88,7 @@ const Intake = (): React.ReactElement => {
                 nextStep={nextStep}
                 prevStep={prevStep}
                 setStep={setStep}
+                setReviewHeader={setReviewHeader}
               />
             </Box>
           </>
@@ -102,16 +98,25 @@ const Intake = (): React.ReactElement => {
 
   return (
     <>
-      {step === 4 ? (
+      {step === IntakeSteps.REVIEW_CASE_DETAILS ? (
         <IntakeHeader
           primaryTitle="Review Case Details"
           secondaryTitle="Initiate New Case"
         />
       ) : (
-        <IntakeHeader
-          primaryTitle="Initiate New Case"
-          secondaryTitle="Case Management"
-        />
+        <>
+          {reviewHeader ? (
+            <IntakeHeader
+              primaryTitle="Edit Case Intake Submission"
+              secondaryTitle="Case Management"
+            />
+          ) : (
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
+          )}
+        </>
       )}
 
       <Box textAlign="center" padding="30px 0 40px 0">

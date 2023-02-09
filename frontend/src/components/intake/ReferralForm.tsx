@@ -28,8 +28,8 @@ type ReferralFormProps = {
   referralDetails: ReferralDetails;
   setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
-  readOnly?: true;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
   hideStepper?: boolean;
   hideFooter?: boolean;
 };
@@ -38,8 +38,8 @@ const ReferralForm = ({
   referralDetails,
   setReferralDetails,
   nextStep,
-  readOnly,
   setStep,
+  readOnly = false,
   hideStepper,
   hideFooter,
 }: ReferralFormProps): React.ReactElement => {

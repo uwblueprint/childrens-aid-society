@@ -28,9 +28,9 @@ export type CourtDetails = {
 type CourtInformationFormProps = {
   courtDetails: CourtDetails;
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
-  readOnly?: boolean;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
   hideStepper?: boolean;
   hideFooter?: boolean;
 };
@@ -38,9 +38,9 @@ type CourtInformationFormProps = {
 const CourtInformationForm = ({
   courtDetails,
   setCourtDetails,
-  readOnly,
   setStep,
   nextStep,
+  readOnly,
   hideStepper,
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {

@@ -64,8 +64,8 @@ def create_intake():
 
     # intake
     intake = {
-        "user_id": 1,  # ?
-        "intake_status": "ACCEPTED",
+        "user_id": request.json["userId"],
+        "intake_status": "IN_PROGRESS",
         "referring_worker_name": request.json["caseReferral"]["referringWorker"],
         "referring_worker_contact": request.json["caseReferral"][
             "referringWorkerContact"
@@ -87,12 +87,12 @@ def create_intake():
             "schedulingRequirements"
         ],
         "suggested_start_date": request.json["programDetails"]["suggestedStartDate"],
-        "date_accepted": "2020-01-01",  # ?
-        "access_weekday": None,  # ?
-        "access_location": None,  # ?
-        "access_time": None,  # ?
-        "lead_access_worker_id": 1,  # ?
-        "denial_reason": None,  # ?
+        "date_accepted": "",
+        "access_weekday": "",
+        "access_location": "",
+        "access_time": "",
+        "lead_access_worker_id": "",
+        "denial_reason": "",
     }
 
     try:
@@ -181,15 +181,12 @@ def create_intake():
     # short term goals
     shortTermGoals = request.json["programDetails"]["shortTermGoals"]
     for shortTermGoal in shortTermGoals:
-        shortTermGoal = {
+        newShortTermGoal = {
             "type": "SHORT_TERM",
             "goal": shortTermGoal,
-            # "start_date": None,
-            # "end_date": None,
-            # "is_default": False,
         }
         try:
-            shortTermGoal_response = goal_service.add_new_goal(**shortTermGoal)
+            shortTermGoal_response = goal_service.add_new_goal(**newShortTermGoal)
             undos.append((goal_service, "delete_goal", shortTermGoal_response.id))
         except Exception as error:
             run_undos()
@@ -198,15 +195,12 @@ def create_intake():
     # long term goals
     longTermGoals = request.json["programDetails"]["longTermGoals"]
     for longTermGoal in longTermGoals:
-        longTermGoal = {
+        newLongTermGoal = {
             "type": "LONG_TERM",
             "goal": longTermGoal,
-            # "start_date": None,
-            # "end_date": None,
-            # "is_default": False,
         }
         try:
-            longTermGoal_response = goal_service.add_new_goal(**longTermGoal)
+            longTermGoal_response = goal_service.add_new_goal(**newLongTermGoal)
             undos.append((goal_service, "delete_goal", longTermGoal_response.id))
         except Exception as error:
             run_undos()
@@ -240,15 +234,12 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": intake_id,
-            "first_name": child["childInfo"]["name"].rsplit(" ", 1)[0],
-            "last_name": child["childInfo"]["name"].rsplit(" ", 1)[1],
+            "name": child["childInfo"]["name"].rsplit(" ", 1)[0],
             "date_of_birth": child["childInfo"]["dateOfBirth"],
             "cpin_number": child["childInfo"]["cpinFileNumber"],
-            "child_service_worker_id": 1,  # ?
-            "daytime_contact_id": 1,  # ?
+            "service_worker": child["childInfo"]["serviceWorker"],
+            "daytime_contact_id": daytimeContact_response.id,
             "special_needs": child["childInfo"]["specialNeeds"],
-            "has_kinship_provider": True,  # ?
-            "has_foster_placement": False,  # ?
         }
         try:
             child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
@@ -265,8 +256,8 @@ def create_intake():
                 "file_number": provider["fileNumber"],
                 "primary_phone_number": provider["primaryPhoneNumber"],
                 "secondary_phone_number": provider["secondaryPhoneNumber"],
-                "email": "test@mail.com",
-                "address": "1234 Test St",
+                "email": provider["email"],
+                "address": provider["address"],
                 "relationship_to_child": provider["relationshipToChild"],
                 "additional_contact_notes": provider["additionalContactNotes"],
                 "child_id": child_response.id,

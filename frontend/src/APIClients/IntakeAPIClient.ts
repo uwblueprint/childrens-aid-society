@@ -97,7 +97,7 @@ const post = async ({
   }
 };
 
-const get = async ({}): Promise<IntakeResponse[]> => {
+const get = async (): Promise<IntakeResponse[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "accessToken",

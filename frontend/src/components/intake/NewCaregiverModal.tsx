@@ -5,20 +5,39 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
+export type CaregiverDetails = {
+  caregiverName: string;
+  dateOfBirth: string;
+  primaryPhoneNo: string;
+  secondaryPhoneNo?: string;
+  contactNotes?: string;
+  address: string;
+  relationship: string;
+  indivConsiderations?: string;
+};
+
+export type Caregivers = CaregiverDetails[];
+
 type NewCaregiverProps = {
   isOpen: boolean;
+  onClick: (newCaregiver: CaregiverDetails) => void;
   onClose: () => void;
 };
 
 const NewCaregiverModal = ({
   isOpen,
+  onClick,
   onClose,
 }: NewCaregiverProps): React.ReactElement => {
   const [caregiverName, setCaregiverName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
+  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
   const [address, setAddress] = useState("");
   const [relationship, setRelationship] = useState("");
+  const [indivConsiderations, setIndivConsiderations] = useState("");
+
   return (
     <Box>
       <ModalComponent
@@ -42,8 +61,8 @@ const NewCaregiverModal = ({
               <Box>
                 <FormLabel htmlFor="dateOfBirth">DATE OF BIRTH</FormLabel>
                 <CustomInput
-                  id="providerFileNumber"
-                  name="providerFileNumber"
+                  id="caregiverFileNumber"
+                  name="caregiverFileNumber"
                   type="string"
                   placeholder="YYYY-MM-DD"
                   icon={<Icon as={Calendar} />}
@@ -77,6 +96,9 @@ const NewCaregiverModal = ({
                   type="string"
                   placeholder="e.g. 555-555-5555"
                   icon={<Icon as={Phone} />}
+                  onChange={(event) => {
+                    setSecondaryPhoneNo(event.target.value);
+                  }}
                 />
               </Box>
             </SimpleGrid>
@@ -91,6 +113,9 @@ const NewCaregiverModal = ({
                 placeholder="Note any preferences or additional channels of communication."
                 height="10rem"
                 paddingBottom="7rem"
+                onChange={(event) => {
+                  setContactNotes(event.target.value);
+                }}
               />
             </Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -132,18 +157,37 @@ const NewCaregiverModal = ({
                 placeholder="Note any caregiver needs for case consideration, ex. special needs, cultural needs."
                 height="10rem"
                 paddingBottom="7rem"
+                onChange={(event) => {
+                  setIndivConsiderations(event.target.value);
+                }}
               />
             </Box>
           </Box>
         }
-        onClick={() => {}} // empty for now
+        onClick={() => {
+          const newCaregiver: CaregiverDetails = {
+            caregiverName,
+            dateOfBirth,
+            primaryPhoneNo,
+            secondaryPhoneNo,
+            contactNotes,
+            address,
+            relationship,
+            indivConsiderations,
+          };
+          onClick(newCaregiver);
+          onClose();
+        }} // empty for now
         isOpen={isOpen}
         onClose={() => {
           setCaregiverName("");
           setDateOfBirth("");
           setPrimaryPhoneNo("");
+          setSecondaryPhoneNo("");
+          setContactNotes("");
           setAddress("");
           setRelationship("");
+          setIndivConsiderations("");
           onClose();
         }}
         disabled={
@@ -151,8 +195,11 @@ const NewCaregiverModal = ({
             caregiverName &&
             dateOfBirth &&
             primaryPhoneNo &&
+            secondaryPhoneNo &&
+            contactNotes &&
             address &&
-            relationship
+            relationship &&
+            indivConsiderations
           )
         }
         secondaryTitle="Individual Details"

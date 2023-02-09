@@ -38,8 +38,8 @@ type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
-  readOnly?: boolean;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
   hideStepper?: boolean;
   hideFooter?: boolean;
 };
@@ -47,9 +47,9 @@ type ProgramFormProps = {
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
-  readOnly = false,
   nextStep,
   setStep,
+  readOnly = false,
   hideStepper,
   hideFooter,
 }: ProgramFormProps): React.ReactElement => {

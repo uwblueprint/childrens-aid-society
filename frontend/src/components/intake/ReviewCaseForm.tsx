@@ -80,6 +80,8 @@ const ReviewForm = ({
           nextStep={nextStep}
           setStep={setStep}
           readOnly
+          hideFooter
+          hideStepper
         />
       </Stack>
 
@@ -108,6 +110,8 @@ const ReviewForm = ({
           nextStep={nextStep}
           setStep={setStep}
           readOnly
+          hideFooter
+          hideStepper
         />
       </Stack>
 

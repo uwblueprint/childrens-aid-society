@@ -205,7 +205,7 @@ const ProgramForm = ({
       </FormikProvider>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.CASE_REFERRAL}
+          currentStep={IntakeSteps.PROGRAM_DETAILS}
           nextButtonText="Review case details"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

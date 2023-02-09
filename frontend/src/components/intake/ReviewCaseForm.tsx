@@ -16,7 +16,6 @@ type ReviewFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
-  prevStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -29,7 +28,6 @@ const ReviewForm = ({
   programDetails,
   setProgramDetails,
   nextStep,
-  prevStep,
   setStep,
   setReviewHeader,
 }: ReviewFormProps): React.ReactElement => {
@@ -112,11 +110,7 @@ const ReviewForm = ({
             Edit
           </Button>
         </HStack>
-        <IndividualDetails
-          title="Individual details"
-          childrenDetails={[]}
-          caregiverDetails={[]}
-        />
+        <IndividualDetails childrenDetails={[]} caregiverDetails={[]} />
       </Stack>
 
       <Stack padding="32px" spacing="16px">

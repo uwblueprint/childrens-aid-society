@@ -1,17 +1,15 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
-import { Edit2, ArrowRight } from "react-feather";
+import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
 import { IndividualDetailsOverview } from "./PromptBox";
 
 type IndividualDetailsProps = {
-  title: string;
   childrenDetails: IndividualDetailsOverview[];
   caregiverDetails: IndividualDetailsOverview[];
 };
 
 const IndividualDetails = ({
-  title,
   childrenDetails,
   caregiverDetails,
 }: IndividualDetailsProps): React.ReactElement => {

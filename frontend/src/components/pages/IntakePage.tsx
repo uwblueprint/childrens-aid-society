@@ -41,7 +41,6 @@ const Intake = (): React.ReactElement => {
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
 
   const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
 
   const renderDetailsForm = () => {
     switch (step) {
@@ -64,7 +63,14 @@ const Intake = (): React.ReactElement => {
           />
         );
       case IntakeSteps.INDIVIDUAL_DETAILS:
-        return <IndividualDetailsEntry nextStep={nextStep} setStep={setStep} />;
+        return (
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            setStep={setStep}
+            caregivers={caregivers}
+            setCaregivers={setCaregivers}
+          />
+        );
       case IntakeSteps.PROGRAM_DETAILS:
         return (
           <ProgramForm
@@ -86,7 +92,6 @@ const Intake = (): React.ReactElement => {
                 programDetails={programDetails}
                 setProgramDetails={setProgramDetails}
                 nextStep={nextStep}
-                prevStep={prevStep}
                 setStep={setStep}
                 setReviewHeader={setReviewHeader}
               />

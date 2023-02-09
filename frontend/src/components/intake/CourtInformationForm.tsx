@@ -40,7 +40,7 @@ const CourtInformationForm = ({
   setCourtDetails,
   setStep,
   nextStep,
-  readOnly,
+  readOnly = false,
   hideStepper,
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {

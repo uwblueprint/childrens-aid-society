@@ -195,11 +195,8 @@ const NewCaregiverModal = ({
             caregiverName &&
             dateOfBirth &&
             primaryPhoneNo &&
-            secondaryPhoneNo &&
-            contactNotes &&
             address &&
-            relationship &&
-            indivConsiderations
+            relationship
           )
         }
         secondaryTitle="Individual Details"

@@ -38,6 +38,18 @@ const NewCaregiverModal = ({
   const [relationship, setRelationship] = useState("");
   const [indivConsiderations, setIndivConsiderations] = useState("");
 
+  const handleClose = () => {
+    setCaregiverName("");
+    setDateOfBirth("");
+    setPrimaryPhoneNo("");
+    setSecondaryPhoneNo("");
+    setContactNotes("");
+    setAddress("");
+    setRelationship("");
+    setIndivConsiderations("");
+    onClose();
+  };
+
   return (
     <Box>
       <ModalComponent
@@ -176,19 +188,11 @@ const NewCaregiverModal = ({
             indivConsiderations,
           };
           onClick(newCaregiver);
-          onClose();
-        }} // empty for now
+          handleClose();
+        }}
         isOpen={isOpen}
         onClose={() => {
-          setCaregiverName("");
-          setDateOfBirth("");
-          setPrimaryPhoneNo("");
-          setSecondaryPhoneNo("");
-          setContactNotes("");
-          setAddress("");
-          setRelationship("");
-          setIndivConsiderations("");
-          onClose();
+          handleClose();
         }}
         disabled={
           !(

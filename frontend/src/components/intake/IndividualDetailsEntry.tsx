@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
@@ -15,6 +15,8 @@ export type IndividualDetailsEntryProp = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   hideStepper?: boolean;
   hideFooter?: boolean;
+  caregivers: Caregivers;
+  setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
 };
 
 const IndividualDetailsEntry = ({
@@ -22,6 +24,8 @@ const IndividualDetailsEntry = ({
   setStep,
   hideStepper,
   hideFooter,
+  caregivers,
+  setCaregivers,
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const history = useHistory();
 
@@ -29,8 +33,6 @@ const IndividualDetailsEntry = ({
     nextStep();
     // TODO: SET UP SAVING INVIDUAL DETAILS
   };
-
-  const [caregivers, setCaregivers] = useState<Caregivers>([]);
 
   return (
     <>

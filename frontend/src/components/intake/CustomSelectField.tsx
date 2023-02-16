@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React, { useState } from "react";
+
 import {
   FormControl,
   Popover,
@@ -10,20 +11,23 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useField } from "formik";
-import CustomInput, { CustomInputProps } from "../common/CustomInput";
 import CustomTag from "../common/CustomTag";
+import CustomInput, { CustomInputProps } from "../common/CustomInput";
 
-export type AutocompleteFieldProps = CustomInputProps & {
+export type CustomSelectProps = CustomInputProps & {
   name: string;
-  hints: string[];
+  placeholder: string;
+  icon?: JSX.Element;
+  iconRight?: JSX.Element;
+  options: string[];
   readOnly?: boolean;
 };
 
-export const AutocompleteSuggestions = ({
-  hints,
+export const CustomSelectDropDown = ({
+  options,
   onSelect,
 }: {
-  hints: string[];
+  options: string[];
   onSelect: (value: string) => void;
 }): React.ReactElement => {
   return (
@@ -33,10 +37,10 @@ export const AutocompleteSuggestions = ({
       shadow="none"
       maxHeight="300px"
       overflowY="auto"
-      display={hints.length === 0 ? "none" : "block"}
+      display={options.length === 0 ? "none" : "block"}
     >
       <PopoverBody padding="8px">
-        {hints.map((hint, index) => (
+        {options.map((option, index) => (
           // if the user holds down the mouse, the input loses
           // focus and the popover is automatically dismissed;
           // this prevents onClick from working, so we need to
@@ -44,11 +48,11 @@ export const AutocompleteSuggestions = ({
           <Box
             key={index}
             onMouseDown={() => {
-              onSelect(hint);
+              onSelect(option);
             }}
           >
             <CustomTag controlled pressed={false} setPressed={() => {}}>
-              {hint}
+              {option}
             </CustomTag>
           </Box>
         ))}
@@ -57,20 +61,18 @@ export const AutocompleteSuggestions = ({
   );
 };
 
-export const AutocompleteField = ({
+export const CustomSelectField = ({
   name,
-  hints,
+  options,
+  placeholder,
+  icon,
+  iconRight,
   readOnly = false,
   ...props
-}: AutocompleteFieldProps): React.ReactElement => {
+}: CustomSelectProps): React.ReactElement => {
   const [field, , helpers] = useField<string>(name);
 
   const [isFocused, setFocus] = useState(false);
-
-  const filtered = React.useMemo(() => {
-    const search = field.value.toLowerCase();
-    return hints.filter((h) => h.toLowerCase().includes(search));
-  }, [field.value, hints]);
 
   return (
     <Popover autoFocus={false} isOpen={isFocused} placement="bottom-start">
@@ -78,16 +80,18 @@ export const AutocompleteField = ({
         <FormControl>
           <CustomInput
             {...{ ...field, ...props }}
-            type="string"
+            placeholder={placeholder}
+            isReadOnly
+            icon={icon}
+            rightIcon={iconRight}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
-            isReadOnly={readOnly}
           />
         </FormControl>
       </PopoverTrigger>
       {!readOnly && (
-        <AutocompleteSuggestions
-          hints={filtered}
+        <CustomSelectDropDown
+          options={options}
           onSelect={(value) => helpers.setValue(value)}
         />
       )}

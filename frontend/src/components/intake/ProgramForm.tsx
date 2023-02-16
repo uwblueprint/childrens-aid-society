@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Box,
   FormLabel,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Truck,
@@ -15,10 +16,16 @@ import {
   CheckSquare,
   TrendingUp,
   UserPlus,
+  ChevronDown,
 } from "react-feather";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import { CustomSelectField } from "./CustomSelectField";
+import Stepper from "./Stepper";
+import IntakeSteps from "./intakeSteps";
+import IntakeFooter from "./IntakeFormFooter";
+import PermittedIndividualsModal from "./PermittedIndividualsModal";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -33,22 +40,62 @@ type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
-  prevStep: () => void;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
+  hideStepper?: boolean;
+  hideFooter?: boolean;
 };
 
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
   nextStep,
-  prevStep,
+  setStep,
+  readOnly = false,
+  hideStepper,
+  hideFooter,
 }: ProgramFormProps): React.ReactElement => {
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
+    nextStep();
   };
 
+  const formik = useFormik({
+    initialValues: programDetails,
+    onSubmit: (values: ProgramDetails) => {
+      onSubmit(values);
+    },
+  });
+
+  const onNextStep = () => {
+    nextStep();
+    setProgramDetails(formik.values);
+  };
+
+  const {
+    onOpen: onOpenAddPermittedIndividuals,
+    isOpen: isOpenAddPermittedIndividuals,
+    onClose: onCloseAddPermittedIndividuals,
+  } = useDisclosure();
+
   return (
-    <Formik initialValues={programDetails} onSubmit={onSubmit}>
-      {({ handleSubmit }) => (
+    <>
+      {!hideStepper && (
+        <Stepper
+          pages={[
+            "Case referral",
+            "Court information",
+            "Individual details",
+            "Program details",
+          ]}
+          setStep={setStep}
+          activePage={IntakeSteps.PROGRAM_DETAILS}
+          onClickCallback={() => {
+            setProgramDetails(formik.values);
+          }}
+        />
+      )}
+      <FormikProvider value={formik}>
         <Form>
           <Text textAlign="left" textStyle="title-medium">
             Logistic Needs
@@ -59,27 +106,36 @@ const ProgramForm = ({
                 <FormLabel htmlFor="transportationRequirements">
                   TRANSPORTATION REQUIREMENTS
                 </FormLabel>
-                <Field
-                  as={CustomInput}
-                  id="transportationRequirements"
+                <CustomSelectField
                   name="transportationRequirements"
-                  type="string"
+                  id="transportationRequirements"
+                  options={[
+                    "Agency driver needed",
+                    "Kin provider will transport",
+                    "Foster provider will transport",
+                  ]}
                   placeholder="Select an option..."
                   icon={<Icon as={Truck} />}
+                  iconRight={<Icon as={ChevronDown} />}
+                  readOnly={readOnly}
                 />
               </Box>
               <Box>
                 <FormLabel htmlFor="schedulingRequirements">
                   SCHEDULING REQUIREMENTS
                 </FormLabel>
-                <Field
-                  as={CustomInput}
-                  // TODO change to list selector component
+                <CustomSelectField
                   name="schedulingRequirements"
                   id="schedulingRequirements"
-                  type="string"
                   placeholder="Select an option..."
+                  options={[
+                    "Weekly and time",
+                    "Weekly after school",
+                    "Standard (2x per week)",
+                  ]}
                   icon={<Icon as={Clipboard} />}
+                  iconRight={<Icon as={ChevronDown} />}
+                  readOnly={readOnly}
                 />
               </Box>
               <Box>
@@ -87,6 +143,7 @@ const ProgramForm = ({
                   SUGGESTED START DATE
                 </FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
                   name="suggestedStartDate"
                   id="suggestedStartDate"
@@ -103,8 +160,9 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
-                  // TODO change to list selector component
+                  // TODO change to multi-list selector component
                   id="shortTermGoals"
                   name="shortTermGoals"
                   placeholder="Select goals..."
@@ -114,8 +172,9 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <Field
+                  disabled={readOnly}
                   as={CustomInput}
-                  // TODO change to list selector component
+                  // TODO change to multi-list selector component
                   id="longTermGoals"
                   name="longTermGoals"
                   placeholder="Select goals..."
@@ -128,8 +187,9 @@ const ProgramForm = ({
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
               <Field
+                disabled={readOnly}
                 as={CustomInput}
-                // TODO change to multi option list selector component
+                // TODO change to multi-list selector component
                 id="familialConcerns"
                 name="familialConcerns"
                 placeholder="Select familial concerns..."
@@ -140,34 +200,35 @@ const ProgramForm = ({
             <Text alignSelf="start" textStyle="title-medium">
               Other permitted individuals
             </Text>
-            <Button
-              alignSelf="end"
-              leftIcon={<Icon as={UserPlus} />}
-              variant="secondary"
-              mr={2}
-            >
-              Add
-            </Button>
+            {!readOnly && (
+              <Button
+                alignSelf="end"
+                leftIcon={<Icon as={UserPlus} />}
+                variant="secondary"
+                mr={2}
+                onClick={onOpenAddPermittedIndividuals}
+              >
+                Add
+              </Button>
+            )}
           </Box>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              prevStep();
-            }}
-          >
-            Previous Button
-          </Button>
-          <Button
-            onClick={() => {
-              handleSubmit();
-              nextStep();
-            }}
-          >
-            Next Button
-          </Button>
+          <PermittedIndividualsModal
+            isOpen={isOpenAddPermittedIndividuals}
+            onClose={onCloseAddPermittedIndividuals}
+          />
         </Form>
+      </FormikProvider>
+      {!hideFooter && (
+        <IntakeFooter
+          currentStep={IntakeSteps.PROGRAM_DETAILS}
+          nextButtonText="Review case details"
+          showClearPageBtn
+          isStepComplete={() => true} // TODO: validate form
+          registrationLoading={false}
+          nextStepCallBack={onNextStep}
+        />
       )}
-    </Formik>
+    </>
   );
 };
 

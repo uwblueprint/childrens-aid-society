@@ -53,7 +53,7 @@ const NewCaregiverModal = ({
   return (
     <Box>
       <ModalComponent
-        primaryTitle="New Caregiver"
+        primaryTitle="New Visiting Family Member"
         modalContent={
           <Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -204,7 +204,7 @@ const NewCaregiverModal = ({
           )
         }
         secondaryTitle="Individual Details"
-        primaryButtonTitle="Save caregiver"
+        primaryButtonTitle="Save visiting family member"
       />
     </Box>
   );

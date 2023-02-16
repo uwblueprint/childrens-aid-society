@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Box,
   FormLabel,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Truck,
@@ -24,6 +25,7 @@ import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import PermittedIndividualsModal from "./PermittedIndividualsModal";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -38,8 +40,8 @@ type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
-  readOnly?: boolean;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
   hideStepper?: boolean;
   hideFooter?: boolean;
 };
@@ -47,9 +49,9 @@ type ProgramFormProps = {
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
-  readOnly = false,
   nextStep,
   setStep,
+  readOnly = false,
   hideStepper,
   hideFooter,
 }: ProgramFormProps): React.ReactElement => {
@@ -69,6 +71,12 @@ const ProgramForm = ({
     nextStep();
     setProgramDetails(formik.values);
   };
+
+  const {
+    onOpen: onOpenAddPermittedIndividuals,
+    isOpen: isOpenAddPermittedIndividuals,
+    onClose: onCloseAddPermittedIndividuals,
+  } = useDisclosure();
 
   return (
     <>
@@ -192,20 +200,27 @@ const ProgramForm = ({
             <Text alignSelf="start" textStyle="title-medium">
               Other permitted individuals
             </Text>
-            <Button
-              alignSelf="end"
-              leftIcon={<Icon as={UserPlus} />}
-              variant="secondary"
-              mr={2}
-            >
-              Add
-            </Button>
+            {!readOnly && (
+              <Button
+                alignSelf="end"
+                leftIcon={<Icon as={UserPlus} />}
+                variant="secondary"
+                mr={2}
+                onClick={onOpenAddPermittedIndividuals}
+              >
+                Add
+              </Button>
+            )}
           </Box>
+          <PermittedIndividualsModal
+            isOpen={isOpenAddPermittedIndividuals}
+            onClose={onCloseAddPermittedIndividuals}
+          />
         </Form>
       </FormikProvider>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.CASE_REFERRAL}
+          currentStep={IntakeSteps.PROGRAM_DETAILS}
           nextButtonText="Review case details"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

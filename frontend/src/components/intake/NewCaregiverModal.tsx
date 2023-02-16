@@ -63,7 +63,7 @@ const NewCaregiverModal = ({
                   id="caregiverName"
                   name="caregiverName"
                   type="string"
-                  placeholder="Enter full name of caregiver..."
+                  placeholder="Enter full name of visiting family member..."
                   icon={<Icon as={User} />}
                   onChange={(event) => {
                     setCaregiverName(event.target.value);
@@ -136,7 +136,7 @@ const NewCaregiverModal = ({
                 <CustomInput
                   id="address"
                   name="address"
-                  placeholder="Enter address of caregiver..."
+                  placeholder="Enter address of visiting family member..."
                   icon={<Icon as={Navigation} />}
                   onChange={(event) => {
                     setAddress(event.target.value);
@@ -148,7 +148,7 @@ const NewCaregiverModal = ({
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
                 <Select
-                  placeholder="Select caregiver's relationship to child(ren)"
+                  placeholder="Select relationship to child(ren)"
                   onChange={(event) => {
                     setRelationship(event.target.value);
                   }}
@@ -166,7 +166,7 @@ const NewCaregiverModal = ({
                 id="contactNotes"
                 name="contactNotes"
                 type="string"
-                placeholder="Note any caregiver needs for case consideration, ex. special needs, cultural needs."
+                placeholder="Note any visiting family member needs for case consideration, ex. special needs, cultural needs."
                 height="10rem"
                 paddingBottom="7rem"
                 onChange={(event) => {

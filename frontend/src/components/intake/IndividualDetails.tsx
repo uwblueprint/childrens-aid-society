@@ -63,7 +63,7 @@ const IndividualDetails = ({
           padding={1}
           borderRadius="5px"
         >
-          CAREGIVERS
+          Visiting Family Members
         </Text>
         {caregiverDetails.map((indiv, i) => (
           <VStack key={i} w="full">

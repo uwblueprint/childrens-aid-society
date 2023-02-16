@@ -49,9 +49,9 @@ const CaregiverForm = ({
   return (
     <>
       <PromptBox
-        headerText="Caregivers"
-        descriptionText="No caregivers have been added to the case yet. "
-        buttonText="Add caregiver"
+        headerText="Visiting Family Members"
+        descriptionText="No visiting family members have been added to the case yet. "
+        buttonText="Add Visiting Family"
         buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
         onButtonClick={onOpenAddCaregivers}
         individualDetails={caregiverDetailsOverview}

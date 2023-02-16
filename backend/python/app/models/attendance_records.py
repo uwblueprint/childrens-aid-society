@@ -3,7 +3,7 @@ from .base_mixin import BaseMixin
 
 supervision_enum = db.Enum("FULL", "PARTIAL", "UNSUPERVISED", name="supervision")
 
-attendance_enum = db.Enum("PRESENT", "CANCELLED", "NO_SHOW", name="attendace")
+attendance_enum = db.Enum("PRESENT", "CANCELLED", "NO_SHOW", name="attendance")
 
 attending_parent_enum = db.Enum("MOM", "DAD", name="attending_parent")
 
@@ -12,7 +12,7 @@ class AttendanceRecords(db.Model, BaseMixin):
     __tablename__ = "attendance_records"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    attendace_sheet_id = db.Column(
+    attendance_sheet_id = db.Column(
         db.Integer, db.ForeignKey("attendance_sheets.id"), nullable=False
     )
     supervision = db.Column(supervision_enum, nullable=False)

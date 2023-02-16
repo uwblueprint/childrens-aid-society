@@ -47,6 +47,12 @@ const ChildInformationForm = ({
                 type="string"
                 placeholder="Enter name of child"
                 icon={<Icon as={User} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setChildDetails({
+                    ...childDetails,
+                    childName: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -58,6 +64,12 @@ const ChildInformationForm = ({
                 type="string"
                 placeholder="YYYY-MM-DD"
                 icon={<Icon as={Calendar} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setChildDetails({
+                    ...childDetails,
+                    dateOfBirth: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -71,6 +83,12 @@ const ChildInformationForm = ({
                 type="string"
                 placeholder="e.g. 123456789"
                 icon={<Icon as={File} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setChildDetails({
+                    ...childDetails,
+                    cpinFileNumber: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -83,6 +101,12 @@ const ChildInformationForm = ({
                 name="workerName"
                 type="string"
                 placeholder="Enter worker name"
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setChildDetails({
+                    ...childDetails,
+                    workerName: e.target.value,
+                  })
+                }
               />
             </Box>
           </SimpleGrid>
@@ -96,6 +120,12 @@ const ChildInformationForm = ({
               name="specialNeeds"
               type="string"
               placeholder="Enter any special needs of the child"
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setChildDetails({
+                  ...childDetails,
+                  specialNeeds: e.target.value,
+                })
+              }
             />
           </Box>
           <Box paddingTop="10px">
@@ -108,12 +138,16 @@ const ChildInformationForm = ({
               name="childBehaviours"
               type="string"
               placeholder="Select or enter any behaviours and concerns to note"
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setChildDetails({
+                  ...childDetails,
+                  childBehaviours: e.target.value,
+                })
+              }
             />
           </Box>
         </FormControl>
       </Form>
-
-      {/* TODO: trigger on submit when save child information button is clicked */}
     </Formik>
   );
 };

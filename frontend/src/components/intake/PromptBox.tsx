@@ -4,8 +4,7 @@ import { useHistory } from "react-router-dom";
 import { ArrowRight, Trash } from "react-feather";
 
 export type IndividualDetailsOverview = {
-  firstName: string;
-  lastName: string;
+  name: string;
   fileNumber: string;
 };
 
@@ -19,6 +18,7 @@ export type PromptBoxProps = {
   secondaryButtonIcon?: ReactElement;
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
+  deleteIndividual?: (index: number) => void;
 };
 
 const PromptBox = ({
@@ -31,6 +31,7 @@ const PromptBox = ({
   secondaryButtonIcon,
   secondaryOnButtonClick,
   individualDetails,
+  deleteIndividual,
 }: PromptBoxProps): React.ReactElement => {
   const history = useHistory();
 
@@ -50,19 +51,18 @@ const PromptBox = ({
         <Text color="b&w.black" textStyle="title-large">
           {headerText}
         </Text>
-        {individualDetails ? (
+        {individualDetails && individualDetails.length > 0 ? (
           individualDetails.map((indiv, i) => (
             <VStack key={i} w="full">
               <HStack w="full">
                 <VStack align="flex-start" w="full" spacing="0px">
                   <HStack>
-                    <Text textStyle="title-small">
-                      {indiv.firstName} {indiv.lastName}
-                    </Text>
+                    <Text textStyle="title-small">{indiv.name}</Text>
                     <Icon
                       onClick={() => {
-                        history.goBack();
-                        // TODO: deletes details, history.goBack() is just a placeholder, replace when ready
+                        if (deleteIndividual !== undefined) {
+                          deleteIndividual(i);
+                        }
                       }}
                       as={Trash}
                       h="16px"

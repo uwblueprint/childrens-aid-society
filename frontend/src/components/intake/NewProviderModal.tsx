@@ -37,6 +37,19 @@ const NewProviderModal = ({
   const [contactNotes, setContactNotes] = useState("");
   const [address, setAddress] = useState("");
   const [relationship, setRelationship] = useState("");
+
+  const handleClose = () => {
+    setProviderName("");
+    setProviderFileNo("");
+    setPrimaryPhoneNo("");
+    setSecondaryPhoneNo("");
+    setEmail("");
+    setContactNotes("");
+    setAddress("");
+    setRelationship("");
+    onClose();
+  };
+
   return (
     <Box>
       <ModalComponent
@@ -175,19 +188,11 @@ const NewProviderModal = ({
             relationship,
           };
           onClick(newProvider);
-          onClose();
+          handleClose();
         }}
         isOpen={isOpen}
         onClose={() => {
-          setProviderName("");
-          setProviderFileNo("");
-          setPrimaryPhoneNo("");
-          setSecondaryPhoneNo("");
-          setEmail("");
-          setContactNotes("");
-          setAddress("");
-          setRelationship("");
-          onClose();
+          handleClose();
         }}
         disabled={
           !(

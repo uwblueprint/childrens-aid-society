@@ -8,6 +8,7 @@ import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
+import { Caregivers } from "../intake/NewCaregiverModal";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
@@ -35,6 +36,8 @@ const Intake = (): React.ReactElement => {
     familialConcerns: "",
   });
 
+  const [caregivers, setCaregivers] = useState<Caregivers>([]);
+
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
@@ -59,7 +62,14 @@ const Intake = (): React.ReactElement => {
           />
         );
       case 2:
-        return <IndividualDetailsEntry nextStep={nextStep} setStep={setStep} />;
+        return (
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            setStep={setStep}
+            caregivers={caregivers}
+            setCaregivers={setCaregivers}
+          />
+        );
       case 3:
         return (
           <ProgramForm

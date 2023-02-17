@@ -7,6 +7,7 @@ import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import { Caregivers } from "./NewCaregiverModal";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;

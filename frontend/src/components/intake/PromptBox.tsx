@@ -1,7 +1,18 @@
 import React, { ReactElement } from "react";
-import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
+import {
+  Button,
+  VStack,
+  Text,
+  HStack,
+  Icon,
+  Divider,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowRight, Trash } from "react-feather";
+import NewCaregiverModal, {
+  Caregivers,
+  CaregiverDetails,
+} from "./NewCaregiverModal";
 
 export type IndividualDetailsOverview = {
   name: string;
@@ -19,6 +30,8 @@ export type PromptBoxProps = {
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
   deleteIndividual?: (index: number) => void;
+  caregivers?: Caregivers;
+  setCaregivers?: React.Dispatch<React.SetStateAction<Caregivers>>;
 };
 
 const PromptBox = ({
@@ -32,8 +45,20 @@ const PromptBox = ({
   secondaryOnButtonClick,
   individualDetails,
   deleteIndividual,
+  caregivers,
+  setCaregivers,
 }: PromptBoxProps): React.ReactElement => {
-  const history = useHistory();
+  const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
+    if (caregivers !== undefined && setCaregivers !== undefined) {
+      caregivers.push(newCaregiver);
+      setCaregivers(caregivers);
+    }
+  };
+  const {
+    onOpen: onOpenAddCaregivers,
+    isOpen: isOpenAddCaregivers,
+    onClose: onCloseAddCaregivers,
+  } = useDisclosure();
 
   return (
     <VStack
@@ -78,14 +103,16 @@ const PromptBox = ({
                   color="blue.300"
                   textStyle="button-small"
                   variant="tertiary"
-                  onClick={() => {
-                    history.goBack();
-                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
-                  }}
+                  onClick={onOpenAddCaregivers}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >
                   View and edit details
                 </Button>
+                <NewCaregiverModal
+                  isOpen={isOpenAddCaregivers}
+                  onClick={onClickNewCaregiver}
+                  onClose={onCloseAddCaregivers}
+                />
               </HStack>
               <Divider orientation="horizontal" w="full" />
             </VStack>

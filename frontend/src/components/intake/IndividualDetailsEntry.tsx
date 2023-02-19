@@ -4,7 +4,7 @@ import { UserPlus } from "react-feather";
 import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
 import { ADD_CHILD_PAGE } from "../../constants/Routes";
-import { Caregivers } from "./NewCaregiverModal";
+import { CaregiverDetails, Caregivers } from "./NewCaregiverModal";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
@@ -17,6 +17,8 @@ export type IndividualDetailsEntryProp = {
   hideFooter?: boolean;
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
+  caregiverDetails: CaregiverDetails;
+  setCaregiverDetails: React.Dispatch<React.SetStateAction<CaregiverDetails>>;
 };
 
 const IndividualDetailsEntry = ({
@@ -26,6 +28,8 @@ const IndividualDetailsEntry = ({
   hideFooter,
   caregivers,
   setCaregivers,
+  caregiverDetails,
+  setCaregiverDetails,
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const history = useHistory();
 
@@ -63,6 +67,8 @@ const IndividualDetailsEntry = ({
           <CaregiverForm
             caregivers={caregivers}
             setCaregivers={setCaregivers}
+            caregiverDetails={caregiverDetails}
+            setCaregiverDetails={setCaregiverDetails}
           />
         </VStack>
       </React.Fragment>

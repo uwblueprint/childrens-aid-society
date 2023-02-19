@@ -32,6 +32,8 @@ export type PromptBoxProps = {
   deleteIndividual?: (index: number) => void;
   caregivers?: Caregivers;
   setCaregivers?: React.Dispatch<React.SetStateAction<Caregivers>>;
+  caregiverDetails?: CaregiverDetails;
+  setCaregiverDetails?: React.Dispatch<React.SetStateAction<CaregiverDetails>>;
 };
 
 const PromptBox = ({
@@ -47,6 +49,8 @@ const PromptBox = ({
   deleteIndividual,
   caregivers,
   setCaregivers,
+  caregiverDetails,
+  setCaregiverDetails,
 }: PromptBoxProps): React.ReactElement => {
   const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
     if (caregivers !== undefined && setCaregivers !== undefined) {
@@ -103,16 +107,22 @@ const PromptBox = ({
                   color="blue.300"
                   textStyle="button-small"
                   variant="tertiary"
-                  onClick={onOpenAddCaregivers}
+                  onClick={() => {
+                    onOpenAddCaregivers();
+                  }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >
                   View and edit details
                 </Button>
-                <NewCaregiverModal
-                  isOpen={isOpenAddCaregivers}
-                  onClick={onClickNewCaregiver}
-                  onClose={onCloseAddCaregivers}
-                />
+                {caregiverDetails && setCaregiverDetails && (
+                  <NewCaregiverModal
+                    isOpen={isOpenAddCaregivers}
+                    onClick={onClickNewCaregiver}
+                    onClose={onCloseAddCaregivers}
+                    caregiverDetails={caregiverDetails}
+                    setCaregiverDetails={setCaregiverDetails}
+                  />
+                )}
               </HStack>
               <Divider orientation="horizontal" w="full" />
             </VStack>

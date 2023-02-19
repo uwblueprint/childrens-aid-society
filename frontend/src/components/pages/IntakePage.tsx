@@ -8,7 +8,7 @@ import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
-import { Caregivers } from "../intake/NewCaregiverModal";
+import { CaregiverDetails, Caregivers } from "../intake/NewCaregiverModal";
 import IntakeSteps from "../intake/intakeSteps";
 
 const Intake = (): React.ReactElement => {
@@ -36,6 +36,16 @@ const Intake = (): React.ReactElement => {
     shortTermGoals: "",
     longTermGoals: "",
     familialConcerns: "",
+  });
+  const [caregiverDetails, setCaregiverDetails] = useState<CaregiverDetails>({
+    caregiverName: "",
+    dateOfBirth: "",
+    primaryPhoneNo: "",
+    secondaryPhoneNo: "",
+    contactNotes: "",
+    address: "",
+    relationship: "",
+    indivConsiderations: "",
   });
 
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
@@ -69,6 +79,8 @@ const Intake = (): React.ReactElement => {
             setStep={setStep}
             caregivers={caregivers}
             setCaregivers={setCaregivers}
+            caregiverDetails={caregiverDetails}
+            setCaregiverDetails={setCaregiverDetails}
           />
         );
       case IntakeSteps.PROGRAM_DETAILS:

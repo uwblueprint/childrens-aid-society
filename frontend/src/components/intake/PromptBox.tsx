@@ -1,18 +1,6 @@
 import React, { ReactElement } from "react";
-import {
-  Button,
-  VStack,
-  Text,
-  HStack,
-  Icon,
-  Divider,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight, Trash } from "react-feather";
-import NewCaregiverModal, {
-  Caregivers,
-  CaregiverDetails,
-} from "./NewCaregiverModal";
 
 export type IndividualDetailsOverview = {
   name: string;
@@ -30,10 +18,7 @@ export type PromptBoxProps = {
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
   deleteIndividual?: (index: number) => void;
-  caregivers?: Caregivers;
-  setCaregivers?: React.Dispatch<React.SetStateAction<Caregivers>>;
-  caregiverDetails?: CaregiverDetails;
-  setCaregiverDetails?: React.Dispatch<React.SetStateAction<CaregiverDetails>>;
+  setIndexValue?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const PromptBox = ({
@@ -47,23 +32,8 @@ const PromptBox = ({
   secondaryOnButtonClick,
   individualDetails,
   deleteIndividual,
-  caregivers,
-  setCaregivers,
-  caregiverDetails,
-  setCaregiverDetails,
+  setIndexValue,
 }: PromptBoxProps): React.ReactElement => {
-  const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
-    if (caregivers !== undefined && setCaregivers !== undefined) {
-      caregivers.push(newCaregiver);
-      setCaregivers(caregivers);
-    }
-  };
-  const {
-    onOpen: onOpenAddCaregivers,
-    isOpen: isOpenAddCaregivers,
-    onClose: onCloseAddCaregivers,
-  } = useDisclosure();
-
   return (
     <VStack
       bg="gray.50"
@@ -108,21 +78,15 @@ const PromptBox = ({
                   textStyle="button-small"
                   variant="tertiary"
                   onClick={() => {
-                    onOpenAddCaregivers();
+                    if (setIndexValue) {
+                      setIndexValue(i);
+                      onButtonClick();
+                    }
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >
                   View and edit details
                 </Button>
-                {caregiverDetails && setCaregiverDetails && (
-                  <NewCaregiverModal
-                    isOpen={isOpenAddCaregivers}
-                    onClick={onClickNewCaregiver}
-                    onClose={onCloseAddCaregivers}
-                    caregiverDetails={caregiverDetails}
-                    setCaregiverDetails={setCaregiverDetails}
-                  />
-                )}
               </HStack>
               <Divider orientation="horizontal" w="full" />
             </VStack>
@@ -148,7 +112,12 @@ const PromptBox = ({
           variant="secondary"
           colorScheme="gray.600"
           leftIcon={buttonIcon}
-          onClick={onButtonClick}
+          onClick={() => {
+            onButtonClick();
+            if (setIndexValue) {
+              setIndexValue(-1);
+            }
+          }}
         >
           {buttonText}
         </Button>

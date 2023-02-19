@@ -10,17 +10,16 @@ import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 export type CaregiverFormProps = {
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
-  caregiverDetails: CaregiverDetails;
-  setCaregiverDetails: React.Dispatch<React.SetStateAction<CaregiverDetails>>;
 };
 
 const CaregiverForm = ({
   caregivers,
   setCaregivers,
-  caregiverDetails,
-  setCaregiverDetails,
 }: CaregiverFormProps): React.ReactElement => {
   const [caregiversDeleted, setCaregiversDeleted] = useState(0);
+  const [indexValue, setIndexValue] = useState(-1);
+  const [edit, setEdit] = useState(false);
+
   const {
     onOpen: onOpenAddCaregivers,
     isOpen: isOpenAddCaregivers,
@@ -28,7 +27,11 @@ const CaregiverForm = ({
   } = useDisclosure();
 
   const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
-    caregivers.push(newCaregiver);
+    if (edit) {
+      caregivers.splice(indexValue, 1, newCaregiver);
+    } else {
+      caregivers.splice(indexValue, 0, newCaregiver);
+    }
     setCaregivers(caregivers);
   };
 
@@ -50,23 +53,6 @@ const CaregiverForm = ({
     },
   );
 
-  const initialCaregiver = {
-    caregiverName: "",
-    dateOfBirth: "",
-    primaryPhoneNo: "",
-    secondaryPhoneNo: "",
-    contactNotes: "",
-    address: "",
-    relationship: "",
-    indivConsiderations: "",
-  };
-
-  const resetCaregivers = () => {
-    setCaregiverDetails({
-      ...initialCaregiver,
-    });
-  };
-
   return (
     <>
       <PromptBox
@@ -74,21 +60,18 @@ const CaregiverForm = ({
         descriptionText="No visiting family members have been added to the case yet. "
         buttonText="Add Visiting Family"
         buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
-        onButtonClick={() => {
-          onOpenAddCaregivers();
-          resetCaregivers();
-        }}
+        onButtonClick={onOpenAddCaregivers}
         individualDetails={caregiverDetailsOverview}
         deleteIndividual={deleteCaregiver}
-        caregiverDetails={caregiverDetails}
-        setCaregiverDetails={setCaregiverDetails}
+        setIndexValue={setIndexValue}
       />
       <NewCaregiverModal
         isOpen={isOpenAddCaregivers}
         onClick={onClickNewCaregiver}
         onClose={onCloseAddCaregivers}
-        caregiverDetails={caregiverDetails}
-        setCaregiverDetails={setCaregiverDetails}
+        indexValue={indexValue}
+        caregivers={caregivers}
+        setEdit={setEdit}
       />
     </>
   );

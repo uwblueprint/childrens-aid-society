@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  Button,
-  VStack,
-  Text,
-  HStack,
-  Icon,
-  Divider,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
 import { IndividualDetailsOverview } from "./PromptBox";
-import NewCaregiverModal, {
-  Caregivers,
-  CaregiverDetails,
-} from "./NewCaregiverModal";
 
 type IndividualDetailsProps = {
   childrenDetails: IndividualDetailsOverview[];

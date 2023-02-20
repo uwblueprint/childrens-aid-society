@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  Button,
   FormControl,
   Text,
   Icon,
   SimpleGrid,
   Box,
   FormLabel,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Truck,
@@ -15,7 +13,6 @@ import {
   Calendar,
   CheckSquare,
   TrendingUp,
-  UserPlus,
   ChevronDown,
 } from "react-feather";
 import { Field, Form, FormikProvider, useFormik } from "formik";
@@ -25,7 +22,6 @@ import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import PermittedIndividualsModal from "./PermittedIndividualsModal";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -71,12 +67,6 @@ const ProgramForm = ({
     nextStep();
     setProgramDetails(formik.values);
   };
-
-  const {
-    onOpen: onOpenAddPermittedIndividuals,
-    isOpen: isOpenAddPermittedIndividuals,
-    onClose: onCloseAddPermittedIndividuals,
-  } = useDisclosure();
 
   return (
     <>
@@ -196,26 +186,6 @@ const ProgramForm = ({
               />
             </Box>
           </FormControl>
-          <Box display="flex" justifyContent="space-between" paddingTop="35px">
-            <Text alignSelf="start" textStyle="title-medium">
-              Other permitted individuals
-            </Text>
-            {!readOnly && (
-              <Button
-                alignSelf="end"
-                leftIcon={<Icon as={UserPlus} />}
-                variant="secondary"
-                mr={2}
-                onClick={onOpenAddPermittedIndividuals}
-              >
-                Add
-              </Button>
-            )}
-          </Box>
-          <PermittedIndividualsModal
-            isOpen={isOpenAddPermittedIndividuals}
-            onClose={onCloseAddPermittedIndividuals}
-          />
         </Form>
       </FormikProvider>
       {!hideFooter && (

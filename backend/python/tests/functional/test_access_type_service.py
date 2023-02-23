@@ -22,6 +22,7 @@ DEFAULT_ACCESS_TYPES = [
     {"access_type": "VIRTUAL", "is_default": True},
 ]
 
+
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     access_type_instances = [AccessType(**data) for data in DEFAULT_ACCESS_TYPES]

@@ -160,7 +160,6 @@ def seed_downgrade_data(
     long_term_goals,
     short_term_goals,
 ):
-
     op.bulk_insert(
         child_concerns,
         [

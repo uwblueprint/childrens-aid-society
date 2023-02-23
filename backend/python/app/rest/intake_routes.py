@@ -12,6 +12,7 @@ from ..resources.intake_dto import CreateIntakeDTO
 from ..resources.other_permitted_individual_dto import CreateOtherPermittedIndividualDTO
 from ..resources.provider_dto import CreateProviderDTO
 from ..services.implementations.caregiver_service import CaregiverService
+from ..services.implementations.child_behavior_service import ChildBehaviorService
 from ..services.implementations.child_service import ChildService
 from ..services.implementations.daytime_contact_service import DaytimeContactService
 from ..services.implementations.familial_concern_service import FamilialConcernService
@@ -29,6 +30,7 @@ familialConcern_service = FamilialConcernService(current_app.logger)
 goal_service = GoalService(current_app.logger)
 daytimeContact_service = DaytimeContactService(current_app.logger)
 child_service = ChildService(current_app.logger)
+childBehavior_service = ChildBehaviorService(current_app.logger)
 provider_service = ProviderService(current_app.logger)
 
 # defines a shared URL prefix for all routes
@@ -113,7 +115,7 @@ def create_intake():
             "individual_considerations": caregiver["individualConsiderations"],
             "primary_phone_number": caregiver["primaryPhoneNumber"],
             "secondary_phone_number": caregiver["secondaryPhoneNumber"],
-            "email": "test@mail.com",
+            "email": caregiver["email"],
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
@@ -159,7 +161,7 @@ def create_intake():
     for familialConcern in familialConcerns:
         familialConcern = {
             "concern": familialConcern,
-            "is_default": False,  # ?
+            "is_default": False,
         }
         try:
             familialConcern_response = familialConcern_service.add_familial_concern(
@@ -276,7 +278,23 @@ def create_intake():
         # concerns
         concerns = child["childInfo"]["concerns"]
         for concern in concerns:
-            continue
-            # ?
+            childBehavior = {
+                "behavior": concern,
+                "is_default": False,
+            }
+            try:
+                childBehavior_response = childBehavior_service.add_familial_concern(
+                    **childBehavior
+                )
+                undos.append(
+                    (
+                        childBehavior_service,
+                        "delete_child_behavior",
+                        childBehavior_response.id,
+                    )
+                )
+            except Exception as error:
+                run_undos()
+                return jsonify(error), 400
 
     return jsonify(new_intake.__dict__), 201

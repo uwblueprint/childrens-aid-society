@@ -171,10 +171,8 @@ class AuthService(IAuthService):
             user_role = self.user_service.get_user_role_by_auth_id(
                 decoded_id_token["uid"]
             )
-            # TODO: Fix firebase email service
-            # firebase_user = firebase_admin.auth.get_user(decoded_id_token["uid"])
-            # return firebase_user.email_verified and user_role in roles
-            return user_role in roles
+            firebase_user = firebase_admin.auth.get_user(decoded_id_token["uid"])
+            return firebase_user.email_verified and user_role in roles
         except:
             return False
 
@@ -186,10 +184,8 @@ class AuthService(IAuthService):
             token_user_id = self.user_service.get_user_id_by_auth_id(
                 decoded_id_token["uid"]
             )
-            # TODO: Fix firebase email service
-            # firebase_user = firebase_admin.auth.get_user(decoded_id_token["uid"])
-            # return firebase_user.email_verified and token_user_id == requested_user_id
-            return token_user_id == requested_user_id
+            firebase_user = firebase_admin.auth.get_user(decoded_id_token["uid"])
+            return firebase_user.email_verified and token_user_id == requested_user_id
         except:
             return False
 

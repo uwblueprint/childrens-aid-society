@@ -17,6 +17,7 @@ def branch_service():
 
 DEFAULT_BRANCH = {"branch": "ALGOMA", "is_default": True}
 
+
 # TODO: remove this step when migrations are configured to run against test db
 def seed_database():
     branch_instance = Branch(**DEFAULT_BRANCH)

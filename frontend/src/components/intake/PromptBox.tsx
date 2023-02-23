@@ -18,7 +18,7 @@ export type PromptBoxProps = {
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
   deleteIndividual?: (index: number) => void;
-  setIndexValue?: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const PromptBox = ({
@@ -32,7 +32,7 @@ const PromptBox = ({
   secondaryOnButtonClick,
   individualDetails,
   deleteIndividual,
-  setIndexValue,
+  setSelectedIndex,
 }: PromptBoxProps): React.ReactElement => {
   return (
     <VStack
@@ -78,8 +78,8 @@ const PromptBox = ({
                   textStyle="button-small"
                   variant="tertiary"
                   onClick={() => {
-                    if (setIndexValue) {
-                      setIndexValue(i);
+                    if (setSelectedIndex) {
+                      setSelectedIndex(i);
                       onButtonClick();
                     }
                   }}
@@ -114,8 +114,8 @@ const PromptBox = ({
           leftIcon={buttonIcon}
           onClick={() => {
             onButtonClick();
-            if (setIndexValue) {
-              setIndexValue(-1);
+            if (setSelectedIndex) {
+              setSelectedIndex(-1);
             }
           }}
         >

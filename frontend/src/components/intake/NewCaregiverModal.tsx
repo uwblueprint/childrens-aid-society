@@ -22,18 +22,14 @@ type NewCaregiverProps = {
   isOpen: boolean;
   onClick: (newCaregiver: CaregiverDetails) => void;
   onClose: () => void;
-  caregivers: Caregivers;
-  indexValue: number;
-  setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  caregiver: CaregiverDetails;
 };
 
 const NewCaregiverModal = ({
   isOpen,
   onClick,
   onClose,
-  caregivers,
-  indexValue,
-  setEdit,
+  caregiver,
 }: NewCaregiverProps): React.ReactElement => {
   const [caregiverName, setCaregiverName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -57,36 +53,24 @@ const NewCaregiverModal = ({
   };
 
   useEffect(() => {
-    if (indexValue >= 0) {
-      const existingCaregivers = caregivers[indexValue];
-      setCaregiverName(existingCaregivers.caregiverName);
-      setDateOfBirth(existingCaregivers.dateOfBirth);
-      setPrimaryPhoneNo(existingCaregivers.primaryPhoneNo);
+    if (caregiver) {
+      setCaregiverName(caregiver.caregiverName);
+      setDateOfBirth(caregiver.dateOfBirth);
+      setPrimaryPhoneNo(caregiver.primaryPhoneNo);
 
-      if (existingCaregivers.secondaryPhoneNo !== undefined) {
-        setSecondaryPhoneNo(existingCaregivers.secondaryPhoneNo);
+      if (caregiver.secondaryPhoneNo !== undefined) {
+        setSecondaryPhoneNo(caregiver.secondaryPhoneNo);
       }
-      if (existingCaregivers.contactNotes !== undefined) {
-        setContactNotes(existingCaregivers.contactNotes);
+      if (caregiver.contactNotes !== undefined) {
+        setContactNotes(caregiver.contactNotes);
       }
-      setAddress(existingCaregivers.address);
-      setRelationship(existingCaregivers.relationship);
-      if (existingCaregivers.indivConsiderations !== undefined) {
-        setIndivConsiderations(existingCaregivers.indivConsiderations);
+      setAddress(caregiver.address);
+      setRelationship(caregiver.relationship);
+      if (caregiver.indivConsiderations !== undefined) {
+        setIndivConsiderations(caregiver.indivConsiderations);
       }
-      setEdit(true);
-    } else {
-      setCaregiverName("");
-      setDateOfBirth("");
-      setPrimaryPhoneNo("");
-      setSecondaryPhoneNo("");
-      setContactNotes("");
-      setAddress("");
-      setRelationship("");
-      setIndivConsiderations("");
-      setEdit(false);
     }
-  }, [indexValue, caregivers, setEdit]);
+  }, [caregiver]);
 
   return (
     <Box>
@@ -102,7 +86,7 @@ const NewCaregiverModal = ({
                   name="caregiverName"
                   type="string"
                   placeholder="Enter full name of visiting family member..."
-                  value={caregiverName}
+                  defaultValue={caregiver ? caregiver.caregiverName : ""}
                   icon={<Icon as={User} />}
                   onChange={(event) => {
                     setCaregiverName(event.target.value);
@@ -116,7 +100,7 @@ const NewCaregiverModal = ({
                   name="caregiverFileNumber"
                   type="string"
                   placeholder="YYYY-MM-DD"
-                  value={dateOfBirth}
+                  defaultValue={caregiver ? caregiver.dateOfBirth : ""}
                   icon={<Icon as={Calendar} />}
                   onChange={(event) => {
                     setDateOfBirth(event.target.value);
@@ -132,7 +116,7 @@ const NewCaregiverModal = ({
                   name="primaryPhoneNumber"
                   type="string"
                   placeholder="e.g. 555-555-5555"
-                  value={primaryPhoneNo}
+                  defaultValue={caregiver ? caregiver.primaryPhoneNo : ""}
                   icon={<Icon as={Phone} />}
                   onChange={(event) => {
                     setPrimaryPhoneNo(event.target.value);
@@ -148,7 +132,7 @@ const NewCaregiverModal = ({
                   name="secondaryPhoneNumber"
                   type="string"
                   placeholder="e.g. 555-555-5555"
-                  value={secondaryPhoneNo}
+                  defaultValue={caregiver ? caregiver.secondaryPhoneNo : ""}
                   icon={<Icon as={Phone} />}
                   onChange={(event) => {
                     setSecondaryPhoneNo(event.target.value);
@@ -165,7 +149,7 @@ const NewCaregiverModal = ({
                 name="contactNotes"
                 type="string"
                 placeholder="Note any preferences or additional channels of communication."
-                value={contactNotes}
+                defaultValue={caregiver ? caregiver.contactNotes : ""}
                 height="10rem"
                 paddingBottom="7rem"
                 onChange={(event) => {
@@ -180,7 +164,7 @@ const NewCaregiverModal = ({
                   id="address"
                   name="address"
                   placeholder="Enter address of visiting family member..."
-                  value={address}
+                  defaultValue={caregiver ? caregiver.address : ""}
                   icon={<Icon as={Navigation} />}
                   onChange={(event) => {
                     setAddress(event.target.value);
@@ -196,7 +180,7 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setRelationship(event.target.value);
                   }}
-                  value={relationship}
+                  defaultValue={caregiver ? caregiver.relationship : ""}
                 >
                   <option>TO DO:</option>
                   <option>Add proper list options</option>
@@ -212,7 +196,7 @@ const NewCaregiverModal = ({
                 name="contactNotes"
                 type="string"
                 placeholder="Note any visiting family member needs for case consideration, ex. special needs, cultural needs."
-                value={indivConsiderations}
+                defaultValue={caregiver ? caregiver.indivConsiderations : ""}
                 height="10rem"
                 paddingBottom="7rem"
                 onChange={(event) => {

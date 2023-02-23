@@ -16,4 +16,4 @@ export const UPDATE_ENTITY_PAGE = "/entity/update";
 
 export const HOOKS_PAGE = "/hooks";
 
-export const DEFAULT_PAGE = "/default"
+export const DEFAULT_PAGE = "/default";

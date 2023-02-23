@@ -28,21 +28,28 @@ const Login = (): React.ReactElement => {
   const toast = useToast();
 
   const onLogInClick = async () => {
-    try{
-      const user: AuthenticatedUser = await authAPIClient.login(email, password);
+    try {
+      const user: AuthenticatedUser = await authAPIClient.login(
+        email,
+        password,
+      );
       setAuthenticatedUser(user);
-    } catch (error: any) {
-      toast({        title: "ERROR",
+    } catch {
+      toast({
+        title: "ERROR",
+        variant: "subtle",
+        duration: 3000,
+        status: "error",
+        position: "top",
+      });
+    }
+    toast({
+      title: "SUCCESS",
       variant: "subtle",
       duration: 3000,
-      status: "error",
-      position: "top",});
-    }
-    toast({        title: "SUCCESS",
-    variant: "subtle",
-    duration: 3000,
-    status: "success",
-    position: "top",})
+      status: "success",
+      position: "top",
+    });
   };
 
   const onSignUpClick = () => {

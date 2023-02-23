@@ -30,7 +30,6 @@ import NotFound from "./components/pages/NotFound";
 import AddChild from "./components/intake/child-information/AddChildPage";
 import Default from "./components/pages/Default";
 
-
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
 const App = (): React.ReactElement => {

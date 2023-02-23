@@ -76,7 +76,7 @@ def register():
     Returns access token and user info in response body and sets refreshToken as an httpOnly cookie
     """
     try:
-        request.json["role"] = "User"
+        request.json["role"] = "User" # TODO: Double check whether we need this route and whether role should be user
         user = CreateUserDTO(**request.json)
         user_service.create_user(user)
         auth_dto = auth_service.generate_token(
@@ -134,7 +134,9 @@ def logout(user_id):
     """
     try:
         auth_service.revoke_tokens(user_id)
-        return "", 204
+        res = jsonify({})
+        res.set_cookie("refreshToken", "", expires=0)
+        return res, 204
     except Exception as e:
         error_message = getattr(e, "message", None)
         return jsonify({"error": (error_message if error_message else str(e))}), 500

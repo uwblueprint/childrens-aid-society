@@ -104,7 +104,7 @@ def create_user():
     try:
         user = CreateUserDTO(**request.json)
         created_user = user_service.create_user(user)
-        auth_service.send_email_verification_link(request.json["email"])
+        # auth_service.send_email_verification_link(request.json["email"]) # TODO: Fix email service
         return jsonify(created_user.__dict__), 201
     except Exception as e:
         error_message = getattr(e, "message", None)

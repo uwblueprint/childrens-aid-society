@@ -25,5 +25,7 @@ class AttendanceRecords(db.Model, BaseMixin):
     staff_transport_time_min = db.Column(db.Integer, nullable=True)
     driver_transport_time_min = db.Column(db.Integer, nullable=True)
     foster_parent_transport_time_min = db.Column(db.Integer, nullable=True)
-    child_family_suypport_worker_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    child_family_suypport_worker_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), nullable=True
+    )
     comments = db.Column(db.String, nullable=True)

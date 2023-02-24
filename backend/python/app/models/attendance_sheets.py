@@ -25,6 +25,6 @@ class AttendanceSheets(db.Model, BaseMixin):
     intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=True)
     family_name = db.Column(db.String, nullable=False)
     month = db.Column(month_enum, nullable=False)
-    cic = db.Column(db.String, nullable=False)
+    csw = db.Column(db.String, nullable=False)
     cpw = db.Column(db.String, nullable=False)
-    riv = db.Column(db.String, nullable=False)
+    fcc = db.Column(db.String, nullable=False)

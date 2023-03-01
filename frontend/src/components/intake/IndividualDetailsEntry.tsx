@@ -68,7 +68,6 @@ const IndividualDetailsEntry = ({
       </React.Fragment>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.INDIVIDUAL_DETAILS}
           nextButtonText="Next section"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

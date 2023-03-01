@@ -194,7 +194,6 @@ const CourtInformationForm = ({
       </FormikProvider>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.COURT_INFORMATION}
           nextButtonText="Next section"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

@@ -9,8 +9,8 @@ export type CurrentStepLayout = {
 
 export type IntakeFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
-  currentStep: number;
   nextButtonText: string;
+  currentStep: number;
   showClearPageBtn?: boolean;
   isStepComplete: () => boolean;
   registrationLoading: boolean;
@@ -20,6 +20,7 @@ export type IntakeFooterProps = {
 const IntakeFooter = ({
   nextButtonRef,
   nextButtonText,
+  currentStep,
   showClearPageBtn,
   isStepComplete,
   registrationLoading,

@@ -21,7 +21,7 @@ const Stepper = ({
       borderWidth="1px"
       borderColor="gray.100"
       borderRadius="4px"
-      margin="0 0 20px 0"
+      margin="0 0 30px 0"
       padding="15px"
     >
       {/* 1fr for each title, 0.25fr for each "connector" */}

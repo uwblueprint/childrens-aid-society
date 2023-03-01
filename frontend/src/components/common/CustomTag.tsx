@@ -29,9 +29,9 @@ const CustomTag = (props: CustomTagProps): React.ReactElement => {
   const setPressed = props.controlled
     ? props.setPressed.bind(props)
     : setRawPressed;
-  function handleComponentClick() {
+  const handleComponentClick = () => {
     setPressed(!pressed);
-  }
+  };
   return (
     <Container
       variant="selectionTag"

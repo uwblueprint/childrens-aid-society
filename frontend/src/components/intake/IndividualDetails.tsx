@@ -22,7 +22,7 @@ const IndividualDetails = ({
           padding={1}
           borderRadius="5px"
         >
-          CHILDREN
+          Children
         </Text>
         {childrenDetails.map((indiv, i) => (
           <VStack key={i} w="full">

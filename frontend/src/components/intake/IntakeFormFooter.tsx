@@ -9,7 +9,6 @@ export type CurrentStepLayout = {
 
 export type IntakeFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
-  currentStep: number;
   nextButtonText: string;
   showClearPageBtn?: boolean;
   isStepComplete: () => boolean;

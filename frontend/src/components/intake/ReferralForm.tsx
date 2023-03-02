@@ -162,7 +162,6 @@ const ReferralForm = ({
       </FormikProvider>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.CASE_REFERRAL}
           nextButtonText="Next section"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

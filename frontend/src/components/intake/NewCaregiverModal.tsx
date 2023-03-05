@@ -5,24 +5,55 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 
+export type CaregiverDetails = {
+  caregiverName: string;
+  dateOfBirth: string;
+  primaryPhoneNo: string;
+  secondaryPhoneNo?: string;
+  contactNotes?: string;
+  address: string;
+  relationship: string;
+  indivConsiderations?: string;
+};
+
+export type Caregivers = CaregiverDetails[];
+
 type NewCaregiverProps = {
   isOpen: boolean;
+  onClick: (newCaregiver: CaregiverDetails) => void;
   onClose: () => void;
 };
 
 const NewCaregiverModal = ({
   isOpen,
+  onClick,
   onClose,
 }: NewCaregiverProps): React.ReactElement => {
   const [caregiverName, setCaregiverName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
+  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
   const [address, setAddress] = useState("");
   const [relationship, setRelationship] = useState("");
+  const [indivConsiderations, setIndivConsiderations] = useState("");
+
+  const handleClose = () => {
+    setCaregiverName("");
+    setDateOfBirth("");
+    setPrimaryPhoneNo("");
+    setSecondaryPhoneNo("");
+    setContactNotes("");
+    setAddress("");
+    setRelationship("");
+    setIndivConsiderations("");
+    onClose();
+  };
+
   return (
     <Box>
       <ModalComponent
-        primaryTitle="New Caregiver"
+        primaryTitle="New Visiting Family Member"
         modalContent={
           <Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -32,7 +63,7 @@ const NewCaregiverModal = ({
                   id="caregiverName"
                   name="caregiverName"
                   type="string"
-                  placeholder="Enter full name of caregiver..."
+                  placeholder="Enter full name of visiting family member..."
                   icon={<Icon as={User} />}
                   onChange={(event) => {
                     setCaregiverName(event.target.value);
@@ -42,8 +73,8 @@ const NewCaregiverModal = ({
               <Box>
                 <FormLabel htmlFor="dateOfBirth">DATE OF BIRTH</FormLabel>
                 <CustomInput
-                  id="providerFileNumber"
-                  name="providerFileNumber"
+                  id="caregiverFileNumber"
+                  name="caregiverFileNumber"
                   type="string"
                   placeholder="YYYY-MM-DD"
                   icon={<Icon as={Calendar} />}
@@ -77,6 +108,9 @@ const NewCaregiverModal = ({
                   type="string"
                   placeholder="e.g. 555-555-5555"
                   icon={<Icon as={Phone} />}
+                  onChange={(event) => {
+                    setSecondaryPhoneNo(event.target.value);
+                  }}
                 />
               </Box>
             </SimpleGrid>
@@ -91,6 +125,9 @@ const NewCaregiverModal = ({
                 placeholder="Note any preferences or additional channels of communication."
                 height="10rem"
                 paddingBottom="7rem"
+                onChange={(event) => {
+                  setContactNotes(event.target.value);
+                }}
               />
             </Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -99,7 +136,7 @@ const NewCaregiverModal = ({
                 <CustomInput
                   id="address"
                   name="address"
-                  placeholder="Enter address of caregiver..."
+                  placeholder="Enter address of visiting family member..."
                   icon={<Icon as={Navigation} />}
                   onChange={(event) => {
                     setAddress(event.target.value);
@@ -111,7 +148,7 @@ const NewCaregiverModal = ({
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
                 <Select
-                  placeholder="Select caregiver's relationship to child(ren)"
+                  placeholder="Select relationship to child(ren)"
                   onChange={(event) => {
                     setRelationship(event.target.value);
                   }}
@@ -129,22 +166,33 @@ const NewCaregiverModal = ({
                 id="contactNotes"
                 name="contactNotes"
                 type="string"
-                placeholder="Note any caregiver needs for case consideration, ex. special needs, cultural needs."
+                placeholder="Note any visiting family member needs for case consideration, ex. special needs, cultural needs."
                 height="10rem"
                 paddingBottom="7rem"
+                onChange={(event) => {
+                  setIndivConsiderations(event.target.value);
+                }}
               />
             </Box>
           </Box>
         }
-        onClick={() => {}} // empty for now
+        onClick={() => {
+          const newCaregiver: CaregiverDetails = {
+            caregiverName,
+            dateOfBirth,
+            primaryPhoneNo,
+            secondaryPhoneNo,
+            contactNotes,
+            address,
+            relationship,
+            indivConsiderations,
+          };
+          onClick(newCaregiver);
+          handleClose();
+        }}
         isOpen={isOpen}
         onClose={() => {
-          setCaregiverName("");
-          setDateOfBirth("");
-          setPrimaryPhoneNo("");
-          setAddress("");
-          setRelationship("");
-          onClose();
+          handleClose();
         }}
         disabled={
           !(
@@ -156,7 +204,7 @@ const NewCaregiverModal = ({
           )
         }
         secondaryTitle="Individual Details"
-        primaryButtonTitle="Save caregiver"
+        primaryButtonTitle="Save visiting family member"
       />
     </Box>
   );

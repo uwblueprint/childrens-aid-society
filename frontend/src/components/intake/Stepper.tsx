@@ -6,12 +6,14 @@ export type StepperProps = {
   pages: string[];
   activePage: number;
   setStep: (index: number) => void;
+  onClickCallback?: () => void;
 };
 
 const Stepper = ({
   pages,
   activePage,
   setStep,
+  onClickCallback,
 }: StepperProps): React.ReactElement => {
   return (
     <Box
@@ -19,7 +21,7 @@ const Stepper = ({
       borderWidth="1px"
       borderColor="gray.100"
       borderRadius="4px"
-      margin="0 96px 20px 96px"
+      margin="0 0 30px 0"
       padding="15px"
     >
       {/* 1fr for each title, 0.25fr for each "connector" */}
@@ -38,6 +40,7 @@ const Stepper = ({
               key={index}
               style={{ display: "contents" }}
               onClick={() => {
+                if (onClickCallback) onClickCallback();
                 setStep(index);
               }}
             >

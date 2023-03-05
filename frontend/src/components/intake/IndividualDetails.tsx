@@ -1,17 +1,15 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
-import { Edit2, ArrowRight } from "react-feather";
+import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
 import { IndividualDetailsOverview } from "./PromptBox";
 
 type IndividualDetailsProps = {
-  title: string;
   childrenDetails: IndividualDetailsOverview[];
   caregiverDetails: IndividualDetailsOverview[];
 };
 
 const IndividualDetails = ({
-  title,
   childrenDetails,
   caregiverDetails,
 }: IndividualDetailsProps): React.ReactElement => {
@@ -19,19 +17,7 @@ const IndividualDetails = ({
 
   return (
     <>
-      <VStack padding="32px" align="flex-start" spacing="16px">
-        <HStack w="full" display="flex" justifyContent="space-between">
-          <Text color="b&w.black" textStyle="header-large">
-            {title}
-          </Text>
-          <Button
-            textStyle="button-medium"
-            variant="primary"
-            rightIcon={<Icon as={Edit2} h="16px" />}
-          >
-            Edit {/* TODO: implement edit button */}
-          </Button>
-        </HStack>
+      <VStack paddingY="32px" align="flex-start" spacing="16px">
         <Text
           color="blue.500"
           textStyle="label"
@@ -69,7 +55,7 @@ const IndividualDetails = ({
           </VStack>
         ))}
       </VStack>
-      <VStack padding="32px" align="flex-start" spacing="16px">
+      <VStack paddingY="32px" align="flex-start" spacing="16px">
         <Text
           color="blue.500"
           textStyle="label"
@@ -77,7 +63,7 @@ const IndividualDetails = ({
           padding={1}
           borderRadius="5px"
         >
-          CAREGIVERS
+          VISITING FAMILY MEMBERS
         </Text>
         {caregiverDetails.map((indiv, i) => (
           <VStack key={i} w="full">

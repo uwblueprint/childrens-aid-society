@@ -20,6 +20,7 @@ export type CustomSelectProps = CustomInputProps & {
   icon?: JSX.Element;
   iconRight?: JSX.Element;
   options: string[];
+  readOnly?: boolean;
 };
 
 export const CustomSelectDropDown = ({
@@ -66,6 +67,7 @@ export const CustomSelectField = ({
   placeholder,
   icon,
   iconRight,
+  readOnly = false,
   ...props
 }: CustomSelectProps): React.ReactElement => {
   const [field, , helpers] = useField<string>(name);
@@ -87,10 +89,12 @@ export const CustomSelectField = ({
           />
         </FormControl>
       </PopoverTrigger>
-      <CustomSelectDropDown
-        options={options}
-        onSelect={(value) => helpers.setValue(value)}
-      />
+      {!readOnly && (
+        <CustomSelectDropDown
+          options={options}
+          onSelect={(value) => helpers.setValue(value)}
+        />
+      )}
     </Popover>
   );
 };

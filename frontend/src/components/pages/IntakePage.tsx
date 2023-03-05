@@ -7,11 +7,13 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
-import Stepper from "../intake/Stepper";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
+import { Caregivers } from "../intake/NewCaregiverModal";
+import IntakeSteps from "../intake/intakeSteps";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
+  const [reviewHeader, setReviewHeader] = useState(false);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
     referringWorkerContact: "",
@@ -36,45 +38,47 @@ const Intake = (): React.ReactElement => {
     familialConcerns: "",
   });
 
-  const nextStep = () => setStep(step + 1);
+  const [caregivers, setCaregivers] = useState<Caregivers>([]);
 
-  const prevStep = () => setStep(step - 1);
+  const nextStep = () => setStep(step + 1);
 
   const renderDetailsForm = () => {
     switch (step) {
-      case 0:
+      case IntakeSteps.CASE_REFERRAL:
         return (
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
+            setStep={setStep}
           />
         );
-      case 1:
+      case IntakeSteps.COURT_INFORMATION:
         return (
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
             nextStep={nextStep}
-            prevStep={prevStep}
+            setStep={setStep}
           />
         );
-      case 2:
+      case IntakeSteps.INDIVIDUAL_DETAILS:
         return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            setStep={setStep}
+            caregivers={caregivers}
+            setCaregivers={setCaregivers}
+          />
         );
-      case 3:
+      case IntakeSteps.PROGRAM_DETAILS:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ProgramForm
-                programDetails={programDetails}
-                setProgramDetails={setProgramDetails}
-                prevStep={prevStep}
-                nextStep={nextStep}
-              />
-            </Box>
-          </>
+          <ProgramForm
+            programDetails={programDetails}
+            setProgramDetails={setProgramDetails}
+            nextStep={nextStep}
+            setStep={setStep}
+          />
         );
       default:
         return (
@@ -83,8 +87,13 @@ const Intake = (): React.ReactElement => {
               <ReviewForm
                 referralDetails={referralDetails}
                 setReferralDetails={setReferralDetails}
+                courtDetails={courtDetails}
+                setCourtDetails={setCourtDetails}
+                programDetails={programDetails}
+                setProgramDetails={setProgramDetails}
                 nextStep={nextStep}
-                prevStep={prevStep}
+                setStep={setStep}
+                setReviewHeader={setReviewHeader}
               />
             </Box>
           </>
@@ -94,33 +103,28 @@ const Intake = (): React.ReactElement => {
 
   return (
     <>
-      {step === 4 ? (
+      {step === IntakeSteps.REVIEW_CASE_DETAILS ? (
         <IntakeHeader
           primaryTitle="Review Case Details"
           secondaryTitle="Initiate New Case"
         />
       ) : (
-        <IntakeHeader
-          primaryTitle="Initiate New Case"
-          secondaryTitle="Case Management"
-        />
+        <>
+          {reviewHeader ? (
+            <IntakeHeader
+              primaryTitle="Edit Case Intake Submission"
+              secondaryTitle="Case Management"
+            />
+          ) : (
+            <IntakeHeader
+              primaryTitle="Initiate New Case"
+              secondaryTitle="Case Management"
+            />
+          )}
+        </>
       )}
 
       <Box textAlign="center" padding="30px 0 40px 0">
-        {step !== 4 ? (
-          <Stepper
-            pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
-            ]}
-            setStep={setStep}
-            activePage={step}
-          />
-        ) : (
-          <></>
-        )}
         <Container maxWidth="container.xl" padding="30px 96px">
           {renderDetailsForm()}
         </Container>

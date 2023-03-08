@@ -85,7 +85,7 @@ const post = async ({
 }): Promise<IntakeResponse> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
-    "accessToken",
+    "access_token",
   )}`;
   try {
     const { data } = await baseAPIClient.post("/intake", formData, {
@@ -100,7 +100,7 @@ const post = async ({
 const get = async (): Promise<IntakeResponse[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
-    "accessToken",
+    "access_token",
   )}`;
   try {
     const { data } = await baseAPIClient.get("/intake", {

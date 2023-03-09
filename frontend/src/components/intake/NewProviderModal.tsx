@@ -256,7 +256,15 @@ const NewProviderModal = ({
           )
         }
         secondaryTitle="Individual Details"
-        primaryButtonTitle="Add provider"
+        primaryButtonTitle={
+          provider?.providerName &&
+          provider?.providerFileNo &&
+          provider?.primaryPhoneNo &&
+          provider?.address &&
+          provider?.relationship
+            ? "Save provider"
+            : "Add provider"
+        }
       />
     </Box>
   );

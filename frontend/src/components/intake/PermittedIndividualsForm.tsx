@@ -60,9 +60,21 @@ const PermittedIndividualsForm = ({
     },
   );
 
-  if (permittedIndividuals.length === 0) {
-    return (
-      <>
+  return (
+    <>
+      {permittedIndividuals.length > 0 ? (
+        <Center paddingTop="35px">
+          <PromptBox
+            headerText="Permitted Individuals"
+            descriptionText="No other permitted individuals have been added to the case yet."
+            buttonText="Add permitted individuals"
+            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+            onButtonClick={onOpenAddPermittedIndividuals}
+            permittedIndividualDetails={permittedIndividualsOverview}
+            deleteIndividual={deletePermittedIndividual}
+          />
+        </Center>
+      ) : (
         <Box display="flex" justifyContent="space-between" paddingTop="35px">
           <Text alignSelf="start" textStyle="title-medium">
             Other permitted individuals
@@ -77,32 +89,12 @@ const PermittedIndividualsForm = ({
             Add
           </Button>
         </Box>
-        <PermittedIndividualsModal
-          isOpen={isOpenAddPermittedIndividuals}
-          onClick={onClickAddPermittedIndividual}
-          onClose={onCloseAddPermittedIndividuals}
-        />
-      </>
-    );
-  }
-  return (
-    <>
-      <Center paddingTop="35px">
-        <PromptBox
-          headerText="Permitted Individuals"
-          descriptionText="No other permitted individuals have been added to the case yet."
-          buttonText="Add permitted individuals"
-          buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
-          onButtonClick={onOpenAddPermittedIndividuals}
-          permittedIndividualDetails={permittedIndividualsOverview}
-          deleteIndividual={deletePermittedIndividual}
-        />
-        <PermittedIndividualsModal
-          isOpen={isOpenAddPermittedIndividuals}
-          onClick={onClickAddPermittedIndividual}
-          onClose={onCloseAddPermittedIndividuals}
-        />
-      </Center>
+      )}
+      <PermittedIndividualsModal
+        isOpen={isOpenAddPermittedIndividuals}
+        onClick={onClickAddPermittedIndividual}
+        onClose={onCloseAddPermittedIndividuals}
+      />
     </>
   );
 };

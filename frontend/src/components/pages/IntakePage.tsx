@@ -11,7 +11,6 @@ import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../intake/NewCaregiverModal";
 import IntakeSteps from "../intake/intakeSteps";
 import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
-import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
@@ -79,18 +78,14 @@ const Intake = (): React.ReactElement => {
         );
       case IntakeSteps.PROGRAM_DETAILS:
         return (
-          <>
-            <ProgramForm
-              programDetails={programDetails}
-              setProgramDetails={setProgramDetails}
-              nextStep={nextStep}
-              setStep={setStep}
-            />
-            <PermittedIndividualsForm
-              permittedIndividuals={permittedIndividuals}
-              setPermittedIndividuals={setPermittedIndividuals}
-            />
-          </>
+          <ProgramForm
+            programDetails={programDetails}
+            setProgramDetails={setProgramDetails}
+            permittedIndividuals={permittedIndividuals}
+            setPermittedIndividuals={setPermittedIndividuals}
+            nextStep={nextStep}
+            setStep={setStep}
+          />
         );
       default:
         return (
@@ -102,6 +97,8 @@ const Intake = (): React.ReactElement => {
               setCourtDetails={setCourtDetails}
               programDetails={programDetails}
               setProgramDetails={setProgramDetails}
+              permittedIndividuals={permittedIndividuals}
+              setPermittedIndividuals={setPermittedIndividuals}
               nextStep={nextStep}
               setStep={setStep}
               setReviewHeader={setReviewHeader}
@@ -133,7 +130,6 @@ const Intake = (): React.ReactElement => {
           )}
         </>
       )}
-
       <Box textAlign="center" padding="30px 0 40px 0">
         <Container maxWidth="container.xl" padding="30px 96px">
           {renderDetailsForm()}

@@ -26,6 +26,7 @@ import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import PermittedIndividualsModal from "./PermittedIndividualsModal";
+import MultiTextInput from "../common/MultiTextInput";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -193,6 +194,13 @@ const ProgramForm = ({
                 id="familialConcerns"
                 name="familialConcerns"
                 placeholder="Select familial concerns..."
+              />
+              <MultiTextInput
+                id="familialConcerns"
+                options={["abc", "abcdef", "def", "ghi"]}
+                values={["abc", "123", "jo42j34"]}
+                state={programDetails}
+                setState={setProgramDetails}
               />
             </Box>
           </FormControl>

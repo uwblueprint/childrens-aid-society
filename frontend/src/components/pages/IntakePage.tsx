@@ -125,7 +125,11 @@ const Intake = (): React.ReactElement => {
       )}
 
       <Box textAlign="center" padding="30px 0 40px 0">
-        <Container maxWidth="container.xl" padding="30px 96px">
+        <Container
+          maxWidth="container.xl"
+          padding="30px 96px"
+          marginBottom="100px"
+        >
           {renderDetailsForm()}
         </Container>
       </Box>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -43,6 +43,24 @@ const ReferralForm = ({
   hideStepper,
   hideFooter,
 }: ReferralFormProps): React.ReactElement => {
+  const [cpinFileNumber, setCpinFileNumber] = useState("");
+  const [cpinFileType, setCpinFileType] = useState("");
+  const [familyName, setFamilyName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [referralDate, setReferralDate] = useState("");
+  const [referringWorker, setReferringWorker] = useState("");
+  const [referringWorkerContact, setReferringWorkerContact] = useState("");
+
+  function onClear() {
+    setCpinFileNumber("");
+    setCpinFileType("");
+    setFamilyName("");
+    setPhoneNumber("");
+    setReferralDate("");
+    setReferringWorker("");
+    setReferringWorkerContact("");
+  }
+
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
     nextStep();
@@ -167,6 +185,7 @@ const ReferralForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

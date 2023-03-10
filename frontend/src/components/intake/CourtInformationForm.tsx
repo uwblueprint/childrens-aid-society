@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -45,6 +45,18 @@ const CourtInformationForm = ({
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [currentCourtStatus, setCurrentCourtStatus] = useState("");
+  const [firstNationHeritage, setFirstNationHeritage] = useState("");
+  const [firstNationBand, setFirstNationBand] = useState("");
+  // const [orderReferral, setOrderReferral] = useState(null);
+
+  const onClear = () => {
+    setCurrentCourtStatus("");
+    setFirstNationHeritage("");
+    setFirstNationBand("");
+    // setFirstNationBand(null);
+  };
+
   const handleClick = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();
@@ -199,6 +211,7 @@ const CourtInformationForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

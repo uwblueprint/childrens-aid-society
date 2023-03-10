@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "react-feather";
 import { Box, Button, Flex, useToast } from "@chakra-ui/react";
+import { Caregivers } from "./NewCaregiverModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -14,6 +15,7 @@ export type IntakeFooterProps = {
   isStepComplete: () => boolean;
   registrationLoading: boolean;
   nextStepCallBack: () => void;
+  clearFields?: () => void;
 };
 
 const IntakeFooter = ({
@@ -23,8 +25,10 @@ const IntakeFooter = ({
   isStepComplete,
   registrationLoading,
   nextStepCallBack,
+  clearFields,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
+
   const onNextStep = () => {
     if (isStepComplete()) {
       nextStepCallBack();
@@ -63,6 +67,11 @@ const IntakeFooter = ({
           height="48px"
           mb={{ sm: 4, md: 0 }}
           mr={{ sm: 0, md: 4 }}
+          onClick={() => {
+            if (clearFields) {
+              clearFields();
+            }
+          }}
         >
           Clear page
         </Button>

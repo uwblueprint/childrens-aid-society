@@ -35,7 +35,7 @@ const Intake = (): React.ReactElement => {
     suggestedStartDate: "",
     shortTermGoals: "",
     longTermGoals: "",
-    familialConcerns: "",
+    familialConcerns: [],
   });
 
   const [caregivers, setCaregivers] = useState<Caregivers>([]);

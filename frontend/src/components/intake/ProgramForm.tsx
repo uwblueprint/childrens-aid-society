@@ -34,7 +34,7 @@ export type ProgramDetails = {
   suggestedStartDate: string;
   shortTermGoals: string;
   longTermGoals: string;
-  familialConcerns: string;
+  familialConcerns: string[];
 };
 
 type ProgramFormProps = {
@@ -187,20 +187,16 @@ const ProgramForm = ({
               <FormLabel htmlFor="familialConcerns">
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
-              <Field
-                disabled={readOnly}
-                as={CustomInput}
-                // TODO change to multi-list selector component
-                id="familialConcerns"
-                name="familialConcerns"
-                placeholder="Select familial concerns..."
-              />
               <MultiTextInput
-                id="familialConcerns"
-                options={["abc", "abcdef", "def", "ghi"]}
-                values={["abc", "123", "jo42j34"]}
-                state={programDetails}
-                setState={setProgramDetails}
+                placeholder="Select familial concerns..."
+                options={["abc", "abcdef", "def", "ghi"]} // TODO: Replace with actual options
+                values={programDetails.familialConcerns}
+                setState={(e: string[]) =>
+                  setProgramDetails((prevState) => ({
+                    ...prevState,
+                    familialConcerns: e,
+                  }))
+                }
               />
             </Box>
           </FormControl>

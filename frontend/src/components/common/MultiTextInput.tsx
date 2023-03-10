@@ -1,50 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Field } from "formik";
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  Text,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Box, Flex, Input } from "@chakra-ui/react";
 import { X } from "react-feather";
-import CustomInput from "./CustomInput";
 
 type MultiTextInputProps = {
-  id: string;
+  placeholder: string;
   options: string[];
   values: string[];
-  state: any;
-  setState: any;
+  setState: React.Dispatch<React.SetStateAction<any>>;
 };
 
 const MultiTextInput = ({
-  id,
+  placeholder,
   options,
   values,
-  state,
   setState,
 }: MultiTextInputProps) => {
-  const [filteredOptions, setFilteredOptions] = useState(options);
-  const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<string[]>(values);
-  // const inputRef = useRef<HTMLInputElement>(null);
-  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const autocompleteRef = useRef<HTMLDivElement>(null);
-
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setShowAutocomplete(false);
-
-    // const { relatedTarget } = event;
-    // if (autocompleteRef.current?.contains(relatedTarget as Node)) {
-    //   console.log("Blur event occurred outside of autocomplete");
-    //   setShowAutocomplete(false);
-    //   // handle onBlur logic here
-    // }
-  };
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => {
@@ -63,37 +39,38 @@ const MultiTextInput = ({
     };
   }, []);
 
+  useEffect(() => {
+    const newFilteredOptions = options.filter((option) => {
+      return option.toLowerCase().startsWith(inputValue.toLowerCase());
+    });
+
+    setFilteredOptions(newFilteredOptions);
+    setShowAutocomplete(newFilteredOptions.length !== 0);
+  }, [inputValue]);
+
+  useEffect(() => {
+    setShowAutocomplete(false);
+  }, []);
+
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key, keyCode } = event;
-    console.log(`[${inputValue}]`);
+    const { key } = event;
 
-    setFilteredOptions(
-      options.filter((option) => {
-        console.log(inputValue.toLowerCase());
-        console.log(option.toLowerCase().startsWith(inputValue.toLowerCase()));
-        return option.toLowerCase().startsWith(inputValue.toLowerCase());
-      }),
-    );
-
-    if ((key === "Enter" || keyCode === 13) && inputValue.trim() !== "") {
-      setTags((prevState) => [...prevState, inputValue.trim()]);
+    if (key === "Enter" && inputValue.trim() !== "") {
+      setState([...values, inputValue.trim()]);
       setInputValue("");
     } else if (
-      (key === "Backspace" ||
-        key === "Delete" ||
-        keyCode === 8 ||
-        keyCode === 46) &&
+      (key === "Backspace" || key === "Delete") &&
       inputValue === "" &&
-      tags.length > 0
+      values.length > 0
     ) {
-      setTags((prevState) => prevState.slice(0, -1));
+      setState(values.slice(0, -1));
     }
   };
 
   const handleDeleteTag = (index: number) => {
-    const newTags = [...tags];
+    const newTags = [...values];
     newTags.splice(index, 1);
-    setTags(newTags);
+    setState(newTags);
   };
 
   return (
@@ -102,39 +79,41 @@ const MultiTextInput = ({
         padding="4px"
         borderWidth="1px"
         borderStyle="solid"
-        borderRadius="4px"
+        borderTopRadius="4px"
+        borderBottomRadius={showAutocomplete ? "0px" : "4px"}
         borderColor="gray.100"
         backgroundColor="gray.50"
         _hover={{ backgroundColor: "gray.100" }}
       >
         <Flex flexWrap="wrap">
-          {tags.map((tag, i) => {
-            return (
-              <Box
-                margin="4px 0px 4px 7px"
-                color="gray.600"
-                textStyle="button-medium"
-                textAlign="left"
-                overflowWrap="break-word"
-                wordBreak="break-word"
-                borderWidth="1px"
-                borderStyle="solid"
-                borderColor="gray.600"
-                borderRadius="4px"
-                padding="8px 4px 8px 12px"
-                key={i}
-                display="flex"
-                alignItems="center"
-                width="fit-content"
-              >
-                <Box>{tag}</Box>
+          {values &&
+            values.map((tag, i) => {
+              return (
+                <Box
+                  margin="4px 0px 4px 7px"
+                  color="gray.600"
+                  textStyle="button-medium"
+                  textAlign="left"
+                  overflowWrap="break-word"
+                  wordBreak="break-word"
+                  borderWidth="1px"
+                  borderStyle="solid"
+                  borderColor="gray.600"
+                  borderRadius="4px"
+                  padding="8px 4px 8px 12px"
+                  key={i}
+                  display="flex"
+                  alignItems="center"
+                  width="fit-content"
+                >
+                  <Box>{tag}</Box>
 
-                <Box onClick={() => handleDeleteTag(i)} cursor="pointer">
-                  <X height="16px" />
+                  <Box onClick={() => handleDeleteTag(i)} cursor="pointer">
+                    <X height="16px" />
+                  </Box>
                 </Box>
-              </Box>
-            );
-          })}
+              );
+            })}
           <Box
             color="gray.600"
             textStyle="button-medium"
@@ -146,26 +125,26 @@ const MultiTextInput = ({
               ref={inputRef}
               variant="unstyled"
               borderRadius={0}
-              placeholder="Select familial concerns..."
+              placeholder={placeholder}
               value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-              onKeyUp={handleKeyPress}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyPress}
               onFocus={() => setShowAutocomplete(true)}
-              // onBlur={handleBlur}
-              // ref={inputRef}
             />
           </Box>
         </Flex>
       </Box>
       <Box
         ref={autocompleteRef}
-        display={showAutocomplete ? "" : "none"} // {filteredOptions.length > 0 && inputValue !== "" ? "" : "none"}
+        display={showAutocomplete ? "" : "none"}
         position="absolute"
         top="100%"
         width="100%"
         backgroundColor="gray.100"
         borderWidth="1px"
         borderColor="gray.300"
+        borderTopRadius="0"
+        borderBottomRadius="4px"
         boxShadow="sm"
         zIndex="1"
         padding="4px"
@@ -194,9 +173,8 @@ const MultiTextInput = ({
               backgroundColor="gray.50"
               _hover={{ backgroundColor: "gray.100" }}
               onClick={() => {
-                setTags((prevState) => [...prevState, option]);
+                setState([...values, option]);
                 setInputValue("");
-                setShowAutocomplete(false);
               }}
             >
               {option}

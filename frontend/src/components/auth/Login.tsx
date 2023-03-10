@@ -9,6 +9,7 @@ import { HOME_PAGE } from "../../constants/Routes";
 import AuthContext from "../../contexts/AuthContext";
 import { AuthenticatedUser } from "../../types/AuthTypes";
 import CustomInput from "../common/CustomInput";
+import IntakeHeader from "../intake/IntakeHeader";
 
 const Login = (): React.ReactElement => {
   const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
@@ -48,80 +49,92 @@ const Login = (): React.ReactElement => {
     return <Redirect to={HOME_PAGE} />;
   }
   return (
-    <Center h="100vh">
-      <Box border="2px" borderColor="gray.100" rounded="xl" p="10" width="50vw">
-        <Text textStyle="header-large" pb="10">
-          Log In
-        </Text>
-        <form>
-          <Box>
-            <Text textStyle="label" padding={1}>
-              USERNAME
-            </Text>
-            <CustomInput
-              isInvalid={isError}
-              type="string"
-              placeholder="firstname.lastname"
-              icon={<Icon as={User} />}
-              onChange={(event) => {
-                setIsError(false);
-                setEmail(event.target.value);
-              }}
-            />
-          </Box>
-          <Box pt={8}>
-            <Text textStyle="label" padding={1}>
-              PASSWORD
-            </Text>
-            <CustomInput
-              isInvalid={isError}
-              type={show ? "text" : "password"}
-              placeholder="************"
-              icon={<Icon as={Lock} />}
-              rightIcon={
-                <Icon
-                  as={Eye}
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                />
-              }
-              rightIconShowPointerEvents
-              onChange={(event) => {
-                setPassword(event.target.value);
-                setIsError(false);
-              }}
-            />
-          </Box>
-
-          <Text
-            fontFamily="Roboto" // TODO: Set up forgot password page
-            fontSize="sm"
-            as="u"
-            padding={1}
-          >
-            Forgot Password?
+    <>
+      <IntakeHeader
+        primaryTitle="Children's Aid Society of Algoma"
+        secondaryTitle="Case Management"
+      />
+      <Center h="80vh">
+        <Box
+          border="2px"
+          borderColor="gray.100"
+          rounded="xl"
+          p="10"
+          width="50vw"
+        >
+          <Text textStyle="header-large" pb="10">
+            Log In
           </Text>
+          <form>
+            <Box>
+              <Text textStyle="label" padding={1}>
+                USERNAME
+              </Text>
+              <CustomInput
+                isInvalid={isError}
+                type="string"
+                placeholder="firstname.lastname"
+                icon={<Icon as={User} />}
+                onChange={(event) => {
+                  setIsError(false);
+                  setEmail(event.target.value);
+                }}
+              />
+            </Box>
+            <Box pt={8}>
+              <Text textStyle="label" padding={1}>
+                PASSWORD
+              </Text>
+              <CustomInput
+                isInvalid={isError}
+                type={show ? "text" : "password"}
+                placeholder="************"
+                icon={<Icon as={Lock} />}
+                rightIcon={
+                  <Icon
+                    as={Eye}
+                    onClick={() => {
+                      setShow(!show);
+                    }}
+                  />
+                }
+                rightIconShowPointerEvents
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                  setIsError(false);
+                }}
+              />
+            </Box>
 
-          <Center pt="8">
-            <Button onClick={onLogInClick} w="30%" textStyle="button-medium">
-              Log In
-            </Button>
-          </Center>
-
-          <Center>
             <Text
-              textStyle="body-medium"
-              color="red.400"
-              visibility={isError ? "visible" : "hidden"}
-              textAlign="center"
+              fontFamily="Roboto" // TODO: Set up forgot password page
+              fontSize="sm"
+              as="u"
+              padding={1}
             >
-              The username or password entered is incorrect
+              Forgot Password?
             </Text>
-          </Center>
-        </form>
-      </Box>
-    </Center>
+
+            <Center pt="8">
+              <Button onClick={onLogInClick} w="30%" textStyle="button-medium">
+                Log In
+              </Button>
+            </Center>
+
+            <Center>
+              <Text
+                textStyle="body-medium"
+                color="red.400"
+                visibility={isError ? "visible" : "hidden"}
+                textAlign="center"
+              >
+                The username or password entered is incorrect
+              </Text>
+            </Center>
+          </form>
+        </Box>
+      </Center>
+    </>
   );
 };
 

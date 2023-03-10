@@ -9,7 +9,7 @@ import {
 const login = async (
   email: string,
   password: string,
-): Promise<AuthenticatedUser> => {
+): Promise<AuthenticatedUser | string> => {
   try {
     const { data } = await baseAPIClient.post(
       "/auth/login",
@@ -19,7 +19,7 @@ const login = async (
     localStorage.setItem(AUTHENTICATED_USER_KEY, JSON.stringify(data));
     return data;
   } catch (error) {
-    return null;
+    return JSON.stringify({ error: { response: { data: { error } } } });
   }
 };
 

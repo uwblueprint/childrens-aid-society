@@ -49,12 +49,14 @@ const CourtInformationForm = ({
   const [firstNationHeritage, setFirstNationHeritage] = useState("");
   const [firstNationBand, setFirstNationBand] = useState("");
   // const [orderReferral, setOrderReferral] = useState(null);
+  // TODO
 
   const onClear = () => {
     setCurrentCourtStatus("");
     setFirstNationHeritage("");
     setFirstNationBand("");
     // setFirstNationBand(null);
+    // TODO
   };
 
   const handleClick = () => {

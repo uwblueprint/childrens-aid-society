@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Month(Enum):
     JANUARY = "January"
     FEBRUARY = "February"
@@ -14,6 +15,7 @@ class Month(Enum):
     NOVEMBER = "November"
     DECEMBER = "December"
 
+
 class AttendanceSheetDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
@@ -23,6 +25,7 @@ class AttendanceSheetDTO:
         self.csw = kwargs.get("csw")
         self.cpw = kwargs.get("cpw")
         self.fcc = kwargs.get("fcc")
+
 
 class CreateAttendanceSheetDTO(AttendanceSheetDTO):
     def __init__(self, **kwargs):
@@ -43,5 +46,3 @@ class CreateAttendanceSheetDTO(AttendanceSheetDTO):
             error_list.append("The fcc supplied is not a string")
 
         return error_list
-
-

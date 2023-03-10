@@ -1,45 +1,47 @@
 import React, { useContext, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import {
-  GoogleLogin,
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
 
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Text, useToast } from "@chakra-ui/react";
 
 import authAPIClient from "../../APIClients/AuthAPIClient";
 import { HOME_PAGE, SIGNUP_PAGE } from "../../constants/Routes";
 import AuthContext from "../../contexts/AuthContext";
 import { AuthenticatedUser } from "../../types/AuthTypes";
 
-type GoogleResponse = GoogleLoginResponse | GoogleLoginResponseOffline;
-
-type GoogleErrorResponse = {
-  error: string;
-  details: string;
-};
-
 const Login = (): React.ReactElement => {
   const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const toast = useToast();
 
   const onLogInClick = async () => {
-    const user: AuthenticatedUser = await authAPIClient.login(email, password);
-    setAuthenticatedUser(user);
+    try {
+      const user: AuthenticatedUser = await authAPIClient.login(
+        email,
+        password,
+      );
+      setAuthenticatedUser(user);
+    } catch {
+      toast({
+        title: "ERROR",
+        variant: "subtle",
+        duration: 3000,
+        status: "error",
+        position: "top",
+      });
+    }
+    toast({
+      title: "SUCCESS",
+      variant: "subtle",
+      duration: 3000,
+      status: "success",
+      position: "top",
+    });
   };
 
   const onSignUpClick = () => {
     history.push(SIGNUP_PAGE);
-  };
-
-  const onGoogleLoginSuccess = async (tokenId: string) => {
-    const user: AuthenticatedUser = await authAPIClient.loginWithGoogle(
-      tokenId,
-    );
-    setAuthenticatedUser(user);
   };
 
   if (authenticatedUser) {
@@ -71,22 +73,6 @@ const Login = (): React.ReactElement => {
             Log In
           </Button>
         </div>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_OAUTH_CLIENT_ID || ""}
-          buttonText="Login with Google"
-          onSuccess={(response: GoogleResponse): void => {
-            if ("tokenId" in response) {
-              onGoogleLoginSuccess(response.tokenId);
-            } else {
-              // eslint-disable-next-line no-alert
-              window.alert(response);
-            }
-          }}
-          onFailure={(error: GoogleErrorResponse) =>
-            // eslint-disable-next-line no-alert
-            window.alert(JSON.stringify(error))
-          }
-        />
       </form>
       <div>
         <Button onClick={onSignUpClick} textStyle="button-medium">

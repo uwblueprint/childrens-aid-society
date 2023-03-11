@@ -45,19 +45,6 @@ const CourtInformationForm = ({
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const [currentCourtStatus, setCurrentCourtStatus] = useState("");
-  const [firstNationHeritage, setFirstNationHeritage] = useState("");
-  const [firstNationBand, setFirstNationBand] = useState("");
-  // const [orderReferral, setOrderReferral] = useState(null);
-  // TODO
-
-  const onClear = () => {
-    setCurrentCourtStatus("");
-    setFirstNationHeritage("");
-    setFirstNationBand("");
-    // setFirstNationBand(null);
-    // TODO
-  };
 
   const handleClick = () => {
     if (inputRef && inputRef.current) {
@@ -86,6 +73,11 @@ const CourtInformationForm = ({
   const onNextStep = () => {
     nextStep();
     setCourtDetails(formik.values);
+  };
+
+  const onClear = () => {
+    formik.resetForm();
+    // TODO: reset uploaded object
   };
   return (
     <>

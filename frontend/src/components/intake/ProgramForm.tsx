@@ -55,22 +55,6 @@ const ProgramForm = ({
   hideStepper,
   hideFooter,
 }: ProgramFormProps): React.ReactElement => {
-  const [transportationRequirements, setTransportationRequirements] =
-    useState("");
-  const [schedulingRequirements, setSchedulingRequirements] = useState("");
-  const [suggestedStartDate, setSuggestedStartDate] = useState("");
-  const [shortTermGoals, setShortTermGoals] = useState("");
-  const [longTermGoals, setLongTermGoals] = useState("");
-  const [familialConcerns, setFamilialConcerns] = useState("");
-
-  function onClear() {
-    setTransportationRequirements("");
-    setSchedulingRequirements("");
-    setSuggestedStartDate("");
-    setShortTermGoals("");
-    setLongTermGoals("");
-    setFamilialConcerns("");
-  }
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
     nextStep();
@@ -87,6 +71,14 @@ const ProgramForm = ({
     nextStep();
     setProgramDetails(formik.values);
   };
+
+  function onClear() {
+    formik.setFieldValue("transportationRequirements", null);
+    formik.setFieldValue("schedulingRequirements", null);
+    formik.setFieldValue("suggestedStartDate", null);
+    formik.setFieldValue("shortTermGoals", null);
+    formik.setFieldValue("longTermGoals", null);
+  }
 
   const {
     onOpen: onOpenAddPermittedIndividuals,

@@ -43,24 +43,6 @@ const ReferralForm = ({
   hideStepper,
   hideFooter,
 }: ReferralFormProps): React.ReactElement => {
-  const [cpinFileNumber, setCpinFileNumber] = useState("");
-  const [cpinFileType, setCpinFileType] = useState("");
-  const [familyName, setFamilyName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [referralDate, setReferralDate] = useState("");
-  const [referringWorker, setReferringWorker] = useState("");
-  const [referringWorkerContact, setReferringWorkerContact] = useState("");
-
-  function onClear() {
-    setCpinFileNumber("");
-    setCpinFileType("");
-    setFamilyName("");
-    setPhoneNumber("");
-    setReferralDate("");
-    setReferringWorker("");
-    setReferringWorkerContact("");
-  }
-
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
     nextStep();
@@ -77,6 +59,10 @@ const ReferralForm = ({
     nextStep();
     setReferralDetails(formik.values);
   };
+
+  function onClear() {
+    formik.resetForm();
+  }
 
   return (
     <>

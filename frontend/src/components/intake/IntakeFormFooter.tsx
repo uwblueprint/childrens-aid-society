@@ -1,7 +1,6 @@
 import React from "react";
 import { ArrowRight } from "react-feather";
 import { Box, Button, Flex, useToast } from "@chakra-ui/react";
-import { Caregivers } from "./NewCaregiverModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;

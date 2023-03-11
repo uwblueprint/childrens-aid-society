@@ -73,6 +73,22 @@ const CourtInformationForm = ({
     nextStep();
     setCourtDetails(formik.values);
   };
+
+  const downloadFile = () => {
+    if(!formik.values.orderReferral || !formik.values.orderReferral.name){
+      return
+    }
+
+    const blob = new Blob([formik.values.orderReferral], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = formik.values.orderReferral.name;
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+
+  };
+
   return (
     <>
       {!hideStepper && (
@@ -143,7 +159,11 @@ const CourtInformationForm = ({
                 style={{ cursor: "pointer" }}
               />
               {readOnly ? (
-                <Button variant="tertiary" leftIcon={<Icon as={Download} />}>
+                <Button
+                    variant="tertiary"
+                    leftIcon={<Icon as={Download} />}
+                    onClick={downloadFile}
+                >
                   Download attachment {/* TODO: implement download button */}
                 </Button>
               ) : (

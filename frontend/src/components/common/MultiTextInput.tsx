@@ -6,7 +6,7 @@ type MultiTextInputProps = {
   placeholder: string;
   options: string[];
   values: string[];
-  setState: React.Dispatch<React.SetStateAction<any>>;
+  setState: (e: string[]) => void;
 };
 
 const MultiTextInput = ({
@@ -14,7 +14,7 @@ const MultiTextInput = ({
   options,
   values,
   setState,
-}: MultiTextInputProps) => {
+}: MultiTextInputProps): React.ReactElement => {
   const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
   const [inputValue, setInputValue] = useState<string>("");
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false);
@@ -46,7 +46,7 @@ const MultiTextInput = ({
 
     setFilteredOptions(newFilteredOptions);
     setShowAutocomplete(newFilteredOptions.length !== 0);
-  }, [inputValue]);
+  }, [inputValue, options]);
 
   useEffect(() => {
     setShowAutocomplete(false);

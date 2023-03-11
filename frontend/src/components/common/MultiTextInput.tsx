@@ -136,7 +136,7 @@ const MultiTextInput = ({
       </Box>
       <Box
         ref={autocompleteRef}
-        display={showAutocomplete ? "" : "none"}
+        display={showAutocomplete && filteredOptions.length > 0 ? "" : "none"}
         position="absolute"
         top="100%"
         width="100%"

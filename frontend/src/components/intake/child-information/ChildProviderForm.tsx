@@ -75,14 +75,15 @@ const ChildProviderForm = ({
         <PromptBox
           headerText="Providers"
           descriptionText="At least one provider must be indicated for each child"
-          buttonText="Add new provider"
-          onButtonClick={onOpenNewProviders}
-          secondaryButtonText="Select providers"
+          buttonText="Select providers"
+          onButtonClick={onOpenExistingProviders}
+          secondaryButtonText="Add new provider"
           secondaryButtonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
-          secondaryOnButtonClick={onOpenExistingProviders}
+          secondaryOnButtonClick={onOpenNewProviders}
           individualDetails={providerDetailsOverview}
           deleteIndividual={deleteProvider}
           setSelectedIndex={setSelectedIndex}
+          useSecondaryOnClick
         />
         <Box>
           <ExistingProvider

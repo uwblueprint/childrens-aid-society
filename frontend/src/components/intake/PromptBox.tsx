@@ -19,6 +19,7 @@ export type PromptBoxProps = {
   individualDetails?: IndividualDetailsOverview[];
   deleteIndividual?: (index: number) => void;
   setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
+  useSecondaryOnClick?: boolean;
 };
 
 const PromptBox = ({
@@ -33,6 +34,7 @@ const PromptBox = ({
   individualDetails,
   deleteIndividual,
   setSelectedIndex,
+  useSecondaryOnClick,
 }: PromptBoxProps): React.ReactElement => {
   return (
     <VStack
@@ -80,7 +82,11 @@ const PromptBox = ({
                   onClick={() => {
                     if (setSelectedIndex) {
                       setSelectedIndex(i);
-                      onButtonClick();
+                      if (useSecondaryOnClick && secondaryOnButtonClick) {
+                        secondaryOnButtonClick();
+                      } else {
+                        onButtonClick();
+                      }
                     }
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
@@ -103,7 +109,14 @@ const PromptBox = ({
             variant="tertiary"
             colorScheme="gray.600"
             leftIcon={secondaryButtonIcon}
-            onClick={secondaryOnButtonClick}
+            onClick={() => {
+              if (secondaryOnButtonClick) {
+                secondaryOnButtonClick();
+              }
+              if (setSelectedIndex) {
+                setSelectedIndex(-1);
+              }
+            }}
           >
             {secondaryButtonText}
           </Button>

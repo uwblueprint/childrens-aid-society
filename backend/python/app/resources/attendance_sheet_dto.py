@@ -34,6 +34,10 @@ class CreateAttendanceSheetDTO(AttendanceSheetDTO):
     def validate(self):
         error_list = []
 
+        if type(self.id) is not int:
+            error_list.append("The id supplied is not an int")
+        if type(self.intake_id) is not int:
+            error_list.append("The intake_id supplied is not an int")
         if type(self.family_name) is not str:
             error_list.append("The family_name supplied is not a string")
         if not isinstance(self.month, Month):

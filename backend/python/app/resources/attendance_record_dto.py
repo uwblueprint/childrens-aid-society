@@ -1,19 +1,22 @@
-import datetime
 from enum import Enum
+
 
 class Supervision(Enum):
     FULL = "FULL"
     PARTIAL = "PARTIAL"
     UNSUPERVISED = "UNSUPERVISED"
 
+
 class Attendance(Enum):
     PRESENT = "PRESENT"
     CANCELLED = "CANCELLED"
     NO_SHOW = "NO_SHOW"
 
+
 class Attending_parent(Enum):
     MOM = "MOM"
     DAD = "DAD"
+
 
 class AttendanceRecordsDTO:
     def __init__(self, **kwargs):
@@ -28,14 +31,19 @@ class AttendanceRecordsDTO:
         self.attending_parent = kwargs.get("attending_parent")
         self.staff_transport_time_min = kwargs.get("staff_transport_time_min")
         self.driver_transport_time_min = kwargs.get("driver_transport_time_min")
-        self.foster_parent_transport_time_min = kwargs.get("foster_parent_transport_time_min")
-        self.child_family_support_worker_id = kwargs.get("child_family_support_worker_id")
+        self.foster_parent_transport_time_min = kwargs.get(
+            "foster_parent_transport_time_min"
+        )
+        self.child_family_support_worker_id = kwargs.get(
+            "child_family_support_worker_id"
+        )
         self.comments = kwargs.get("comments")
 
-class AttendanceRecordsDTO(CaregiverDTO):
+
+class AttendanceRecordsDTO(AttendanceRecordsDTO):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+
     def validate(self):
         error_list = []
 
@@ -57,11 +65,11 @@ class AttendanceRecordsDTO(CaregiverDTO):
         if type(self.start_time) is not str:
             # add additional datetime validation
             error_list.append("start_time must be a string")
-        
+
         if type(self.end_time) is not str:
             # add additional datetime validation
             error_list.append("end_time must be a string")
-        
+
         if type(self.location) is not str:
             error_list.append("location must be a list")
 
@@ -72,7 +80,7 @@ class AttendanceRecordsDTO(CaregiverDTO):
                 error_list.append("attendance must not be empty")
         else:
             error_list.append("attendance must be a string")
-    
+
         if type(self.attending_parent) is str:
             if not isinstance(self.attending_parent, Attendance):
                 error_list.append("must be a valid attending_parent")
@@ -86,18 +94,20 @@ class AttendanceRecordsDTO(CaregiverDTO):
                 error_list.append("staff_transport_time_min must be non-negative")
         else:
             error_list.append("staff_transport_time_min must be an integer")
-        
+
         if type(self.driver_transport_time_min) is int:
             if self.driver_transport_time_min < 0:
                 error_list.append("driver_transport_time_min must be non-negative")
         else:
             error_list.append("driver_transport_time_min must be an integer")
-        
+
         if type(self.foster_parent_transport_time_min) is int:
             if self.foster_parent_transport_time_min < 0:
-                error_list.append("foster_parent_transport_time_min must be non-negative")
+                error_list.append(
+                    "foster_parent_transport_time_min must be non-negative"
+                )
         else:
             error_list.append("foster_parent_transport_time_min must be an integer")
-        
+
         if type(self.comments) is not str:
             error_list.append("comments must be a string")

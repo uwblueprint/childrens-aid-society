@@ -73,11 +73,16 @@ const ProgramForm = ({
   };
 
   function onClear() {
-    formik.setFieldValue("transportationRequirements", null);
-    formik.setFieldValue("schedulingRequirements", null);
-    formik.setFieldValue("suggestedStartDate", null);
-    formik.setFieldValue("shortTermGoals", null);
-    formik.setFieldValue("longTermGoals", null);
+    const { familialConcerns } = formik.values;
+    formik.setValues({
+      transportationRequirements: "",
+      schedulingRequirements: "",
+      suggestedStartDate: "",
+      shortTermGoals: "",
+      longTermGoals: "",
+      familialConcerns: "",
+    });
+    formik.setFieldValue("familialConcerns", familialConcerns);
   }
 
   const {

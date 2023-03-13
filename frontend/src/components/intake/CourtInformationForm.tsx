@@ -76,7 +76,12 @@ const CourtInformationForm = ({
   };
 
   const onClear = () => {
-    formik.resetForm();
+    formik.setValues({
+      currentCourtStatus: "",
+      firstNationHeritage: "",
+      firstNationBand: "",
+      orderReferral: null,
+    });
     // TODO: reset uploaded object
   };
   return (
@@ -142,6 +147,7 @@ const CourtInformationForm = ({
                 as={CustomInput}
                 isReadOnly
                 id="documentDisplay"
+                name="documentDisplay"
                 placeholder="No document attached"
                 value={formik.values.orderReferral?.name}
                 onClick={handleClick}

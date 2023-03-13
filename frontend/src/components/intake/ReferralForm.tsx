@@ -60,9 +60,17 @@ const ReferralForm = ({
     setReferralDetails(formik.values);
   };
 
-  function onClear() {
-    formik.resetForm();
-  }
+  const onClear = () => {
+    formik.setValues({
+      referringWorker: "",
+      referringWorkerContact: "",
+      familyName: "",
+      referralDate: "",
+      cpinFileNumber: "",
+      cpinFileType: "",
+      phoneNumber: "",
+    });
+  };
 
   return (
     <>

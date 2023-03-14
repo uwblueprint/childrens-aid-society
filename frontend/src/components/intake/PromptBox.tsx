@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
 import { ArrowRight, Trash } from "react-feather";
 
 export type IndividualDetailsOverview = {
@@ -19,6 +18,8 @@ export type PromptBoxProps = {
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
   deleteIndividual?: (index: number) => void;
+  setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
+  useSecondaryOnClick?: boolean;
 };
 
 const PromptBox = ({
@@ -32,9 +33,9 @@ const PromptBox = ({
   secondaryOnButtonClick,
   individualDetails,
   deleteIndividual,
+  setSelectedIndex,
+  useSecondaryOnClick,
 }: PromptBoxProps): React.ReactElement => {
-  const history = useHistory();
-
   return (
     <VStack
       bg="gray.50"
@@ -79,8 +80,14 @@ const PromptBox = ({
                   textStyle="button-small"
                   variant="tertiary"
                   onClick={() => {
-                    history.goBack();
-                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
+                    if (setSelectedIndex) {
+                      setSelectedIndex(i);
+                      if (useSecondaryOnClick && secondaryOnButtonClick) {
+                        secondaryOnButtonClick();
+                      } else {
+                        onButtonClick();
+                      }
+                    }
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >
@@ -102,7 +109,14 @@ const PromptBox = ({
             variant="tertiary"
             colorScheme="gray.600"
             leftIcon={secondaryButtonIcon}
-            onClick={secondaryOnButtonClick}
+            onClick={() => {
+              if (secondaryOnButtonClick) {
+                secondaryOnButtonClick();
+              }
+              if (setSelectedIndex) {
+                setSelectedIndex(-1);
+              }
+            }}
           >
             {secondaryButtonText}
           </Button>
@@ -111,7 +125,12 @@ const PromptBox = ({
           variant="secondary"
           colorScheme="gray.600"
           leftIcon={buttonIcon}
-          onClick={onButtonClick}
+          onClick={() => {
+            onButtonClick();
+            if (setSelectedIndex) {
+              setSelectedIndex(-1);
+            }
+          }}
         >
           {buttonText}
         </Button>

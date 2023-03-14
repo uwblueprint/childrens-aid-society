@@ -18,6 +18,8 @@ const ChildProviderForm = ({
   setProviders,
 }: ChildProviderFormProps): React.ReactElement => {
   const [providersDeleted, setProvidersDeleted] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const {
     onOpen: onOpenExistingProviders,
     isOpen: isOpenExistingProviders,
@@ -30,7 +32,11 @@ const ChildProviderForm = ({
   } = useDisclosure();
 
   const onClickNewProvider = (newProvider: ProviderDetails) => {
-    providers.push(newProvider);
+    if (selectedIndex >= 0) {
+      providers.splice(selectedIndex, 1, newProvider);
+    } else {
+      providers.push(newProvider);
+    }
     setProviders(providers);
   };
 
@@ -52,6 +58,17 @@ const ChildProviderForm = ({
     },
   );
 
+  const emptyProvider: ProviderDetails = {
+    providerName: "",
+    providerFileNo: "",
+    primaryPhoneNo: "",
+    secondaryPhoneNo: "",
+    email: "",
+    contactNotes: "",
+    address: "",
+    relationship: "",
+  };
+
   return (
     <>
       <VStack padding="100px">
@@ -65,6 +82,8 @@ const ChildProviderForm = ({
           secondaryOnButtonClick={onOpenNewProviders}
           individualDetails={providerDetailsOverview}
           deleteIndividual={deleteProvider}
+          setSelectedIndex={setSelectedIndex}
+          useSecondaryOnClick
         />
         <Box>
           <ExistingProvider
@@ -75,6 +94,9 @@ const ChildProviderForm = ({
             isOpen={isOpenNewProviders}
             onClick={onClickNewProvider}
             onClose={onCloseNewProviders}
+            provider={
+              selectedIndex >= 0 ? providers[selectedIndex] : emptyProvider
+            }
           />
         </Box>
       </VStack>

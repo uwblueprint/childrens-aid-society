@@ -10,6 +10,7 @@ import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../intake/NewCaregiverModal";
 import IntakeSteps from "../intake/intakeSteps";
+import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 
 const Intake = (): React.ReactElement => {
   const [step, setStep] = useState(0);
@@ -39,6 +40,10 @@ const Intake = (): React.ReactElement => {
   });
 
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
+  const [
+    permittedIndividuals,
+    setPermittedIndividuals,
+  ] = useState<PermittedIndividuals>([]);
 
   const nextStep = () => setStep(step + 1);
 
@@ -76,27 +81,29 @@ const Intake = (): React.ReactElement => {
           <ProgramForm
             programDetails={programDetails}
             setProgramDetails={setProgramDetails}
+            permittedIndividuals={permittedIndividuals}
+            setPermittedIndividuals={setPermittedIndividuals}
             nextStep={nextStep}
             setStep={setStep}
           />
         );
       default:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm
-                referralDetails={referralDetails}
-                setReferralDetails={setReferralDetails}
-                courtDetails={courtDetails}
-                setCourtDetails={setCourtDetails}
-                programDetails={programDetails}
-                setProgramDetails={setProgramDetails}
-                nextStep={nextStep}
-                setStep={setStep}
-                setReviewHeader={setReviewHeader}
-              />
-            </Box>
-          </>
+          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+            <ReviewForm
+              referralDetails={referralDetails}
+              setReferralDetails={setReferralDetails}
+              courtDetails={courtDetails}
+              setCourtDetails={setCourtDetails}
+              programDetails={programDetails}
+              setProgramDetails={setProgramDetails}
+              permittedIndividuals={permittedIndividuals}
+              setPermittedIndividuals={setPermittedIndividuals}
+              nextStep={nextStep}
+              setStep={setStep}
+              setReviewHeader={setReviewHeader}
+            />
+          </Box>
         );
     }
   };
@@ -123,7 +130,6 @@ const Intake = (): React.ReactElement => {
           )}
         </>
       )}
-
       <Box textAlign="center" padding="30px 0 40px 0">
         <Container maxWidth="container.xl" padding="30px 96px">
           {renderDetailsForm()}

@@ -5,6 +5,7 @@ import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
 import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import { PermittedIndividuals } from "./PermittedIndividualsModal";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 
@@ -15,6 +16,10 @@ type ReviewFormProps = {
   setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
+  permittedIndividuals: PermittedIndividuals;
+  setPermittedIndividuals: React.Dispatch<
+    React.SetStateAction<PermittedIndividuals>
+  >;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +32,8 @@ const ReviewForm = ({
   setCourtDetails,
   programDetails,
   setProgramDetails,
+  permittedIndividuals,
+  setPermittedIndividuals,
   nextStep,
   setStep,
   setReviewHeader,
@@ -133,6 +140,8 @@ const ReviewForm = ({
         <ProgramForm
           programDetails={programDetails}
           setProgramDetails={setProgramDetails}
+          permittedIndividuals={permittedIndividuals}
+          setPermittedIndividuals={setPermittedIndividuals}
           nextStep={nextStep}
           setStep={setStep}
           readOnly

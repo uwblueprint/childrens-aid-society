@@ -1,6 +1,17 @@
 import React, { ReactElement } from "react";
-import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
+import {
+  Button,
+  Divider,
+  HStack,
+  Icon,
+  Text,
+  VStack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowRight, Trash } from "react-feather";
+import { useHistory } from "react-router-dom";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { PermittedIndividualsDetails } from "./PermittedIndividualsModal";
 
 export type IndividualDetailsOverview = {
   name: string;
@@ -17,6 +28,7 @@ export type PromptBoxProps = {
   secondaryButtonIcon?: ReactElement;
   secondaryOnButtonClick?: () => void;
   individualDetails?: IndividualDetailsOverview[];
+  permittedIndividualDetails?: PermittedIndividualsDetails[];
   deleteIndividual?: (index: number) => void;
   setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
   useSecondaryOnClick?: boolean;
@@ -32,10 +44,18 @@ const PromptBox = ({
   secondaryButtonIcon,
   secondaryOnButtonClick,
   individualDetails,
+  permittedIndividualDetails,
   deleteIndividual,
   setSelectedIndex,
   useSecondaryOnClick,
 }: PromptBoxProps): React.ReactElement => {
+  const history = useHistory();
+  const {
+    onOpen: onOpenDeletePermittedIndividuals,
+    isOpen: isOpenDeletePermittedIndividuals,
+    onClose: onCloseDeletePermittedIndividuals,
+  } = useDisclosure();
+
   return (
     <VStack
       bg="gray.50"
@@ -52,18 +72,67 @@ const PromptBox = ({
         <Text color="b&w.black" textStyle="title-large">
           {headerText}
         </Text>
-        {individualDetails && individualDetails.length > 0 ? (
-          individualDetails.map((indiv, i) => (
+        {individualDetails && individualDetails.length > 0
+          ? individualDetails.map((indiv, i) => (
+              <VStack key={i} w="full">
+                <HStack w="full">
+                  <VStack align="flex-start" w="full" spacing="0px">
+                    <HStack>
+                      <Text textStyle="title-small">{indiv.name}</Text>
+                      <Icon
+                        onClick={() => {
+                          if (deleteIndividual !== undefined) {
+                            deleteIndividual(i);
+                          }
+                        }}
+                        as={Trash}
+                        h="16px"
+                        color="grey.600"
+                        cursor="pointer"
+                      />
+                    </HStack>
+                    <Text color="gray.600" textStyle="body-medium">
+                      {indiv.fileNumber}
+                    </Text>
+                  </VStack>
+                  <Button
+                    color="blue.300"
+                    textStyle="button-small"
+                    variant="tertiary"
+                    onClick={() => {
+                      if (setSelectedIndex) {
+                        setSelectedIndex(i);
+                        if (useSecondaryOnClick && secondaryOnButtonClick) {
+                          secondaryOnButtonClick();
+                        } else {
+                          onButtonClick();
+                        }
+                      }
+                    }}
+                    rightIcon={<Icon as={ArrowRight} h="16px" />}
+                  >
+                    View and edit details
+                  </Button>
+                </HStack>
+                <Divider orientation="horizontal" w="full" />
+              </VStack>
+            ))
+          : !permittedIndividualDetails && (
+              <Text color="gray.600" textStyle="body-large">
+                {descriptionText}
+              </Text>
+            )}
+        {permittedIndividualDetails &&
+          permittedIndividualDetails.length > 0 &&
+          permittedIndividualDetails.map((indiv, i) => (
             <VStack key={i} w="full">
               <HStack w="full">
                 <VStack align="flex-start" w="full" spacing="0px">
                   <HStack>
-                    <Text textStyle="title-small">{indiv.name}</Text>
+                    <Text textStyle="title-small">{indiv.providerName}</Text>
                     <Icon
                       onClick={() => {
-                        if (deleteIndividual !== undefined) {
-                          deleteIndividual(i);
-                        }
+                        onOpenDeletePermittedIndividuals();
                       }}
                       as={Trash}
                       h="16px"
@@ -72,7 +141,7 @@ const PromptBox = ({
                     />
                   </HStack>
                   <Text color="gray.600" textStyle="body-medium">
-                    {indiv.fileNumber}
+                    {indiv.relationshipToChild}
                   </Text>
                 </VStack>
                 <Button
@@ -80,14 +149,8 @@ const PromptBox = ({
                   textStyle="button-small"
                   variant="tertiary"
                   onClick={() => {
-                    if (setSelectedIndex) {
-                      setSelectedIndex(i);
-                      if (useSecondaryOnClick && secondaryOnButtonClick) {
-                        secondaryOnButtonClick();
-                      } else {
-                        onButtonClick();
-                      }
-                    }
+                    history.goBack();
+                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >
@@ -95,13 +158,18 @@ const PromptBox = ({
                 </Button>
               </HStack>
               <Divider orientation="horizontal" w="full" />
+              <DeleteConfirmationModal
+                isOpen={isOpenDeletePermittedIndividuals}
+                onClick={() => {
+                  if (deleteIndividual !== undefined) {
+                    deleteIndividual(i);
+                  }
+                }}
+                onClose={onCloseDeletePermittedIndividuals}
+                providerName={permittedIndividualDetails[i].providerName}
+              />
             </VStack>
-          ))
-        ) : (
-          <Text color="gray.600" textStyle="body-large">
-            {descriptionText}
-          </Text>
-        )}
+          ))}
       </VStack>
       <HStack>
         {secondaryButtonText && (

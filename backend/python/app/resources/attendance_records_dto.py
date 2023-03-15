@@ -13,7 +13,8 @@ class Attendance(Enum):
     NO_SHOW = "NO_SHOW"
 
 
-class Attending_parent(Enum):
+class Attending_family(Enum):
+    # add more types
     MOM = "MOM"
     DAD = "DAD"
 
@@ -28,7 +29,7 @@ class AttendanceRecordsDTO:
         self.end_time = kwargs.get("end_time")
         self.location = kwargs.get("location")
         self.attendance = kwargs.get("attendance")
-        self.attending_parent = kwargs.get("attending_parent")
+        self.attending_family = kwargs.get("attending_family")
         self.staff_transport_time_min = kwargs.get("staff_transport_time_min")
         self.driver_transport_time_min = kwargs.get("driver_transport_time_min")
         self.foster_parent_transport_time_min = kwargs.get(
@@ -53,8 +54,6 @@ class AttendanceRecordsDTO(AttendanceRecordsDTO):
         if type(self.supervision) is str:
             if not isinstance(self.supervision, Supervision):
                 error_list.append("must be a valid supervision")
-            elif len(self.supervision) == 0:
-                error_list.append("supervision must not be empty")
         else:
             error_list.append("supervision must be a string")
 
@@ -71,23 +70,19 @@ class AttendanceRecordsDTO(AttendanceRecordsDTO):
             error_list.append("end_time must be a string")
 
         if type(self.location) is not str:
-            error_list.append("location must be a list")
+            error_list.append("location must be a string")
 
         if type(self.attendance) is str:
             if not isinstance(self.attendance, Attendance):
                 error_list.append("must be a valid attendance")
-            elif len(self.attendance) == 0:
-                error_list.append("attendance must not be empty")
         else:
             error_list.append("attendance must be a string")
 
-        if type(self.attending_parent) is str:
-            if not isinstance(self.attending_parent, Attendance):
-                error_list.append("must be a valid attending_parent")
-            elif len(self.attending_parent) == 0:
-                error_list.append("attending_parent must not be empty")
+        if type(self.attending_family) is str:
+            if not isinstance(self.attending_family, Attendance):
+                error_list.append("must be a valid attending_family")
         else:
-            error_list.append("attending_parent must be a string")
+            error_list.append("attending_family must be a string")
 
         if type(self.staff_transport_time_min) is int:
             if self.staff_transport_time_min < 0:
@@ -109,5 +104,9 @@ class AttendanceRecordsDTO(AttendanceRecordsDTO):
         else:
             error_list.append("foster_parent_transport_time_min must be an integer")
 
+        if type(self.child_family_support_worker_id) is not int:
+            error_list.append("child_family_support_worker_id must be an integer")
+
         if type(self.comments) is not str:
             error_list.append("comments must be a string")
+        

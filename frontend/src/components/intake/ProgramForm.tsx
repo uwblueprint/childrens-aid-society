@@ -73,7 +73,6 @@ const ProgramForm = ({
   };
 
   function onClear() {
-    const { familialConcerns } = formik.values;
     formik.setValues({
       transportationRequirements: "",
       schedulingRequirements: "",
@@ -82,7 +81,6 @@ const ProgramForm = ({
       longTermGoals: "",
       familialConcerns: "",
     });
-    formik.setFieldValue("familialConcerns", familialConcerns);
   }
 
   const {

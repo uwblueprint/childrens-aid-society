@@ -45,7 +45,6 @@ const CourtInformationForm = ({
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-
   const handleClick = () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();
@@ -84,6 +83,23 @@ const CourtInformationForm = ({
     });
     // TODO: reset uploaded object
   };
+
+  const downloadFile = () => {
+    if (!formik.values.orderReferral || !formik.values.orderReferral.name) {
+      return;
+    }
+
+    const blob = new Blob([formik.values.orderReferral], {
+      type: "application/pdf",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = formik.values.orderReferral.name;
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <>
       {!hideStepper && (
@@ -155,7 +171,11 @@ const CourtInformationForm = ({
                 style={{ cursor: "pointer" }}
               />
               {readOnly ? (
-                <Button variant="tertiary" leftIcon={<Icon as={Download} />}>
+                <Button
+                  variant="tertiary"
+                  leftIcon={<Icon as={Download} />}
+                  onClick={downloadFile}
+                >
                   Download attachment {/* TODO: implement download button */}
                 </Button>
               ) : (

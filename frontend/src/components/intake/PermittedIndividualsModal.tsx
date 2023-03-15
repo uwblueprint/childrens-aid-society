@@ -18,23 +18,38 @@ type PermittedIndividualsProps = {
   isOpen: boolean;
   onClick: (newPermittedIndividual: PermittedIndividualsDetails) => void;
   onClose: () => void;
+  permittedIndividual: PermittedIndividualsDetails;
 };
 
 const PermittedIndividualsModal = ({
   isOpen,
   onClick,
   onClose,
+  permittedIndividual,
 }: PermittedIndividualsProps): React.ReactElement => {
   const [providerName, setProviderName] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [relationshipToChild, setRelationshipToChild] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  const [providerNameChanged, setProviderNameChanged] = useState(false);
+  const [phoneNoChanged, setPhoneNoChanged] = useState(false);
+  const [relationshipToChildChanged, setRelationshipToChildChanged] = useState(
+    false,
+  );
+  const [additionalNotesChanged, setAdditionalNotesChanged] = useState(false);
+
   const handleClose = () => {
     setProviderName("");
     setPhoneNo("");
     setRelationshipToChild("");
     setAdditionalNotes("");
+
+    setProviderNameChanged(false);
+    setPhoneNoChanged(false);
+    setRelationshipToChildChanged(false);
+    setAdditionalNotesChanged(false);
+
     onClose();
   };
 
@@ -54,10 +69,13 @@ const PermittedIndividualsModal = ({
                   type="string"
                   placeholder="Enter full name of individual"
                   icon={<Icon as={User} />}
+                  defaultValue={
+                    permittedIndividual ? permittedIndividual.providerName : ""
+                  }
                   onChange={(event) => {
                     setProviderName(event.target.value);
+                    setProviderNameChanged(true);
                   }}
-                  defaultValue={providerName}
                 />
               </Box>
               <Box>
@@ -70,7 +88,13 @@ const PermittedIndividualsModal = ({
                   type="string"
                   placeholder="e.g. 555-555-5555"
                   icon={<Icon as={Phone} />}
-                  defaultValue={phoneNo}
+                  defaultValue={
+                    permittedIndividual ? permittedIndividual.phoneNo : ""
+                  }
+                  onChange={(event) => {
+                    setPhoneNo(event.target.value);
+                    setPhoneNoChanged(true);
+                  }}
                 />
               </Box>
             </SimpleGrid>
@@ -83,10 +107,15 @@ const PermittedIndividualsModal = ({
                 name="relationshipToChild"
                 type="string"
                 placeholder="Note permitted individual's relationship to child(ren)..."
+                defaultValue={
+                  permittedIndividual
+                    ? permittedIndividual.relationshipToChild
+                    : ""
+                }
                 onChange={(event) => {
                   setRelationshipToChild(event.target.value);
+                  setRelationshipToChildChanged(true);
                 }}
-                defaultValue={relationshipToChild}
               />
             </Box>
             <Box paddingTop="10px">
@@ -100,17 +129,29 @@ const PermittedIndividualsModal = ({
                 placeholder="Click to add notes..."
                 height="10rem"
                 paddingBottom="7rem"
-                defaultValue={additionalNotes}
+                defaultValue={
+                  permittedIndividual ? permittedIndividual.additionalNotes : ""
+                }
+                onChange={(event) => {
+                  setAdditionalNotes(event.target.value);
+                  setAdditionalNotesChanged(true);
+                }}
               />
             </Box>
           </Box>
         }
         onClick={() => {
           const newPermittedIndividual: PermittedIndividualsDetails = {
-            providerName,
-            phoneNo,
-            relationshipToChild,
-            additionalNotes,
+            providerName: providerNameChanged
+              ? providerName
+              : permittedIndividual.providerName,
+            phoneNo: phoneNoChanged ? phoneNo : permittedIndividual.phoneNo,
+            relationshipToChild: relationshipToChildChanged
+              ? relationshipToChild
+              : permittedIndividual.relationshipToChild,
+            additionalNotes: additionalNotesChanged
+              ? additionalNotes
+              : permittedIndividual.additionalNotes,
           };
           onClick(newPermittedIndividual);
           handleClose();
@@ -119,7 +160,16 @@ const PermittedIndividualsModal = ({
         onClose={() => {
           handleClose();
         }}
-        disabled={!(providerName && relationshipToChild)}
+        disabled={
+          !(
+            (providerNameChanged
+              ? providerName
+              : permittedIndividual?.providerName) &&
+            (relationshipToChildChanged
+              ? relationshipToChild
+              : permittedIndividual?.relationshipToChild)
+          )
+        }
         primaryButtonTitle="Save permitted individual"
       />
     </Box>

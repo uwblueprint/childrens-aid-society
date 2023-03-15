@@ -22,8 +22,6 @@ import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import { PermittedIndividuals } from "./PermittedIndividualsModal";
-import PermittedIndividualsForm from "./PermittedIndividualsForm";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -37,10 +35,6 @@ export type ProgramDetails = {
 type ProgramFormProps = {
   programDetails: ProgramDetails;
   setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
-  permittedIndividuals: PermittedIndividuals;
-  setPermittedIndividuals: React.Dispatch<
-    React.SetStateAction<PermittedIndividuals>
-  >;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -51,8 +45,6 @@ type ProgramFormProps = {
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
-  permittedIndividuals,
-  setPermittedIndividuals,
   nextStep,
   setStep,
   readOnly = false,
@@ -196,10 +188,6 @@ const ProgramForm = ({
           </FormControl>
         </Form>
       </FormikProvider>
-      <PermittedIndividualsForm
-        permittedIndividuals={permittedIndividuals}
-        setPermittedIndividuals={setPermittedIndividuals}
-      />
       {!hideFooter && (
         <IntakeFooter
           nextButtonText="Review case details"

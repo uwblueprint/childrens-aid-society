@@ -9,7 +9,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ArrowRight, Trash } from "react-feather";
-import { useHistory } from "react-router-dom";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { PermittedIndividualsDetails } from "./PermittedIndividualsModal";
 
@@ -49,7 +48,6 @@ const PromptBox = ({
   setSelectedIndex,
   useSecondaryOnClick,
 }: PromptBoxProps): React.ReactElement => {
-  const history = useHistory();
   const {
     onOpen: onOpenDeletePermittedIndividuals,
     isOpen: isOpenDeletePermittedIndividuals,
@@ -149,8 +147,14 @@ const PromptBox = ({
                   textStyle="button-small"
                   variant="tertiary"
                   onClick={() => {
-                    history.goBack();
-                    // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
+                    if (setSelectedIndex) {
+                      setSelectedIndex(i);
+                      if (useSecondaryOnClick && secondaryOnButtonClick) {
+                        secondaryOnButtonClick();
+                      } else {
+                        onButtonClick();
+                      }
+                    }
                   }}
                   rightIcon={<Icon as={ArrowRight} h="16px" />}
                 >

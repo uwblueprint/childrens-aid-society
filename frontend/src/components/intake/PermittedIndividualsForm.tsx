@@ -29,6 +29,8 @@ const PermittedIndividualsForm = ({
     permittedIndividualsDeleted,
     setPermittedIndividualsDeleted,
   ] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const {
     onOpen: onOpenAddPermittedIndividuals,
     isOpen: isOpenAddPermittedIndividuals,
@@ -38,7 +40,11 @@ const PermittedIndividualsForm = ({
   const onClickAddPermittedIndividual = (
     newPermittedIndividual: PermittedIndividualsDetails,
   ) => {
-    permittedIndividuals.push(newPermittedIndividual);
+    if (selectedIndex >= 0) {
+      permittedIndividuals.splice(selectedIndex, 1, newPermittedIndividual);
+    } else {
+      permittedIndividuals.push(newPermittedIndividual);
+    }
     setPermittedIndividuals(permittedIndividuals);
   };
 
@@ -60,6 +66,13 @@ const PermittedIndividualsForm = ({
     },
   );
 
+  const emptyPermittedIndividual: PermittedIndividualsDetails = {
+    providerName: "",
+    phoneNo: "",
+    relationshipToChild: "",
+    additionalNotes: "",
+  };
+
   return (
     <>
       {permittedIndividuals.length > 0 ? (
@@ -72,6 +85,8 @@ const PermittedIndividualsForm = ({
             onButtonClick={onOpenAddPermittedIndividuals}
             permittedIndividualDetails={permittedIndividualsOverview}
             deleteIndividual={deletePermittedIndividual}
+            setSelectedIndex={setSelectedIndex}
+            useSecondaryOnClick
           />
         </Center>
       ) : (
@@ -94,6 +109,11 @@ const PermittedIndividualsForm = ({
         isOpen={isOpenAddPermittedIndividuals}
         onClick={onClickAddPermittedIndividual}
         onClose={onCloseAddPermittedIndividuals}
+        permittedIndividual={
+          selectedIndex >= 0
+            ? permittedIndividuals[selectedIndex]
+            : emptyPermittedIndividual
+        }
       />
     </>
   );

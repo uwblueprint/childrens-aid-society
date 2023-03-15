@@ -74,6 +74,16 @@ const CourtInformationForm = ({
     setCourtDetails(formik.values);
   };
 
+  const onClear = () => {
+    formik.setValues({
+      currentCourtStatus: "",
+      firstNationHeritage: "",
+      firstNationBand: "",
+      orderReferral: null,
+    });
+    // TODO: reset uploaded object
+  };
+
   const downloadFile = () => {
     if (!formik.values.orderReferral || !formik.values.orderReferral.name) {
       return;
@@ -153,6 +163,7 @@ const CourtInformationForm = ({
                 as={CustomInput}
                 isReadOnly
                 id="documentDisplay"
+                name="documentDisplay"
                 placeholder="No document attached"
                 value={formik.values.orderReferral?.name}
                 onClick={handleClick}
@@ -220,6 +231,7 @@ const CourtInformationForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

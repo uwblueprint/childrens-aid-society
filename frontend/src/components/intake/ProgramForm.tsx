@@ -68,6 +68,17 @@ const ProgramForm = ({
     setProgramDetails(formik.values);
   };
 
+  function onClear() {
+    formik.setValues({
+      transportationRequirements: "",
+      schedulingRequirements: "",
+      suggestedStartDate: "",
+      shortTermGoals: "",
+      longTermGoals: "",
+      familialConcerns: "",
+    });
+  }
+
   return (
     <>
       {!hideStepper && (
@@ -195,6 +206,7 @@ const ProgramForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

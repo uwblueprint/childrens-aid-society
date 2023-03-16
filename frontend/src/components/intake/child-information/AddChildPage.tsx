@@ -1,6 +1,6 @@
-import { Box, Button, Icon, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { ChevronLeft } from "react-feather";
+import { ArrowLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import IntakeHeader from "../IntakeHeader";
 import { Providers } from "../NewProviderModal";
@@ -82,13 +82,12 @@ const AddChild = (): React.ReactElement => {
         borderColor="gray.100"
       >
         <Button
-          color="blue.400"
-          variant="link"
+          leftIcon={<ArrowLeft />}
           onClick={() => {
-            history.goBack();
             // TODO: Fix route to navigate back to individual details entry intake page
+            history.goBack();
           }}
-          leftIcon={<Icon as={ChevronLeft} h="16px" />}
+          variant="tertiary"
         >
           Back to case individuals
         </Button>

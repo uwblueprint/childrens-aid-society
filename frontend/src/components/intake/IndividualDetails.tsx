@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
-import { useHistory } from "react-router-dom";
 import { IndividualDetailsOverview } from "./PromptBox";
 
 type IndividualDetailsProps = {
@@ -13,8 +12,6 @@ const IndividualDetails = ({
   childrenDetails,
   caregiverDetails,
 }: IndividualDetailsProps): React.ReactElement => {
-  const history = useHistory();
-
   return (
     <>
       <VStack paddingY="32px" align="flex-start" spacing="16px">
@@ -43,8 +40,7 @@ const IndividualDetails = ({
                 textStyle="button-small"
                 variant="tertiary"
                 onClick={() => {
-                  history.goBack();
-                  // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
+                  // TODO: implement view and edit details button
                 }}
                 rightIcon={<Icon as={ArrowRight} h="16px" />}
               >
@@ -80,10 +76,7 @@ const IndividualDetails = ({
                 color="blue.300"
                 textStyle="button-small"
                 variant="tertiary"
-                onClick={() => {
-                  history.goBack();
-                  // TODO: implement view and edit details button, history.goBack() is just a placeholder, replace when ready
-                }}
+                onClick={() => {}}
                 rightIcon={<Icon as={ArrowRight} h="16px" />}
               >
                 View and edit details

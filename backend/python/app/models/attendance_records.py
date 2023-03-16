@@ -5,7 +5,7 @@ supervision_enum = db.Enum("FULL", "PARTIAL", "UNSUPERVISED", name="supervision"
 
 attendance_enum = db.Enum("PRESENT", "CANCELLED", "NO_SHOW", name="attendance")
 
-attending_parent_enum = db.Enum("MOM", "DAD", name="attending_parent")
+attending_family_enum = db.Enum("MOM", "DAD", name="attending_family")
 
 
 class AttendanceRecords(db.Model, BaseMixin):
@@ -21,7 +21,7 @@ class AttendanceRecords(db.Model, BaseMixin):
     end_time = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
     attendance = db.Column(attendance_enum, nullable=False)
-    attending_parent = db.Column(attending_parent_enum, nullable=False)
+    attending_family = db.Column(attending_family_enum, nullable=False)
     staff_transport_time_min = db.Column(db.Integer, nullable=True)
     driver_transport_time_min = db.Column(db.Integer, nullable=True)
     foster_parent_transport_time_min = db.Column(db.Integer, nullable=True)

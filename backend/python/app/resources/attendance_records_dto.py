@@ -41,7 +41,7 @@ class AttendanceRecordsDTO:
         self.comments = kwargs.get("comments")
 
 
-class AttendanceRecordsDTO(AttendanceRecordsDTO):
+class CreateAttendanceRecordsDTO(AttendanceRecordsDTO):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -79,7 +79,7 @@ class AttendanceRecordsDTO(AttendanceRecordsDTO):
             error_list.append("attendance must be a string")
 
         if type(self.attending_family) is str:
-            if not isinstance(self.attending_family, Attendance):
+            if not isinstance(self.attending_family, Attending_family):
                 error_list.append("must be a valid attending_family")
         else:
             error_list.append("attending_family must be a string")

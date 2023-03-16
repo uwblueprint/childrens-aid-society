@@ -109,4 +109,3 @@ class AttendanceRecordsDTO(AttendanceRecordsDTO):
 
         if type(self.comments) is not str:
             error_list.append("comments must be a string")
-        

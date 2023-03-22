@@ -4,6 +4,7 @@ import {
   ModalOverlay,
   ModalContent,
   Text,
+  ModalHeader,
   ModalFooter,
   ModalCloseButton,
   ModalBody,
@@ -40,11 +41,13 @@ const ModalComponent = ({
   >
     <ModalOverlay />
     <ModalContent padding="32px">
-      <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
-      <Text paddingBottom="62px" textStyle="header-medium">
-        {primaryTitle}
-      </Text>
-      <ModalCloseButton marginTop="40px" marginRight="20px" size="sm" />
+      <ModalHeader>
+        <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
+        <Text paddingBottom="12px" textStyle="header-medium">
+          {primaryTitle}
+        </Text>
+        <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
+      </ModalHeader>
       <ModalBody>
         {modalContent}
         <ModalFooter paddingTop="56px" paddingRight="0px" paddingBottom="0px">

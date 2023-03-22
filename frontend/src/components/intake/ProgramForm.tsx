@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  Button,
   FormControl,
   Text,
   Icon,
   SimpleGrid,
   Box,
   FormLabel,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   Truck,
@@ -15,7 +13,6 @@ import {
   Calendar,
   CheckSquare,
   TrendingUp,
-  UserPlus,
   ChevronDown,
 } from "react-feather";
 import { Field, Form, FormikProvider, useFormik } from "formik";
@@ -26,6 +23,7 @@ import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import MultiTextInput from "../common/MultiTextInput";
+
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -84,11 +82,16 @@ const ProgramForm = ({
     setProgramDetails(formik.values);
   };
 
-  const {
-    onOpen: onOpenAddPermittedIndividuals,
-    isOpen: isOpenAddPermittedIndividuals,
-    onClose: onCloseAddPermittedIndividuals,
-  } = useDisclosure();
+  function onClear() {
+    formik.setValues({
+      transportationRequirements: "",
+      schedulingRequirements: "",
+      suggestedStartDate: "",
+      shortTermGoals: "",
+      longTermGoals: "",
+      familialConcerns: "",
+    });
+  }
 
   return (
     <>
@@ -231,26 +234,6 @@ const ProgramForm = ({
               />
             </Box>
           </FormControl>
-          <Box display="flex" justifyContent="space-between" paddingTop="35px">
-            <Text alignSelf="start" textStyle="title-medium">
-              Other permitted individuals
-            </Text>
-            {!readOnly && (
-              <Button
-                alignSelf="end"
-                leftIcon={<Icon as={UserPlus} />}
-                variant="secondary"
-                mr={2}
-                onClick={onOpenAddPermittedIndividuals}
-              >
-                Add
-              </Button>
-            )}
-          </Box>
-          <PermittedIndividualsModal
-            isOpen={isOpenAddPermittedIndividuals}
-            onClose={onCloseAddPermittedIndividuals}
-          />
         </Form>
       </FormikProvider>
       {!hideFooter && (
@@ -260,6 +243,7 @@ const ProgramForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

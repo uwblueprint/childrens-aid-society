@@ -33,8 +33,8 @@ const Intake = (): React.ReactElement => {
     transportationRequirements: "",
     schedulingRequirements: "",
     suggestedStartDate: "",
-    shortTermGoals: "",
-    longTermGoals: "",
+    shortTermGoals: [],
+    longTermGoals: [],
     familialConcerns: [],
   });
 

@@ -25,7 +25,6 @@ import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import PermittedIndividualsModal from "./PermittedIndividualsModal";
 import MultiTextInput from "../common/MultiTextInput";
 
 export type ProgramDetails = {

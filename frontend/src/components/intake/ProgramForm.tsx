@@ -24,7 +24,6 @@ import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import MultiTextInput from "../common/MultiTextInput";
 
-
 export type ProgramDetails = {
   transportationRequirements: string;
   schedulingRequirements: string;
@@ -87,9 +86,9 @@ const ProgramForm = ({
       transportationRequirements: "",
       schedulingRequirements: "",
       suggestedStartDate: "",
-      shortTermGoals: "",
-      longTermGoals: "",
-      familialConcerns: "",
+      shortTermGoals: [],
+      longTermGoals: [],
+      familialConcerns: [],
     });
   }
 

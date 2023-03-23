@@ -1,6 +1,8 @@
 import React from "react";
 import { ArrowRight } from "react-feather";
-import { Box, Button, Flex, useToast } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import SubmitCaseModal from "./SubmitCaseModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -27,6 +29,14 @@ const IntakeFooter = ({
   clearFields,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
+  // TODO: remove useHistory once dashboard is implemented
+  const history = useHistory();
+
+  const {
+    onOpen: onOpenSubmitCase,
+    isOpen: isOpenSubmitCase,
+    onClose: onCloseSubmitCase,
+  } = useDisclosure();
 
   const onNextStep = () => {
     if (isStepComplete()) {
@@ -84,12 +94,28 @@ const IntakeFooter = ({
         type="submit"
         isLoading={registrationLoading}
         onClick={() => {
-          onNextStep();
+          if (nextButtonText === "Submit case") {
+            onOpenSubmitCase();
+          } else if (nextButtonText === "Return to dashboard") {
+            // TODO: remove this once dashboard is implemented
+            history.goBack();
+          } else {
+            onNextStep();
+          }
         }}
       >
         <Box pr="5px">{nextButtonText}</Box>
         <ArrowRight />
       </Button>
+
+      <SubmitCaseModal
+        isOpen={isOpenSubmitCase}
+        onClick={() => {
+          // TODO: implement submit/POST functionality
+          onNextStep();
+        }}
+        onClose={onCloseSubmitCase}
+      />
     </Flex>
   );
 };

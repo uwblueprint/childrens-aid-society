@@ -22,14 +22,15 @@ import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import MultiTextInput from "../common/MultiTextInput";
 
 export type ProgramDetails = {
   transportationRequirements: string;
   schedulingRequirements: string;
   suggestedStartDate: string;
-  shortTermGoals: string;
-  longTermGoals: string;
-  familialConcerns: string;
+  shortTermGoals: string[];
+  longTermGoals: string[];
+  familialConcerns: string[];
 };
 
 type ProgramFormProps = {
@@ -41,6 +42,18 @@ type ProgramFormProps = {
   hideStepper?: boolean;
   hideFooter?: boolean;
 };
+
+const shortTermGoalsOptions = ["a", "b"]; // TODO: replace with actual options
+
+const longTermGoalsOptions = [
+  "Caregiver(s) encourages child(ren) to meet age appropriate physical and cognitive skills",
+  "Caregiver(s) engage appropriately with their support system (ie. approved visitors)",
+  "Caregiver(s) appropriately encourages child(ren) to demosntrate age appropriate social skills",
+  "Caregiver(s) appropriately mitigates family conflict (ie. sibiling conflict, parent/child conflict)",
+  "Caregiver(s) demosntrates appropriate communication skills (ie. parent/child, parent/parent)",
+  "Caregiver(s) mental/physical health has minimal impact on parenting/family functioning during visits",
+  "Caregiver(s) cultural differences has minimal impact on parenting/family functioning during visits",
+];
 
 const ProgramForm = ({
   programDetails,
@@ -73,9 +86,9 @@ const ProgramForm = ({
       transportationRequirements: "",
       schedulingRequirements: "",
       suggestedStartDate: "",
-      shortTermGoals: "",
-      longTermGoals: "",
-      familialConcerns: "",
+      shortTermGoals: [],
+      longTermGoals: [],
+      familialConcerns: [],
     });
   }
 
@@ -160,26 +173,34 @@ const ProgramForm = ({
             <SimpleGrid columns={2} spacing="30px">
               <Box>
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
-                <Field
-                  disabled={readOnly}
-                  as={CustomInput}
-                  // TODO change to multi-list selector component
-                  id="shortTermGoals"
-                  name="shortTermGoals"
+                <MultiTextInput
                   placeholder="Select goals..."
+                  options={shortTermGoalsOptions}
                   icon={<Icon as={CheckSquare} />}
+                  isReadOnly={readOnly}
+                  values={programDetails.shortTermGoals}
+                  newValue={(e: string[]) =>
+                    setProgramDetails((prevState) => ({
+                      ...prevState,
+                      shortTermGoals: e,
+                    }))
+                  }
                 />
               </Box>
               <Box>
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
-                <Field
-                  disabled={readOnly}
-                  as={CustomInput}
-                  // TODO change to multi-list selector component
-                  id="longTermGoals"
-                  name="longTermGoals"
+                <MultiTextInput
                   placeholder="Select goals..."
+                  options={longTermGoalsOptions}
                   icon={<Icon as={TrendingUp} />}
+                  isReadOnly={readOnly}
+                  values={programDetails.longTermGoals}
+                  newValue={(e: string[]) =>
+                    setProgramDetails((prevState) => ({
+                      ...prevState,
+                      longTermGoals: e,
+                    }))
+                  }
                 />
               </Box>
             </SimpleGrid>
@@ -187,13 +208,28 @@ const ProgramForm = ({
               <FormLabel htmlFor="familialConcerns">
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
-              <Field
-                disabled={readOnly}
-                as={CustomInput}
-                // TODO change to multi-list selector component
-                id="familialConcerns"
-                name="familialConcerns"
+              <MultiTextInput
                 placeholder="Select familial concerns..."
+                options={[
+                  "abc",
+                  "abcdef",
+                  "def",
+                  "ghi",
+                  "sdfg",
+                  "dfgh",
+                  "345g6",
+                  "asfjiod",
+                  "45v2te ercew",
+                  " sdf sd fas a",
+                ]} // TODO: Replace with actual options
+                isReadOnly={readOnly}
+                values={programDetails.familialConcerns}
+                newValue={(e: string[]) =>
+                  setProgramDetails((prevState) => ({
+                    ...prevState,
+                    familialConcerns: e,
+                  }))
+                }
               />
             </Box>
           </FormControl>

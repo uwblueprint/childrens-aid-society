@@ -37,6 +37,7 @@ const CustomTag = (props: CustomTagProps): React.ReactElement => {
       variant="selectionTag"
       aria-pressed={pressed}
       onClick={handleComponentClick}
+      cursor={controlled ? "pointer" : ""}
     >
       <Tag
         border="1px solid"
@@ -44,7 +45,9 @@ const CustomTag = (props: CustomTagProps): React.ReactElement => {
         padding="8px 12px"
         {...otherProps}
       >
-        <TagLabel>{children}</TagLabel>
+        <TagLabel whiteSpace="normal" wordBreak="break-word" textAlign="left">
+          {children}
+        </TagLabel>
         {icon && <TagRightIcon pointerEvents="none">{icon}</TagRightIcon>}
       </Tag>
     </Container>

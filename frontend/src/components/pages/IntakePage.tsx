@@ -46,9 +46,9 @@ const Intake = (): React.ReactElement => {
     transportationRequirements: "",
     schedulingRequirements: "",
     suggestedStartDate: "",
-    shortTermGoals: "",
-    longTermGoals: "",
-    familialConcerns: "",
+    shortTermGoals: [],
+    longTermGoals: [],
+    familialConcerns: [],
   });
 
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
@@ -145,7 +145,11 @@ const Intake = (): React.ReactElement => {
         </>
       )}
       <Box padding="30px 0 40px 0">
-        <Container maxWidth="container.xl" padding="30px 96px">
+        <Container
+          maxWidth="container.xl"
+          padding="30px 96px"
+          marginBottom="100px"
+        >
           {step !== IntakeSteps.REVIEW_CASE_DETAILS && (
             <Button
               leftIcon={<ArrowLeft />}

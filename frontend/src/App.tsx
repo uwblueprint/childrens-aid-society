@@ -27,7 +27,6 @@ import Intake from "./components/pages/IntakePage";
 import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
-import AddChild from "./components/intake/child-information/AddChildPage";
 import Default from "./components/pages/Default";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
@@ -67,11 +66,6 @@ const App = (): React.ReactElement => {
                 <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
                 <Route exact path={Routes.VISIT_PAGE} component={Visit} />
                 <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
-                <Route
-                  exact
-                  path={Routes.ADD_CHILD_PAGE}
-                  component={AddChild}
-                />
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </Router>

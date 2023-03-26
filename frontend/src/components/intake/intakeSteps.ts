@@ -4,6 +4,7 @@ enum IntakeSteps {
   INDIVIDUAL_DETAILS,
   PROGRAM_DETAILS,
   REVIEW_CASE_DETAILS,
+  ADD_CHILD,
 }
 
 export default IntakeSteps;

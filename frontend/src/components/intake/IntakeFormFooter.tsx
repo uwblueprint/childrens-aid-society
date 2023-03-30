@@ -3,6 +3,7 @@ import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
 import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import SubmitCaseModal from "./SubmitCaseModal";
+import SubmitErrorModal from "./SubmitErrorModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -114,6 +115,11 @@ const IntakeFooter = ({
           // TODO: implement submit/POST functionality
           onNextStep();
         }}
+        onClose={onCloseSubmitCase}
+      />
+      <SubmitErrorModal
+        // TODO: implement error modal behaviour
+        isOpen={false}
         onClose={onCloseSubmitCase}
       />
     </Flex>

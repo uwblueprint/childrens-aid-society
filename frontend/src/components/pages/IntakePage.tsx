@@ -127,7 +127,7 @@ const Intake = (): React.ReactElement => {
             <Text>The admin team will review it promptly.</Text>
             <IntakeFooter
               nextButtonText="Return to dashboard"
-              isStepComplete={() => true} // TODO: validate form
+              isStepComplete={() => true}
               registrationLoading={false}
               nextStepCallBack={() => {}}
             />
@@ -190,20 +190,21 @@ const Intake = (): React.ReactElement => {
           {renderIntakeHeader()}
           <Box padding="30px 0 40px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
-              {step !== IntakeSteps.REVIEW_CASE_DETAILS && (
-                <Button
-                  leftIcon={<ArrowLeft />}
-                  marginBottom="30px"
-                  onClick={() => {
-                    onOpenUnsavedProgress();
-                  }}
-                  variant="tertiary"
-                >
-                  {reviewHeader
-                    ? "Back to Submission Review"
-                    : "Back to Dashboard"}
-                </Button>
-              )}
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+                step !== IntakeSteps.FORM_COMPLETE && (
+                  <Button
+                    leftIcon={<ArrowLeft />}
+                    marginBottom="30px"
+                    onClick={() => {
+                      onOpenUnsavedProgress();
+                    }}
+                    variant="tertiary"
+                  >
+                    {reviewHeader
+                      ? "Back to Submission Review"
+                      : "Back to Dashboard"}
+                  </Button>
+                )}
               {renderDetailsForm()}
             </Container>
           </Box>

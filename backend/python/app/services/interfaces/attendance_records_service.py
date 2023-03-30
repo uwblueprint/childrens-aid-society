@@ -2,18 +2,18 @@ from abc import ABC, abstractmethod
 
 class IAttendanceRecords(ABC):
     """
-    Attendance record service interface with attendance record management methods
+    Attendance records service interface with attendance record management methods
     """
 
     @abstractmethod
-    def create_attendance_record(self, attendance_record):
+    def create_attendance_records(self, attendance_records):
         """
-        Create a new attendance_record object
-        :param attendance_record: the attendance_record to be created
-        :type attendance_record: CreateAttendanceRecordsDTO
-        :return: the created attendance_record
+        Create a new attendance_records object
+        :param attendance_records: the attendance_records to be created
+        :type attendance_records: CreateAttendanceRecordsDTO
+        :return: the created attendance_records
         :rtype: AttendanceRecordsDTO
-        :raises Exception: if attendance_record creation fails
+        :raises Exception: if attendance_records creation fails
         """
         pass
 
@@ -28,26 +28,26 @@ class IAttendanceRecords(ABC):
         pass
 
     @abstractmethod
-    def update_attendance_record(self, attendance_record_id, attendance_record):
+    def update_attendance_records(self, attendance_records_id, attendance_records):
         """
-        Updates an attendance_record
-        :param attendance_record_id: the id of the attendance_record to be updated
-        :type attendance_record_id: int
-        :param attendance_record: the attendance_record to be updated
-        :type attendance_record: AttendanceRecordsDTO
-        :return: the updated attendance_record
+        Updates an attendance_records
+        :param attendance_records_id: the id of the attendance_records to be updated
+        :type attendance_records_id: int
+        :param attendance_records: the attendance_records to be updated
+        :type attendance_records: AttendanceRecordsDTO
+        :return: the updated attendance_records
         :rtype: AttendanceRecordsDTO
-        :raises Exception: if attendance_record update fails
+        :raises Exception: if attendance_records update fails
         """
         pass
 
     @abstractmethod
-    def delete_attendance_record(self, attendance_record_id):
+    def delete_attendance_records(self, attendance_records_id):
         """
-        Delete an attendance_record
-        :param attendance_record_id: the id of the attendance_record to be deleted
-        :type attendance_record_id: int
-        :raises Exception: if delete attendance_record fails
+        Delete an attendance_records
+        :param attendance_records_id: the id of the attendance_records to be deleted
+        :type attendance_records_id: int
+        :raises Exception: if delete attendance_records fails
         """
         pass
 

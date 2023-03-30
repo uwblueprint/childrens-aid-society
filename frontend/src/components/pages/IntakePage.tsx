@@ -135,19 +135,12 @@ const Intake = (): React.ReactElement => {
         );
       default:
         return (
-          <>
-            {reviewHeader ? (
-              <IntakeHeader
-                primaryTitle="Edit Case Intake Submission"
-                secondaryTitle="Case Management"
-              />
-            ) : (
-              <IntakeHeader
-                primaryTitle="Initiate New Case"
-                secondaryTitle="Case Management"
-              />
-            )}
-          </>
+          <IntakeHeader
+            primaryTitle={
+              reviewHeader ? "Edit Case Intake Submission" : "Initiate New Case"
+            }
+            secondaryTitle="Case Management"
+          />
         );
     }
   };
@@ -178,25 +171,19 @@ const Intake = (): React.ReactElement => {
               {renderDetailsForm()}
             </Container>
           </Box>
-          {reviewHeader ? (
-            <UnsavedProgressModal
-              isOpen={isOpenUnsavedProgress}
-              onClick={() => {
+          <UnsavedProgressModal
+            isOpen={isOpenUnsavedProgress}
+            onClick={() => {
+              if (reviewHeader) {
                 setStep(IntakeSteps.REVIEW_CASE_DETAILS);
-              }}
-              onClose={onCloseUnsavedProgress}
-              reviewVersion={reviewHeader}
-            />
-          ) : (
-            <UnsavedProgressModal
-              isOpen={isOpenUnsavedProgress}
-              onClick={() => {
+              } else {
                 // TODO: remove this once dashboard is implemented
                 history.goBack();
-              }}
-              onClose={onCloseUnsavedProgress}
-            />
-          )}
+              }
+            }}
+            onClose={onCloseUnsavedProgress}
+            reviewVersion={reviewHeader}
+          />
         </>
       )}
     </>

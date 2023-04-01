@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Icon, SimpleGrid, FormLabel, Select } from "@chakra-ui/react";
+import { Box, Icon, SimpleGrid, FormLabel } from "@chakra-ui/react";
 import { Calendar, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
@@ -179,12 +179,12 @@ const NewCaregiverModal = ({
                 />
               </Box>
               <Box marginTop="0.75rem">
-                <FormLabel htmlFor="address">
+                <FormLabel htmlFor="relationship">
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
                 <CustomSelectField
-                  name="relationshipToChild"
-                  id="relationshipToChild"
+                  name="relationship"
+                  id="relationship"
                   options={[
                     "Foster caregiver",
                     "Kinship caregiver",

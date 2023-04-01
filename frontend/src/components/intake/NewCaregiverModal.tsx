@@ -4,6 +4,7 @@ import { Calendar, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import { CustomSelectField } from "./CustomSelectField";
 
 export type CaregiverDetails = {
   caregiverName: string;
@@ -181,17 +182,21 @@ const NewCaregiverModal = ({
                 <FormLabel htmlFor="address">
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
-                <Select
+                <CustomSelectField
+                  name="relationshipToChild"
+                  id="relationshipToChild"
+                  options={[
+                    "Foster caregiver",
+                    "Kinship caregiver",
+                    "Foster provider will transport",
+                  ]}
                   placeholder="Select relationship to child(ren)"
+                  defaultValue={caregiver ? caregiver.relationship : ""}
                   onChange={(event) => {
                     setRelationship(event.target.value);
                     setRelationshipChanged(true);
                   }}
-                  defaultValue={caregiver ? caregiver.relationship : ""}
-                >
-                  <option>TO DO:</option>
-                  <option>Add proper list options</option>
-                </Select>
+                />
               </Box>
             </SimpleGrid>
             <Box marginTop="0.75rem">

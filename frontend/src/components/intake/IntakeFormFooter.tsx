@@ -39,6 +39,11 @@ const IntakeFooter = ({
     onClose: onCloseSubmitCase,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenSubmitError,
+    onClose: onCloseSubmitError,
+  } = useDisclosure();
+
   const onNextStep = () => {
     if (isStepComplete()) {
       nextStepCallBack();
@@ -119,8 +124,8 @@ const IntakeFooter = ({
       />
       <SubmitErrorModal
         // TODO: implement error modal behaviour
-        isOpen={false}
-        onClose={onCloseSubmitCase}
+        isOpen={isOpenSubmitError}
+        onClose={onCloseSubmitError}
       />
     </Flex>
   );

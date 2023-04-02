@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Box, Button, Container, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
+import Logo from "../../assets/logo.png";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -16,6 +26,7 @@ import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
 import AddChild from "../intake/child-information/AddChildPage";
+import IntakeFooter from "../intake/IntakeFormFooter";
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -104,6 +115,24 @@ const Intake = (): React.ReactElement => {
             />
           </>
         );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <Box textAlign="center">
+            <Center>
+              <Image src={Logo} alt="CAS Logo" marginBottom="45px" />
+            </Center>
+            <Heading size="xl">
+              Thank you for completing the intake form
+            </Heading>
+            <Text>The admin team will review it promptly.</Text>
+            <IntakeFooter
+              nextButtonText="Return to dashboard"
+              isStepComplete={() => true}
+              registrationLoading={false}
+              nextStepCallBack={() => {}}
+            />
+          </Box>
+        );
       default:
         // IntakeSteps.REVIEW_CASE_DETAILS
         return (
@@ -133,6 +162,13 @@ const Intake = (): React.ReactElement => {
             secondaryTitle="Initiate New Case"
           />
         );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <IntakeHeader
+            primaryTitle="Intake Form Complete"
+            secondaryTitle="Initiate New Case"
+          />
+        );
       default:
         return (
           <IntakeHeader
@@ -154,20 +190,21 @@ const Intake = (): React.ReactElement => {
           {renderIntakeHeader()}
           <Box padding="30px 0 40px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
-              {step !== IntakeSteps.REVIEW_CASE_DETAILS && (
-                <Button
-                  leftIcon={<ArrowLeft />}
-                  marginBottom="30px"
-                  onClick={() => {
-                    onOpenUnsavedProgress();
-                  }}
-                  variant="tertiary"
-                >
-                  {reviewHeader
-                    ? "Back to Submission Review"
-                    : "Back to Dashboard"}
-                </Button>
-              )}
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+                step !== IntakeSteps.FORM_COMPLETE && (
+                  <Button
+                    leftIcon={<ArrowLeft />}
+                    marginBottom="30px"
+                    onClick={() => {
+                      onOpenUnsavedProgress();
+                    }}
+                    variant="tertiary"
+                  >
+                    {reviewHeader
+                      ? "Back to Submission Review"
+                      : "Back to Dashboard"}
+                  </Button>
+                )}
               {renderDetailsForm()}
             </Container>
           </Box>

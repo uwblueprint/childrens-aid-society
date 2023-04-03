@@ -1,9 +1,10 @@
+from copy import deepcopy
+
 import pytest
 
 from app import create_app
 from app.models import db
 from app.models.attendance_sheets import AttendanceSheets
-from copy import deepcopy
 
 """
 Sample python test.
@@ -18,7 +19,7 @@ TEST_ATTENDANCE_SHEETS = [
         "fcc": "BOOOOOOOO",
         "id": 1,
         "intake_id": 124,
-        "month": "JANUARY"
+        "month": "JANUARY",
     },
     {
         "cpw": "MOOOOOOOO",
@@ -27,7 +28,7 @@ TEST_ATTENDANCE_SHEETS = [
         "fcc": "MOOOOOOOO",
         "id": 5,
         "intake_id": 123,
-        "month": "JANUARY"
+        "month": "JANUARY",
     },
     {
         "cpw": "SOOOOOOOO",
@@ -36,9 +37,10 @@ TEST_ATTENDANCE_SHEETS = [
         "fcc": "SOOOOOOOO",
         "id": 3,
         "intake_id": 123,
-        "month": "JANUARY"
-    }
+        "month": "JANUARY",
+    },
 ]
+
 
 def insert_data():
     attendance_instances = [AttendanceSheets(**data) for data in TEST_ATTENDANCE_SHEETS]
@@ -53,6 +55,7 @@ def setup(module_mocker):
         return_value=True,
     )
 
+@pytest.fixture
 def test_get_all_attendance_sheet(client):
     insert_data()
     res = client.get("/attendanceSheet")
@@ -62,6 +65,7 @@ def test_get_all_attendance_sheet(client):
         for key in actual_sheet.keys():
             assert expected_sheet[key] == actual_sheet[key]
 
+@pytest.fixture
 def test_get_attendance_sheet_by_intake_id(client):
     insert_data()
 
@@ -72,9 +76,13 @@ def test_get_attendance_sheet_by_intake_id(client):
 
     # get valid intake id
     res = client.get("/attendanceSheet/?intakeId=123")
-    expected_sheets, actual_sheets = [TEST_ATTENDANCE_SHEETS[1], TEST_ATTENDANCE_SHEETS[2]], res.json
+    expected_sheets, actual_sheets = [
+        TEST_ATTENDANCE_SHEETS[1],
+        TEST_ATTENDANCE_SHEETS[2],
+    ], res.json
     assert expected_sheets == actual_sheets
 
+@pytest.fixture
 def test_get_attendance_sheet_by_id(client):
     insert_data()
 
@@ -83,12 +91,12 @@ def test_get_attendance_sheet_by_id(client):
         res = client.get("/attendanceSheet/?id=2")
     assert exc_info
 
-
     # get valid id
     res = client.get("/attendanceSheet/?id=1").json
     assert len(res) == 1
     assert res[0] == TEST_ATTENDANCE_SHEETS[0]
 
+@pytest.fixture
 def test_delete_attendance_sheet_by_id(client):
     insert_data()
     client.delete("/attendanceSheet/?id=1")
@@ -96,6 +104,8 @@ def test_delete_attendance_sheet_by_id(client):
     client.delete("/attendanceSheet/?id=5")
     assert AttendanceSheets.query.all() == []
 
+
+@pytest.fixture
 def test_create_attendance_sheet_by_id(client):
     new_sheet_data = TEST_ATTENDANCE_SHEETS[0]
     new_sheet = AttendanceSheets(**new_sheet_data)
@@ -105,9 +115,7 @@ def test_create_attendance_sheet_by_id(client):
     assert len(queried_sheets) == 1
 
     a, b = deepcopy(queried_sheets[0].__dict__), deepcopy(new_sheet.__dict__)
-    #compare based on equality our attributes, ignoring SQLAlchemy internal stuff
-    a.pop('_sa_instance_state', None)
-    b.pop('_sa_instance_state', None)
+    # compare based on equality our attributes, ignoring SQLAlchemy internal stuff
+    a.pop("_sa_instance_state", None)
+    b.pop("_sa_instance_state", None)
     assert a == b
-
-    

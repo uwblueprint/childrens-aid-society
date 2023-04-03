@@ -152,7 +152,7 @@ def delete_user():
                     jsonify({"error": (error_message if error_message else str(e))}),
                     500,
                 )
-                
+
     if email:
         if type(email) is not str:
             return jsonify({"error": "email query parameter must be a string"}), 400

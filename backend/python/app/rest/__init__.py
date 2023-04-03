@@ -1,5 +1,6 @@
 def init_app(app):
     from . import (
+        attendance_sheet_routes,
         auth_routes,
         caregiver_routes,
         child_routes,
@@ -7,7 +8,6 @@ def init_app(app):
         intake_routes,
         user_routes,
         visit_routes,
-        attendance_sheet_routes,
     )
 
     app.register_blueprint(auth_routes.blueprint)

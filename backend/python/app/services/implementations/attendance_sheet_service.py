@@ -1,6 +1,9 @@
 from ...models import db
 from ...models.attendance_sheets import AttendanceSheets
-from ...resources.attendance_sheet_dto import AttendanceSheetDTO, CreateAttendanceSheetDTO
+from ...resources.attendance_sheet_dto import (
+    AttendanceSheetDTO,
+    CreateAttendanceSheetDTO,
+)
 from ..interfaces.attendance_sheet_service import IAttendanceSheetService
 
 
@@ -10,9 +13,12 @@ class AttendanceSheetService(IAttendanceSheetService):
 
     def get_attendance_sheet_by_intake(self, intake_id):
         try:
-            attendance_sheets = AttendanceSheets.query.filter_by(intake_id=intake_id).all()
+            attendance_sheets = AttendanceSheets.query.filter_by(
+                intake_id=intake_id
+            ).all()
             attendance_sheets_dtos = [
-                CreateAttendanceSheetDTO(**attendance_sheet.to_dict()) for attendance_sheet in attendance_sheets
+                CreateAttendanceSheetDTO(**attendance_sheet.to_dict())
+                for attendance_sheet in attendance_sheets
             ]
             return attendance_sheets_dtos
         except Exception as error:
@@ -44,7 +50,8 @@ class AttendanceSheetService(IAttendanceSheetService):
         try:
             attendance_sheets = AttendanceSheets.query.all()
             attendance_sheets_dtos = [
-                CreateAttendanceSheetDTO(**attendance_sheet.to_dict()) for attendance_sheet in attendance_sheets
+                CreateAttendanceSheetDTO(**attendance_sheet.to_dict())
+                for attendance_sheet in attendance_sheets
             ]
             return attendance_sheets_dtos
         except Exception as error:
@@ -54,7 +61,9 @@ class AttendanceSheetService(IAttendanceSheetService):
     def create_attendance_sheet(self, attendance_sheet):
         try:
             if not isinstance(attendance_sheet, CreateAttendanceSheetDTO):
-                raise Exception("Attendance sheet passed is not of CreateAttendanceSheetDTO type")
+                raise Exception(
+                    "Attendance sheet passed is not of CreateAttendanceSheetDTO type"
+                )
             if not attendance_sheet:
                 raise Exception(
                     "Empty attendance sheet DTO/None passed to creacreate_attendance_sheet function"

@@ -8,6 +8,7 @@ from ..services.implementations.attendance_sheet_service import AttendanceSheetS
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 blueprint = Blueprint("attendanceSheet", __name__, url_prefix="/attendanceSheet")
 
+
 # create an attendance sheet in db
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 @require_authorization_by_role({"Admin", "User"})
@@ -15,7 +16,9 @@ blueprint = Blueprint("attendanceSheet", __name__, url_prefix="/attendanceSheet"
 def create_attendance_sheet():
     try:
         attendance_sheet = CreateAttendanceSheetDTO(**request.get_json())
-        new_attendance_sheet = attendance_sheet_service.create_attendance_sheet(attendance_sheet)
+        new_attendance_sheet = attendance_sheet_service.create_attendance_sheet(
+            attendance_sheet
+        )
         return jsonify(new_attendance_sheet.__dict__), 201
     except Exception as error:
         return jsonify(str(error)), 400
@@ -32,7 +35,9 @@ def get_attendance_sheet():
             return jsonify({"error": "Cannot query by both intake id and id"}), 400
         elif intake_id:
             intake_id = int(intake_id)
-            attendance_sheets = attendance_sheet_service.get_attendance_sheet_by_intake(intake_id)
+            attendance_sheets = attendance_sheet_service.get_attendance_sheet_by_intake(
+                intake_id
+            )
         elif id:
             id = int(id)
             attendance_sheets = attendance_sheet_service.get_attendance_sheet_by_id(id)
@@ -41,7 +46,8 @@ def get_attendance_sheet():
         return jsonify(list(map(lambda user: user.__dict__, attendance_sheets))), 200
     except Exception as error:
         return jsonify(error), 400
-        
+
+
 # delete attendance sheet in db by intake id
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)
 @require_authorization_by_role({"Admin", "User"})

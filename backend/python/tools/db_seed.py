@@ -4,6 +4,7 @@ import sys
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
+
 # from ..app.models.caregiver import Caregiver
 from ..app.config import Config
 

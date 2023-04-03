@@ -1,19 +1,6 @@
 from enum import Enum
 
-
-class Month(Enum):
-    JANUARY = "January"
-    FEBRUARY = "February"
-    MARCH = "March"
-    APRIL = "April"
-    MAY = "May"
-    JUNE = "June"
-    JULY = "July"
-    AUGUST = "August"
-    SEPTEMBER = "September"
-    OCTOBER = "October"
-    NOVEMBER = "November"
-    DECEMBER = "December"
+Months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"]
 
 
 class AttendanceSheetDTO:
@@ -34,14 +21,14 @@ class CreateAttendanceSheetDTO(AttendanceSheetDTO):
     def validate(self):
         error_list = []
 
-        if type(self.id) is not int or not self.id:
+        if self.id and type(self.id) is not int:
             error_list.append("The id supplied is not an int")
         if type(self.intake_id) is not int or not self.intake_id:
             error_list.append("The intake_id supplied is not an int")
         if type(self.family_name) is not str:
             error_list.append("The family_name supplied is not a string")
         if type(self.month) is str:
-            if not isinstance(self.month, Month):
+            if self.month not in Months:
                 error_list.append("The month must be a valid month")
         else:
             error_list.append("The month supplied is not a string")

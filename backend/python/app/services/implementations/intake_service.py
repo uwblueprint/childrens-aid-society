@@ -12,7 +12,7 @@ class IntakeService(IIntakeService):
         try:
             if not intake:
                 raise Exception(
-                    "Empty intake DTO/None passed to create_intake function"
+                "Empty intake DTO/None passed to create_intake function"
                 )
             if not isinstance(intake, CreateIntakeDTO):
                 raise Exception("Intake passed is not of CreateIntakeDTO type")

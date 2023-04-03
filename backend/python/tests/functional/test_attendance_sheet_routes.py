@@ -55,6 +55,7 @@ def setup(module_mocker):
         return_value=True,
     )
 
+
 @pytest.fixture
 def test_get_all_attendance_sheet(client):
     insert_data()
@@ -64,6 +65,7 @@ def test_get_all_attendance_sheet(client):
             assert expected_sheet[key] == actual_sheet[key]
         for key in actual_sheet.keys():
             assert expected_sheet[key] == actual_sheet[key]
+
 
 @pytest.fixture
 def test_get_attendance_sheet_by_intake_id(client):
@@ -82,6 +84,7 @@ def test_get_attendance_sheet_by_intake_id(client):
     ], res.json
     assert expected_sheets == actual_sheets
 
+
 @pytest.fixture
 def test_get_attendance_sheet_by_id(client):
     insert_data()
@@ -95,6 +98,7 @@ def test_get_attendance_sheet_by_id(client):
     res = client.get("/attendanceSheet/?id=1").json
     assert len(res) == 1
     assert res[0] == TEST_ATTENDANCE_SHEETS[0]
+
 
 @pytest.fixture
 def test_delete_attendance_sheet_by_id(client):

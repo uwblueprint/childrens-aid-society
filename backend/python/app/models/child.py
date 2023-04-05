@@ -12,9 +12,7 @@ class Child(db.Model, BaseMixin):
     last_name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=True)
     cpin_number = db.Column(db.String, nullable=True)
-    child_service_worker_id = db.Column(
-        db.Integer, db.ForeignKey("users.id"), nullable=False
-    )
+    service_worker = db.Column(db.String, nullable=False)
     daytime_contact_id = db.Column(
         db.Integer, db.ForeignKey("daytime_contacts.id"), nullable=False
     )
@@ -23,6 +21,5 @@ class Child(db.Model, BaseMixin):
     has_kinship_provider = db.Column(db.Boolean, nullable=False)
     has_foster_placement = db.Column(db.Boolean, nullable=False)
     intake = db.relationship("Intake")
-    child_service_worker = db.relationship("User")
     daytime_contact = db.relationship("DaytimeContact")
     behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)

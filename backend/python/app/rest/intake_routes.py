@@ -51,7 +51,7 @@ def get_all_intakes():
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
-# @validate_request("CreateIntakeDTO")
+@validate_request("CreateIntakeDTO")
 def create_intake():
     undos = []
 

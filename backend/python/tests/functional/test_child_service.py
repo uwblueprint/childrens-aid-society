@@ -48,7 +48,7 @@ DUMMY_CHILD_DATA = {
     "last_name": "Child",
     "date_of_birth": "2020-05-17",
     "cpin_number": "1",
-    "child_service_worker_id": 1,
+    "service_worker": "Test Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
     "has_foster_placement": True,
@@ -124,7 +124,7 @@ def test_nullable_false_case(child_service):
     param = CreateChildDTO(
         first_name="Test",
         last_name="Child",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
         has_foster_placement=True,
@@ -145,7 +145,7 @@ def test_empty_input_string(child_service):
     param = CreateChildDTO(
         first_name="Test",
         last_name="",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
         has_foster_placement=True,
@@ -158,7 +158,7 @@ def test_empty_input_string(child_service):
 def test_missing_field(child_service):
     param = CreateChildDTO(
         last_name="Child",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
         has_foster_placement=True,

@@ -86,7 +86,7 @@ def insert_test_data():
     ]
 
     for value in values:
-        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "child_service_worker_id", "daytime_contact_id", "special_needs", "has_kinship_provider", "has_foster_placement"), value)
+        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs", "has_kinship_provider", "has_foster_placement"), value)
 
     # Caregivers
     values = [

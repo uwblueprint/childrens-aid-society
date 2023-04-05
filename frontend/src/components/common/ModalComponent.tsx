@@ -1,12 +1,14 @@
 import {
   Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  Text,
-  ModalFooter,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -19,6 +21,7 @@ export type ModalProps = {
   onClick: () => void;
   isOpen: boolean;
   onClose: () => void;
+  unsavedProgressModal?: boolean;
 };
 
 const ModalComponent = ({
@@ -30,6 +33,7 @@ const ModalComponent = ({
   secondaryTitle,
   isOpen,
   onClose,
+  unsavedProgressModal,
 }: ModalProps): React.ReactElement => (
   <Modal
     isCentered
@@ -40,17 +44,25 @@ const ModalComponent = ({
   >
     <ModalOverlay />
     <ModalContent padding="32px">
-      <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
-      <Text paddingBottom="62px" textStyle="header-medium">
-        {primaryTitle}
-      </Text>
-      <ModalCloseButton marginTop="40px" marginRight="20px" size="sm" />
+      <ModalHeader>
+        <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
+        <Text paddingBottom="12px" textStyle="header-medium">
+          {primaryTitle}
+        </Text>
+        <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
+      </ModalHeader>
       <ModalBody>
         {modalContent}
-        <ModalFooter paddingTop="56px" paddingRight="0px" paddingBottom="0px">
+        <ModalFooter
+          paddingTop="56px"
+          paddingBottom="0px"
+          paddingLeft="0px"
+          paddingRight="0px"
+        >
           <Button variant="tertiary" onClick={onClose}>
             Cancel
           </Button>
+          {unsavedProgressModal && <Spacer />}
           <Button variant="primary" disabled={disabled} onClick={onClick}>
             {primaryButtonTitle}
           </Button>

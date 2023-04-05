@@ -1,6 +1,5 @@
 export const HOME_PAGE = "/";
 export const INTAKE_PAGE = "/intake";
-export const ADD_CHILD_PAGE = "/intake/add-child";
 export const VISIT_PAGE = "/visit";
 export const LOGIN_PAGE = "/login";
 export const SIGNUP_PAGE = "/signup";
@@ -15,3 +14,5 @@ export const CREATE_ENTITY_PAGE = "/entity/create";
 export const UPDATE_ENTITY_PAGE = "/entity/update";
 
 export const HOOKS_PAGE = "/hooks";
+
+export const DEFAULT_PAGE = "/default";

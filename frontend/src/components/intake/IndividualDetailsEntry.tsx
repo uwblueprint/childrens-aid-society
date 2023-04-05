@@ -1,9 +1,7 @@
 import React from "react";
 import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
-import { useHistory } from "react-router-dom";
 import PromptBox from "./PromptBox";
-import { ADD_CHILD_PAGE } from "../../constants/Routes";
 import { Caregivers } from "./NewCaregiverModal";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
@@ -27,8 +25,6 @@ const IndividualDetailsEntry = ({
   caregivers,
   setCaregivers,
 }: IndividualDetailsEntryProp): React.ReactElement => {
-  const history = useHistory();
-
   const onNextStep = () => {
     nextStep();
     // TODO: SET UP SAVING INVIDUAL DETAILS
@@ -57,7 +53,7 @@ const IndividualDetailsEntry = ({
             buttonText="Add child"
             buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
             onButtonClick={() => {
-              history.push(ADD_CHILD_PAGE);
+              setStep(IntakeSteps.ADD_CHILD);
             }}
           />
           <CaregiverForm

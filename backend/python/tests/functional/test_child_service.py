@@ -108,7 +108,7 @@ def test_add_new_child_valid(child_service):
         last_name="Child",
         date_of_birth="2020-05-17",
         cpin_number="1",
-        child_service_worker_id=1,
+        service_worker="Service Worker",
         daytime_contact_id=1,
         special_needs="None",
         has_foster_placement=True,

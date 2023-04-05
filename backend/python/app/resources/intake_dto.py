@@ -84,7 +84,7 @@ class CreateIntakeDTO(IntakeDTO):
             error_list.append("access_weekday is invalid")
         if self.access_location and not isinstance(self.access_location, str):
             error_list.append("access_location is invalid")
-        if self.access_time and not isinstance(self.access_time, datetime.time):
+        if self.access_time and not isinstance(self.access_time, str):
             error_list.append("access_time is invalid")
         if self.lead_access_worker_id and not isinstance(
             self.lead_access_worker_id, int

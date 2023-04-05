@@ -60,6 +60,18 @@ const ReferralForm = ({
     setReferralDetails(formik.values);
   };
 
+  const onClear = () => {
+    formik.setValues({
+      referringWorker: "",
+      referringWorkerContact: "",
+      familyName: "",
+      referralDate: "",
+      cpinFileNumber: "",
+      cpinFileType: "",
+      phoneNumber: "",
+    });
+  };
+
   return (
     <>
       {!hideStepper && (
@@ -167,6 +179,7 @@ const ReferralForm = ({
           isStepComplete={() => true} // TODO: validate form
           registrationLoading={false}
           nextStepCallBack={onNextStep}
+          clearFields={onClear}
         />
       )}
     </>

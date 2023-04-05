@@ -1,6 +1,9 @@
 import React from "react";
 import { ArrowRight } from "react-feather";
-import { Box, Button, Flex, useToast } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import SubmitCaseModal from "./SubmitCaseModal";
+import SubmitErrorModal from "./SubmitErrorModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -14,6 +17,7 @@ export type IntakeFooterProps = {
   isStepComplete: () => boolean;
   registrationLoading: boolean;
   nextStepCallBack: () => void;
+  clearFields?: () => void;
 };
 
 const IntakeFooter = ({
@@ -23,8 +27,23 @@ const IntakeFooter = ({
   isStepComplete,
   registrationLoading,
   nextStepCallBack,
+  clearFields,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
+  // TODO: remove useHistory once dashboard is implemented
+  const history = useHistory();
+
+  const {
+    onOpen: onOpenSubmitCase,
+    isOpen: isOpenSubmitCase,
+    onClose: onCloseSubmitCase,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenSubmitError,
+    onClose: onCloseSubmitError,
+  } = useDisclosure();
+
   const onNextStep = () => {
     if (isStepComplete()) {
       nextStepCallBack();
@@ -63,6 +82,11 @@ const IntakeFooter = ({
           height="48px"
           mb={{ sm: 4, md: 0 }}
           mr={{ sm: 0, md: 4 }}
+          onClick={() => {
+            if (clearFields) {
+              clearFields();
+            }
+          }}
         >
           Clear page
         </Button>
@@ -76,12 +100,33 @@ const IntakeFooter = ({
         type="submit"
         isLoading={registrationLoading}
         onClick={() => {
-          onNextStep();
+          if (nextButtonText === "Submit case") {
+            onOpenSubmitCase();
+          } else if (nextButtonText === "Return to dashboard") {
+            // TODO: remove this once dashboard is implemented
+            history.goBack();
+          } else {
+            onNextStep();
+          }
         }}
       >
         <Box pr="5px">{nextButtonText}</Box>
         <ArrowRight />
       </Button>
+
+      <SubmitCaseModal
+        isOpen={isOpenSubmitCase}
+        onClick={() => {
+          // TODO: implement submit/POST functionality
+          onNextStep();
+        }}
+        onClose={onCloseSubmitCase}
+      />
+      <SubmitErrorModal
+        // TODO: implement error modal behaviour
+        isOpen={isOpenSubmitError}
+        onClose={onCloseSubmitError}
+      />
     </Flex>
   );
 };

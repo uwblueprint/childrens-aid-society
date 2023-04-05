@@ -9,7 +9,7 @@ import {
 const login = async (
   email: string,
   password: string,
-): Promise<AuthenticatedUser> => {
+): Promise<AuthenticatedUser | string> => {
   try {
     const { data } = await baseAPIClient.post(
       "/auth/login",
@@ -19,7 +19,7 @@ const login = async (
     localStorage.setItem(AUTHENTICATED_USER_KEY, JSON.stringify(data));
     return data;
   } catch (error) {
-    return null;
+    return JSON.stringify({ error: { response: { data: { error } } } });
   }
 };
 
@@ -40,13 +40,13 @@ const loginWithGoogle = async (idToken: string): Promise<AuthenticatedUser> => {
 const logout = async (userId: string | undefined): Promise<boolean> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
-    "accessToken",
+    "access_token",
   )}`;
   try {
     await baseAPIClient.post(
       `/auth/logout/${userId}`,
       {},
-      { headers: { Authorization: bearerToken } },
+      { headers: { Authorization: bearerToken }, withCredentials: true },
     );
     localStorage.removeItem(AUTHENTICATED_USER_KEY);
     return true;
@@ -77,7 +77,7 @@ const register = async (
 const resetPassword = async (email: string | undefined): Promise<boolean> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
-    "accessToken",
+    "access_token",
   )}`;
   try {
     await baseAPIClient.post(
@@ -101,8 +101,8 @@ const refresh = async (): Promise<boolean> => {
     );
     setLocalStorageObjProperty(
       AUTHENTICATED_USER_KEY,
-      "accessToken",
-      data.accessToken,
+      "access_token",
+      data.access_token,
     );
     return true;
   } catch (error) {

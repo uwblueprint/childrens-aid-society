@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IAttendanceRecords(ABC):
     """
     Attendance records service interface with attendance record management methods
@@ -50,6 +51,3 @@ class IAttendanceRecords(ABC):
         :raises Exception: if delete attendance_records fails
         """
         pass
-
-
-

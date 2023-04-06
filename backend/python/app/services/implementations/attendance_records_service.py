@@ -1,10 +1,10 @@
 from ...models import db
 from ...models.attendance_records import AttendanceRecords
 from ...resources.attendance_records_dto import AttendanceRecordsDTO
-from ..interfaces.attendance_records_service import IAttendanceRecords
+from ..interfaces.attendance_records_service import IAttendanceRecordsService
 
 
-class AttendanceRecords(IAttendanceRecords):
+class AttendanceRecordsService(IAttendanceRecordsService):
     def __init__(self, logger):
         self.logger = logger
 

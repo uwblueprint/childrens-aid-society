@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class IAttendanceRecords(ABC):
+class IAttendanceRecordsService(ABC):
     """
     Attendance records service interface with attendance record management methods
     """

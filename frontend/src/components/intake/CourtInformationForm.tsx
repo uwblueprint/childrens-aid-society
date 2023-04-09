@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDown, Download, FilePlus } from "react-feather";
 import { Field, Form, FormikProvider, useFormik } from "formik";
+import * as Yup from "yup";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
 import CustomInput from "../common/CustomInput";
@@ -17,6 +18,11 @@ import OptionalLabel from "./OptionalLabel";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+
+const courtInformationValidationSchema = Yup.object().shape({
+  currentCourtStatus: Yup.string().required("This is a required field"),
+  orderReferral: Yup.mixed<File>().required("Please attack a file"),
+});
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -63,6 +69,7 @@ const CourtInformationForm = ({
   const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
   const formik = useFormik({
+    validationSchema: courtInformationValidationSchema,
     initialValues: courtDetails,
     onSubmit: (values: CourtDetails) => {
       onSubmit(values);
@@ -137,6 +144,10 @@ const CourtInformationForm = ({
               ]}
               readOnly={readOnly}
             />
+            {formik.errors.currentCourtStatus &&
+            formik.touched.currentCourtStatus ? (
+              <Box>{formik.errors.currentCourtStatus}</Box>
+            ) : null}
           </Box>
           {/* TODO: store the uploaded file and save in backend */}
           <Input
@@ -188,6 +199,9 @@ const CourtInformationForm = ({
                 </Button>
               )}
             </HStack>
+            {formik.errors.orderReferral && formik.touched.orderReferral ? (
+              <Box>{formik.errors.orderReferral}</Box>
+            ) : null}
           </FormControl>
           <HStack alignItems="end" padding="16px 0" spacing={10}>
             <FormControl>

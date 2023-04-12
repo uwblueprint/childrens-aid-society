@@ -1,15 +1,32 @@
 import React from "react";
 import {
   Box,
+  Text,
   FormControl,
   FormLabel,
   Icon,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import { User, File, Calendar } from "react-feather";
 import CustomInput from "../../common/CustomInput";
 import OptionalLabel from "../OptionalLabel";
+
+const dateRegExp = /^(?:(?:31(\/)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+
+const validationSchema = Yup.object().shape({
+  cpinFileNumber: Yup.number()
+    .required("This is a required field")
+    .typeError("CPIN file number must be a number"),
+  childName: Yup.string().required("This is a required field"),
+  dateOfBirth: Yup.string()
+    .matches(
+      dateRegExp,
+      "Please enter a date in the desired format. ie. DD/MM/YYYY",
+    )
+    .required("This is a required field"),
+});
 
 export type ChildDetails = {
   childName: string;
@@ -33,8 +50,16 @@ const ChildInformationForm = ({
     setChildDetails(values);
   };
 
+  const formik = useFormik({
+    initialValues: childDetails,
+    onSubmit: (values: ChildDetails) => {
+      onSubmit(values);
+    },
+    validationSchema,
+  });
+
   return (
-    <Formik initialValues={childDetails} onSubmit={onSubmit}>
+    <FormikProvider value={formik}>
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -53,7 +78,20 @@ const ChildInformationForm = ({
                     childName: e.target.value,
                   })
                 }
+                backgroundColor={
+                  formik.errors.childName && formik.touched.childName
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.childName && formik.touched.childName
+                    ? "red.400"
+                    : ""
+                }
               />
+              {formik.errors.childName && formik.touched.childName ? (
+                <Text color="red">{formik.errors.childName}</Text>
+              ) : null}
             </Box>
             <Box>
               <FormLabel htmlFor="dateOfBirth">DATE OF BIRTH</FormLabel>
@@ -70,7 +108,20 @@ const ChildInformationForm = ({
                     dateOfBirth: e.target.value,
                   })
                 }
+                backgroundColor={
+                  formik.errors.dateOfBirth && formik.touched.dateOfBirth
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.dateOfBirth && formik.touched.dateOfBirth
+                    ? "red.400"
+                    : ""
+                }
               />
+              {formik.errors.dateOfBirth && formik.touched.dateOfBirth ? (
+                <Text color="red">{formik.errors.dateOfBirth}</Text>
+              ) : null}
             </Box>
             <Box>
               <FormLabel htmlFor="cpinFileNumber">
@@ -89,7 +140,20 @@ const ChildInformationForm = ({
                     cpinFileNumber: e.target.value,
                   })
                 }
+                backgroundColor={
+                  formik.errors.cpinFileNumber && formik.touched.cpinFileNumber
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.cpinFileNumber && formik.touched.cpinFileNumber
+                    ? "red.400"
+                    : ""
+                }
               />
+              {formik.errors.cpinFileNumber && formik.touched.cpinFileNumber ? (
+                <Text color="red">{formik.errors.cpinFileNumber}</Text>
+              ) : null}
             </Box>
             <Box>
               <FormLabel htmlFor="workerName">
@@ -148,7 +212,7 @@ const ChildInformationForm = ({
           </Box>
         </FormControl>
       </Form>
-    </Formik>
+    </FormikProvider>
   );
 };
 

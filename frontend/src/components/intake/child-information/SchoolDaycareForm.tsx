@@ -1,15 +1,30 @@
 import {
   Box,
+  Text,
   FormControl,
   FormLabel,
   Icon,
   SimpleGrid,
 } from "@chakra-ui/react";
+import * as Yup from "yup";
 import React from "react";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
 import CustomInput from "../../common/CustomInput";
 import OptionalLabel from "../OptionalLabel";
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+const validationSchema = Yup.object().shape({
+  schoolName: Yup.string().required("This is a required field"),
+  schoolAddress: Yup.string().required("This is a required field"),
+  schoolPhoneNo: Yup.string()
+    .matches(
+      phoneRegExp,
+      "Please provide a phone number or extension in the valid format. eg. 555-555-5555",
+    )
+    .required("This is a required field"),
+});
 
 export type SchoolDetails = {
   schoolName: string;
@@ -31,8 +46,16 @@ const SchoolDaycareForm = ({
     setSchoolDetails(values);
   };
 
+  const formik = useFormik({
+    initialValues: schoolDetails,
+    onSubmit: (values: SchoolDetails) => {
+      onSubmit(values);
+    },
+    validationSchema,
+  });
+
   return (
-    <Formik initialValues={schoolDetails} onSubmit={onSubmit}>
+    <FormikProvider value={formik}>
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -40,12 +63,25 @@ const SchoolDaycareForm = ({
               <FormLabel htmlFor="schoolName">NAME</FormLabel>
               <Field
                 as={CustomInput}
-                id="schooName"
-                name="schoolname"
+                id="schoolName"
+                name="schoolName"
                 type="string"
                 placeholder="Enter name of school or daycare"
                 icon={<Icon as={Home} />}
+                backgroundColor={
+                  formik.errors.schoolName && formik.touched.schoolName
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.schoolName && formik.touched.schoolName
+                    ? "red.400"
+                    : ""
+                }
               />
+              {formik.errors.schoolName && formik.touched.schoolName ? (
+                <Text color="red">{formik.errors.schoolName}</Text>
+              ) : null}
             </Box>
             <Box>
               <FormLabel htmlFor="schoolPhoneNo">
@@ -58,7 +94,20 @@ const SchoolDaycareForm = ({
                 type="string"
                 placeholder="e.g. 555-555-5555"
                 icon={<Icon as={Phone} />}
+                backgroundColor={
+                  formik.errors.schoolPhoneNo && formik.touched.schoolPhoneNo
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.schoolPhoneNo && formik.touched.schoolPhoneNo
+                    ? "red.400"
+                    : ""
+                }
               />
+              {formik.errors.schoolPhoneNo && formik.touched.schoolPhoneNo ? (
+                <Text color="red">{formik.errors.schoolPhoneNo}</Text>
+              ) : null}
             </Box>
           </SimpleGrid>
           <Box paddingTop="10px">
@@ -70,7 +119,20 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter address of school or daycare"
               icon={<Icon as={Navigation} />}
+              backgroundColor={
+                formik.errors.schoolAddress && formik.touched.schoolAddress
+                  ? "red.50"
+                  : ""
+              }
+              borderColor={
+                formik.errors.schoolAddress && formik.touched.schoolAddress
+                  ? "red.400"
+                  : ""
+              }
             />
+            {formik.errors.schoolAddress && formik.touched.schoolAddress ? (
+              <Text color="red">{formik.errors.schoolAddress}</Text>
+            ) : null}
           </Box>
           <Box paddingTop="10px">
             <FormLabel htmlFor="dismissalTime">
@@ -89,7 +151,7 @@ const SchoolDaycareForm = ({
       </Form>
 
       {/* TODO: trigger on submit when save child information button is clicked */}
-    </Formik>
+    </FormikProvider>
   );
 };
 

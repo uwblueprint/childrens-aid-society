@@ -131,6 +131,18 @@ const ReferralForm = ({
                   type="string"
                   placeholder="Enter name of the referring worker..."
                   icon={<Icon as={User} />}
+                  backgroundColor={
+                    formik.errors.referringWorker &&
+                    formik.touched.referringWorker
+                      ? "red.50"
+                      : ""
+                  }
+                  borderColor={
+                    formik.errors.referringWorker &&
+                    formik.touched.referringWorker
+                      ? "red.400"
+                      : ""
+                  }
                 />
                 {formik.errors.referringWorker &&
                 formik.touched.referringWorker ? (
@@ -149,6 +161,18 @@ const ReferralForm = ({
                   type="string"
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
+                  backgroundColor={
+                    formik.errors.referringWorkerContact &&
+                    formik.touched.referringWorkerContact
+                      ? "red.50"
+                      : ""
+                  }
+                  borderColor={
+                    formik.errors.referringWorkerContact &&
+                    formik.touched.referringWorkerContact
+                      ? "red.400"
+                      : ""
+                  }
                 />
                 {formik.errors.referringWorkerContact &&
                 formik.touched.referringWorkerContact ? (
@@ -167,6 +191,18 @@ const ReferralForm = ({
                   type="string"
                   placeholder="Enter file number of the referred case"
                   icon={<Icon as={File} />}
+                  backgroundColor={
+                    formik.errors.cpinFileNumber &&
+                    formik.touched.cpinFileNumber
+                      ? "red.50"
+                      : ""
+                  }
+                  borderColor={
+                    formik.errors.cpinFileNumber &&
+                    formik.touched.cpinFileNumber
+                      ? "red.400"
+                      : ""
+                  }
                 />
                 {formik.errors.cpinFileNumber &&
                 formik.touched.cpinFileNumber ? (
@@ -182,6 +218,16 @@ const ReferralForm = ({
                   name="cpinFileType"
                   type="string"
                   placeholder="Select the CPIN file type..."
+                  backgroundColor={
+                    formik.errors.cpinFileType && formik.touched.cpinFileType
+                      ? "red.50"
+                      : ""
+                  }
+                  borderColor={
+                    formik.errors.cpinFileType && formik.touched.cpinFileType
+                      ? "red.400"
+                      : ""
+                  }
                 />
                 {formik.errors.cpinFileType && formik.touched.cpinFileType ? (
                   <Text color="red">{formik.errors.cpinFileType}</Text>
@@ -198,6 +244,16 @@ const ReferralForm = ({
                 type="string"
                 placeholder="Enter family name as referenced in the case"
                 icon={<Icon as={Users} />}
+                backgroundColor={
+                  formik.errors.familyName && formik.touched.familyName
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.familyName && formik.touched.familyName
+                    ? "red.400"
+                    : ""
+                }
               />
               {formik.errors.familyName && formik.touched.familyName ? (
                 <Text color="red">{formik.errors.familyName}</Text>
@@ -213,6 +269,16 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
+                backgroundColor={
+                  formik.errors.referralDate && formik.touched.referralDate
+                    ? "red.50"
+                    : ""
+                }
+                borderColor={
+                  formik.errors.referralDate && formik.touched.referralDate
+                    ? "red.400"
+                    : ""
+                }
               />
               {formik.errors.referralDate && formik.touched.referralDate ? (
                 <Text color="red">{formik.errors.referralDate}</Text>

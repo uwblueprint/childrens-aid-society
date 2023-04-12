@@ -15,6 +15,7 @@ import {
   TrendingUp,
   ChevronDown,
 } from "react-feather";
+import * as Yup from "yup";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
@@ -55,6 +56,17 @@ const longTermGoalsOptions = [
   "Caregiver(s) cultural differences has minimal impact on parenting/family functioning during visits",
 ];
 
+const dateRegExp = /^(?:(?:31(\/)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+
+const validationSchema = Yup.object().shape({
+  suggestedStartDate: Yup.string()
+    .matches(
+      dateRegExp,
+      "Please enter a date in the desired format. ie. DD/MM/YYYY",
+    )
+    .required("This is a required field"),
+});
+
 const ProgramForm = ({
   programDetails,
   setProgramDetails,
@@ -74,6 +86,7 @@ const ProgramForm = ({
     onSubmit: (values: ProgramDetails) => {
       onSubmit(values);
     },
+    validationSchema,
   });
 
   const onNextStep = () => {
@@ -164,7 +177,23 @@ const ProgramForm = ({
                   type="string"
                   placeholder="DD/MM/YYYY"
                   icon={<Icon as={Calendar} />}
+                  backgroundColor={
+                    formik.errors.suggestedStartDate &&
+                    formik.touched.suggestedStartDate
+                      ? "red.50"
+                      : ""
+                  }
+                  borderColor={
+                    formik.errors.suggestedStartDate &&
+                    formik.touched.suggestedStartDate
+                      ? "red.400"
+                      : ""
+                  }
                 />
+                {formik.errors.suggestedStartDate &&
+                formik.touched.suggestedStartDate ? (
+                  <Text color="red">{formik.errors.suggestedStartDate}</Text>
+                ) : null}
               </Box>
             </SimpleGrid>
             <Text textAlign="left" paddingTop="35px" textStyle="title-medium">

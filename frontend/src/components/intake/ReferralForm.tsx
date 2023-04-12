@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Text,
   Box,
   FormControl,
   FormLabel,
@@ -7,12 +8,36 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
+import * as Yup from "yup";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const dateRegExp = /^(?:(?:31(\/)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+
+const validationSchema = Yup.object().shape({
+  cpinFileNumber: Yup.number()
+    .required("This is a required field")
+    .typeError("CPIN file number must be a number"),
+  familyName: Yup.string().required("This is a required field"),
+  referringWorkerContact: Yup.string()
+    .matches(
+      phoneRegExp,
+      "Please provide a phone number or extension in the valid format. eg. 555-555-5555",
+    )
+    .required("This is a required field"),
+  referralDate: Yup.string()
+    .matches(
+      dateRegExp,
+      "Please enter a date in the desired format. ie. DD/MM/YYYY",
+    )
+    .required("This is a required field"),
+  referringWorker: Yup.string().required("This is a required field"),
+});
 
 export type ReferralDetails = {
   cpinFileNumber: string;
@@ -53,6 +78,7 @@ const ReferralForm = ({
     onSubmit: (values: ReferralDetails) => {
       onSubmit(values);
     },
+    validationSchema,
   });
 
   const onNextStep = () => {
@@ -106,6 +132,10 @@ const ReferralForm = ({
                   placeholder="Enter name of the referring worker..."
                   icon={<Icon as={User} />}
                 />
+                {formik.errors.referringWorker &&
+                formik.touched.referringWorker ? (
+                  <Text color="red">{formik.errors.referringWorker}</Text>
+                ) : null}
               </Box>
               <Box>
                 <FormLabel htmlFor="referringWorkerContact">
@@ -120,6 +150,12 @@ const ReferralForm = ({
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
                 />
+                {formik.errors.referringWorkerContact &&
+                formik.touched.referringWorkerContact ? (
+                  <Text color="red">
+                    {formik.errors.referringWorkerContact}
+                  </Text>
+                ) : null}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
@@ -132,6 +168,10 @@ const ReferralForm = ({
                   placeholder="Enter file number of the referred case"
                   icon={<Icon as={File} />}
                 />
+                {formik.errors.cpinFileNumber &&
+                formik.touched.cpinFileNumber ? (
+                  <Text color="red">{formik.errors.cpinFileNumber}</Text>
+                ) : null}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileType">CPIN FILE TYPE</FormLabel>
@@ -143,6 +183,9 @@ const ReferralForm = ({
                   type="string"
                   placeholder="Select the CPIN file type..."
                 />
+                {formik.errors.cpinFileType && formik.touched.cpinFileType ? (
+                  <Text color="red">{formik.errors.cpinFileType}</Text>
+                ) : null}
               </Box>
             </SimpleGrid>
             <Box paddingTop="10px">
@@ -156,6 +199,9 @@ const ReferralForm = ({
                 placeholder="Enter family name as referenced in the case"
                 icon={<Icon as={Users} />}
               />
+              {formik.errors.familyName && formik.touched.familyName ? (
+                <Text color="red">{formik.errors.familyName}</Text>
+              ) : null}
             </Box>
             <Box paddingTop="10px">
               <FormLabel htmlFor="referralDate">REFERRAL DATE</FormLabel>
@@ -168,6 +214,9 @@ const ReferralForm = ({
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
               />
+              {formik.errors.referralDate && formik.touched.referralDate ? (
+                <Text color="red">{formik.errors.referralDate}</Text>
+              ) : null}
             </Box>
           </FormControl>
         </Form>

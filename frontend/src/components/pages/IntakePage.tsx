@@ -189,7 +189,11 @@ const Intake = (): React.ReactElement => {
         <>
           {renderIntakeHeader()}
           <Box padding="30px 0 40px 0">
-            <Container maxWidth="container.xl" padding="30px 96px">
+            <Container
+              maxWidth="container.xl"
+              padding="30px 96px"
+              marginBottom="50px"
+            >
               {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
                 step !== IntakeSteps.FORM_COMPLETE && (
                   <Button

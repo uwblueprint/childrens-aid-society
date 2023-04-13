@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import {
-  Button,
   Box,
-  Select,
-  Text,
-  Icon,
+  Button,
   Flex,
+  Icon,
+  Text,
+  Select,
   Spacer,
 } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
+import MultiListSelect from "../common/MultiListSelect";
 
 type ExistingProviderProps = {
   isOpen: boolean;
@@ -53,6 +54,11 @@ const ExistingProvider = ({
               <option>BFirst BLast</option>
               <option>CFirst CLast</option>
             </Select>
+            <MultiListSelect
+              placeholder="Select provider"
+              values={["dsjkfs", "help"]}
+              options={["1", "2", "3"]}
+            />
           </Box>
         }
         disabled={!isSelected} // if modal button disabled or not

@@ -5,7 +5,7 @@ import ModalComponent from "../common/ModalComponent";
 
 type ExistingProviderProps = {
   isOpen: boolean;
-  onClick: (newProvider: ProviderDetails) => void;
+  onClick: (existingProvider: ProviderDetails) => void;
   onClose: () => void;
   existingProviders: Providers;
 };

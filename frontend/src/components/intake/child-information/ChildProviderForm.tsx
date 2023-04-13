@@ -46,6 +46,11 @@ const ChildProviderForm = ({
     setAllProviders(allProviders);
   };
 
+  const onClickExistingProvider = (existingProvider: ProviderDetails) => {
+    providers.push(existingProvider);
+    setProviders(providers);
+  };
+
   const deleteProvider = (index: number) => {
     providers.splice(index, 1);
     // this isn't really useful, but it helps refresh the component
@@ -94,7 +99,7 @@ const ChildProviderForm = ({
         <Box>
           <ExistingProvider
             isOpen={isOpenExistingProviders}
-            onClick={onClickNewProvider}
+            onClick={onClickExistingProvider}
             onClose={onCloseExistingProviders}
             existingProviders={allProviders}
           />

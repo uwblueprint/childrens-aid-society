@@ -16,10 +16,16 @@ enum AddChildSteps {
 }
 
 type AddChildProps = {
+  allProviders: Providers;
+  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
+const AddChild = ({
+  allProviders,
+  setAllProviders,
+  setStep,
+}: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
   const [childDetails, setChildDetails] = useState<ChildDetails>({
@@ -70,6 +76,8 @@ const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
           <ChildProviderForm
             providers={providers}
             setProviders={setProviders}
+            allProviders={allProviders}
+            setAllProviders={setAllProviders}
           />
         );
       default:

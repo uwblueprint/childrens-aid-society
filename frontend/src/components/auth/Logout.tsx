@@ -24,13 +24,8 @@ const LogoutButton = (): React.ReactElement => {
       borderColor="blue.400"
       color="blue.400"
       onClick={onLogOutClick}
-    >
-      {" "}
-      <Center gridGap="1">
-        {" "}
-        <Icon as={LogOut} />
-        <Spacer /> <Text>Logout</Text>
-      </Center>
+      leftIcon={<Icon as={LogOut} />}
+    >Logout
     </Button>
   );
 };

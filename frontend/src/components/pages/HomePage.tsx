@@ -44,13 +44,8 @@ const SecondaryHeader = (): React.ReactElement => {
           rounded="lg"
           border="1px"
           onClick={() => console.log("FINISH THIS CALLBACK")}
-        >
-          {" "}
-          <Center gridGap="1">
-            {" "}
-            <Icon as={FilePlus} />
-            <Spacer /> <Text>New case</Text>
-          </Center>
+          leftIcon={<Icon as={FilePlus} />}
+        >New case
         </Button>
       </Flex>
     </Box>

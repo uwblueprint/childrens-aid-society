@@ -194,7 +194,7 @@ const Intake = (): React.ReactElement => {
       ) : (
         <>
           {renderIntakeHeader()}
-          <Box padding="30px 0 40px 0">
+          <Box padding="30px 0 160px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
               {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
                 step !== IntakeSteps.FORM_COMPLETE && (

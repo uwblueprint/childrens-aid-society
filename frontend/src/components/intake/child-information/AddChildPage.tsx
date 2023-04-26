@@ -1,17 +1,32 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ArrowLeft } from "react-feather";
-import { useHistory } from "react-router-dom";
 import IntakeHeader from "../IntakeHeader";
+import IntakeSteps from "../intakeSteps";
 import { Providers } from "../NewProviderModal";
 import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
 
-const AddChild = (): React.ReactElement => {
+enum AddChildSteps {
+  CHILD_INFORMATION_FORM,
+  SCHOOL_DAYCARE_FORM,
+  CHILD_PROVIDER_FORM,
+}
+
+type AddChildProps = {
+  allProviders: Providers;
+  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const AddChild = ({
+  allProviders,
+  setAllProviders,
+  setStep,
+}: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
-  const history = useHistory();
 
   const [childDetails, setChildDetails] = useState<ChildDetails>({
     childName: "",
@@ -42,25 +57,27 @@ const AddChild = (): React.ReactElement => {
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
-      case 0:
+      case AddChildSteps.CHILD_INFORMATION_FORM:
         return (
           <ChildInformationForm
             childDetails={childDetails}
             setChildDetails={setChildDetails}
           />
         );
-      case 1:
+      case AddChildSteps.SCHOOL_DAYCARE_FORM:
         return (
           <SchoolDaycareForm
             schoolDetails={schoolDetails}
             setSchoolDetails={setSchoolDetails}
           />
         );
-      case 2:
+      case AddChildSteps.CHILD_PROVIDER_FORM:
         return (
           <ChildProviderForm
             providers={providers}
             setProviders={setProviders}
+            allProviders={allProviders}
+            setAllProviders={setAllProviders}
           />
         );
       default:
@@ -84,8 +101,7 @@ const AddChild = (): React.ReactElement => {
         <Button
           leftIcon={<ArrowLeft />}
           onClick={() => {
-            // TODO: Fix route to navigate back to individual details entry intake page
-            history.goBack();
+            setStep(IntakeSteps.INDIVIDUAL_DETAILS);
           }}
           variant="tertiary"
         >

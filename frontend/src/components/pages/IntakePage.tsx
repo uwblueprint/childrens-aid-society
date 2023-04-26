@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Box, Button, Container, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
+import Logo from "../../assets/logo.png";
 import CourtInformationForm, {
   CourtDetails,
 } from "../intake/CourtInformationForm";
@@ -15,6 +25,9 @@ import IntakeSteps from "../intake/intakeSteps";
 import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
+import AddChild from "../intake/child-information/AddChildPage";
+import IntakeFooter from "../intake/IntakeFormFooter";
+import { Providers } from "../intake/NewProviderModal";
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -56,6 +69,7 @@ const Intake = (): React.ReactElement => {
     permittedIndividuals,
     setPermittedIndividuals,
   ] = useState<PermittedIndividuals>([]);
+  const [allProviders, setAllProviders] = useState<Providers>([]);
 
   const nextStep = () => setStep(step + 1);
 
@@ -103,7 +117,26 @@ const Intake = (): React.ReactElement => {
             />
           </>
         );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <Box textAlign="center">
+            <Center>
+              <Image src={Logo} alt="CAS Logo" marginBottom="45px" />
+            </Center>
+            <Heading size="xl">
+              Thank you for completing the intake form
+            </Heading>
+            <Text>The admin team will review it promptly.</Text>
+            <IntakeFooter
+              nextButtonText="Return to dashboard"
+              isStepComplete={() => true}
+              registrationLoading={false}
+              nextStepCallBack={() => {}}
+            />
+          </Box>
+        );
       default:
+        // IntakeSteps.REVIEW_CASE_DETAILS
         return (
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
             <ReviewForm
@@ -122,67 +155,79 @@ const Intake = (): React.ReactElement => {
     }
   };
 
+  const renderIntakeHeader = () => {
+    switch (step) {
+      case IntakeSteps.REVIEW_CASE_DETAILS:
+        return (
+          <IntakeHeader
+            primaryTitle="Review Case Details"
+            secondaryTitle="Initiate New Case"
+          />
+        );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <IntakeHeader
+            primaryTitle="Intake Form Complete"
+            secondaryTitle="Initiate New Case"
+          />
+        );
+      default:
+        return (
+          <IntakeHeader
+            primaryTitle={
+              reviewHeader ? "Edit Case Intake Submission" : "Initiate New Case"
+            }
+            secondaryTitle="Case Management"
+          />
+        );
+    }
+  };
+
   return (
     <>
-      {step === IntakeSteps.REVIEW_CASE_DETAILS ? (
-        <IntakeHeader
-          primaryTitle="Review Case Details"
-          secondaryTitle="Initiate New Case"
+      {step === IntakeSteps.ADD_CHILD ? (
+        <AddChild
+          allProviders={allProviders}
+          setAllProviders={setAllProviders}
+          setStep={setStep}
         />
       ) : (
         <>
-          {reviewHeader ? (
-            <IntakeHeader
-              primaryTitle="Edit Case Intake Submission"
-              secondaryTitle="Case Management"
-            />
-          ) : (
-            <IntakeHeader
-              primaryTitle="Initiate New Case"
-              secondaryTitle="Case Management"
-            />
-          )}
+          {renderIntakeHeader()}
+          <Box padding="30px 0 40px 0">
+            <Container maxWidth="container.xl" padding="30px 96px">
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+                step !== IntakeSteps.FORM_COMPLETE && (
+                  <Button
+                    leftIcon={<ArrowLeft />}
+                    marginBottom="30px"
+                    onClick={() => {
+                      onOpenUnsavedProgress();
+                    }}
+                    variant="tertiary"
+                  >
+                    {reviewHeader
+                      ? "Back to Submission Review"
+                      : "Back to Dashboard"}
+                  </Button>
+                )}
+              {renderDetailsForm()}
+            </Container>
+          </Box>
+          <UnsavedProgressModal
+            isOpen={isOpenUnsavedProgress}
+            onClick={() => {
+              if (reviewHeader) {
+                setStep(IntakeSteps.REVIEW_CASE_DETAILS);
+              } else {
+                // TODO: remove this once dashboard is implemented
+                history.goBack();
+              }
+            }}
+            onClose={onCloseUnsavedProgress}
+            reviewVersion={reviewHeader}
+          />
         </>
-      )}
-      <Box padding="30px 0 40px 0">
-        <Container
-          maxWidth="container.xl"
-          padding="30px 96px"
-          marginBottom="100px"
-        >
-          {step !== IntakeSteps.REVIEW_CASE_DETAILS && (
-            <Button
-              leftIcon={<ArrowLeft />}
-              marginBottom="30px"
-              onClick={() => {
-                onOpenUnsavedProgress();
-              }}
-              variant="tertiary"
-            >
-              {reviewHeader ? "Back to Submission Review" : "Back to Dashboard"}
-            </Button>
-          )}
-          {renderDetailsForm()}
-        </Container>
-      </Box>
-      {reviewHeader ? (
-        <UnsavedProgressModal
-          isOpen={isOpenUnsavedProgress}
-          onClick={() => {
-            setStep(IntakeSteps.REVIEW_CASE_DETAILS);
-          }}
-          onClose={onCloseUnsavedProgress}
-          reviewVersion={reviewHeader}
-        />
-      ) : (
-        <UnsavedProgressModal
-          isOpen={isOpenUnsavedProgress}
-          onClick={() => {
-            // TODO: remove this once dashboard is implemented
-            history.goBack();
-          }}
-          onClose={onCloseUnsavedProgress}
-        />
       )}
     </>
   );

@@ -67,7 +67,6 @@ const AddChild = ({
         providers: [...providers],
       },
     ]);
-    console.log(childrens);
   };
 
   const renderChildForm = () => {

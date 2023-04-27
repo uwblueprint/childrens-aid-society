@@ -1,4 +1,4 @@
-import { Button, Center, Icon, Spacer, Text } from "@chakra-ui/react";
+import { Button, Icon } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { LogOut } from "react-feather";
 
@@ -25,7 +25,8 @@ const LogoutButton = (): React.ReactElement => {
       color="blue.400"
       onClick={onLogOutClick}
       leftIcon={<Icon as={LogOut} />}
-    >Logout
+    >
+      Logout
     </Button>
   );
 };

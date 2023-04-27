@@ -1,28 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
-import {
-  ChevronDown,
-  Cloud,
-  Feather,
-  FilePlus,
-  LogOut,
-  Plus,
-  Search,
-} from "react-feather";
+import { Box, Button, Flex, Heading, Icon, Spacer } from "@chakra-ui/react";
+import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
-import CustomTag from "../common/CustomTag";
 import IntakeHeader from "../intake/IntakeHeader";
 
 const SecondaryHeader = (): React.ReactElement => {
@@ -43,9 +22,12 @@ const SecondaryHeader = (): React.ReactElement => {
           px="2"
           rounded="lg"
           border="1px"
-          onClick={() => console.log("FINISH THIS CALLBACK")}
+          onClick={
+            () => {} // TODO: FINISH THIS CALLBACK
+          }
           leftIcon={<Icon as={FilePlus} />}
-        >New case
+        >
+          New case
         </Button>
       </Flex>
     </Box>

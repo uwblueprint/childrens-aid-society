@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  InputGroup,
-  InputLeftElement,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Icon, Text } from "@chakra-ui/react";
 import { ChevronDown, Cloud, Feather } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import CustomTag from "../common/CustomTag";

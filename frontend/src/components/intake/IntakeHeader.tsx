@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Center,
-  Flex,
-  Heading,
-  Spacer,
-  Text,
-  Icon,
-  Button,
-} from "@chakra-ui/react";
-import { LogOut } from "react-feather";
+import { Box, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import LogoutButton from "../auth/Logout";
 
 export type IntakeHeaderProps = {

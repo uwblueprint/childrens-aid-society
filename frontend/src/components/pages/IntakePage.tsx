@@ -19,15 +19,26 @@ import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
 import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
+// eslint-disable-next-line import/no-cycle
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../intake/NewCaregiverModal";
 import IntakeSteps from "../intake/intakeSteps";
 import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
+// eslint-disable-next-line import/no-cycle
 import AddChild from "../intake/child-information/AddChildPage";
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
+import { ChildDetails } from "../intake/child-information/ChildInformationForm";
+import { SchoolDetails } from "../intake/child-information/SchoolDaycareForm";
+
+type ChildrenDetails = {
+  childDetails: ChildDetails;
+  schoolDetails: SchoolDetails;
+  providers: Providers;
+};
+export type Childrens = ChildrenDetails[];
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -64,6 +75,7 @@ const Intake = (): React.ReactElement => {
     familialConcerns: [],
   });
 
+  const [childrens, setChildrens] = useState<Childrens>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
   const [
     permittedIndividuals,
@@ -190,6 +202,8 @@ const Intake = (): React.ReactElement => {
           allProviders={allProviders}
           setAllProviders={setAllProviders}
           setStep={setStep}
+          childrens={childrens}
+          setChildrens={setChildrens}
         />
       ) : (
         <>

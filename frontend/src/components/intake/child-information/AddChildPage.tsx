@@ -1,6 +1,8 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ArrowLeft } from "react-feather";
+// eslint-disable-next-line import/no-cycle
+import { Childrens } from "../../pages/IntakePage";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
 import { Providers } from "../NewProviderModal";
@@ -19,12 +21,16 @@ type AddChildProps = {
   allProviders: Providers;
   setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  childrens: Childrens;
+  setChildrens: React.Dispatch<React.SetStateAction<Childrens>>;
 };
 
 const AddChild = ({
   allProviders,
   setAllProviders,
   setStep,
+  childrens,
+  setChildrens,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -53,6 +59,14 @@ const AddChild = ({
 
   const childFormSubmitHandler = () => {
     // TODO: Do something with the information
+    setChildrens((prevChildrens) => [
+      ...prevChildrens,
+      {
+        childDetails: { ...childDetails },
+        schoolDetails: { ...schoolDetails },
+        providers: [...providers],
+      },
+    ]);
   };
 
   const renderChildForm = () => {

@@ -17,5 +17,4 @@ def init_app(app):
     app.register_blueprint(intake_routes.blueprint)
     app.register_blueprint(user_routes.blueprint)
     app.register_blueprint(visit_routes.blueprint)
-    app.register_blueprint(visit_routes.blueprint)
     app.register_blueprint(attendance_sheet_routes.blueprint)

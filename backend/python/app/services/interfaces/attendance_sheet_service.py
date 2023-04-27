@@ -15,6 +15,7 @@ class IAttendanceSheetService(ABC):
         :rtype: AttendanceSheetDTO
         :raises Exception: if intake_id is invalid
         """
+        pass
 
     @abstractmethod
     def get_all_attendance_sheets(self):
@@ -24,6 +25,7 @@ class IAttendanceSheetService(ABC):
         :rtype: List of AttendanceSheetDTO
         :raises Exception: if an error encountered when querying database
         """
+        pass
 
     @abstractmethod
     def create_attendance_sheet(self, attendance_sheet):
@@ -37,7 +39,7 @@ class IAttendanceSheetService(ABC):
         """
         pass
 
-    @abstractmethod  # TODO: finish this
+    @abstractmethod
     def delete_attendance_sheet(self, id):
         """Deletes the attendance sheet associated with id from the database
 

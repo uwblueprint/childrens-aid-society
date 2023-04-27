@@ -66,7 +66,7 @@ class AttendanceSheetService(IAttendanceSheetService):
                 )
             if not attendance_sheet:
                 raise Exception(
-                    "Empty attendance sheet DTO/None passed to creacreate_attendance_sheet function"
+                    "Empty attendance sheet DTO/None passed to create_attendance_sheet function"
                 )
             # check for valid input fields
             error = attendance_sheet.validate()

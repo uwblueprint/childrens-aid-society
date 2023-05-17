@@ -28,6 +28,7 @@ import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
 import Default from "./components/pages/Default";
+import Template from "./components/pages/TemplatePage";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -66,6 +67,7 @@ const App = (): React.ReactElement => {
                 <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
                 <Route exact path={Routes.VISIT_PAGE} component={Visit} />
                 <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
+                <Route exact path={Routes.TEMPLATE_PAGE} component={Template} />
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </Router>

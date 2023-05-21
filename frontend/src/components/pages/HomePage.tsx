@@ -5,12 +5,12 @@ import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 
-
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
   function goToIntake() {
     history.push("/intake");
   }
+
   return (
     <Box>
       <Heading textStyle="display-medium">Intake Cases</Heading>

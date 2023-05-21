@@ -27,6 +27,7 @@ import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
 import AddChild from "../intake/child-information/AddChildPage";
 import IntakeFooter from "../intake/IntakeFormFooter";
+import { Providers } from "../intake/NewProviderModal";
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -68,6 +69,7 @@ const Intake = (): React.ReactElement => {
     permittedIndividuals,
     setPermittedIndividuals,
   ] = useState<PermittedIndividuals>([]);
+  const [allProviders, setAllProviders] = useState<Providers>([]);
 
   const nextStep = () => setStep(step + 1);
 
@@ -184,11 +186,15 @@ const Intake = (): React.ReactElement => {
   return (
     <>
       {step === IntakeSteps.ADD_CHILD ? (
-        <AddChild setStep={setStep} />
+        <AddChild
+          allProviders={allProviders}
+          setAllProviders={setAllProviders}
+          setStep={setStep}
+        />
       ) : (
         <>
           {renderIntakeHeader()}
-          <Box padding="30px 0 40px 0">
+          <Box padding="30px 0 160px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
               {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
                 step !== IntakeSteps.FORM_COMPLETE && (

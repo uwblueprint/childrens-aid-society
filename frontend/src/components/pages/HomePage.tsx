@@ -3,6 +3,7 @@ import { Box, Button, Flex, Heading, Icon, Spacer } from "@chakra-ui/react";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
+import StatusChange from "../dashboard/StatusModal";
 
 const SecondaryHeader = (): React.ReactElement => {
   return (
@@ -15,6 +16,7 @@ const SecondaryHeader = (): React.ReactElement => {
             icon={<Icon as={Search} />}
           />
         </Box>
+        <StatusChange caseNum={1} status= "ARCHIVED"/>
 
         <Spacer />
         <Button

@@ -236,7 +236,8 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": intake_id,
-            "name": child["childInfo"]["name"].rsplit(" ", 1)[0],
+            "first_name": child["childInfo"]["first_name"],
+            "last_name": child["childInfo"]["last_name"],
             "date_of_birth": child["childInfo"]["dateOfBirth"],
             "cpin_number": child["childInfo"]["cpinFileNumber"],
             "service_worker": child["childInfo"]["serviceWorker"],

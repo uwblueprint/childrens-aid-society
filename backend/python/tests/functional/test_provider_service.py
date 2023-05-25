@@ -29,7 +29,7 @@ DEFAULT_CHILD = {
     "id": 1,
     "first_name": "Jane",
     "last_name": "Doe",
-    "child_service_worker_id": 1,
+    "service_worker": "Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
     "has_kinship_provider": True,

@@ -12,7 +12,7 @@ export type StatusChangeProps = {
 };
 
 const StatusChange = ({caseNum, status}: StatusChangeProps): React.ReactElement => {
-   const [isOpen, setIsOpen] = useState(false);
+   const [isOpen, setIsOpen] = useState(true);
    const [selectedOption, setSelectedOption] = useState(status);
    const [workerName, setWorkerName] = useState("");
    const [meetingNotes, setMeetingNotes] = useState("");
@@ -28,7 +28,6 @@ const StatusChange = ({caseNum, status}: StatusChangeProps): React.ReactElement 
 
    return (
       <Box>
-        <Button onClick={openModal}>Open Modal</Button>
         <ModalComponent
             primaryTitle={`Case ${caseNum}`}
             secondaryTitle=""

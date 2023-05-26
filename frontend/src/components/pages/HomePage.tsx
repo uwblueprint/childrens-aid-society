@@ -21,7 +21,7 @@ const SecondaryHeader = (): React.ReactElement => {
             icon={<Icon as={Search} />}
           />
         </Box>
-        <StatusChange caseNum={1} status= "ARCHIVED"/>
+        <StatusChange caseNum={1} status="ARCHIVED" />
 
         <Spacer />
         <Button

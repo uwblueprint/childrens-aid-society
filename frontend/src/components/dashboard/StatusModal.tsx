@@ -7,29 +7,12 @@ import {
   Button,
   FormLabel,
   SimpleGrid,
-  FormControl,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-  MenuList,
-  Container,
 } from "@chakra-ui/react";
-import { useField } from "formik";
-import CustomTag from "../common/CustomTag";
-import StatusTag from "./StatusTag";
 
 import ModalComponent from "../common/ModalComponent";
 
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
-import { CustomSelectField } from "../intake/CustomSelectField";
 
 export type StatusChangeProps = {
   caseNum?: number;
@@ -44,16 +27,9 @@ const StatusChange = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
-  const options = [
-    "First Nation Registered",
-    "Eligible for Registration",
-    "Inuit",
-    "Metis",
-    "Unknown",
-  ];
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  // const openModal = () => {
+  //   setIsOpen(true);
+  // };
 
   const closeModal = () => {
     setIsOpen(false);
@@ -176,7 +152,6 @@ const StatusChange = ({
         disabled={selectedOption === "" || workerName === ""}
         primaryButtonTitle="Save"
         onClick={() => {
-          console.log("Primary button clicked");
           closeModal();
         }}
         isOpen={isOpen}

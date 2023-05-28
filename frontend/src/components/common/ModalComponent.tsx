@@ -71,7 +71,6 @@ const ModalComponent = ({
           {unsavedProgressModal && <Spacer />}
           <Button
             variant={mainButtonType}
-            // colorScheme={color}
             disabled={disabled}
             onClick={onClick}
           >

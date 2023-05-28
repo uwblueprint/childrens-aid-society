@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import ModalComponent from "../common/ModalComponent";
-import CustomInput from "../common/CustomInput";
+import CustomInput, { CustomInputProps } from "../common/CustomInput";
 
 type SubmitCaseProps = {
   isOpen: boolean;
@@ -14,6 +14,16 @@ const PermanentDeleteModal = ({
   onClick,
   onClose,
 }: SubmitCaseProps): React.ReactElement => {
+  const [confirmationInput, setConfirmationInput] = useState("");
+
+  const handleConfirmationInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setConfirmationInput(event.target.value);
+  };
+
+  const isConfirmationValid = confirmationInput.trim() === "Confirm Deletion";
+
   return (
     <Box>
       <ModalComponent
@@ -36,19 +46,21 @@ const PermanentDeleteModal = ({
               id="confirmDeletion"
               name="confirmDeletion"
               type="string"
-              placeholder="confirmDeletion"
+              placeholder="Insert text here"
+              value={confirmationInput}
+              onChange={handleConfirmationInputChange}
             />
           </Box>
         }
         onClick={() => {
-          onClick();
-          onClose();
+          if (isConfirmationValid) {
+            onClick();
+            onClose();
+          }
         }}
         isOpen={isOpen}
-        onClose={() => {
-          onClose();
-        }}
-        disabled={false}
+        onClose={onClose}
+        disabled={!isConfirmationValid}
         primaryButtonTitle="Confirm"
       />
     </Box>

@@ -4,8 +4,6 @@ import { ArrowLeft, UserPlus, Archive, FileText } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../intake/CaseOverviewFooter";
 
-
-
 const SecondaryHeader = (): React.ReactElement => {
   return (
     <Box>
@@ -15,18 +13,22 @@ const SecondaryHeader = (): React.ReactElement => {
 
       <Flex pt="10">
         <div>
-          <b style={{ color: "#45464F", fontSize: "12px" }}>CHILDREN SERVICES OR KINSHIP WORKER</b>
-          <div style={{
-            display: "flex"
-            , alignItems: "flex-end", gap: "20px"
-          }}>
+          <b style={{ color: "#45464F", fontSize: "12px" }}>
+            CHILDREN SERVICES OR KINSHIP WORKER
+          </b>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              gap: "20px",
+            }}
+          >
             <Input variant="filled" placeholder="Search name" />
-            <Button color="#F7F7FF" variant='outline'>
+            <Button color="#F7F7FF" variant="outline">
               <span style={{ color: "#8093BE" }}>Save</span>
             </Button>
           </div>
         </div>
-
       </Flex>
 
       <div style={{ paddingBottom: "100px" }}>
@@ -49,7 +51,6 @@ const SecondaryHeader = (): React.ReactElement => {
               justifyContent="center"
               flexDirection="column"
             >
-
               <b>There are no children under this case</b>
 
               <Button
@@ -64,16 +65,14 @@ const SecondaryHeader = (): React.ReactElement => {
                 <div style={{ paddingRight: "10px" }}>
                   <UserPlus width="13px" />
                 </div>
-
                 Add Child
               </Button>
-
-
             </Box>
 
-
             <Flex pt="50">
-              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>Visiting Family</h1>
+              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                Visiting Family
+              </h1>
             </Flex>
             <Box
               border="1px"
@@ -88,7 +87,6 @@ const SecondaryHeader = (): React.ReactElement => {
               justifyContent="center"
               flexDirection="column"
             >
-
               <b>There are no visiting families under this case</b>
 
               <Button
@@ -100,18 +98,17 @@ const SecondaryHeader = (): React.ReactElement => {
                 borderColor="#00287D"
                 backgroundColor="#EFF0FF"
               >
-
                 <div style={{ paddingRight: "10px" }}>
                   <UserPlus width="13px" />
                 </div>
-
                 Add visiting family
               </Button>
-
             </Box>
 
             <Flex pt="50">
-              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>Intake Information</h1>
+              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                Intake Information
+              </h1>
             </Flex>
 
             <Box
@@ -126,7 +123,6 @@ const SecondaryHeader = (): React.ReactElement => {
               alignItems="left"
               flexDirection="column"
             >
-
               <p>By FirstLast@example.com</p>
               <p>Date</p>
 
@@ -141,13 +137,14 @@ const SecondaryHeader = (): React.ReactElement => {
               >
                 View
               </Button>
-
             </Box>
           </Flex>
 
           <Flex direction="column" flex="1" mt="-100">
             <Flex pt="50">
-              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>Visit Cadence</h1>
+              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                Visit Cadence
+              </h1>
             </Flex>
             <Box
               border="1px"
@@ -162,7 +159,6 @@ const SecondaryHeader = (): React.ReactElement => {
               justifyContent="center"
               flexDirection="column"
             >
-
               <b>There are no visit cadences under this case</b>
 
               <Button
@@ -176,11 +172,12 @@ const SecondaryHeader = (): React.ReactElement => {
               >
                 Add
               </Button>
-
             </Box>
 
             <Flex pt="50">
-              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>Visitation</h1>
+              <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                Visitation
+              </h1>
             </Flex>
             <Box
               border="1px"
@@ -195,7 +192,6 @@ const SecondaryHeader = (): React.ReactElement => {
               justifyContent="center"
               flexDirection="column"
             >
-
               <b>There are no past visits under this case</b>
 
               <Button
@@ -212,14 +208,10 @@ const SecondaryHeader = (): React.ReactElement => {
                 </div>
                 Add new visit
               </Button>
-
             </Box>
           </Flex>
         </Flex>
       </div>
-
-
-
     </Box>
   );
 };
@@ -236,12 +228,11 @@ const CaseOverview = (): React.ReactElement => {
         <div style={{ paddingBottom: "100px" }}>
           <SecondaryHeader />
         </div>
-
       </Box>
       <CaseOverviewFooter
         isStepComplete={() => true}
         registrationLoading={false}
-        nextStepCallBack={() => { }}
+        nextStepCallBack={() => {}}
       />
     </Box>
   );

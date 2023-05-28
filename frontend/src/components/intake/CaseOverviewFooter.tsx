@@ -1,6 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Flex, useDisclosure, useToast, ButtonGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  useDisclosure,
+  useToast,
+  ButtonGroup,
+} from "@chakra-ui/react";
 import { Archive, FileText } from "react-feather";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
@@ -47,7 +54,8 @@ const CaseOverviewFooter = ({
     } else {
       toast({
         title: "Form does not pass validation.",
-        description: "Please complete all form fields according to requirements.",
+        description:
+          "Please complete all form fields according to requirements.",
         variant: "subtle",
         duration: 3000,
         status: "error",
@@ -71,8 +79,7 @@ const CaseOverviewFooter = ({
       bottom="0"
       zIndex="5"
     >
-
-      <ButtonGroup spacing='67rem'>
+      <ButtonGroup spacing="67rem">
         <Button
           height="38px"
           onClick={() => {
@@ -101,17 +108,14 @@ const CaseOverviewFooter = ({
         </Button>
       </ButtonGroup>
 
-
       <SubmitCaseModal
         isOpen={isOpenSubmitCase}
         onClick={() => {
-
           onNextStep();
         }}
         onClose={onCloseSubmitCase}
       />
       <SubmitErrorModal
-
         isOpen={isOpenSubmitError}
         onClose={onCloseSubmitError}
       />

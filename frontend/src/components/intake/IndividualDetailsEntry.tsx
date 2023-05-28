@@ -1,10 +1,8 @@
 import React from "react";
 import { VStack, Icon } from "@chakra-ui/react";
 import { UserPlus } from "react-feather";
-import PromptBox, { IndividualDetailsOverview } from "./PromptBox";
+import PromptBox from "./PromptBox";
 import { Caregivers } from "./NewCaregiverModal";
-// eslint-disable-next-line import/no-cycle
-import { Childrens } from "../pages/IntakePage";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";

@@ -19,7 +19,7 @@ type AddChildProps = {
   allProviders: Providers;
   setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  childrens: Children;
+  children: Children;
   setChildren: React.Dispatch<React.SetStateAction<Children>>;
 };
 
@@ -34,7 +34,7 @@ const AddChild = ({
   allProviders,
   setAllProviders,
   setStep,
-  childrens,
+  children,
   setChildren,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
@@ -72,7 +72,6 @@ const AddChild = ({
         providers: [...providers],
       },
     ]);
-    console.log(childrens);
   };
 
   const renderChildForm = () => {

@@ -66,10 +66,8 @@ const Intake = (): React.ReactElement => {
 
   const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
-  const [
-    permittedIndividuals,
-    setPermittedIndividuals,
-  ] = useState<PermittedIndividuals>([]);
+  const [permittedIndividuals, setPermittedIndividuals] =
+    useState<PermittedIndividuals>([]);
   const [allProviders, setAllProviders] = useState<Providers>([]);
 
   const nextStep = () => setStep(step + 1);
@@ -191,7 +189,7 @@ const Intake = (): React.ReactElement => {
           allProviders={allProviders}
           setAllProviders={setAllProviders}
           setStep={setStep}
-          childrens={children}
+          children={children}
           setChildren={setChildren}
         />
       ) : (

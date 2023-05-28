@@ -22,6 +22,9 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   unsavedProgressModal?: boolean;
+  leftButtonTitle?: string;
+  leftButtonVariant?: string;
+  onLeftButtonClick?: () => void;
 };
 
 const ModalComponent = ({
@@ -34,6 +37,9 @@ const ModalComponent = ({
   isOpen,
   onClose,
   unsavedProgressModal,
+  leftButtonTitle,
+  leftButtonVariant,
+  onLeftButtonClick,
 }: ModalProps): React.ReactElement => (
   <Modal
     isCentered
@@ -59,6 +65,16 @@ const ModalComponent = ({
           paddingLeft="0px"
           paddingRight="0px"
         >
+          {leftButtonTitle && leftButtonVariant ? (
+            <>
+              <Button variant={leftButtonVariant} onClick={onLeftButtonClick}>
+                {leftButtonTitle}
+              </Button>
+              <Spacer />
+            </>
+          ) : (
+            ""
+          )}
           <Button variant="tertiary" onClick={onClose}>
             Cancel
           </Button>

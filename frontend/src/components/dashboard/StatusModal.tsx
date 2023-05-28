@@ -15,12 +15,12 @@ import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 
 export type StatusChangeProps = {
-  caseNum?: number;
+  caseNumber?: number;
   status?: string;
 };
 
-const StatusChange = ({
-  caseNum,
+const StatusChangeModal = ({
+  caseNumber,
   status,
 }: StatusChangeProps): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(true);
@@ -38,19 +38,23 @@ const StatusChange = ({
   return (
     <Box>
       <ModalComponent
-        primaryTitle={`Case ${caseNum}`}
+        primaryTitle={`Case ${caseNumber}`}
         secondaryTitle=""
+        leftButtonTitle={selectedOption === "ARCHIVED" ? "Delete" : ""}
+        leftButtonVariant={selectedOption === "ARCHIVED" ? "delete" : ""}
+        onLeftButtonClick={() => {} /* TODO: delete button onClick */}
         modalContent={
           <Box>
             <Box
               borderWidth="1px"
               borderRadius="lg"
-              padding="1rem"
+              padding="1.5rem"
               position="relative"
             >
-              <Text fontWeight="semibold" fontSize="xl">
+              <Text fontWeight="semibold" fontSize="2xl" mb="6px">
                 Case Submission
               </Text>
+              {/* TODO: Need to be changed for dynamic values */}
               <Text>Lead: XXX</Text>
               <Text>Date: XXX</Text>
               <Text>Family Name: XXX</Text>
@@ -67,6 +71,8 @@ const StatusChange = ({
             </Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
               <Box>
+                {" "}
+                {/* TODO: Need to change status dropdown */}
                 <FormLabel htmlFor="status">STATUS</FormLabel>
                 <Select
                   id="status"
@@ -91,21 +97,15 @@ const StatusChange = ({
                 </Select>
               </Box>
               <Box>
-                {selectedOption === "ACTIVE" ? (
-                  <FormLabel htmlFor="childrenservicesworker">
-                    CHILDREN SERVICES OR KINSHIP WORKER
-                  </FormLabel>
-                ) : (
-                  <FormLabel
-                    htmlFor="childrenservicesworker"
-                    fontWeight="light"
-                    color="lightgray"
-                  >
-                    CHILDREN SERVICES OR KINSHIP WORKER
-                  </FormLabel>
-                )}
+                <FormLabel
+                  htmlFor="childrenServicesWorker"
+                  fontWeight={selectedOption === "ACTIVE" ? "" : "light"}
+                  color={selectedOption === "ACTIVE" ? "" : "lightgray"}
+                >
+                  CHILDREN SERVICES OR KINSHIP WORKER
+                </FormLabel>
                 <CustomInput
-                  id="childrenservicesworker"
+                  id="childrenServicesWorker"
                   type="string"
                   placeholder={
                     selectedOption === "ACTIVE" ? "Enter worker name" : ""
@@ -119,11 +119,11 @@ const StatusChange = ({
               </Box>
             </SimpleGrid>
             <Box marginTop="0.75rem">
-              <FormLabel htmlFor="meetingnotes">
+              <FormLabel htmlFor="meetingNotes">
                 MEETING NOTES <OptionalLabel />
               </FormLabel>
               <CustomInput
-                id="meetingnotes"
+                id="meetingNotes"
                 type="string"
                 placeholder="Note any additional information in regards to this case."
                 height="10rem"
@@ -134,19 +134,6 @@ const StatusChange = ({
                 }}
               />
             </Box>
-            {selectedOption === "ARCHIVED" ? (
-              <Button
-                variant="primary"
-                backgroundColor="red"
-                position="absolute"
-                bottom={9}
-              >
-                Delete
-              </Button>
-            ) : (
-              ""
-            )}
-            {/* save button is part of ModalComponent so don't know how to make delete button aligned */}
           </Box>
         }
         disabled={selectedOption === "" || workerName === ""}
@@ -162,4 +149,4 @@ const StatusChange = ({
   );
 };
 
-export default StatusChange;
+export default StatusChangeModal;

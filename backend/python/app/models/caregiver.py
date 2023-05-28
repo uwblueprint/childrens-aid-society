@@ -14,7 +14,7 @@ class Caregiver(db.Model, BaseMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    date_of_birth = db.Column(db.Date, nullable=False)
+    date_of_birth = db.Column(db.String, nullable=False)
     individual_considerations = db.Column(db.String, nullable=True)
     primary_phone_number = db.Column(db.String, nullable=False)
     secondary_phone_number = db.Column(db.String, nullable=True)

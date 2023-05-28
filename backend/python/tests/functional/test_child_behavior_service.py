@@ -50,8 +50,6 @@ DUMMY_CHILD = {
     "service_worker": "Test Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
-    "has_kinship_provider": True,
-    "has_foster_placement": False,
 }
 
 DUMMY_CHILD_BEHAVIOR = [

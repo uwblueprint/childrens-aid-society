@@ -18,8 +18,8 @@ class Child(db.Model, BaseMixin):
     )
     special_needs = db.Column(db.String, nullable=False)
     # has_kinship_provider and has_foster_placement should be mutually exclusive
-    has_kinship_provider = db.Column(db.Boolean, nullable=False)
-    has_foster_placement = db.Column(db.Boolean, nullable=False)
+    has_kinship_provider = db.Column(db.Boolean, nullable=True)
+    has_foster_placement = db.Column(db.Boolean, nullable=True)
     intake = db.relationship("Intake")
     daytime_contact = db.relationship("DaytimeContact")
     behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)

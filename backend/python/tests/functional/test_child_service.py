@@ -51,8 +51,6 @@ DUMMY_CHILD_DATA = {
     "service_worker": "Test Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
-    "has_foster_placement": True,
-    "has_kinship_provider": False,
 }
 
 
@@ -111,8 +109,6 @@ def test_add_new_child_valid(child_service):
         service_worker="Service Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     child_instance = child_service.add_new_child(param)
     param.id = child_instance.id
@@ -127,8 +123,6 @@ def test_nullable_false_case(child_service):
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     child_instance = child_service.add_new_child(param)
     param.id = child_instance.id
@@ -148,8 +142,6 @@ def test_empty_input_string(child_service):
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)
@@ -161,8 +153,6 @@ def test_missing_field(child_service):
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)

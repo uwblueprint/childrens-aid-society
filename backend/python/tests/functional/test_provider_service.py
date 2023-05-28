@@ -32,8 +32,6 @@ DEFAULT_CHILD = {
     "service_worker": "Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
-    "has_kinship_provider": True,
-    "has_foster_placement": False,
 }
 
 DEFAULT_PROVIDER = {

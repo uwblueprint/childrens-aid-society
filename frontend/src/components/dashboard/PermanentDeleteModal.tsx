@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import ModalComponent from "../common/ModalComponent";
-import CustomInput, { CustomInputProps } from "../common/CustomInput";
+import CustomInput from "../common/CustomInput";
 
 type SubmitCaseProps = {
   isOpen: boolean;

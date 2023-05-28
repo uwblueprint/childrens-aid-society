@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import ModalComponent from "../common/ModalComponent";
+import CustomInput from "../common/CustomInput";
 
 type SubmitCaseProps = {
   isOpen: boolean;
@@ -18,12 +19,26 @@ const PermanentDeleteModal = ({
       <ModalComponent
         primaryTitle="Delete Archived Case"
         secondaryTitle="Attention"
+        color="red.600"
+        mainButtonType="warning"
         modalContent={
-          <Text>
-            Once this case is deleted, it will be permanently erased and this
-            action is irreversible. Please confirm that you want to delete this
-            case by typing “Confirm Deletion” in the text box below.
-          </Text>
+          <Box>
+            <Box pb={5}>
+              <Text textStyle="label">WARNING: </Text>
+              Once this case is deleted, it will be permanently erased and this
+              action is irreversible.
+            </Box>
+            <Box pb={3}>
+              Please confirm that you want to delete this case by typing
+              “Confirm Deletion” in the text box below.
+            </Box>
+            <CustomInput
+              id="confirmDeletion"
+              name="confirmDeletion"
+              type="string"
+              placeholder="confirmDeletion"
+            />
+          </Box>
         }
         onClick={() => {
           onClick();

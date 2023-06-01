@@ -2,8 +2,7 @@ import sys
 
 from flask_sqlalchemy import SQLAlchemy
 
-from app import create_app
-from app import app_config
+from app import app_config, create_app
 
 db = SQLAlchemy()
 

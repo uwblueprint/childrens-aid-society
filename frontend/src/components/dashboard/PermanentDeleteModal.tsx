@@ -16,21 +16,24 @@ const PermanentDeleteModal = ({
 }: SubmitCaseProps): React.ReactElement => {
   const [confirmationInput, setConfirmationInput] = useState("");
 
+  const deleteConfirmatonText = "Confirm Deletion";
+
   const handleConfirmationInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setConfirmationInput(event.target.value);
   };
 
-  const isConfirmationValid = confirmationInput.trim() === "Confirm Deletion";
+  const isConfirmationValid =
+    confirmationInput.trim() === deleteConfirmatonText;
 
   return (
     <Box>
       <ModalComponent
         primaryTitle="Delete Archived Case"
         secondaryTitle="Attention"
-        color="red.600"
-        mainButtonType="warning"
+        titleColor="red.600"
+        mainButtonVariant="warning"
         modalContent={
           <Box>
             <Box pb={5}>
@@ -39,8 +42,8 @@ const PermanentDeleteModal = ({
               action is irreversible.
             </Box>
             <Box pb={3}>
-              Please confirm that you want to delete this case by typing
-              “Confirm Deletion” in the text box below.
+              Please confirm that you want to delete this case by typing “
+              {deleteConfirmatonText}” in the text box below.
             </Box>
             <CustomInput
               id="confirmDeletion"
@@ -52,12 +55,7 @@ const PermanentDeleteModal = ({
             />
           </Box>
         }
-        onClick={() => {
-          if (isConfirmationValid) {
-            onClick();
-            onClose();
-          }
-        }}
+        onClick={() => {}}
         isOpen={isOpen}
         onClose={onClose}
         disabled={!isConfirmationValid}

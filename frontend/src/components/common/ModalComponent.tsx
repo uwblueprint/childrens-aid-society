@@ -22,8 +22,8 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   unsavedProgressModal?: boolean;
-  color?: string;
-  mainButtonType?: string;
+  titleColor?: string;
+  mainButtonVariant?: string;
 };
 
 const ModalComponent = ({
@@ -36,8 +36,8 @@ const ModalComponent = ({
   isOpen,
   onClose,
   unsavedProgressModal,
-  color,
-  mainButtonType,
+  titleColor,
+  mainButtonVariant,
 }: ModalProps): React.ReactElement => (
   <Modal
     isCentered
@@ -49,10 +49,10 @@ const ModalComponent = ({
     <ModalOverlay />
     <ModalContent padding="32px">
       <ModalHeader>
-        <Text textStyle="label" color={color}>
+        <Text textStyle="label" color={titleColor}>
           {secondaryTitle.toUpperCase()}
         </Text>
-        <Text paddingBottom="12px" textStyle="header-medium" color={color}>
+        <Text paddingBottom="12px" textStyle="header-medium" color={titleColor}>
           {primaryTitle}
         </Text>
         <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
@@ -70,7 +70,7 @@ const ModalComponent = ({
           </Button>
           {unsavedProgressModal && <Spacer />}
           <Button
-            variant={mainButtonType}
+            variant={mainButtonVariant}
             disabled={disabled}
             onClick={onClick}
           >

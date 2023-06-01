@@ -20,7 +20,11 @@ const SecondaryHeader = (): React.ReactElement => {
     history.push("/intake");
   }
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    onOpen: onOpenPermanentDelete,
+    isOpen: isOpenPermanentDelete,
+    onClose: onClosePermanentDelete,
+  } = useDisclosure();
   return (
     <Box>
       <Heading textStyle="display-medium">Intake Cases</Heading>
@@ -44,21 +48,21 @@ const SecondaryHeader = (): React.ReactElement => {
           New case
         </Button>
 
-        {/* //Remove this later - just for testing modal */}
+        {/* //TODO: Remove this later - just for testing modal */}
         <Button
           height="100%"
           px="2"
           rounded="lg"
           border="1px"
-          onClick={onOpen}
-          // leftIcon={<Icon as={FilePlus} />}
+          onClick={onOpenPermanentDelete}
         >
           Permanently Delete
         </Button>
+        {/* //TODO: Remove when modal properly implemented */}
         <PermanentDeleteModal
-          isOpen={isOpen}
+          isOpen={isOpenPermanentDelete}
           onClick={() => {}}
-          onClose={onClose}
+          onClose={onClosePermanentDelete}
         />
       </Flex>
     </Box>

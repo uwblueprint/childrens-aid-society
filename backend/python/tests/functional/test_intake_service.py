@@ -30,7 +30,7 @@ DEFAULT_INTAKE = {
     "user_id": 1,
     "referring_worker_name": "Jane Doe",
     "referring_worker_contact": "1234567890",
-    "referral_date": datetime.date(2020, 1, 1),
+    "referral_date": "2020-01-01",
     "family_name": "Doe",
     "cpin_number": "1234567890",
     "cpin_file_type": "INVESTIGATION",
@@ -38,7 +38,7 @@ DEFAULT_INTAKE = {
     "court_order_file": "1234567890",
     "transportation_requirements": "1234567890",
     "scheduling_requirements": "1234567890",
-    "suggested_start_date": datetime.date(2020, 1, 1),
+    "suggested_start_date": "2020-01-01",
 }
 
 
@@ -64,10 +64,10 @@ def test_create_intake_valid(intake_service):
     param = CreateIntakeDTO(
         id=2,
         user_id=1,
-        intake_status="IN_PROGRESS",
+        intake_status="SUBMITTED",
         referring_worker_name="Jane Doe",
         referring_worker_contact="1234567890",
-        referral_date=datetime.date(2020, 1, 1),
+        referral_date="2020-01-01",
         family_name="Doe",
         cpin_number="1234567890",
         cpin_file_type="INVESTIGATION",
@@ -75,7 +75,7 @@ def test_create_intake_valid(intake_service):
         court_order_file="1234567890",
         transportation_requirements="1234567890",
         scheduling_requirements="1234567890",
-        suggested_start_date=datetime.date(2020, 1, 1),
+        suggested_start_date="2020-01-01",
     )
 
     intake_instance = intake_service.create_intake(param)
@@ -103,7 +103,7 @@ def test_empty_input_string(intake_service):
         court_order_file="1234567890",
         transportation_requirements="1234567890",
         scheduling_requirements="1234567890",
-        suggested_start_date=datetime.date(2020, 1, 1),
+        suggested_start_date="2020-01-01",
     )
     with pytest.raises(Exception):
         intake_service.create_intake(param)

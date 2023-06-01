@@ -62,3 +62,12 @@ class GoalService(IGoalService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
+
+    def delete_goal(self, goal_id):
+        try:
+            goal = Goal.query.filter_by(id=goal_id).first()
+            db.session.delete(goal)
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            raise error

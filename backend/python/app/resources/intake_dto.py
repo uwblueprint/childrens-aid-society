@@ -17,9 +17,7 @@ class IntakeDTO:
         self.scheduling_requirements = kwargs.get("scheduling_requirements")
         self.suggested_start_date = kwargs.get("suggested_start_date")
         self.date_accepted = kwargs.get("date_accepted")
-        self.access_weekday = kwargs.get("access_weekday")
         self.access_location = kwargs.get("access_location")
-        self.access_time = kwargs.get("access_time")
         self.lead_access_worker_id = kwargs.get("lead_access_worker_id")
         self.denial_reason = kwargs.get("denial_reason")
 
@@ -77,12 +75,8 @@ class CreateIntakeDTO(IntakeDTO):
             error_list.append("first_nation_band is invalid")
         if self.date_accepted and not isinstance(self.date_accepted, str):
             error_list.append("date_accepted is invalid")
-        if self.access_weekday and not isinstance(self.access_weekday, list):
-            error_list.append("access_weekday is invalid")
         if self.access_location and not isinstance(self.access_location, str):
             error_list.append("access_location is invalid")
-        if self.access_time and not isinstance(self.access_time, str):
-            error_list.append("access_time is invalid")
         if self.lead_access_worker_id and not isinstance(
             self.lead_access_worker_id, int
         ):

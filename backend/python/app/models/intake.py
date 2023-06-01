@@ -39,17 +39,6 @@ first_nation_heritage_enum = db.Enum(
     name="intakes_first_nation_heritage",
 )
 
-intakes_access_weekday_enum = db.Enum(
-    "MONDAY",
-    "TUESDAY",
-    "WEDNESDAY",
-    "THURSDAY",
-    "FRIDAY",
-    "SATURDAY",
-    "SUNDAY",
-    name="intakes_access_weekday",
-)
-
 
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
@@ -71,9 +60,7 @@ class Intake(db.Model, BaseMixin):
     scheduling_requirements = db.Column(db.String, nullable=False)
     suggested_start_date = db.Column(db.String, nullable=False)
     date_accepted = db.Column(db.String, nullable=True)
-    access_weekday = db.Column(pg.ARRAY(intakes_access_weekday_enum), nullable=True)
     access_location = db.Column(db.String, nullable=True)
-    access_time = db.Column(db.Time, nullable=True)
     lead_access_worker_id = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )

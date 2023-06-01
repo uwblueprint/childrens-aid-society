@@ -1,7 +1,7 @@
 """remove kinship and foster placement from child
 
 Revision ID: 58c30491ece7
-Revises: 5142d62fc44e
+Revises: bb23310db98a
 Create Date: 2023-05-28 15:38:54.595947
 
 """
@@ -10,7 +10,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "58c30491ece7"
-down_revision = "5142d62fc44e"
+down_revision = "bb23310db98a"
 branch_labels = None
 depends_on = None
 

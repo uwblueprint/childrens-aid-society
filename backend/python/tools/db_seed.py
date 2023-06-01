@@ -1,11 +1,9 @@
-import datetime
 import sys
 
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-
-from ..app.config import Config
+from app import app_config
 
 db = SQLAlchemy()
 
@@ -66,7 +64,7 @@ def insert_test_data():
     ]
 
     for value in values:
-        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_weekday", "access_location", "access_time", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason"), value)
 
     # Daytime Contact
     values = [
@@ -81,10 +79,10 @@ def insert_test_data():
 
     # Child
     values = [
-        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs', True, False),
-        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs', True, False),
-        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs', False, True),
-        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs', False, True),
+        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
+        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
+        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
+        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
     ]
 
     for value in values:

@@ -1,5 +1,3 @@
-import datetime
-
 import pytest
 from flask import current_app
 

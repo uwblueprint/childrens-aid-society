@@ -51,7 +51,7 @@ def get_all_intakes():
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
-@validate_request("CreateIntakeDTO")
+# @validate_request("CreateIntakeDTO")
 def create_intake():
     undos = []
 
@@ -67,7 +67,7 @@ def create_intake():
     # intake
     intake = {
         "user_id": request.json["userId"],
-        "intake_status": "IN_PROGRESS",
+        "intake_status": "ACCEPTED",
         "referring_worker_name": request.json["caseReferral"]["referringWorker"],
         "referring_worker_contact": request.json["caseReferral"][
             "referringWorkerContact"
@@ -89,12 +89,10 @@ def create_intake():
             "schedulingRequirements"
         ],
         "suggested_start_date": request.json["programDetails"]["suggestedStartDate"],
-        "date_accepted": "",
-        "access_weekday": "",
-        "access_location": "",
-        "access_time": "",
-        "lead_access_worker_id": "",
-        "denial_reason": "",
+        "date_accepted": None,
+        "access_location": None,
+        "lead_access_worker_id": None,
+        "denial_reason": None,
     }
 
     try:
@@ -284,7 +282,7 @@ def create_intake():
                 "is_default": False,
             }
             try:
-                childBehavior_response = childBehavior_service.add_familial_concern(
+                childBehavior_response = childBehavior_service.add_child_behavior(
                     **childBehavior
                 )
                 undos.append(

@@ -1,6 +1,3 @@
-import datetime
-
-
 class ChildDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")

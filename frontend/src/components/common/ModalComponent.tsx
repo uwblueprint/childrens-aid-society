@@ -18,7 +18,7 @@ export type ModalProps = {
   modalContent: React.ReactElement;
   disabled: boolean;
   primaryButtonTitle: string;
-  onClick: () => void;
+  onClick?: () => void;
   isOpen: boolean;
   onClose: () => void;
   unsavedProgressModal?: boolean;

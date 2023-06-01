@@ -64,7 +64,7 @@ def test_create_intake_valid(intake_service):
     param = CreateIntakeDTO(
         id=2,
         user_id=1,
-        intake_status="IN_PROGRESS",
+        intake_status="SUBMITTED",
         referring_worker_name="Jane Doe",
         referring_worker_contact="1234567890",
         referral_date="2020-01-01",

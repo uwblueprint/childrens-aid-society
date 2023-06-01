@@ -6,10 +6,10 @@ from .intakes_concerns import intakes_concerns
 from .intakes_goals import intakes_goals
 
 intake_status_enum = db.Enum(
-    "IN_PROGRESS",
-    "IN_REVIEW",
-    "ACCEPTED",
-    "DENIED",
+    "SUBMITTED",
+    "PENDING",
+    "ACTIVE",
+    "ARCHIVED",
     name="intake_status",
 )
 
@@ -45,7 +45,7 @@ class Intake(db.Model, BaseMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    intake_status = db.Column(intake_status_enum, nullable=True, default="IN_PROGRESS")
+    intake_status = db.Column(intake_status_enum, nullable=True, default="SUBMITTED")
     referring_worker_name = db.Column(db.String, nullable=False)
     referring_worker_contact = db.Column(db.String, nullable=False)
     referral_date = db.Column(db.String, nullable=False)

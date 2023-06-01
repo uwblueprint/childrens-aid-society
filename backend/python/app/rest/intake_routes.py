@@ -51,7 +51,6 @@ def get_all_intakes():
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
-# @validate_request("CreateIntakeDTO")
 def create_intake():
     undos = []
 
@@ -67,7 +66,7 @@ def create_intake():
     # intake
     intake = {
         "user_id": request.json["userId"],
-        "intake_status": "ACCEPTED",
+        "intake_status": "SUBMITTED",
         "referring_worker_name": request.json["caseReferral"]["referringWorker"],
         "referring_worker_contact": request.json["caseReferral"][
             "referringWorkerContact"
@@ -96,10 +95,12 @@ def create_intake():
     }
 
     try:
+        validate_request("CreateIntakeDTO")
         intake = CreateIntakeDTO(**intake)
         new_intake = intake_service.create_intake(intake)
         undos.append((intake_service, "delete_intake", new_intake.id))
     except Exception as error:
+        print("invalid")
         run_undos()
         return jsonify(str(error)), 400
 

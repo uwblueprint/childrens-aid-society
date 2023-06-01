@@ -11,7 +11,6 @@ type SubmitCaseProps = {
 
 const PermanentDeleteModal = ({
   isOpen,
-  onClick,
   onClose,
 }: SubmitCaseProps): React.ReactElement => {
   const [confirmationInput, setConfirmationInput] = useState("");

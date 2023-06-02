@@ -24,7 +24,7 @@ DUMMY_INTAKE_DATA = {
     "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
-    "referral_date": datetime.date(2020, 1, 1),
+    "referral_date": "2020-01-01",
     "family_name": "Doe",
     "cpin_number": "123456789",
     "cpin_file_type": "ONGOING",
@@ -32,7 +32,7 @@ DUMMY_INTAKE_DATA = {
     "court_order_file": "court_order.pdf",
     "transportation_requirements": "car",
     "scheduling_requirements": "flexible",
-    "suggested_start_date": datetime.date(2020, 1, 1),
+    "suggested_start_date": "2020-01-01",
 }
 
 DUMMY_DAYTIME_CONTACT_DATA = {
@@ -46,13 +46,11 @@ DUMMY_CHILD_DATA = {
     "intake_id": 1,
     "first_name": "Test",
     "last_name": "Child",
-    "date_of_birth": datetime.date(2020, 5, 17),
+    "date_of_birth": "2020-05-17",
     "cpin_number": "1",
-    "child_service_worker_id": 1,
+    "service_worker": "Test Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",
-    "has_foster_placement": True,
-    "has_kinship_provider": False,
 }
 
 
@@ -106,13 +104,11 @@ def test_add_new_child_valid(child_service):
         intake_id=1,
         first_name="Test",
         last_name="Child",
-        date_of_birth=datetime.date(2020, 5, 17),
+        date_of_birth="2020-05-17",
         cpin_number="1",
-        child_service_worker_id=1,
+        service_worker="Service Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     child_instance = child_service.add_new_child(param)
     param.id = child_instance.id
@@ -124,11 +120,9 @@ def test_nullable_false_case(child_service):
     param = CreateChildDTO(
         first_name="Test",
         last_name="Child",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     child_instance = child_service.add_new_child(param)
     param.id = child_instance.id
@@ -145,11 +139,9 @@ def test_empty_input_string(child_service):
     param = CreateChildDTO(
         first_name="Test",
         last_name="",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)
@@ -158,11 +150,9 @@ def test_empty_input_string(child_service):
 def test_missing_field(child_service):
     param = CreateChildDTO(
         last_name="Child",
-        child_service_worker_id=1,
+        service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
-        has_foster_placement=True,
-        has_kinship_provider=False,
     )
     with pytest.raises(Exception):
         child_service.add_new_child(param)

@@ -8,7 +8,7 @@ import {
   Spacer,
   VStack,
 } from "@chakra-ui/react";
-import { FilePlus, Search, ArrowRight } from "react-feather";
+import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseTypes";

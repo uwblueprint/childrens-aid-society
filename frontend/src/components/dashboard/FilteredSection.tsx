@@ -8,7 +8,6 @@ import {
   Spacer,
   Text,
   Center,
-  VStack,
 } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
 

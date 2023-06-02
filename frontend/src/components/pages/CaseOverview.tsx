@@ -35,6 +35,8 @@ const SecondaryHeader = (): React.ReactElement => {
         <Flex direction="row" justifyContent="space-between" gap="10">
           <Flex direction="column" flex="1">
             <Flex pt="50">
+              <p>hi</p>
+              hellow
               <h1 style={{ fontSize: "20px", fontWeight: "bold" }}>Children</h1>
             </Flex>
 

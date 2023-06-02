@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,7 +7,7 @@ import {
   useToast,
   ButtonGroup,
 } from "@chakra-ui/react";
-import { Archive, FileText } from "react-feather";
+import { FileText } from "react-feather";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
 
@@ -28,17 +27,15 @@ export type CaseOverviewFooterProps = {
 
 const CaseOverviewFooter = ({
   nextButtonRef,
-  showClearPageBtn,
+  // showClearPageBtn,
   isStepComplete,
   registrationLoading,
   nextStepCallBack,
-  clearFields,
 }: CaseOverviewFooterProps): React.ReactElement => {
   const toast = useToast();
-  const history = useHistory();
 
   const {
-    onOpen: onOpenSubmitCase,
+    // onOpen: onOpenSubmitCase,
     isOpen: isOpenSubmitCase,
     onClose: onCloseSubmitCase,
   } = useDisclosure();

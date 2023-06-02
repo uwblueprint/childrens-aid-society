@@ -69,7 +69,12 @@ const App = (): React.ReactElement => {
                 <Route exact path={Routes.VISIT_PAGE} component={Visit} />
                 <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
                 <Route exact path={Routes.TEMPLATE_PAGE} component={Template} />
-                <Route exact path={Routes.CASEOVERVIEW_PAGE} component={CaseOverview} />
+                <Route
+                  exact
+                  path={Routes.CASEOVERVIEW_PAGE}
+                  component={CaseOverview}
+                />
+
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </Router>

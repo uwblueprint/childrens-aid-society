@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Button, Flex, Input, IconButton } from "@chakra-ui/react";
-import { ArrowLeft, UserPlus, Archive, FileText } from "react-feather";
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import { ArrowLeft, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../intake/CaseOverviewFooter";
 

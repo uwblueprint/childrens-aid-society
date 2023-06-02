@@ -8,6 +8,7 @@ import {
   Spacer,
   VStack,
 } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
@@ -15,6 +16,10 @@ import CaseStatus from "../../types/CaseTypes";
 import FilteredSection from "../dashboard/FilteredSection";
 
 const SecondaryHeader = (): React.ReactElement => {
+  const history = useHistory();
+  function goToIntake() {
+    history.push("/intake");
+  }
   return (
     <Box>
       <Heading textStyle="display-medium">Intake Cases</Heading>
@@ -32,9 +37,7 @@ const SecondaryHeader = (): React.ReactElement => {
           px="2"
           rounded="lg"
           border="1px"
-          onClick={
-            () => {} // TODO: FINISH THIS CALLBACK
-          }
+          onClick={goToIntake}
           leftIcon={<Icon as={FilePlus} />}
         >
           New case

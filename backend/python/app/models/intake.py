@@ -6,10 +6,10 @@ from .intakes_concerns import intakes_concerns
 from .intakes_goals import intakes_goals
 
 intake_status_enum = db.Enum(
-    "IN_PROGRESS",
-    "IN_REVIEW",
-    "ACCEPTED",
-    "DENIED",
+    "SUBMITTED",
+    "PENDING",
+    "ACTIVE",
+    "ARCHIVED",
     name="intake_status",
 )
 
@@ -39,27 +39,16 @@ first_nation_heritage_enum = db.Enum(
     name="intakes_first_nation_heritage",
 )
 
-intakes_access_weekday_enum = db.Enum(
-    "MONDAY",
-    "TUESDAY",
-    "WEDNESDAY",
-    "THURSDAY",
-    "FRIDAY",
-    "SATURDAY",
-    "SUNDAY",
-    name="intakes_access_weekday",
-)
-
 
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    intake_status = db.Column(intake_status_enum, nullable=True, default="IN_PROGRESS")
+    intake_status = db.Column(intake_status_enum, nullable=True, default="SUBMITTED")
     referring_worker_name = db.Column(db.String, nullable=False)
     referring_worker_contact = db.Column(db.String, nullable=False)
-    referral_date = db.Column(db.Date, nullable=False)
+    referral_date = db.Column(db.String, nullable=False)
     family_name = db.Column(db.String, nullable=False)
     cpin_number = db.Column(db.String, nullable=False)
     cpin_file_type = db.Column(cpin_file_type_enum, nullable=False)
@@ -69,11 +58,9 @@ class Intake(db.Model, BaseMixin):
     first_nation_band = db.Column(db.String, nullable=True)
     transportation_requirements = db.Column(db.String, nullable=False)
     scheduling_requirements = db.Column(db.String, nullable=False)
-    suggested_start_date = db.Column(db.Date, nullable=False)
-    date_accepted = db.Column(db.Date, nullable=True)
-    access_weekday = db.Column(pg.ARRAY(intakes_access_weekday_enum), nullable=True)
+    suggested_start_date = db.Column(db.String, nullable=False)
+    date_accepted = db.Column(db.String, nullable=True)
     access_location = db.Column(db.String, nullable=True)
-    access_time = db.Column(db.Time, nullable=True)
     lead_access_worker_id = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )

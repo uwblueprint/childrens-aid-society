@@ -75,7 +75,7 @@ const Button: ComponentStyleConfig = {
       _hover: {
         background: "red.600",
         boxShadow:
-          "0px 0px 32px rgba(255, 0, 0, 0.1), 0px 0px 32px rgba(102, 0, 0, 0.2)",
+          "0px 0px 16px rgba(255, 0, 0, 0.1), 0px 0px 16px rgba(102, 0, 0, 0.2)",
       },
     },
   },

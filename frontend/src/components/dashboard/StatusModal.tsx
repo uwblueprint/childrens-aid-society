@@ -40,8 +40,9 @@ const StatusChangeModal = ({
       <ModalComponent
         primaryTitle={`Case ${caseNumber}`}
         secondaryTitle=""
-        leftButtonTitle={selectedOption === "ARCHIVED" ? "Delete" : ""}
-        leftButtonVariant={selectedOption === "ARCHIVED" ? "delete" : ""}
+        showLeftButton={selectedOption === "ARCHIVED"}
+        leftButtonTitle="Delete"
+        leftButtonVariant="delete"
         onLeftButtonClick={() => {} /* TODO: delete button onClick */}
         modalContent={
           <Box>

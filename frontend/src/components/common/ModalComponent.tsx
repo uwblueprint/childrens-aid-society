@@ -22,6 +22,7 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   unsavedProgressModal?: boolean;
+  showLeftButton?: boolean;
   leftButtonTitle?: string;
   leftButtonVariant?: string;
   onLeftButtonClick?: () => void;
@@ -37,6 +38,7 @@ const ModalComponent = ({
   isOpen,
   onClose,
   unsavedProgressModal,
+  showLeftButton,
   leftButtonTitle,
   leftButtonVariant,
   onLeftButtonClick,
@@ -65,15 +67,13 @@ const ModalComponent = ({
           paddingLeft="0px"
           paddingRight="0px"
         >
-          {leftButtonTitle && leftButtonVariant ? (
+          {showLeftButton && (
             <>
               <Button variant={leftButtonVariant} onClick={onLeftButtonClick}>
                 {leftButtonTitle}
               </Button>
               <Spacer />
             </>
-          ) : (
-            ""
           )}
           <Button variant="tertiary" onClick={onClose}>
             Cancel

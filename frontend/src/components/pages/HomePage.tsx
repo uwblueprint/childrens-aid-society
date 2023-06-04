@@ -12,6 +12,7 @@ import {
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
+import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 
 const SecondaryHeader = (): React.ReactElement => {
@@ -35,6 +36,7 @@ const SecondaryHeader = (): React.ReactElement => {
             icon={<Icon as={Search} />}
           />
         </Box>
+        <StatusModal caseNumber={1} status="ARCHIVED" />
 
         <Spacer />
         <Button

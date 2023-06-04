@@ -45,6 +45,12 @@ const SchoolDaycareForm = ({
                 type="string"
                 placeholder="Enter name of school or daycare"
                 icon={<Icon as={Home} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolName: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -58,6 +64,12 @@ const SchoolDaycareForm = ({
                 type="string"
                 placeholder="e.g. 555-555-5555"
                 icon={<Icon as={Phone} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolPhoneNo: e.target.value,
+                  })
+                }
               />
             </Box>
           </SimpleGrid>
@@ -70,6 +82,12 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter address of school or daycare"
               icon={<Icon as={Navigation} />}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  schoolAddress: e.target.value,
+                })
+              }
             />
           </Box>
           <Box paddingTop="10px">
@@ -83,12 +101,16 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter dismissal time of school or daycare"
               icon={<Icon as={Clock} />}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  dismissalTime: e.target.value,
+                })
+              }
             />
           </Box>
         </FormControl>
       </Form>
-
-      {/* TODO: trigger on submit when save child information button is clicked */}
     </Formik>
   );
 };

@@ -1,16 +1,31 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Flex, Heading, Icon, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Icon,
+  Spacer,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import StatusModal from "../dashboard/StatusModal";
+import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
   function goToIntake() {
     history.push("/intake");
   }
+
+  const {
+    onOpen: onOpenPermanentDelete,
+    isOpen: isOpenPermanentDelete,
+    onClose: onClosePermanentDelete,
+  } = useDisclosure();
   return (
     <Box>
       <Heading textStyle="display-medium">Intake Cases</Heading>
@@ -34,6 +49,23 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
+
+        {/* //TODO: Remove this later - just for testing modal */}
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={onOpenPermanentDelete}
+        >
+          Permanently Delete
+        </Button>
+        {/* //TODO: Remove when modal properly implemented */}
+        <PermanentDeleteModal
+          isOpen={isOpenPermanentDelete}
+          onClick={() => {}}
+          onClose={onClosePermanentDelete}
+        />
       </Flex>
     </Box>
   );

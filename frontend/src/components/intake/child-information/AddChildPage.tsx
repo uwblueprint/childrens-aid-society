@@ -72,6 +72,7 @@ const AddChild = ({
         providers: [...providers],
       },
     ]);
+    setStep(IntakeSteps.INDIVIDUAL_DETAILS);
   };
 
   const renderChildForm = () => {
@@ -103,6 +104,10 @@ const AddChild = ({
         return <Text>Error</Text>;
     }
   };
+
+  // REMOVE THIS ONCE YOU CALL CHILDRENS
+  // eslint-disable-next-line no-console
+  console.log(childrens);
 
   return (
     <>
@@ -149,6 +154,7 @@ const AddChild = ({
         <Button
           type="submit"
           mr="96px"
+          // remove when error checking is implemented
           disabled={requiredInfomationMissing}
           onClick={childFormSubmitHandler}
         >

@@ -78,6 +78,25 @@ const Button: ComponentStyleConfig = {
           "0px 0px 16px rgba(255, 0, 0, 0.1), 0px 0px 16px rgba(102, 0, 0, 0.2)",
       },
     },
+    warning: {
+      background: "red.500",
+      boxShadow:
+        "inset 0px 0px 18px rgba(143, 167, 255, 0.15), inset 0px 0px 32px rgba(53, 87, 188, 0.5)",
+      _hover: {
+        background: "red.600",
+        boxShadow:
+          "0px 0px 32px rgba(143, 167, 255, 0.1), 0px 0px 16px rgba(0, 40, 125, 0.2)",
+      },
+      _active: {
+        background: "red.500",
+        boxShadow:
+          "0px 0px 32px rgba(143, 167, 255, 0.1), 0px 0px 16px rgba(0, 40, 125, 0.2), inset 0px 0px 32px rgba(220, 225, 255, 0.5)",
+      },
+      _disabled: {
+        opacity: "0.5",
+        pointerEvents: "none",
+      },
+    },
   },
   defaultProps: {
     variant: "primary",

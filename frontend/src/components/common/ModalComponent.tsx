@@ -26,6 +26,8 @@ export type ModalProps = {
   leftButtonTitle?: string;
   leftButtonVariant?: string;
   onLeftButtonClick?: () => void;
+  titleColor?: string;
+  mainButtonVariant?: string;
 };
 
 const ModalComponent = ({
@@ -42,6 +44,8 @@ const ModalComponent = ({
   leftButtonTitle,
   leftButtonVariant,
   onLeftButtonClick,
+  titleColor,
+  mainButtonVariant,
 }: ModalProps): React.ReactElement => (
   <Modal
     isCentered
@@ -53,8 +57,10 @@ const ModalComponent = ({
     <ModalOverlay />
     <ModalContent padding="32px">
       <ModalHeader>
-        <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
-        <Text paddingBottom="12px" textStyle="header-medium">
+        <Text textStyle="label" color={titleColor}>
+          {secondaryTitle.toUpperCase()}
+        </Text>
+        <Text paddingBottom="12px" textStyle="header-medium" color={titleColor}>
           {primaryTitle}
         </Text>
         <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
@@ -79,7 +85,11 @@ const ModalComponent = ({
             Cancel
           </Button>
           {unsavedProgressModal && <Spacer />}
-          <Button variant="primary" disabled={disabled} onClick={onClick}>
+          <Button
+            variant={mainButtonVariant}
+            disabled={disabled}
+            onClick={onClick}
+          >
             {primaryButtonTitle}
           </Button>
         </ModalFooter>

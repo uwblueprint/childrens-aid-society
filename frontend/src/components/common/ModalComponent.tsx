@@ -28,6 +28,7 @@ export type ModalProps = {
   onLeftButtonClick?: () => void;
   titleColor?: string;
   mainButtonVariant?: string;
+  showModalCloseButton?: boolean;
 };
 
 const ModalComponent = ({
@@ -46,6 +47,7 @@ const ModalComponent = ({
   onLeftButtonClick,
   titleColor,
   mainButtonVariant,
+  showModalCloseButton=true,
 }: ModalProps): React.ReactElement => (
   <Modal
     isCentered
@@ -63,7 +65,7 @@ const ModalComponent = ({
         <Text paddingBottom="12px" textStyle="header-medium" color={titleColor}>
           {primaryTitle}
         </Text>
-        <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
+        {showModalCloseButton && <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />}
       </ModalHeader>
       <ModalBody>
         {modalContent}

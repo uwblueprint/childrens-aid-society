@@ -87,6 +87,7 @@ const SecondaryHeader = (): React.ReactElement => {
           onClick={() => {}}
           onClose={onCloseStatusModal}
           onDeleteClick={onOpenPermanentDelete}
+          goToIntake={goToIntake}
         />
       </Flex>
     </Box>

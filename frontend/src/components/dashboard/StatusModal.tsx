@@ -24,6 +24,7 @@ export type StatusModalProps = {
   onClick: () => void;
   onClose: () => void;
   onDeleteClick: () => void;
+  goToIntake: () => void;
 };
 
 const StatusModal = ({
@@ -33,6 +34,7 @@ const StatusModal = ({
   onClose,
   onClick,
   onDeleteClick,
+  goToIntake,
 }: StatusModalProps): React.ReactElement => {
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
@@ -79,6 +81,7 @@ const StatusModal = ({
                   border="1px solid"
                   paddingLeft="6"
                   paddingRight="6"
+                  onClick={goToIntake}
                 >
                   Review
                 </Button>

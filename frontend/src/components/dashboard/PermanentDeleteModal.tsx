@@ -3,7 +3,7 @@ import { Box, Text } from "@chakra-ui/react";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 
-type SubmitCaseProps = {
+type PermanentDeleteModalProps = {
   isOpen: boolean;
   onClick: () => void;
   onClose: () => void;
@@ -13,7 +13,7 @@ const PermanentDeleteModal = ({
   isOpen,
   onClose,
   onClick,
-}: SubmitCaseProps): React.ReactElement => {
+}: PermanentDeleteModalProps): React.ReactElement => {
   const [confirmationInput, setConfirmationInput] = useState("");
 
   const deleteConfirmatonText = "Confirm Deletion";

@@ -4,9 +4,9 @@ import {
   Box,
   Button,
   Flex,
-  Heading,
   Icon,
   Spacer,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FilePlus, Search } from "react-feather";
@@ -26,9 +26,16 @@ const SecondaryHeader = (): React.ReactElement => {
     isOpen: isOpenPermanentDelete,
     onClose: onClosePermanentDelete,
   } = useDisclosure();
+
+  const {
+    onOpen: onOpenStatusModal,
+    isOpen: isOpenStatusModal,
+    onClose: onCloseStatusModal,
+  } = useDisclosure();
+
   return (
     <Box>
-      <Heading textStyle="display-medium">Intake Cases</Heading>
+      <Text textStyle="header-large">Intake Cases</Text>
       <Flex pt="10">
         <Box w="20%">
           <CustomInput
@@ -36,8 +43,6 @@ const SecondaryHeader = (): React.ReactElement => {
             icon={<Icon as={Search} />}
           />
         </Box>
-        <StatusModal caseNumber={1} status="ARCHIVED" />
-
         <Spacer />
         <Button
           height="100%"
@@ -50,21 +55,34 @@ const SecondaryHeader = (): React.ReactElement => {
           New case
         </Button>
 
-        {/* //TODO: Remove this later - just for testing modal */}
         <Button
           height="100%"
           px="2"
           rounded="lg"
           border="1px"
-          onClick={onOpenPermanentDelete}
+          onClick={onOpenStatusModal}
         >
-          Permanently Delete
+          Test Status Modal
         </Button>
-        {/* //TODO: Remove when modal properly implemented */}
+
         <PermanentDeleteModal
           isOpen={isOpenPermanentDelete}
-          onClick={() => {}}
+          onClick={() => {
+            // TODO: add deletion logic
+            onClosePermanentDelete();
+            onCloseStatusModal();
+          }}
           onClose={onClosePermanentDelete}
+        />
+        {/* //TODO: dynamically pass in case details 
+        and add onClick save functionality */}
+        <StatusModal
+          caseNumber={1}
+          status="ARCHIVED"
+          isOpen={isOpenStatusModal}
+          onClick={() => {}}
+          onClose={onCloseStatusModal}
+          onDeleteClick={onOpenPermanentDelete}
         />
       </Flex>
     </Box>

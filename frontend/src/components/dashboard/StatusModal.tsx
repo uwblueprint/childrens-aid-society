@@ -75,7 +75,7 @@ const StatusModal = ({
               <Box>
                 <FormControl>
                   <FormLabel pt="15px" htmlFor="curStatus">
-                    STATUS <OptionalLabel />
+                    STATUS
                   </FormLabel>
                   <StatusSelectField
                     id="curStatus"

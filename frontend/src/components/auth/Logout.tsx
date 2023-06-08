@@ -8,19 +8,19 @@ import LogoutModal from "./LogoutModal";
 
 const LogoutButton = (): React.ReactElement => {
   const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
 
   const onLogOutClick = async () => {
     const success = await authAPIClient.logout(authenticatedUser?.id);
     if (success) {
       setAuthenticatedUser(null);
-      setOpenModal(false)
+      setOpenModal(false);
     }
   };
 
   const onClose = () => {
-    setOpenModal(false)
-  }
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -38,7 +38,7 @@ const LogoutButton = (): React.ReactElement => {
       </Button>
       <LogoutModal
         isOpen={openModal}
-        onClick={onLogOutClick}
+        onClick={() => onLogOutClick()}
         onClose={() => onClose()}
       />
     </>

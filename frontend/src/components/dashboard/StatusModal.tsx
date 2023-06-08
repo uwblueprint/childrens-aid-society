@@ -14,26 +14,26 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 
-export type StatusChangeProps = {
+export type StatusModalProps = {
   caseNumber?: number;
   status?: string;
+  isOpen: boolean;
+  onClick: () => void;
+  onClose: () => void;
+  onDeleteClick: () => void;
 };
 
-const StatusChangeModal = ({
+const StatusModal = ({
   caseNumber,
   status,
-}: StatusChangeProps): React.ReactElement => {
-  const [isOpen, setIsOpen] = useState(true);
+  isOpen,
+  onClose,
+  onClick,
+  onDeleteClick,
+}: StatusModalProps): React.ReactElement => {
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
-  // const openModal = () => {
-  //   setIsOpen(true);
-  // };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
 
   return (
     <Box>
@@ -43,7 +43,7 @@ const StatusChangeModal = ({
         showLeftButton={selectedOption === "ARCHIVED"}
         leftButtonTitle="Delete"
         leftButtonVariant="delete"
-        onLeftButtonClick={() => {} /* TODO: delete button onClick */}
+        onLeftButtonClick={onDeleteClick}
         modalContent={
           <Box>
             <Box
@@ -139,15 +139,13 @@ const StatusChangeModal = ({
         }
         disabled={selectedOption === "" || workerName === ""}
         primaryButtonTitle="Save"
-        onClick={() => {
-          closeModal();
-        }}
+        onClick={onClick}
         isOpen={isOpen}
-        onClose={closeModal}
+        onClose={onClose}
         unsavedProgressModal={false}
       />
     </Box>
   );
 };
 
-export default StatusChangeModal;
+export default StatusModal;

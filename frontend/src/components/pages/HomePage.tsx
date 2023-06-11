@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -11,6 +10,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";

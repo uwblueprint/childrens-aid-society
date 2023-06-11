@@ -99,6 +99,8 @@ const Intake = (): React.ReactElement => {
           <IndividualDetailsEntry
             nextStep={nextStep}
             setStep={setStep}
+            childrens={children}
+            setChildren={setChildren}
             caregivers={caregivers}
             setCaregivers={setCaregivers}
           />

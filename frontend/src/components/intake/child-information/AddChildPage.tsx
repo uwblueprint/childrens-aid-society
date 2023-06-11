@@ -1,5 +1,5 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
@@ -80,6 +80,14 @@ const AddChild = ({
     setChildren([...childrens]);
     setStep(IntakeSteps.INDIVIDUAL_DETAILS);
   };
+
+  useEffect(() => {
+    if (selectedIndexChild >= 0) {
+      setChildDetails(childrens[selectedIndexChild].childDetails);
+      setSchoolDetails(childrens[selectedIndexChild].schoolDetails);
+      setProviders(childrens[selectedIndexChild].providers);
+    }
+  }, [childrens, selectedIndexChild]);
 
   const renderChildForm = () => {
     switch (activeFormIndex) {

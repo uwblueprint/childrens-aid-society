@@ -10,17 +10,18 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
+import CaseCard, { CaseCardProps } from "./CaseCard";
 
 const FilteredSection = ({
   status,
   cases,
 }: {
   status: string;
-  cases: [];
+  cases: CaseCardProps[];
 }): React.ReactElement => {
   return (
-    <Box height="25vh" minHeight="fit-content">
-      <Flex>
+    <Box height="40vh" minHeight="fit-content">
+      <Flex mb={5}>
         <Heading textStyle="header-medium">{status}</Heading>
         <Spacer />
         <Button
@@ -39,7 +40,20 @@ const FilteredSection = ({
             </Text>
           </Center>
         ) : (
-          <></>
+          <Flex justifyContent="space-between">
+            {cases.slice(0, 4).map((caseData: CaseCardProps) => {
+              return(
+                <CaseCard
+                  key={caseData.caseTitle}
+                  caseTitle={caseData.caseTitle}
+                  caseLead={caseData.caseLead}
+                  date={caseData.date}
+                  familyName={caseData.familyName}
+                  caseTag={caseData.caseTag}
+                />
+              )
+            })}
+          </Flex>
         )}
       </Box>
     </Box>

@@ -18,6 +18,7 @@ import CaseStatus from "../../types/CaseTypes";
 import FilteredSection from "../dashboard/FilteredSection";
 import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
+import { CaseCardProps } from "../dashboard/CaseCard";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -94,6 +95,15 @@ const SecondaryHeader = (): React.ReactElement => {
 };
 
 const Home = (): React.ReactElement => {
+  const cases: {[key: string]: CaseCardProps[]} = {
+    "active": [{caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.ACTIVE},
+              {caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.ACTIVE},
+              {caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.ACTIVE},
+              {caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.ACTIVE},],
+    "submitted": [{caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.SUBMITTED}],
+    "pending": [{caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.PENDING}],
+    "archived": [{caseTitle: "Case 1", caseLead: "Case Lead", date: "11/06/2023", familyName: "Family Name", caseTag: CaseStatus.ARCHIVED}]
+  }
   return (
     <Box>
       <IntakeHeader
@@ -101,13 +111,13 @@ const Home = (): React.ReactElement => {
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Box px="100px" pt="60px">
+      <Box px="100px" py="60px">
         <SecondaryHeader />
         <VStack spacing={15} align="stretch" my={12}>
-          <FilteredSection status={CaseStatus.ACTIVE} cases={[]} />
-          <FilteredSection status={CaseStatus.SUBMITTED} cases={[]} />
-          <FilteredSection status={CaseStatus.PENDING} cases={[]} />
-          <FilteredSection status={CaseStatus.ARCHIVED} cases={[]} />
+          <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
+          <FilteredSection status={CaseStatus.SUBMITTED} cases={cases.submitted} />
+          <FilteredSection status={CaseStatus.PENDING} cases={cases.pending} />
+          <FilteredSection status={CaseStatus.ARCHIVED} cases={cases.archived} />
         </VStack>
       </Box>
     </Box>

@@ -17,6 +17,8 @@ export type IndividualDetailsEntryProp = {
   setChildren: React.Dispatch<React.SetStateAction<Children>>;
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
+  selectedIndexChild: number;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const IndividualDetailsEntry = ({
@@ -28,6 +30,7 @@ const IndividualDetailsEntry = ({
   setChildren,
   caregivers,
   setCaregivers,
+  setSelectedIndexChild,
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const onNextStep = () => {
     nextStep();
@@ -55,6 +58,7 @@ const IndividualDetailsEntry = ({
             childrens={childrens}
             setChildren={setChildren}
             setStep={setStep}
+            setSelectedIndexChild={setSelectedIndexChild}
           />
           <CaregiverForm
             caregivers={caregivers}

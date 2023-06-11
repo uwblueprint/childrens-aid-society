@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserPlus } from "react-feather";
 import { Icon } from "@chakra-ui/react";
 import { Children } from "../child-information/AddChildPage";
-import PromptBox from "../PromptBox";
+import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 import IntakeSteps from "../intakeSteps";
 
-export type ChildrenFormProps = {
+type ChildrenFormProps = {
   childrens: Children;
   setChildren: React.Dispatch<React.SetStateAction<Children>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const ChildrenForm = ({
   childrens,
   setChildren,
   setStep,
+  setSelectedIndexChild,
 }: ChildrenFormProps): React.ReactElement => {
+  const [childrenDeleted, setChildrenDeleted] = useState(0);
+
+  const deleteChild = (index: number) => {
+    childrens.splice(index, 1);
+    // this isn't really useful, but it helps refresh the component
+    // ideally should have something useEffect, but current way of passing data does not work well with it
+    setChildrenDeleted(childrenDeleted + 1);
+    setChildren(childrens);
+  };
+
+  const childDetailsOverview: IndividualDetailsOverview[] = childrens.map(
+    (child) => {
+      const individualDetail: IndividualDetailsOverview = {
+        name: child.childDetails.childName,
+        fileNumber: child.childDetails.cpinFileNumber,
+      };
+      return individualDetail;
+    },
+  );
+
   return (
     <>
       <PromptBox
@@ -26,6 +48,9 @@ const ChildrenForm = ({
         onButtonClick={() => {
           setStep(IntakeSteps.ADD_CHILD);
         }}
+        individualDetails={childDetailsOverview}
+        deleteIndividual={deleteChild}
+        setSelectedIndex={setSelectedIndexChild}
       />
     </>
   );

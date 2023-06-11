@@ -21,9 +21,10 @@ type AddChildProps = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   childrens: Children;
   setChildren: React.Dispatch<React.SetStateAction<Children>>;
+  selectedIndexChild: number;
 };
 
-type ChildrenDetails = {
+export type ChildrenDetails = {
   childDetails: ChildDetails;
   schoolDetails: SchoolDetails;
   providers: Providers;
@@ -36,6 +37,7 @@ const AddChild = ({
   setStep,
   childrens,
   setChildren,
+  selectedIndexChild,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -63,15 +65,19 @@ const AddChild = ({
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    // TODO: Do something with the information
-    setChildren((prevChildren) => [
-      ...prevChildren,
-      {
-        childDetails: { ...childDetails },
-        schoolDetails: { ...schoolDetails },
-        providers: [...providers],
-      },
-    ]);
+    const updatedChild = {
+      childDetails: { ...childDetails },
+      schoolDetails: { ...schoolDetails },
+      providers: [...providers],
+    };
+
+    if (selectedIndexChild >= 0) {
+      childrens.splice(selectedIndexChild, 1, updatedChild);
+    } else {
+      childrens.push(updatedChild);
+    }
+
+    setChildren([...childrens]);
     setStep(IntakeSteps.INDIVIDUAL_DETAILS);
   };
 
@@ -104,10 +110,6 @@ const AddChild = ({
         return <Text>Error</Text>;
     }
   };
-
-  // REMOVE THIS ONCE YOU CALL CHILDRENS
-  // eslint-disable-next-line no-console
-  console.log(childrens);
 
   return (
     <>

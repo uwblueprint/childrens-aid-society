@@ -20,6 +20,8 @@ class IntakeDTO:
         self.access_location = kwargs.get("access_location")
         self.lead_access_worker_id = kwargs.get("lead_access_worker_id")
         self.denial_reason = kwargs.get("denial_reason")
+        self.lead_access_worker_name = kwargs.get("lead_access_worker_name")
+        self.intake_meeting_notes = kwargs.get("intake_meeting_notes")
 
 
 class CreateIntakeDTO(IntakeDTO):

@@ -55,3 +55,26 @@ class IntakeService(IIntakeService):
         except Exception as error:
             db.session.rollback()
             raise error
+    def update_intake(self, intake_id: int, updated_data):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to update_intake function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+
+            intake = Intake.query.filter_by(id=intake_id).first()
+            if not intake:
+                raise Exception("Intake with id {} not found".format(intake_id))
+
+            if 'intake_status' in updated_data:
+                intake.intake_status = updated_data['intake_status']
+            if 'lead_access_worker_name' in updated_data:
+                intake.lead_access_worker_name = updated_data['lead_access_worker_name']
+            if 'intake_meeting_notes' in updated_data:
+                intake.intake_meeting_notes = updated_data['intake_meeting_notes']
+            db.session.commit()
+            return IntakeDTO(**intake.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+    

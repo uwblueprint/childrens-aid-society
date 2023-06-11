@@ -67,3 +67,5 @@ class Intake(db.Model, BaseMixin):
     denial_reason = db.Column(db.String, nullable=True)
     concerns = db.relationship("FamilialConcern", secondary=intakes_concerns)
     goals = db.relationship("Goal", secondary=intakes_goals)
+    lead_access_worker_name = db.Column(db.String, nullable=True)
+    intake_meeting_notes = db.Column(db.String, nullable=True)

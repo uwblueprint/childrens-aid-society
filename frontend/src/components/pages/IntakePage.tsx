@@ -25,7 +25,7 @@ import IntakeSteps from "../intake/intakeSteps";
 import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
-import AddChild from "../intake/child-information/AddChildPage";
+import AddChild, { Children } from "../intake/child-information/AddChildPage";
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
 
@@ -64,6 +64,7 @@ const Intake = (): React.ReactElement => {
     familialConcerns: [],
   });
 
+  const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
   const [
     permittedIndividuals,
@@ -190,6 +191,8 @@ const Intake = (): React.ReactElement => {
           allProviders={allProviders}
           setAllProviders={setAllProviders}
           setStep={setStep}
+          childrens={children}
+          setChildren={setChildren}
         />
       ) : (
         <>

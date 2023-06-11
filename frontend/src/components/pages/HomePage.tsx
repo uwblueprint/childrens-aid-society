@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -7,17 +8,38 @@ import {
   Icon,
   Spacer,
   VStack,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseTypes";
 import FilteredSection from "../dashboard/FilteredSection";
+import StatusModal from "../dashboard/StatusModal";
+import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 
 const SecondaryHeader = (): React.ReactElement => {
+  const history = useHistory();
+  function goToIntake() {
+    history.push("/intake");
+  }
+
+  const {
+    onOpen: onOpenPermanentDelete,
+    isOpen: isOpenPermanentDelete,
+    onClose: onClosePermanentDelete,
+  } = useDisclosure();
+
+  const {
+    onOpen: onOpenStatusModal,
+    isOpen: isOpenStatusModal,
+    onClose: onCloseStatusModal,
+  } = useDisclosure();
+
   return (
     <Box>
-      <Heading textStyle="display-medium">Intake Cases</Heading>
+      <Text textStyle="header-large">Intake Cases</Text>
       <Flex pt="10">
         <Box w="20%">
           <CustomInput
@@ -25,20 +47,47 @@ const SecondaryHeader = (): React.ReactElement => {
             icon={<Icon as={Search} />}
           />
         </Box>
-
         <Spacer />
         <Button
           height="100%"
           px="2"
           rounded="lg"
           border="1px"
-          onClick={
-            () => {} // TODO: FINISH THIS CALLBACK
-          }
+          onClick={goToIntake}
           leftIcon={<Icon as={FilePlus} />}
         >
           New case
         </Button>
+
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={onOpenStatusModal}
+        >
+          Test Status Modal
+        </Button>
+
+        <PermanentDeleteModal
+          isOpen={isOpenPermanentDelete}
+          onClick={() => {
+            // TODO: add deletion logic
+            onClosePermanentDelete();
+            onCloseStatusModal();
+          }}
+          onClose={onClosePermanentDelete}
+        />
+        {/* //TODO: dynamically pass in case details 
+        and add onClick save functionality */}
+        <StatusModal
+          caseNumber={1}
+          status="ARCHIVED"
+          isOpen={isOpenStatusModal}
+          onClick={() => {}}
+          onClose={onCloseStatusModal}
+          onDeleteClick={onOpenPermanentDelete}
+        />
       </Flex>
     </Box>
   );

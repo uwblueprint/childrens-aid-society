@@ -19,12 +19,23 @@ type AddChildProps = {
   allProviders: Providers;
   setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  childrens: Children;
+  setChildren: React.Dispatch<React.SetStateAction<Children>>;
 };
+
+type ChildrenDetails = {
+  childDetails: ChildDetails;
+  schoolDetails: SchoolDetails;
+  providers: Providers;
+};
+export type Children = ChildrenDetails[];
 
 const AddChild = ({
   allProviders,
   setAllProviders,
   setStep,
+  childrens,
+  setChildren,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -53,6 +64,15 @@ const AddChild = ({
 
   const childFormSubmitHandler = () => {
     // TODO: Do something with the information
+    setChildren((prevChildren) => [
+      ...prevChildren,
+      {
+        childDetails: { ...childDetails },
+        schoolDetails: { ...schoolDetails },
+        providers: [...providers],
+      },
+    ]);
+    setStep(IntakeSteps.INDIVIDUAL_DETAILS);
   };
 
   const renderChildForm = () => {
@@ -84,6 +104,10 @@ const AddChild = ({
         return <Text>Error</Text>;
     }
   };
+
+  // REMOVE THIS ONCE YOU CALL CHILDRENS
+  // eslint-disable-next-line no-console
+  console.log(childrens);
 
   return (
     <>
@@ -130,6 +154,7 @@ const AddChild = ({
         <Button
           type="submit"
           mr="96px"
+          // remove when error checking is implemented
           disabled={requiredInfomationMissing}
           onClick={childFormSubmitHandler}
         >

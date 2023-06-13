@@ -42,7 +42,7 @@ const FilteredSection = ({
         ) : (
           <Flex justifyContent="space-between">
             {cases.slice(0, 4).map((caseData: CaseCardProps) => {
-              return(
+              return (
                 <CaseCard
                   key={caseData.caseTitle}
                   caseTitle={caseData.caseTitle}
@@ -51,7 +51,7 @@ const FilteredSection = ({
                   familyName={caseData.familyName}
                   caseTag={caseData.caseTag}
                 />
-              )
+              );
             })}
           </Flex>
         )}

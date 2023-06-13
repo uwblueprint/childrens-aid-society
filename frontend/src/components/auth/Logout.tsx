@@ -1,5 +1,5 @@
-import { Button, Icon } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import { Button, Icon, useDisclosure } from "@chakra-ui/react";
+import React, { useContext } from "react";
 import { LogOut } from "react-feather";
 
 import authAPIClient from "../../APIClients/AuthAPIClient";
@@ -8,18 +8,18 @@ import LogoutModal from "./LogoutModal";
 
 const LogoutButton = (): React.ReactElement => {
   const { authenticatedUser, setAuthenticatedUser } = useContext(AuthContext);
-  const [openModal, setOpenModal] = useState(false);
+  const {
+    onOpen: onOpenLogoutModal,
+    isOpen: isOpenLogoutModal,
+    onClose: onCloseLogoutModal,
+  } = useDisclosure();
 
   const onLogOutClick = async () => {
     const success = await authAPIClient.logout(authenticatedUser?.id);
     if (success) {
       setAuthenticatedUser(null);
-      setOpenModal(false);
+      onCloseLogoutModal();
     }
-  };
-
-  const onClose = () => {
-    setOpenModal(false);
   };
 
   return (
@@ -31,15 +31,15 @@ const LogoutButton = (): React.ReactElement => {
         border="1px"
         borderColor="blue.400"
         color="blue.400"
-        onClick={() => setOpenModal(true)}
+        onClick={onOpenLogoutModal}
         leftIcon={<Icon as={LogOut} />}
       >
         Logout
       </Button>
       <LogoutModal
-        isOpen={openModal}
+        isOpen={isOpenLogoutModal}
         onClick={() => onLogOutClick()}
-        onClose={() => onClose()}
+        onClose={onCloseLogoutModal}
       />
     </>
   );

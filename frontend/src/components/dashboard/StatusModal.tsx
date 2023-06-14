@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import {
   Box,
   Flex,
-  Select,
   Text,
   Button,
   FormLabel,
   SimpleGrid,
+  FormControl,
+  Icon,
 } from "@chakra-ui/react";
-
+import { ChevronDown } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
+import { StatusSelectField } from "./StatusSelectField";
 
 export type StatusModalProps = {
   caseNumber?: number;
-  status?: string;
+  status: string;
   isOpen: boolean;
   onClick: () => void;
   onClose: () => void;
@@ -36,7 +38,6 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
-
   return (
     <Box>
       <ModalComponent
@@ -75,30 +76,20 @@ const StatusModal = ({
             </Box>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
               <Box>
-                {" "}
-                {/* TODO: Need to change status dropdown */}
-                <FormLabel htmlFor="status">STATUS</FormLabel>
-                <Select
-                  id="status"
-                  placeholder={selectedOption || "Select an option"}
-                  value={selectedOption}
-                  onChange={(event) => {
-                    setSelectedOption(event.target.value);
-                  }}
-                >
-                  <option value="SUBMITTED" style={{ color: "red" }}>
-                    SUBMITTED
-                  </option>
-                  <option value="PENDING" style={{ color: "orange" }}>
-                    PENDING
-                  </option>
-                  <option value="ACTIVE" style={{ color: "green" }}>
-                    ACTIVE
-                  </option>
-                  <option value="ARCHIVED" style={{ color: "gray" }}>
-                    ARCHIVED
-                  </option>
-                </Select>
+                <FormControl>
+                  <FormLabel pt="15px" htmlFor="curStatus">
+                    STATUS
+                  </FormLabel>
+                  <StatusSelectField
+                    id="curStatus"
+                    name="curStatus"
+                    placeholder={selectedOption}
+                    options={["SUBMITTED", "PENDING", "ACTIVE", "ARCHIVED"]}
+                    iconRight={<Icon as={ChevronDown} />}
+                    readOnly={false}
+                    setSelected={setSelectedOption}
+                  />
+                </FormControl>
               </Box>
               <Box>
                 <FormLabel
@@ -140,7 +131,7 @@ const StatusModal = ({
             </Box>
           </Box>
         }
-        disabled={selectedOption === "" || workerName === ""}
+        disabled={selectedOption === ""}
         primaryButtonTitle="Save"
         onClick={onClick}
         isOpen={isOpen}

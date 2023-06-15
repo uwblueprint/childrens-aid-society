@@ -71,6 +71,7 @@ const Intake = (): React.ReactElement => {
     setPermittedIndividuals,
   ] = useState<PermittedIndividuals>([]);
   const [allProviders, setAllProviders] = useState<Providers>([]);
+  const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
   const nextStep = () => setStep(step + 1);
 
@@ -99,8 +100,12 @@ const Intake = (): React.ReactElement => {
           <IndividualDetailsEntry
             nextStep={nextStep}
             setStep={setStep}
+            childrens={children}
+            setChildren={setChildren}
             caregivers={caregivers}
             setCaregivers={setCaregivers}
+            selectedIndexChild={selectedIndexChild}
+            setSelectedIndexChild={setSelectedIndexChild}
           />
         );
       case IntakeSteps.PROGRAM_DETAILS:
@@ -193,6 +198,7 @@ const Intake = (): React.ReactElement => {
           setStep={setStep}
           childrens={children}
           setChildren={setChildren}
+          selectedIndexChild={selectedIndexChild}
         />
       ) : (
         <>

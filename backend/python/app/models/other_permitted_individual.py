@@ -10,4 +10,4 @@ class OtherPermittedIndividual(db.Model, BaseMixin):
     phone_number = db.Column(db.String, nullable=False)
     relationship_to_child = db.Column(db.String, nullable=False)
     notes = db.Column(db.String, nullable=False)
-    intake_id = db.Column(db.Integer, db.ForeignKey('intakes.id', ondelete='CASCADE'), nullable=False)
+    intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False)

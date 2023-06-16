@@ -12,4 +12,3 @@ class DaytimeContact(db.Model, BaseMixin):
     address = db.Column(db.String, nullable=False)
     contact_information = db.Column(db.String, nullable=False)
     dismissal_time = db.Column(db.String, nullable=True)
-    

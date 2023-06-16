@@ -51,15 +51,12 @@ class IntakeService(IIntakeService):
             if not intake:
                 raise Exception("Intake with id {} not found".format(intake_id))
 
-            # Get the associated providers
             providers_to_delete = Provider.query.filter_by(child_id=intake_id).all()
 
-            # Delete the providers
             for provider in providers_to_delete:
-                provider.child_id = None  # Clear the child_id reference
+                provider.child_id = None  
                 db.session.delete(provider)
 
-            # Delete the intake
             db.session.delete(intake)
             db.session.commit()
 

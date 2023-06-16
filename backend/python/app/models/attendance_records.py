@@ -30,4 +30,3 @@ class AttendanceRecords(db.Model, BaseMixin):
     )
     comments = db.Column(db.String, nullable=True)
     user = db.relationship("User")
-

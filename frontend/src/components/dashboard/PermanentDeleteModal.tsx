@@ -30,9 +30,7 @@ const PermanentDeleteModal = ({
   const handleDelete = async () => {
     try {
       await IntakeAPIClient.deleteIntake(intakeId);
-    } catch (error) {
-      console.log("intake api client was not called");
-    }
+    } catch (error) {}
   };
 
   const isConfirmationValid =

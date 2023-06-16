@@ -32,7 +32,11 @@ const SchoolDaycareForm = ({
   };
 
   return (
-    <Formik initialValues={schoolDetails} onSubmit={onSubmit}>
+    <Formik
+      enableReinitialize
+      initialValues={schoolDetails}
+      onSubmit={onSubmit}
+    >
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -40,8 +44,8 @@ const SchoolDaycareForm = ({
               <FormLabel htmlFor="schoolName">NAME</FormLabel>
               <Field
                 as={CustomInput}
-                id="schooName"
-                name="schoolname"
+                id="schoolName"
+                name="schoolName"
                 type="string"
                 placeholder="Enter name of school or daycare"
                 icon={<Icon as={Home} />}

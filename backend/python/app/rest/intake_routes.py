@@ -299,13 +299,14 @@ def create_intake():
 
     return jsonify(new_intake.__dict__), 201
 
+
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)
 def delete_intake():
     """
     Delete intake by intake_id specified through a query parameter
     """
     intake_id = int(request.args.get("intake_id"))
-    
+
     if intake_id:
         if type(intake_id) is not int:
             return jsonify({"error": "intake_id query parameter must be an int"}), 400
@@ -324,4 +325,3 @@ def delete_intake():
         jsonify({"error": "Must supply intake id as query parameter."}),
         400,
     )
-

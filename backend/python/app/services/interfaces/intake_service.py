@@ -36,3 +36,16 @@ class IIntakeService(ABC):
         :raises Exception: if intake_id is not valid or if there was an error during deletion
         """
         pass
+
+    @abstractmethod
+    def update_intake(self, intake_id, updated_data):
+        """Updates the intake with new status, lead worker name, meeting notes
+        :param intake_id: the intake_id of the intake to be updated
+        :type intake_id: int
+        :param updated_data: the new updated data object
+        :type updated_data: IntakeDTO
+        :return: IntakeDTO
+        :rtype: IntakeDTO
+        :raises Exception: if intake_id or updated_data is not valid or if an error occurs during update
+        """
+        pass

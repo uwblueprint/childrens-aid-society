@@ -112,7 +112,7 @@ const get = async (): Promise<IntakeResponse[]> => {
   }
 };
 
-const deleteIntake = async (intakeId: number): Promise<any> => {
+const deleteIntake = async (intakeId: number): Promise<void> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",

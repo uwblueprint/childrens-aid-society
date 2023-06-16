@@ -29,6 +29,7 @@ import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
 import Default from "./components/pages/Default";
 import Template from "./components/pages/TemplatePage";
+import { IntakeValueProvider } from "./contexts/IntakeValueContext";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -59,17 +60,23 @@ const App = (): React.ReactElement => {
             value={{ authenticatedUser, setAuthenticatedUser }}
           >
             <Router>
-              <Switch>
-                <Route exact path={Routes.LOGIN_PAGE} component={Login} />
-                <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
-                {/* TODO: Change these to private routes */}
-                <Route exact path={Routes.HOME_PAGE} component={Home} />
-                <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
-                <Route exact path={Routes.VISIT_PAGE} component={Visit} />
-                <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
-                <Route exact path={Routes.TEMPLATE_PAGE} component={Template} />
-                <Route exact path="*" component={NotFound} />
-              </Switch>
+              <IntakeValueProvider>
+                <Switch>
+                  <Route exact path={Routes.LOGIN_PAGE} component={Login} />
+                  <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
+                  {/* TODO: Change these to private routes */}
+                  <Route exact path={Routes.HOME_PAGE} component={Home} />
+                  <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
+                  <Route exact path={Routes.VISIT_PAGE} component={Visit} />
+                  <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
+                  <Route
+                    exact
+                    path={Routes.TEMPLATE_PAGE}
+                    component={Template}
+                  />
+                  <Route exact path="*" component={NotFound} />
+                </Switch>
+              </IntakeValueProvider>
             </Router>
           </AuthContext.Provider>
         </SampleContextDispatcherContext.Provider>

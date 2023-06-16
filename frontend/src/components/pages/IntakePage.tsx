@@ -28,6 +28,7 @@ import UnsavedProgressModal from "../intake/UnsavedProgressModal";
 import AddChild, { Children } from "../intake/child-information/AddChildPage";
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -38,7 +39,7 @@ const Intake = (): React.ReactElement => {
     onClose: onCloseUnsavedProgress,
   } = useDisclosure();
 
-  const [step, setStep] = useState(0);
+  const { step, setStep } = useStepValueContext();
   const [reviewHeader, setReviewHeader] = useState(false);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
     referringWorker: "",
@@ -77,6 +78,7 @@ const Intake = (): React.ReactElement => {
 
   const renderDetailsForm = () => {
     switch (step) {
+      default:
       case IntakeSteps.CASE_REFERRAL:
         return (
           <ReferralForm
@@ -123,6 +125,22 @@ const Intake = (): React.ReactElement => {
             />
           </>
         );
+      case IntakeSteps.REVIEW_CASE_DETAILS:
+        return (
+          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+            <ReviewForm
+              referralDetails={referralDetails}
+              setReferralDetails={setReferralDetails}
+              courtDetails={courtDetails}
+              setCourtDetails={setCourtDetails}
+              programDetails={programDetails}
+              setProgramDetails={setProgramDetails}
+              nextStep={nextStep}
+              setStep={setStep}
+              setReviewHeader={setReviewHeader}
+            />
+          </Box>
+        );
       case IntakeSteps.FORM_COMPLETE:
         return (
           <Box textAlign="center">
@@ -138,23 +156,6 @@ const Intake = (): React.ReactElement => {
               isStepComplete={() => true}
               registrationLoading={false}
               nextStepCallBack={() => {}}
-            />
-          </Box>
-        );
-      default:
-        // IntakeSteps.REVIEW_CASE_DETAILS
-        return (
-          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-            <ReviewForm
-              referralDetails={referralDetails}
-              setReferralDetails={setReferralDetails}
-              courtDetails={courtDetails}
-              setCourtDetails={setCourtDetails}
-              programDetails={programDetails}
-              setProgramDetails={setProgramDetails}
-              nextStep={nextStep}
-              setStep={setStep}
-              setReviewHeader={setReviewHeader}
             />
           </Box>
         );

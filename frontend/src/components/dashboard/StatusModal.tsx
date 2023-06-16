@@ -16,6 +16,7 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 import { StatusSelectField } from "./StatusSelectField";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type StatusModalProps = {
   caseNumber?: number;
@@ -48,6 +49,12 @@ const StatusModal = ({
     setMeetingNotes("");
   };
 
+  const { step, setStep } = useStepValueContext();
+
+  function sendToReview() {
+    setStep(4);
+    goToIntake();
+  }
   return (
     <Box>
       <ModalComponent
@@ -81,7 +88,7 @@ const StatusModal = ({
                   border="1px solid"
                   paddingLeft="6"
                   paddingRight="6"
-                  onClick={goToIntake}
+                  onClick={sendToReview}
                 >
                   Review
                 </Button>

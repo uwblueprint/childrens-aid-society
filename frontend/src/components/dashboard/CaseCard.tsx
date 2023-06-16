@@ -1,22 +1,23 @@
 import { Box, Text, Tag, Icon } from "@chakra-ui/react";
 import React from "react";
 import { ArrowUpRight } from "react-feather";
+import CaseStatus from "../../types/CaseStatus";
 
 export type CaseCardProps = {
   caseTitle: string;
   caseLead: string;
   date: string;
   familyName: string;
-  caseTag: string;
+  caseTag: CaseStatus;
 };
 
 const colorChange = (value: string) => {
   let color;
-  if (value === "ACTIVE") {
+  if (value === "Active") {
     color = "green.400";
-  } else if (value === "SUBMITTED") {
+  } else if (value === "Submitted") {
     color = "blue.300";
-  } else if (value === "ARCHIVED") {
+  } else if (value === "Archived") {
     color = "gray.500";
   } else {
     color = "orange.400";
@@ -75,7 +76,7 @@ const CaseCard = ({
         borderWidth="0"
         textStyle="button-medium"
       >
-        {caseTag}
+        {caseTag.toUpperCase()}
       </Tag>
     </Box>
   </Box>

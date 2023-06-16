@@ -1,7 +1,7 @@
 import { Box, Text, Tag, Icon } from "@chakra-ui/react";
 import React from "react";
 import { ArrowUpRight } from "react-feather";
-import CaseStatus from "../../types/CaseTypes";
+import CaseStatus from "../../types/CaseStatus";
 
 export type CaseCardProps = {
   caseTitle: string;

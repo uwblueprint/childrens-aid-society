@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
-import CaseStatus from "../../types/CaseTypes";
+import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";

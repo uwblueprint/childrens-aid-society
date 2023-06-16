@@ -299,6 +299,7 @@ def create_intake():
 
     return jsonify(new_intake.__dict__), 201
 
+
 @blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
 def update_intake_route(intake_id):
     try:

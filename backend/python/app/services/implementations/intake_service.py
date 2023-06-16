@@ -55,6 +55,7 @@ class IntakeService(IIntakeService):
         except Exception as error:
             db.session.rollback()
             raise error
+
     def update_intake(self, intake_id: int, updated_data):
         try:
             if not intake_id:
@@ -66,15 +67,14 @@ class IntakeService(IIntakeService):
             if not intake:
                 raise Exception("Intake with id {} not found".format(intake_id))
 
-            if 'intake_status' in updated_data:
-                intake.intake_status = updated_data['intake_status']
-            if 'lead_access_worker_name' in updated_data:
-                intake.lead_access_worker_name = updated_data['lead_access_worker_name']
-            if 'intake_meeting_notes' in updated_data:
-                intake.intake_meeting_notes = updated_data['intake_meeting_notes']
+            if "intake_status" in updated_data:
+                intake.intake_status = updated_data["intake_status"]
+            if "lead_access_worker_name" in updated_data:
+                intake.lead_access_worker_name = updated_data["lead_access_worker_name"]
+            if "intake_meeting_notes" in updated_data:
+                intake.intake_meeting_notes = updated_data["intake_meeting_notes"]
             db.session.commit()
             return IntakeDTO(**intake.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error
-    

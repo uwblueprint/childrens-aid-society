@@ -29,3 +29,5 @@ class AttendanceRecords(db.Model, BaseMixin):
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )
     comments = db.Column(db.String, nullable=True)
+    user = db.relationship("User")
+

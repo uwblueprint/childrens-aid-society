@@ -298,3 +298,36 @@ def create_intake():
                 return jsonify(error), 400
 
     return jsonify(new_intake.__dict__), 201
+
+#delete case
+
+#this just deletes this row in intake table
+#need to also delete all the other rows that use the deleted intake id as a foreign key
+# query other tables, and find rows that have the intake id we are trying to delete, and remove those rows as well.
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_intake():
+    """
+    Delete intake by intake_id specified through a query parameter
+    """
+    intake_id = int(request.args.get("intake_id"))
+
+    # transform intake_id to int after getting it from service 
+    if intake_id:
+        if type(intake_id) is not int:
+            return jsonify({"error": "intake_id query parameter must be an int"}), 400
+        else:
+            try:
+                intake_service.delete_intake(intake_id)
+                return "intake deleted", 200
+            except Exception as e:
+                error_message = getattr(e, "message", None)
+                return (
+                    jsonify({"error": (error_message if error_message else str(e))}),
+                    500,
+                )
+
+    return (
+        jsonify({"error": "Must supply intake id as query parameter."}),
+        400,
+    )
+

@@ -39,7 +39,7 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
-  const { step, setStep } = useStepValueContext();
+  const { setStep } = useStepValueContext();
 
   function sendToReview() {
     setStep(4);

@@ -15,11 +15,13 @@ const StepValueContext = createContext<IntakeStepContext>({
   setStep: () => {},
 });
 
-export function useStepValueContext() {
+export function useStepValueContext(): IntakeStepContext {
   return useContext(StepValueContext);
 }
 
-export const IntakeValueProvider = ({ children }: IntakeValueProviderProps) => {
+export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
+  children,
+}: IntakeValueProviderProps) => {
   const location = useLocation();
   const [step, setStep] = useState(0);
   const reviewCaseDetailsStep = 4;
@@ -28,6 +30,7 @@ export const IntakeValueProvider = ({ children }: IntakeValueProviderProps) => {
     if (step !== reviewCaseDetailsStep) {
       setStep(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (

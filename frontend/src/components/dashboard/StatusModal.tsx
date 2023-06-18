@@ -50,6 +50,7 @@ const StatusModal = ({
   };
 
   const { step, setStep } = useStepValueContext();
+  const { setStep } = useStepValueContext();
 
   function sendToReview() {
     setStep(4);

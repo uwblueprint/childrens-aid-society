@@ -12,12 +12,10 @@ import {
 import { ArrowLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import Logo from "../../assets/logo.png";
-import CourtInformationForm, {
-  CourtDetails,
-} from "../intake/CourtInformationForm";
-import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
+import CourtInformationForm from "../intake/CourtInformationForm";
+import ReferralForm from "../intake/ReferralForm";
 import IntakeHeader from "../intake/IntakeHeader";
-import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
+import ProgramForm from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../intake/NewCaregiverModal";
@@ -41,29 +39,9 @@ const Intake = (): React.ReactElement => {
 
   const { step, setStep } = useStepValueContext();
   const [reviewHeader, setReviewHeader] = useState(false);
-  const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
-    referringWorker: "",
-    referringWorkerContact: "",
-    familyName: "",
-    referralDate: "",
-    cpinFileNumber: "",
-    cpinFileType: "",
-    phoneNumber: "",
-  });
-  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
-    currentCourtStatus: "",
-    firstNationHeritage: "",
-    firstNationBand: "",
-    orderReferral: null,
-  });
-  const [programDetails, setProgramDetails] = useState<ProgramDetails>({
-    transportationRequirements: "",
-    schedulingRequirements: "",
-    suggestedStartDate: "",
-    shortTermGoals: [],
-    longTermGoals: [],
-    familialConcerns: [],
-  });
+  const { referralDetails, setReferralDetails } = useStepValueContext();
+  const { courtDetails, setCourtDetails } = useStepValueContext();
+  const { programDetails, setProgramDetails } = useStepValueContext();
 
   const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);

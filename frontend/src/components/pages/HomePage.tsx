@@ -18,6 +18,7 @@ import FilteredSection from "../dashboard/FilteredSection";
 import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import ArchiveCaseModal from "../dashboard/ArchiveCaseModal";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -35,6 +36,12 @@ const SecondaryHeader = (): React.ReactElement => {
     onOpen: onOpenStatusModal,
     isOpen: isOpenStatusModal,
     onClose: onCloseStatusModal,
+  } = useDisclosure();
+
+  const {
+    onOpen: onOpenArchiveCaseModal,
+    isOpen: isOpenArchiveCaseModal,
+    onClose: onCloseArchiveCaseModal,
   } = useDisclosure();
 
   return (
@@ -68,6 +75,15 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           Test Status Modal
         </Button>
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={onOpenArchiveCaseModal}
+        >
+          Test Archive Case Modal
+        </Button>
 
         <PermanentDeleteModal
           isOpen={isOpenPermanentDelete}
@@ -87,6 +103,12 @@ const SecondaryHeader = (): React.ReactElement => {
           onClick={() => {}}
           onClose={onCloseStatusModal}
           onDeleteClick={onOpenPermanentDelete}
+        />
+        <ArchiveCaseModal
+          intakeID={1}
+          isOpen={isOpenArchiveCaseModal}
+          onClose={onCloseArchiveCaseModal}
+          caseName="Case 1"
         />
       </Flex>
     </Box>

@@ -112,4 +112,28 @@ const get = async (): Promise<IntakeResponse[]> => {
   }
 };
 
-export default { post, get };
+const put = async ({
+  changedData,
+  intakeID,
+}: {
+  changedData: Record<string, string>;
+  intakeID: number;
+}): Promise<IntakeResponse> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+  try {
+    const { data } = await baseAPIClient.put(
+      `/intake/${intakeID}`,
+      changedData,
+      {
+        headers: { Authorization: bearerToken },
+      },
+    );
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+export default { post, get, put };

@@ -41,8 +41,20 @@ blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 def get_all_intakes():
+    args = request.args
+    intake_status = args.get("intake_status")
+    page_number = 1
     try:
-        intakes = intake_service.get_all_intakes()
+        page_number = int(args.get("page_number"))
+    except:
+        pass
+    page_limit = 20
+    try:
+        page_limit = int(args.get("page_limit"))
+    except:
+        pass
+    try:
+        intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400

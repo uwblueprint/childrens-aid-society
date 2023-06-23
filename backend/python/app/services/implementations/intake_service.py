@@ -8,11 +8,14 @@ class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_all_intakes(self):
-        # FIXME: change this to match spec for actual get intakes method
+    def get_all_intakes(self, intake_status, page_number, page_limit=20):
+        start = (page_number - 1) * page_limit
+        end = page_number * page_limit
         try:
-            intakes = Intake.query.all()
-            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
+            intakes = Intake.query.filter_by(intake_status=intake_status).all()
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes][
+                start:end
+            ]
             return intakes_dto
         except Exception as error:
             self.logger.error(str(error))

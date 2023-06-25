@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Button, Flex, Input, color } from "@chakra-ui/react";
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import { ArrowLeft, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../intake/CaseOverviewFooter";
-import textStyles from "../../theme/textStyles";
 import colors from "../../theme/colors";
 
 const SecondaryHeader = (): React.ReactElement => {
@@ -258,7 +257,7 @@ const CaseOverview = (): React.ReactElement => {
           <SecondaryHeader />
         </div>
       </Box>
-      <CaseOverviewFooter nextStepCallBack={() => {}} />
+      <CaseOverviewFooter />
     </Box>
   );
 };

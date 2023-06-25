@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Flex, useToast, ButtonGroup } from "@chakra-ui/react";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import { FileText } from "react-feather";
 import colors from "../../theme/colors";
 
@@ -10,11 +10,7 @@ export type CaseOverviewFooterProps = {
   clearFields?: () => void;
 };
 
-const CaseOverviewFooter = (
-  props: CaseOverviewFooterProps,
-): React.ReactElement => {
-  const toast = useToast();
-
+const CaseOverviewFooter = (): React.ReactElement => {
   return (
     <Flex
       bg="gray.50"

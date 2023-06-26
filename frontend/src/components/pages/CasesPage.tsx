@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { ArrowLeft } from "react-feather";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import { CaseCardProps } from "../dashboard/CaseCard";
@@ -45,15 +45,7 @@ const cases: { [key: string]: CaseCardProps[] } = {
       caseTag: CaseStatus.ACTIVE,
     },
   ],
-  submitted: [
-    {
-      caseTitle: "Case 1",
-      caseLead: "Case Lead",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.SUBMITTED,
-    },
-  ],
+  submitted: [],
   pending: [
     {
       caseTitle: "Case 1",
@@ -74,10 +66,26 @@ const cases: { [key: string]: CaseCardProps[] } = {
   ],
 };
 
-const Cases = (): React.ReactElement => {
+const Cases = (): React.ReactElement | null => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const status = queryParams.get("status");
+  const history = useHistory();
+
+  if (!status) {
+    history.push("/");
+    return null;
+  }
+
+  const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1);
+  const validStatus = Object.values(CaseStatus).includes(
+    formattedStatus as CaseStatus,
+  );
+
+  if (!validStatus) {
+    history.push("/");
+    return null;
+  }
 
   return (
     <Box>
@@ -89,19 +97,16 @@ const Cases = (): React.ReactElement => {
       <Box px="80px" pt="32px">
         <Icon as={ArrowLeft} boxSize={8} />
       </Box>
-      {status ? (
-        <>
-          <Text textStyle="header-large" px="86px" pt="16px">
-            {status.charAt(0).toUpperCase() + status.slice(1)} Cases
-          </Text>
-          <Box px="86px" pt="32px">
-            <FilteredCaseDisplay cases={cases[status]} numberOfRows={2} />
-          </Box>
-        </>
-      ) : (
-        // This is temporary
-        <Text>Redirecting to homepage...</Text>
-      )}
+      <Text textStyle="header-large" px="86px" pt="16px">
+        {formattedStatus} Cases
+      </Text>
+      <Box px="86px" pt="32px">
+        <FilteredCaseDisplay
+          cases={cases[status]}
+          numberOfRows={2}
+          status={status}
+        />
+      </Box>
       <Flex justifyContent="center" py="45px">
         <Button
           variant="ghost"

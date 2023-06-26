@@ -34,15 +34,7 @@ const FilteredSection = ({
         </Button>
       </Flex>
       <Box width="100%" height="100%">
-        {cases.length <= 0 ? (
-          <Center height="full">
-            <Text textStyle="text-medium">
-              No current {status.toLowerCase()} cases
-            </Text>
-          </Center>
-        ) : (
-          <FilteredCaseDisplay cases={cases} numberOfRows={1} />
-        )}
+        <FilteredCaseDisplay cases={cases} numberOfRows={1} status={status} />
       </Box>
     </Box>
   );

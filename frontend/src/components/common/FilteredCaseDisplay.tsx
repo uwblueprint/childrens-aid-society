@@ -1,20 +1,27 @@
-import { Flex } from "@chakra-ui/react";
+import { Center, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
 
 interface Props {
   cases: CaseCardProps[];
   numberOfRows: number;
+  status: string;
 }
 
 const FilteredCaseDisplay = ({
   cases,
   numberOfRows,
+  status,
 }: Props): React.ReactElement => {
-  const maxCasesDisplayed = numberOfRows * 4;
-  const numberOfCases = cases.length;
-  const numberOfCasesDisplayed =
-    numberOfCases < maxCasesDisplayed ? numberOfCases : maxCasesDisplayed;
+  if (cases.length <= 0) {
+    return (
+      <Center height="full">
+        <Text textStyle="text-medium">
+          No current {status.toLowerCase()} cases
+        </Text>
+      </Center>
+    );
+  }
 
   const rows = [];
   for (let i = 0; i < numberOfRows; i += 1) {

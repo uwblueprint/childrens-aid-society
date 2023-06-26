@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  Spacer,
-  Text,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Icon, Spacer } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
+import { useHistory } from "react-router-dom";
 import { CaseCardProps } from "./CaseCard";
 import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
 
@@ -20,6 +12,11 @@ const FilteredSection = ({
   status: string;
   cases: CaseCardProps[];
 }): React.ReactElement => {
+  const history = useHistory();
+  const viewAllCases = () => {
+    history.push(`/cases?status=${status.toLowerCase()}`);
+  };
+
   return (
     <Box height="40vh" minHeight="fit-content">
       <Flex>
@@ -28,7 +25,7 @@ const FilteredSection = ({
         <Button
           variant="tertiary"
           rightIcon={<Icon as={ArrowRight} />}
-          onClick={() => {}}
+          onClick={viewAllCases}
         >
           View All
         </Button>

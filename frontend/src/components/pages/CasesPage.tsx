@@ -1,14 +1,16 @@
-import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { ArrowLeft } from "react-feather";
+import { useLocation } from "react-router-dom";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
-import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
+import { CaseCardProps } from "../dashboard/CaseCard";
+import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
 
 const cases: { [key: string]: CaseCardProps[] } = {
   active: [
     {
-      caseTitle: "Case 1",
+      caseTitle: "Case 0",
       caseLead: "Case Lead",
       date: "11/06/2023",
       familyName: "Family Name",
@@ -22,14 +24,21 @@ const cases: { [key: string]: CaseCardProps[] } = {
       caseTag: CaseStatus.ACTIVE,
     },
     {
-      caseTitle: "Case 1",
+      caseTitle: "Case 2",
       caseLead: "Case Lead",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
-      caseTitle: "Case 1",
+      caseTitle: "Case 3",
+      caseLead: "Case Lead",
+      date: "11/06/2023",
+      familyName: "Family Name",
+      caseTag: CaseStatus.ACTIVE,
+    },
+    {
+      caseTitle: "Case 4",
       caseLead: "Case Lead",
       date: "11/06/2023",
       familyName: "Family Name",
@@ -66,6 +75,10 @@ const cases: { [key: string]: CaseCardProps[] } = {
 };
 
 const Cases = (): React.ReactElement => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get("status");
+
   return (
     <Box>
       <IntakeHeader
@@ -74,32 +87,22 @@ const Cases = (): React.ReactElement => {
         hasLogout
       />
       <Box px="80px" pt="32px">
-        {/* Return Button */}
         <Icon as={ArrowLeft} boxSize={8} />
       </Box>
-      {/* Appropriate Header */}
-      <Text textStyle="header-large" px="86px" pt="32px">
-        Active Cases
-      </Text>
-      <Box px="86px" pt="32px">
-        {/* Grid of Appropriate Filtered Case components */}
-        <Flex justifyContent="space-between">
-          {cases.active.map((caseData: CaseCardProps) => {
-            return (
-              <CaseCard
-                key={caseData.caseTitle}
-                caseTitle={caseData.caseTitle}
-                caseLead={caseData.caseLead}
-                date={caseData.date}
-                familyName={caseData.familyName}
-                caseTag={caseData.caseTag}
-              />
-            );
-          })}
-        </Flex>
-      </Box>
-      {/* Load more cases button (doesn't need to work) */}
-      <Flex justifyContent="center" pt="45px">
+      {status ? (
+        <>
+          <Text textStyle="header-large" px="86px" pt="16px">
+            {status.charAt(0).toUpperCase() + status.slice(1)} Cases
+          </Text>
+          <Box px="86px" pt="32px">
+            <FilteredCaseDisplay cases={cases[status]} numberOfRows={2} />
+          </Box>
+        </>
+      ) : (
+        // This is temporary
+        <Text>Redirecting to homepage...</Text>
+      )}
+      <Flex justifyContent="center" py="45px">
         <Button
           variant="ghost"
           px="2"

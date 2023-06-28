@@ -1,5 +1,4 @@
 import { Box, Text, Tag, Icon, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ArrowUpRight } from "react-feather";
 import CaseStatus from "../../types/CaseStatus";

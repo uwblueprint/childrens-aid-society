@@ -83,3 +83,5 @@ class Intake(db.Model, BaseMixin):
     caregivers = db.relationship(
         "Caregiver", backref="associated_intake", cascade="all, delete"
     )
+    lead_access_worker_name = db.Column(db.String, nullable=True)
+    intake_meeting_notes = db.Column(db.String, nullable=True)

@@ -106,14 +106,14 @@ const Home = (): React.ReactElement => {
         caseTag: CaseStatus.ACTIVE,
       },
       {
-        caseTitle: "Case 1",
+        caseTitle: "Case 2",
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
         caseTag: CaseStatus.ACTIVE,
       },
       {
-        caseTitle: "Case 1",
+        caseTitle: "Case 3",
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",

@@ -47,7 +47,7 @@ const PermanentDeleteModal = ({
         primaryTitle="Delete Archived Case"
         secondaryTitle="Attention"
         titleColor="red.600"
-        mainButtonVariant="warning"
+        mainButtonVariant="delete"
         modalContent={
           <Box>
             <Box pb={5}>

@@ -299,6 +299,7 @@ def create_intake():
 
     return jsonify(new_intake.__dict__), 201
 
+
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)
 def delete_intake():
     """
@@ -324,7 +325,8 @@ def delete_intake():
         jsonify({"error": "Must supply intake id as query parameter."}),
         400,
     )
-  
+
+
 @blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
 def update_intake_route(intake_id):
     try:
@@ -334,4 +336,3 @@ def update_intake_route(intake_id):
 
     except Exception as error:
         return jsonify(str(error)), 400
-

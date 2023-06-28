@@ -72,8 +72,12 @@ const Cases = (): React.ReactElement | null => {
   const status = queryParams.get("status");
   const history = useHistory();
 
-  if (!status) {
+  const goToHomepage = () => {
     history.push("/");
+  };
+
+  if (!status) {
+    goToHomepage();
     return null;
   }
 
@@ -83,7 +87,7 @@ const Cases = (): React.ReactElement | null => {
   );
 
   if (!validStatus) {
-    history.push("/");
+    goToHomepage();
     return null;
   }
 
@@ -94,9 +98,13 @@ const Cases = (): React.ReactElement | null => {
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Box px="80px" pt="32px">
-        <Icon as={ArrowLeft} boxSize={8} />
-      </Box>
+      <Button
+        variant="tertiary"
+        leftIcon={<Icon as={ArrowLeft} boxSize={8} color="black" />}
+        onClick={goToHomepage}
+        ml="65px"
+        mt="32px"
+      />
       <Text textStyle="header-large" px="86px" pt="16px">
         {formattedStatus} Cases
       </Text>

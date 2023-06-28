@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Text, Tag, Icon, useDisclosure } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { ArrowUpRight } from "react-feather";

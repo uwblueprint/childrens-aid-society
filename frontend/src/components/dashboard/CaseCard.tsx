@@ -7,7 +7,7 @@ import StatusModal from "./StatusModal";
 import PermanentDeleteModal from "./PermanentDeleteModal";
 
 export type CaseCardProps = {
-  caseTitle: string;
+  caseId: number;
   caseLead: string;
   date: string;
   familyName: string;
@@ -30,7 +30,7 @@ const colorChange = (value: string) => {
 };
 
 const CaseCard = ({
-  caseTitle,
+  caseId,
   caseLead,
   date,
   familyName,
@@ -72,7 +72,7 @@ const CaseCard = ({
           textStyle="title-medium"
         >
           <Text textStyle="title-medium" marginBottom="15px">
-            {caseTitle}
+            Case {caseId}
           </Text>
           <Icon w="6" h="6" as={ArrowUpRight} />
         </Box>
@@ -114,7 +114,7 @@ const CaseCard = ({
         onClose={onClosePermanentDelete}
       />
       <StatusModal
-        caseNumber={1}
+        caseId={caseId}
         status="ARCHIVED"
         isOpen={isOpenStatusModal}
         onClick={() => {}}

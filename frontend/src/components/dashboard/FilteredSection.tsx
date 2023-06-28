@@ -44,8 +44,8 @@ const FilteredSection = ({
             {cases.slice(0, 4).map((caseData: CaseCardProps) => {
               return (
                 <CaseCard
-                  key={caseData.caseTitle}
-                  caseTitle={caseData.caseTitle}
+                  key={caseData.caseId}
+                  caseId={caseData.caseId}
                   caseLead={caseData.caseLead}
                   date={caseData.date}
                   familyName={caseData.familyName}

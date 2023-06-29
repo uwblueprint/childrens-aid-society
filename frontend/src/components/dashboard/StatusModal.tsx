@@ -10,6 +10,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { ChevronDown } from "react-feather";
+import { worker } from "cluster";
 import ModalComponent from "../common/ModalComponent";
 
 import CustomInput from "../common/CustomInput";
@@ -36,9 +37,21 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
+
+  const hasAdditionalNotesOrWorkerName =
+    meetingNotes !== "" || workerName !== "";
+
+  const handleClearPage = () => {
+    setWorkerName("");
+    setMeetingNotes("");
+  };
+
   return (
     <Box>
       <ModalComponent
+        workerName={workerName}
+        meetingNotes={meetingNotes}
+        onClearPage={handleClearPage}
         primaryTitle={`Case ${caseNumber}`}
         secondaryTitle=""
         showLeftButton={selectedOption === "ARCHIVED"}
@@ -71,6 +84,7 @@ const StatusModal = ({
                 </Button>
               </Flex>
             </Box>
+
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
               <Box>
                 <FormControl>
@@ -110,6 +124,7 @@ const StatusModal = ({
                 />
               </Box>
             </SimpleGrid>
+
             <Box marginTop="0.75rem">
               <FormLabel htmlFor="meetingNotes">
                 MEETING NOTES <OptionalLabel />

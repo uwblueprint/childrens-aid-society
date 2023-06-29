@@ -29,9 +29,14 @@ export type ModalProps = {
   titleColor?: string;
   mainButtonVariant?: string;
   showModalCloseButton?: boolean;
+  onClearPage?: () => void;
+  meetingNotes?: string;
+  workerName?: string;
 };
 
 const ModalComponent = ({
+  meetingNotes,
+  workerName,
   primaryTitle,
   modalContent,
   disabled,
@@ -48,7 +53,9 @@ const ModalComponent = ({
   titleColor,
   mainButtonVariant,
   showModalCloseButton = true,
+  onClearPage,
 }: ModalProps): React.ReactElement => {
+  const shouldShowClearButton = meetingNotes !== "" || workerName !== "";
   return (
     <Modal
       isCentered
@@ -92,9 +99,11 @@ const ModalComponent = ({
                 <Spacer />
               </>
             )}
-            <Button variant="tertiary" onClick={onClose}>
-              Cancel
-            </Button>
+            {shouldShowClearButton && (
+              <Button variant="tertiary" onClick={onClearPage}>
+                Clear Page
+              </Button>
+            )}
             {unsavedProgressModal && <Spacer />}
             <Button
               variant={mainButtonVariant}

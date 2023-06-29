@@ -103,6 +103,7 @@ const SecondaryHeader = (): React.ReactElement => {
           onClick={() => {}}
           onClose={onCloseStatusModal}
           onDeleteClick={onOpenPermanentDelete}
+          goToIntake={goToIntake}
         />
         <ArchiveCaseModal
           intakeID={1}

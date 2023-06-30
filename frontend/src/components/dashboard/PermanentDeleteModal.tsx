@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 type PermanentDeleteModalProps = {
   isOpen: boolean;
-  onClick: () => void;
+  intakeId: number;
   onClose: () => void;
+  onClick: () => void;
 };
 
 const PermanentDeleteModal = ({
   isOpen,
+  intakeId,
   onClose,
   onClick,
 }: PermanentDeleteModalProps): React.ReactElement => {
   const [confirmationInput, setConfirmationInput] = useState("");
 
-  const deleteConfirmatonText = "Confirm Deletion";
+  const deleteConfirmationText = "Confirm Deletion";
 
   const handleConfirmationInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -24,8 +27,19 @@ const PermanentDeleteModal = ({
     setConfirmationInput(event.target.value);
   };
 
+  const handleDelete = async () => {
+    await IntakeAPIClient.deleteIntake(intakeId);
+  };
+
   const isConfirmationValid =
-    confirmationInput.trim() === deleteConfirmatonText;
+    confirmationInput.trim() === deleteConfirmationText;
+
+  const handleConfirmDelete = () => {
+    if (isConfirmationValid) {
+      handleDelete();
+      onClick();
+    }
+  };
 
   return (
     <Box>
@@ -33,7 +47,7 @@ const PermanentDeleteModal = ({
         primaryTitle="Delete Archived Case"
         secondaryTitle="Attention"
         titleColor="red.600"
-        mainButtonVariant="warning"
+        mainButtonVariant="delete"
         modalContent={
           <Box>
             <Box pb={5}>
@@ -42,8 +56,8 @@ const PermanentDeleteModal = ({
               action is irreversible.
             </Box>
             <Box pb={3}>
-              Please confirm that you want to delete this case by typing “
-              {deleteConfirmatonText}” in the text box below.
+              Please confirm that you want to delete this case by typing &quot;
+              {deleteConfirmationText}&quot; in the text box below.
             </Box>
             <CustomInput
               id="confirmDeletion"
@@ -55,7 +69,7 @@ const PermanentDeleteModal = ({
             />
           </Box>
         }
-        onClick={onClick}
+        onClick={handleConfirmDelete}
         isOpen={isOpen}
         onClose={onClose}
         disabled={!isConfirmationValid}

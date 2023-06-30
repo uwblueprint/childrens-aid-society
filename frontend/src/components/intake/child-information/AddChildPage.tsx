@@ -22,6 +22,7 @@ type AddChildProps = {
   childrens: Children;
   setChildren: React.Dispatch<React.SetStateAction<Children>>;
   selectedIndexChild: number;
+  referrer: string;
 };
 
 export type ChildrenDetails = {
@@ -38,6 +39,7 @@ const AddChild = ({
   childrens,
   setChildren,
   selectedIndexChild,
+  referrer,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -78,7 +80,11 @@ const AddChild = ({
     }
 
     setChildren([...childrens]);
-    setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+    if (referrer === "intake") {
+      setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+    } else {
+      console.log("back")
+    }
   };
 
   useEffect(() => {
@@ -135,7 +141,11 @@ const AddChild = ({
         <Button
           leftIcon={<ArrowLeft />}
           onClick={() => {
-            setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+            if (referrer === "intake") {
+              setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+            } else {
+              console.log("back")
+            }
           }}
           variant="tertiary"
         >

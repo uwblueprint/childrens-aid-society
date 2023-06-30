@@ -112,6 +112,7 @@ const CaseCard = ({
           onCloseStatusModal();
         }}
         onClose={onClosePermanentDelete}
+        intakeId={2} // TODO implement so that this componet gets passed in real intakeId
       />
       <StatusModal
         caseId={caseId}

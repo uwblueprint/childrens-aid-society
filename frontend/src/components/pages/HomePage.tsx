@@ -25,18 +25,6 @@ const SecondaryHeader = (): React.ReactElement => {
     history.push("/intake");
   }
 
-  const {
-    onOpen: onOpenPermanentDelete,
-    isOpen: isOpenPermanentDelete,
-    onClose: onClosePermanentDelete,
-  } = useDisclosure();
-
-  const {
-    onOpen: onOpenStatusModal,
-    isOpen: isOpenStatusModal,
-    onClose: onCloseStatusModal,
-  } = useDisclosure();
-
   return (
     <Box>
       <Text textStyle="header-large">Intake Cases</Text>
@@ -58,38 +46,6 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
-
-        <Button
-          height="100%"
-          px="2"
-          rounded="lg"
-          border="1px"
-          onClick={onOpenStatusModal}
-        >
-          Test Status Modal
-        </Button>
-
-        <PermanentDeleteModal
-          isOpen={isOpenPermanentDelete}
-          onClick={() => {
-            // TODO: add deletion logic
-            onClosePermanentDelete();
-            onCloseStatusModal();
-          }}
-          onClose={onClosePermanentDelete}
-          intakeId={2} // TODO implement so that this componet gets passed in real intakeId
-        />
-        {/* //TODO: dynamically pass in case details 
-        and add onClick save functionality */}
-        <StatusModal
-          caseId={1}
-          status="ARCHIVED"
-          isOpen={isOpenStatusModal}
-          onClick={() => {}}
-          onClose={onCloseStatusModal}
-          onDeleteClick={onOpenPermanentDelete}
-          goToIntake={goToIntake}
-        />
       </Flex>
     </Box>
   );
@@ -138,7 +94,7 @@ const Home = (): React.ReactElement => {
     ],
     pending: [
       {
-        caseId: 1,
+        caseId: 6,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
@@ -147,7 +103,7 @@ const Home = (): React.ReactElement => {
     ],
     archived: [
       {
-        caseId: 1,
+        caseId: 7,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",

@@ -116,7 +116,7 @@ const CaseCard = ({
       />
       <StatusModal
         caseId={caseId}
-        status="ARCHIVED"
+        status={caseTag.toUpperCase()}
         isOpen={isOpenStatusModal}
         onClick={() => {}}
         onClose={onCloseStatusModal}

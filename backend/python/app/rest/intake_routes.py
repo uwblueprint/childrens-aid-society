@@ -25,7 +25,8 @@ from ..services.implementations.provider_service import ProviderService
 
 intake_service = IntakeService(current_app.logger)
 caregiver_service = CaregiverService(current_app.logger)
-permittedIndividual_service = OtherPermittedIndividualService(current_app.logger)
+permittedIndividual_service = OtherPermittedIndividualService(
+    current_app.logger)
 familialConcern_service = FamilialConcernService(current_app.logger)
 goal_service = GoalService(current_app.logger)
 daytimeContact_service = DaytimeContactService(current_app.logger)
@@ -62,6 +63,8 @@ def create_intake():
     # intake_id
     intake_response = intake_service.get_all_intakes()
     intake_id = len(intake_response) + 1
+
+    print(request.json)
 
     # intake
     intake = {
@@ -123,7 +126,8 @@ def create_intake():
         caregiver = CreateCaregiverDTO(**caregiver)
         try:
             caregiver_response = caregiver_service.create_caregiver(caregiver)
-            undos.append((caregiver_service, "delete_caregiver", caregiver_response.id))
+            undos.append(
+                (caregiver_service, "delete_caregiver", caregiver_response.id))
         except Exception as error:
             run_undos()
             return jsonify(error), 400
@@ -187,8 +191,10 @@ def create_intake():
             "goal": shortTermGoal,
         }
         try:
-            shortTermGoal_response = goal_service.add_new_goal(**newShortTermGoal)
-            undos.append((goal_service, "delete_goal", shortTermGoal_response.id))
+            shortTermGoal_response = goal_service.add_new_goal(
+                **newShortTermGoal)
+            undos.append((goal_service, "delete_goal",
+                         shortTermGoal_response.id))
         except Exception as error:
             run_undos()
             return jsonify(error), 400
@@ -201,8 +207,10 @@ def create_intake():
             "goal": longTermGoal,
         }
         try:
-            longTermGoal_response = goal_service.add_new_goal(**newLongTermGoal)
-            undos.append((goal_service, "delete_goal", longTermGoal_response.id))
+            longTermGoal_response = goal_service.add_new_goal(
+                **newLongTermGoal)
+            undos.append((goal_service, "delete_goal",
+                         longTermGoal_response.id))
         except Exception as error:
             run_undos()
             return jsonify(error), 400
@@ -244,7 +252,8 @@ def create_intake():
             "special_needs": child["childInfo"]["specialNeeds"],
         }
         try:
-            child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
+            child_response = child_service.add_new_child(
+                CreateChildDTO(**child_obj))
             undos.append((child_service, "delete_child", child_response.id))
         except Exception as error:
             run_undos()
@@ -298,3 +307,14 @@ def create_intake():
                 return jsonify(error), 400
 
     return jsonify(new_intake.__dict__), 201
+
+
+@blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
+def update_intake_route(intake_id):
+    try:
+        updated_data = request.json
+        updated_intake = intake_service.update_intake(intake_id, updated_data)
+        return jsonify(updated_intake.__dict__), 200
+
+    except Exception as error:
+        return jsonify(str(error)), 400

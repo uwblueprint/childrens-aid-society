@@ -1,5 +1,5 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
@@ -19,12 +19,27 @@ type AddChildProps = {
   allProviders: Providers;
   setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  childrens: Children;
+  setChildren: React.Dispatch<React.SetStateAction<Children>>;
+  selectedIndexChild: number;
+  referrer: string;
 };
+
+export type ChildrenDetails = {
+  childDetails: ChildDetails;
+  schoolDetails: SchoolDetails;
+  providers: Providers;
+};
+export type Children = ChildrenDetails[];
 
 const AddChild = ({
   allProviders,
   setAllProviders,
   setStep,
+  childrens,
+  setChildren,
+  selectedIndexChild,
+  referrer,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -52,8 +67,33 @@ const AddChild = ({
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    // TODO: Do something with the information
+    const updatedChild = {
+      childDetails: { ...childDetails },
+      schoolDetails: { ...schoolDetails },
+      providers: [...providers],
+    };
+
+    if (selectedIndexChild >= 0) {
+      childrens.splice(selectedIndexChild, 1, updatedChild);
+    } else {
+      childrens.push(updatedChild);
+    }
+
+    setChildren([...childrens]);
+    if (referrer === "intake") {
+      setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+    } else {
+      console.log("back")
+    }
   };
+
+  useEffect(() => {
+    if (selectedIndexChild >= 0) {
+      setChildDetails(childrens[selectedIndexChild].childDetails);
+      setSchoolDetails(childrens[selectedIndexChild].schoolDetails);
+      setProviders(childrens[selectedIndexChild].providers);
+    }
+  }, [childrens, selectedIndexChild]);
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -101,7 +141,11 @@ const AddChild = ({
         <Button
           leftIcon={<ArrowLeft />}
           onClick={() => {
-            setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+            if (referrer === "intake") {
+              setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+            } else {
+              console.log("back")
+            }
           }}
           variant="tertiary"
         >
@@ -130,6 +174,7 @@ const AddChild = ({
         <Button
           type="submit"
           mr="96px"
+          // remove when error checking is implemented
           disabled={requiredInfomationMissing}
           onClick={childFormSubmitHandler}
         >

@@ -7,7 +7,7 @@ import NewCaregiverModal, {
 } from "../NewCaregiverModal";
 import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 
-export type CaregiverFormProps = {
+type CaregiverFormProps = {
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
 };

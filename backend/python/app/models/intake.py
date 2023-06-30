@@ -67,5 +67,21 @@ class Intake(db.Model, BaseMixin):
     denial_reason = db.Column(db.String, nullable=True)
     concerns = db.relationship("FamilialConcern", secondary=intakes_concerns)
     goals = db.relationship("Goal", secondary=intakes_goals)
+    user = db.relationship("User", foreign_keys=[user_id])
+    concerns = db.relationship(
+        "FamilialConcern", secondary=intakes_concerns, backref="intakes"
+    )
+    goals = db.relationship(
+        "Goal", secondary=intakes_goals, backref="intakes", cascade="all, delete"
+    )
+    children = db.relationship(
+        "Child", backref="associated_intake", cascade="all, delete"
+    )
+    other_permitted_individuals = db.relationship(
+        "OtherPermittedIndividual", backref="intake", cascade="all, delete"
+    )
+    caregivers = db.relationship(
+        "Caregiver", backref="associated_intake", cascade="all, delete"
+    )
     lead_access_worker_name = db.Column(db.String, nullable=True)
     intake_meeting_notes = db.Column(db.String, nullable=True)

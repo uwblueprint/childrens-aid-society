@@ -1,5 +1,8 @@
+from sqlalchemy import inspect
+
 from ...models import db
 from ...models.intake import Intake
+from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
 
@@ -50,8 +53,15 @@ class IntakeService(IIntakeService):
             if not intake:
                 raise Exception("Intake with id {} not found".format(intake_id))
 
+            providers_to_delete = Provider.query.filter_by(child_id=intake_id).all()
+
+            for provider in providers_to_delete:
+                provider.child_id = None
+                db.session.delete(provider)
+
             db.session.delete(intake)
             db.session.commit()
+
         except Exception as error:
             db.session.rollback()
             raise error

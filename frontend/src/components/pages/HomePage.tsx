@@ -93,6 +93,7 @@ const SecondaryHeader = (): React.ReactElement => {
             onCloseStatusModal();
           }}
           onClose={onClosePermanentDelete}
+          intakeId={2} // TODO implement so that this componet gets passed in real intakeId
         />
         {/* //TODO: dynamically pass in case details 
         and add onClick save functionality */}

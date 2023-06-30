@@ -136,4 +136,19 @@ const put = async ({
     return error;
   }
 };
-export default { post, get, put };
+
+const deleteIntake = async (intakeId: number): Promise<void> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+  try {
+    const response = await baseAPIClient.delete(`/intake/${intakeId}`, {
+      headers: { Authorization: bearerToken },
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export default { post, get, put, deleteIntake };

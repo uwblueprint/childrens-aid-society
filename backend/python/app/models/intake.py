@@ -43,7 +43,7 @@ first_nation_heritage_enum = db.Enum(
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     intake_status = db.Column(intake_status_enum, nullable=True, default="SUBMITTED")
     referring_worker_name = db.Column(db.String, nullable=False)

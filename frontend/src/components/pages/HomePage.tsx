@@ -7,7 +7,6 @@ import {
   Spacer,
   VStack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -15,8 +14,6 @@ import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
-import StatusModal from "../dashboard/StatusModal";
-import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import { CaseCardProps } from "../dashboard/CaseCard";
 
 const SecondaryHeader = (): React.ReactElement => {
@@ -24,18 +21,6 @@ const SecondaryHeader = (): React.ReactElement => {
   function goToIntake() {
     history.push("/intake");
   }
-
-  const {
-    onOpen: onOpenPermanentDelete,
-    isOpen: isOpenPermanentDelete,
-    onClose: onClosePermanentDelete,
-  } = useDisclosure();
-
-  const {
-    onOpen: onOpenStatusModal,
-    isOpen: isOpenStatusModal,
-    onClose: onCloseStatusModal,
-  } = useDisclosure();
 
   return (
     <Box>
@@ -58,38 +43,6 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
-
-        <Button
-          height="100%"
-          px="2"
-          rounded="lg"
-          border="1px"
-          onClick={onOpenStatusModal}
-        >
-          Test Status Modal
-        </Button>
-
-        <PermanentDeleteModal
-          isOpen={isOpenPermanentDelete}
-          onClick={() => {
-            // TODO: add deletion logic
-            onClosePermanentDelete();
-            onCloseStatusModal();
-          }}
-          onClose={onClosePermanentDelete}
-          intakeId={2} // TODO implement so that this componet gets passed in real intakeId
-        />
-        {/* //TODO: dynamically pass in case details 
-        and add onClick save functionality */}
-        <StatusModal
-          caseNumber={1}
-          status="ARCHIVED"
-          isOpen={isOpenStatusModal}
-          onClick={() => {}}
-          onClose={onCloseStatusModal}
-          onDeleteClick={onOpenPermanentDelete}
-          goToIntake={goToIntake}
-        />
       </Flex>
     </Box>
   );
@@ -99,28 +52,28 @@ const Home = (): React.ReactElement => {
   const cases: { [key: string]: CaseCardProps[] } = {
     active: [
       {
-        caseTitle: "Case 1",
+        caseId: 1,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
         caseTag: CaseStatus.ACTIVE,
       },
       {
-        caseTitle: "Case 1",
+        caseId: 2,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
         caseTag: CaseStatus.ACTIVE,
       },
       {
-        caseTitle: "Case 1",
+        caseId: 3,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
         caseTag: CaseStatus.ACTIVE,
       },
       {
-        caseTitle: "Case 1",
+        caseId: 4,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
@@ -129,7 +82,7 @@ const Home = (): React.ReactElement => {
     ],
     submitted: [
       {
-        caseTitle: "Case 1",
+        caseId: 5,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
@@ -138,7 +91,7 @@ const Home = (): React.ReactElement => {
     ],
     pending: [
       {
-        caseTitle: "Case 1",
+        caseId: 6,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",
@@ -147,7 +100,7 @@ const Home = (): React.ReactElement => {
     ],
     archived: [
       {
-        caseTitle: "Case 1",
+        caseId: 7,
         caseLead: "Case Lead",
         date: "11/06/2023",
         familyName: "Family Name",

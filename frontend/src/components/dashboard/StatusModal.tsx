@@ -19,7 +19,7 @@ import { StatusSelectField } from "./StatusSelectField";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type StatusModalProps = {
-  caseNumber?: number;
+  caseId?: number;
   status: string;
   isOpen: boolean;
   onClick: () => void;
@@ -29,7 +29,7 @@ export type StatusModalProps = {
 };
 
 const StatusModal = ({
-  caseNumber,
+  caseId,
   status,
   isOpen,
   onClose,
@@ -100,6 +100,7 @@ const StatusModal = ({
         meetingNotes={meetingNotes}
         onClearPage={handleClearPage}
         primaryTitle={`Case ${caseNumber}`}
+        primaryTitle={`Case ${caseId}`}
         secondaryTitle=""
         showLeftButton={selectedOption === "ARCHIVED"}
         leftButtonTitle="Delete"

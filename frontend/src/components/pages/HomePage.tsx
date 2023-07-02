@@ -18,6 +18,7 @@ import FilteredSection from "../dashboard/FilteredSection";
 import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -29,6 +30,12 @@ const SecondaryHeader = (): React.ReactElement => {
     onOpen: onOpenPermanentDelete,
     isOpen: isOpenPermanentDelete,
     onClose: onClosePermanentDelete,
+  } = useDisclosure();
+
+  const {
+    onOpen: onOpenVisitCadenceModal,
+    isOpen: isOpenVisitCadenceModal,
+    onClose: onCloseVisitCadenceModal,
   } = useDisclosure();
 
   const {
@@ -68,6 +75,15 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           Test Status Modal
         </Button>
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={onOpenVisitCadenceModal}
+        >
+          Test Cadence Modal
+        </Button>
 
         <PermanentDeleteModal
           isOpen={isOpenPermanentDelete}
@@ -89,6 +105,16 @@ const SecondaryHeader = (): React.ReactElement => {
           onClose={onCloseStatusModal}
           onDeleteClick={onOpenPermanentDelete}
           goToIntake={goToIntake}
+        />
+        <VisitCadenceModal
+          caseNumber={1}
+          status="ARCHIVED"
+          isOpen={isOpenVisitCadenceModal}
+          onClick={() => {}}
+          onClose={onCloseVisitCadenceModal}
+          onDeleteClick={onOpenPermanentDelete}
+          goToIntake={goToIntake}
+          childName="Anne Chovy"
         />
       </Flex>
     </Box>

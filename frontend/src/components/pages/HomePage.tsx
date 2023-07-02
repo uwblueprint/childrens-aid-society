@@ -52,7 +52,7 @@ const SecondaryHeader = (): React.ReactElement => {
   );
 };
 
-const HomePage = (): React.ReactElement => {
+const Home = (): React.ReactElement => {
   const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
     active: [],
     submitted: [],
@@ -123,4 +123,4 @@ const HomePage = (): React.ReactElement => {
   );
 };
 
-export default HomePage;
+export default Home;

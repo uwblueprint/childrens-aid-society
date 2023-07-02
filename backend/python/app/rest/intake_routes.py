@@ -71,10 +71,6 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
-    # intake_id
-    intake_response = intake_service.get_all_intakes()
-    intake_id = len(intake_response) + 1
-
     # intake
     intake = {
         "user_id": request.json["userId"],
@@ -130,7 +126,7 @@ def create_intake():
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
         }
         caregiver = CreateCaregiverDTO(**caregiver)
         try:
@@ -148,7 +144,7 @@ def create_intake():
             "phone_number": permittedIndividual["phoneNumber"],
             "relationship_to_child": permittedIndividual["relationshipToChildren"],
             "notes": permittedIndividual["additionalNotes"],
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
         }
         try:
             permittedIndividual_response = (
@@ -246,7 +242,7 @@ def create_intake():
 
         # children
         child_obj = {
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
             "first_name": child["childInfo"]["first_name"],
             "last_name": child["childInfo"]["last_name"],
             "date_of_birth": child["childInfo"]["dateOfBirth"],

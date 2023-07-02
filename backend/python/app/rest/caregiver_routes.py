@@ -20,7 +20,6 @@ def get_all_caregivers():
     except Exception as error:
         return jsonify(error), 400
 
-
 # create a caregiver
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
@@ -30,5 +29,19 @@ def create_caregiver():
         caregiver = CreateCaregiverDTO(**request.get_json())
         new_caregiver = caregiver_service.create_caregiver(caregiver)
         return jsonify(new_caregiver.__dict__), 201
+    except Exception as error:
+        return jsonify(str(error)), 400
+
+
+# update a caregiver
+@blueprint.route("/<int:caregiver_id>", methods=["PUT"], strict_slashes=False)
+def update_caregiver(caregiver_id):
+    try:
+        new_caregiver = request.json
+        updated_caregiver = caregiver_service.update_caregiver(
+            caregiver_id, new_caregiver
+        )
+        return jsonify(updated_caregiver.__dict__), 200
+
     except Exception as error:
         return jsonify(str(error)), 400

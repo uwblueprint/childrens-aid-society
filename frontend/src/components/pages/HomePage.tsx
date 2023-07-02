@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -15,9 +15,13 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import IntakeApiClient, {
+  IntakeResponse,
+} from "../../APIClients/IntakeAPIClient";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
+
   function goToIntake() {
     history.push("/intake");
   }
@@ -48,66 +52,51 @@ const SecondaryHeader = (): React.ReactElement => {
   );
 };
 
-const Home = (): React.ReactElement => {
-  const cases: { [key: string]: CaseCardProps[] } = {
-    active: [
-      {
-        caseId: 1,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseId: 2,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseId: 3,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseId: 4,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-    ],
-    submitted: [
-      {
-        caseId: 5,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.SUBMITTED,
-      },
-    ],
-    pending: [
-      {
-        caseId: 6,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.PENDING,
-      },
-    ],
-    archived: [
-      {
-        caseId: 7,
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ARCHIVED,
-      },
-    ],
+const HomePage = (): React.ReactElement => {
+  const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
+    active: [],
+    submitted: [],
+    pending: [],
+    archived: [],
+  });
+
+  const mapIntakeResponsesToCaseCards = (
+    intakes: IntakeResponse[],
+  ): CaseCardProps[] => {
+    return intakes.map((intake) => ({
+      caseId:
+        typeof intake.user_id === "number"
+          ? intake.user_id
+          : parseInt(intake.user_id, 10),
+      caseLead: intake.caseReferral.referringWorkerName,
+      date: intake.caseReferral.referralDate,
+      familyName: intake.caseReferral.familyName,
+      caseTag: CaseStatus.ACTIVE,
+    }));
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const activeCases = await IntakeApiClient.get("active", 1, 20);
+        const submittedCases = await IntakeApiClient.get("submitted", 1, 20);
+        const pendingCases = await IntakeApiClient.get("pending", 1, 20);
+        const archivedCases = await IntakeApiClient.get("archived", 1, 20);
+
+        setCases({
+          active: mapIntakeResponsesToCaseCards(activeCases),
+          submitted: mapIntakeResponsesToCaseCards(submittedCases),
+          pending: mapIntakeResponsesToCaseCards(pendingCases),
+          archived: mapIntakeResponsesToCaseCards(archivedCases),
+        });
+      } catch (error) {
+        console.error("Error fetching cases:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Box>
       <IntakeHeader
@@ -134,4 +123,4 @@ const Home = (): React.ReactElement => {
   );
 };
 
-export default Home;
+export default HomePage;

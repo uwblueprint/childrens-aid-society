@@ -24,10 +24,11 @@ const ArchiveCaseModal = ({
     };
     try {
       await intakeAPIClient.put({ changedData, intakeID });
-      return <Redirect to={HOME_PAGE} />;
     } catch (error) {
       return error;
     }
+    onClose();
+    return <Redirect to={HOME_PAGE} />;
   };
   return (
     <ModalComponent

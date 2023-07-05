@@ -10,14 +10,9 @@ import {
   PopoverTrigger,
   Box,
   InputGroup,
-  InputLeftAddon,
   Input,
-  TagLabel,
-  Tag,
   InputRightElement,
-  InputLeftElement,
 } from "@chakra-ui/react";
-import CustomTag from "../common/CustomTag";
 import { CustomInputProps } from "../common/CustomInput";
 
 export type VisitCadenceSelectProps = CustomInputProps & {
@@ -37,12 +32,10 @@ export type VisitCadenceSelectProps = CustomInputProps & {
 export const VisitCadenceSelectDropDown = ({
   options,
   onSelect,
-  placeholder,
   width,
 }: {
   options: string[];
   onSelect: (value: string) => void;
-  placeholder: string;
   width: string;
 }): React.ReactElement => {
   return (
@@ -94,12 +87,6 @@ export const VisitCadenceSelectField = ({
   width,
 }: VisitCadenceSelectProps): React.ReactElement => {
   const [isFocused, setFocus] = useState(false);
-  const colorMap = new Map([
-    ["SUBMITTED", "#3557BC"],
-    ["ACTIVE", "#42A43D"],
-    ["ARCHIVED", "#767680"],
-    ["PENDING", "#BC8711"],
-  ]);
   return (
     <Popover autoFocus={false} isOpen={isFocused} placement="bottom-start">
       <PopoverTrigger>
@@ -133,7 +120,6 @@ export const VisitCadenceSelectField = ({
         <VisitCadenceSelectDropDown
           options={options}
           onSelect={(value) => setSelected(value)}
-          placeholder={placeholder}
           width={dropdownWidth}
         />
       )}

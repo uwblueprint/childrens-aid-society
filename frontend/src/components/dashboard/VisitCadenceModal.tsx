@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Flex,
-  Text,
   Button,
   FormLabel,
   SimpleGrid,
@@ -14,8 +12,6 @@ import ModalComponent from "../common/ModalComponent";
 
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
-import { StatusSelectField } from "./StatusSelectField";
-import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import { VisitCadenceSelectField } from "./VisitCadenceSelectField";
 
 export type VisitCadenceModalProps = {
@@ -30,13 +26,9 @@ export type VisitCadenceModalProps = {
 };
 
 const VisitCadenceModal = ({
-  caseNumber,
-  status,
   isOpen,
   onClose,
   onClick,
-  onDeleteClick,
-  goToIntake,
   childName,
 }: VisitCadenceModalProps): React.ReactElement => {
   const [visitingFamilyMember, setVisitingFamilyMember] = useState("");

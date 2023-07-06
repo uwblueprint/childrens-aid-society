@@ -44,6 +44,13 @@ const cases: { [key: string]: CaseCardProps[] } = {
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
+    {
+      caseTitle: "Case 5",
+      caseLead: "Case Lead",
+      date: "11/06/2023",
+      familyName: "Family Name",
+      caseTag: CaseStatus.ACTIVE,
+    },
   ],
   submitted: [],
   pending: [
@@ -56,6 +63,20 @@ const cases: { [key: string]: CaseCardProps[] } = {
     },
   ],
   archived: [
+    {
+      caseTitle: "Case 1",
+      caseLead: "Case Lead",
+      date: "11/06/2023",
+      familyName: "Family Name",
+      caseTag: CaseStatus.ARCHIVED,
+    },
+    {
+      caseTitle: "Case 1",
+      caseLead: "Case Lead",
+      date: "11/06/2023",
+      familyName: "Family Name",
+      caseTag: CaseStatus.ARCHIVED,
+    },
     {
       caseTitle: "Case 1",
       caseLead: "Case Lead",
@@ -98,17 +119,30 @@ const Cases = (): React.ReactElement | null => {
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Button
-        variant="tertiary"
-        leftIcon={<Icon as={ArrowLeft} boxSize={8} color="black" />}
-        onClick={goToHomepage}
-        ml="65px"
-        mt="32px"
-      />
-      <Text textStyle="header-large" px="86px" pt="16px">
+      <Flex justifyContent="center">
+        <Button
+          marginRight="1270px"
+          variant="tertiary"
+          onClick={goToHomepage}
+          mt="32px"
+          leftIcon={
+            <Icon
+              as={ArrowLeft}
+              boxSize={8}
+              color="black"
+              _hover={{ color: "gray" }}
+            />
+          }
+        />
+      </Flex>
+      <Text
+        textStyle="header-large"
+        marginLeft="calc(50% - 650px)"
+        pt="16px"
+      >
         {formattedStatus} Cases
       </Text>
-      <Box px="86px" pt="32px">
+      <Box pt="32px">
         <FilteredCaseDisplay
           cases={cases[status]}
           numberOfRows={2}

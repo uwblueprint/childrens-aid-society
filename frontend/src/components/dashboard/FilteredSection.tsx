@@ -30,7 +30,7 @@ const FilteredSection = ({
           View All
         </Button>
       </Flex>
-      <Box width="100%" height="100%">
+      <Box width="100%" height="100%" pt="25px">
         <FilteredCaseDisplay cases={cases} numberOfRows={1} status={status} />
       </Box>
     </Box>

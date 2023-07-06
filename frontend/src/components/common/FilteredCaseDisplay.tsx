@@ -1,4 +1,4 @@
-import { Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
 
@@ -28,26 +28,36 @@ const FilteredCaseDisplay = ({
     const start = i * 4;
     const end = start + 4;
     const casesDisplayed = cases.slice(start, end);
+    const fillerBoxAmount = 4 - casesDisplayed.length;
 
     rows.push(
-      <Flex key={i} justifyContent="space-between" pt="16px">
+      <Flex key={i} columnGap="12px" pb="24px">
         {casesDisplayed.map((caseData: CaseCardProps) => {
           return (
-            <CaseCard
-              key={caseData.caseTitle}
-              caseTitle={caseData.caseTitle}
-              caseLead={caseData.caseLead}
-              date={caseData.date}
-              familyName={caseData.familyName}
-              caseTag={caseData.caseTag}
-            />
+            <Box px="12px" key={caseData.caseTitle}>
+              <CaseCard
+                key={caseData.caseTitle}
+                caseTitle={caseData.caseTitle}
+                caseLead={caseData.caseLead}
+                date={caseData.date}
+                familyName={caseData.familyName}
+                caseTag={caseData.caseTag}
+              />
+            </Box>
           );
         })}
+        {Array.from({ length: fillerBoxAmount }, (_, index) => (
+          <Box mx="12px" px="30px" width="297px" key={index} />
+        ))}
       </Flex>,
     );
   }
 
-  return <>{rows}</>;
+  return (
+    <Flex justifyContent="center" flexWrap="wrap">
+      {rows}
+    </Flex>
+  );
 };
 
 export default FilteredCaseDisplay;

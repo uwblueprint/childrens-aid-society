@@ -64,8 +64,6 @@ def create_intake():
     intake_response = intake_service.get_all_intakes()
     intake_id = len(intake_response) + 1
 
-    print(request.json)
-
     # intake
     intake = {
         "user_id": request.json["userId"],

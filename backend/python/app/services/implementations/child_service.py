@@ -52,21 +52,22 @@ class ChildService(IChildService):
             db.session.rollback()
             raise error
 
-    def edit_child(self, child_id, child, intake_id):
+    def edit_child(self, child_data, child_id):
         try:
             child = Child.query.filter_by(id=child_id).first()
             if not child:
                 raise Exception("Child with id {} not found".format(child_id))
-            child["intake_id"] = intake_id
-            child["first_name"] = child["childInfo"]["first_name"]
-            child["last_name"] = child["childInfo"]["last_name"]
-            child["date_of_birth"] = child["childInfo"]["dateOfBirth"]
-            child["cpin_number"] = child["childInfo"]["cpinFileNumber"]
-            child["service_worker"] = child["childInfo"]["serviceWorker"]
-            child["daytime_contact_id"] = daytimeContact_response.id
-            child["special_needs"] = child["childInfo"]["specialNeeds"]
+            child.intake_id = child_data["intake_id"]
+            child.first_name = child_data["first_name"]
+            child.last_name = child_data["last_name"]
+            child.date_of_birth = child_data["date_of_birth"]
+            child.cpin_number = child_data["cpin_number"]
+            child.service_worker = child_data["service_worker"]
+            child.daytime_contact_id = child_data["daytime_contact_id"]
+            child.special_needs = child_data["special_needs"]
             db.session.merge(child)
             db.session.commit()
+            return ChildDTO(**child.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error

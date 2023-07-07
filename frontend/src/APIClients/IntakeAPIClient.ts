@@ -14,7 +14,7 @@ export type IntakeResponse = {
   };
   courtInformation: {
     courtStatus: string;
-    orderReferral: number;
+    orderReferral: number | null;
     firstNationHeritage: string;
     firstNationBand: string;
   };
@@ -78,6 +78,22 @@ export type IntakeResponse = {
   };
 };
 
+interface Intake {
+  user_id: number;
+  referring_worker_name: string;
+  referring_worker_contact: string;
+  cpin_number: string;
+  cpin_file_type: string;
+  family_name: string;
+  referral_date: string;
+  court_status: string;
+  first_nation_heritage: string;
+  first_nation_band: string;
+  transportation_requirements: string;
+  scheduling_requirements: string;
+  suggested_start_date: string;
+}
+
 const post = async ({
   formData,
 }: {
@@ -97,13 +113,17 @@ const post = async ({
   }
 };
 
-const get = async (intakeStatus: string, page: number, limit: number): Promise<IntakeResponse[]> => {
+const get = async (
+  intakeStatus: string,
+  page: number,
+  limit: number,
+): Promise<IntakeResponse[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get("/intake", {
+    const { data } = await baseAPIClient.get<Intake[]>("/intake", {
       headers: { Authorization: bearerToken },
       params: {
         intake_status: intakeStatus,
@@ -111,7 +131,84 @@ const get = async (intakeStatus: string, page: number, limit: number): Promise<I
         page_limit: limit,
       },
     });
-    return data;
+
+    const mappedData: IntakeResponse[] = data.map((intake) => ({
+      user_id: intake.user_id.toString(),
+      caseReferral: {
+        referringWorkerName: intake.referring_worker_name,
+        referringWorkerContact: intake.referring_worker_contact,
+        cpinFileNumber: parseInt(intake.cpin_number, 20),
+        cpinFileType: intake.cpin_file_type,
+        familyName: intake.family_name,
+        referralDate: intake.referral_date,
+      },
+      courtInformation: {
+        courtStatus: intake.court_status,
+        orderReferral: null,
+        firstNationHeritage: intake.first_nation_heritage,
+        firstNationBand: intake.first_nation_band,
+      },
+      children: [
+        {
+          childInfo: {
+            name: "",
+            dateOfBirth: "",
+            cpinFileNumber: 0,
+            serviceWorker: "",
+            specialNeeds: "",
+            concerns: [],
+          },
+          daytimeContact: {
+            name: "",
+            contactInfo: "",
+            address: "",
+            dismissalTime: "",
+          },
+          provider: [
+            {
+              name: "",
+              fileNumber: 0,
+              primaryPhoneNumber: 0,
+              secondaryPhoneNumber: 0,
+              email: "",
+              address: "",
+              additionalContactNotes: "",
+              relationshipToChild: "",
+            },
+          ],
+        },
+      ],
+      caregivers: [
+        {
+          name: "",
+          dateOfBirth: "",
+          primaryPhoneNumber: 0,
+          secondaryPhoneNumber: 0,
+          additionalContactNotes: "",
+          address: "",
+          relationshipToChild: "",
+          individualConsiderations: "",
+        },
+      ],
+      programDetails: {
+        transportRequirements: intake.transportation_requirements,
+        schedulingRequirements: intake.scheduling_requirements,
+        suggestedStartDate: intake.suggested_start_date,
+        shortTermGoals: [],
+        longTermGoals: [],
+        familialConcerns: [],
+        permittedIndividuals: [
+          {
+            name: "",
+            phoneNumber: 0,
+            relationshipToChildren: "",
+            additionalNotes: "",
+          },
+        ],
+      },
+    }));
+
+    return mappedData;
   } catch (error) {
     return error;
   }

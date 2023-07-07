@@ -78,10 +78,10 @@ const Home = (): React.ReactElement => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const activeCases = await IntakeApiClient.get("active", 1, 20);
-        const submittedCases = await IntakeApiClient.get("submitted", 1, 20);
-        const pendingCases = await IntakeApiClient.get("pending", 1, 20);
-        const archivedCases = await IntakeApiClient.get("archived", 1, 20);
+        const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
+        const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
+        const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
+        const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
 
         setCases({
           active: mapIntakeResponsesToCaseCards(activeCases),

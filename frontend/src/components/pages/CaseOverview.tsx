@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import { ArrowLeft, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
-import CaseOverviewFooter from "../intake/CaseOverviewFooter";
+import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
 
 const SecondaryHeader = (): React.ReactElement => {

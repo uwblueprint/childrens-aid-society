@@ -81,9 +81,9 @@ const AddChild = ({
 
     setChildren([...childrens]);
     if (referrer === "intake") {
-      setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+      setStep(IntakeSteps.INDIVIDUAL_DETAILS);
     } else {
-      console.log("back")
+      // console.log("back");
     }
   };
 
@@ -142,9 +142,9 @@ const AddChild = ({
           leftIcon={<ArrowLeft />}
           onClick={() => {
             if (referrer === "intake") {
-              setStep(IntakeSteps.INDIVIDUAL_DETAILS)
+              setStep(IntakeSteps.INDIVIDUAL_DETAILS);
             } else {
-              console.log("back")
+              // console.log("back");
             }
           }}
           variant="tertiary"

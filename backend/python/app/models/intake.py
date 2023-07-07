@@ -43,7 +43,7 @@ first_nation_heritage_enum = db.Enum(
 class Intake(db.Model, BaseMixin):
     __tablename__ = "intakes"
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     intake_status = db.Column(intake_status_enum, nullable=True, default="SUBMITTED")
     referring_worker_name = db.Column(db.String, nullable=False)
@@ -67,5 +67,21 @@ class Intake(db.Model, BaseMixin):
     denial_reason = db.Column(db.String, nullable=True)
     concerns = db.relationship("FamilialConcern", secondary=intakes_concerns)
     goals = db.relationship("Goal", secondary=intakes_goals)
+    user = db.relationship("User", foreign_keys=[user_id])
+    concerns = db.relationship(
+        "FamilialConcern", secondary=intakes_concerns, backref="intakes"
+    )
+    goals = db.relationship(
+        "Goal", secondary=intakes_goals, backref="intakes", cascade="all, delete"
+    )
+    children = db.relationship(
+        "Child", backref="associated_intake", cascade="all, delete"
+    )
+    other_permitted_individuals = db.relationship(
+        "OtherPermittedIndividual", backref="intake", cascade="all, delete"
+    )
+    caregivers = db.relationship(
+        "Caregiver", backref="associated_intake", cascade="all, delete"
+    )
     lead_access_worker_name = db.Column(db.String, nullable=True)
     intake_meeting_notes = db.Column(db.String, nullable=True)

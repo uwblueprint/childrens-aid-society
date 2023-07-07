@@ -1,5 +1,8 @@
+from sqlalchemy import inspect
+
 from ...models import db
 from ...models.intake import Intake
+from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
 
@@ -8,11 +11,14 @@ class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
 
-    def get_all_intakes(self):
-        # FIXME: change this to match spec for actual get intakes method
+    def get_all_intakes(self, intake_status, page_number, page_limit=20):
+        start = (page_number - 1) * page_limit
+        end = page_number * page_limit
         try:
-            intakes = Intake.query.all()
-            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
+            intakes = Intake.query.filter_by(intake_status=intake_status).all()
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes][
+                start:end
+            ]
             return intakes_dto
         except Exception as error:
             self.logger.error(str(error))
@@ -50,8 +56,15 @@ class IntakeService(IIntakeService):
             if not intake:
                 raise Exception("Intake with id {} not found".format(intake_id))
 
+            providers_to_delete = Provider.query.filter_by(child_id=intake_id).all()
+
+            for provider in providers_to_delete:
+                provider.child_id = None
+                db.session.delete(provider)
+
             db.session.delete(intake)
             db.session.commit()
+
         except Exception as error:
             db.session.rollback()
             raise error

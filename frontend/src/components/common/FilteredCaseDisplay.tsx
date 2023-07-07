@@ -34,10 +34,10 @@ const FilteredCaseDisplay = ({
       <Flex key={i} pb="24px">
         {casesDisplayed.map((caseData: CaseCardProps) => {
           return (
-            <Box px="12px" key={caseData.caseTitle}>
+            <Box px="12px" key={caseData.caseId}>
               <CaseCard
-                key={caseData.caseTitle}
-                caseTitle={caseData.caseTitle}
+                key={caseData.caseId}
+                caseId={caseData.caseId}
                 caseLead={caseData.caseLead}
                 date={caseData.date}
                 familyName={caseData.familyName}

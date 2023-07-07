@@ -49,3 +49,4 @@ class IIntakeService(ABC):
         :raises Exception: if intake_id or updated_data is not valid or if an error occurs during update
         """
         pass
+    

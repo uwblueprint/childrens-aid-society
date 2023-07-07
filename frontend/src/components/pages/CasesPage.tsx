@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { ArrowLeft } from "react-feather";
 import { useHistory, useLocation } from "react-router-dom";

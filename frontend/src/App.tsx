@@ -39,7 +39,7 @@ const App = (): React.ReactElement => {
   );
 
   const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(
-    currentUser
+    currentUser,
   );
 
   // Some sort of global state. Context API replaces redux.

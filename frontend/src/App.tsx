@@ -30,6 +30,8 @@ import NotFound from "./components/pages/NotFound";
 import Default from "./components/pages/Default";
 import Template from "./components/pages/TemplatePage";
 import { IntakeValueProvider } from "./contexts/IntakeValueContext";
+import { IntakeValueProvider } from "./contexts/IntakeValueContext";
+import CaseOverview from "./components/pages/CaseOverview";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -73,6 +75,8 @@ const App = (): React.ReactElement => {
                     exact
                     path={Routes.TEMPLATE_PAGE}
                     component={Template}
+                    path={Routes.CASEOVERVIEW_PAGE}
+                    component={CaseOverview}
                   />
                   <Route exact path="*" component={NotFound} />
                 </Switch>

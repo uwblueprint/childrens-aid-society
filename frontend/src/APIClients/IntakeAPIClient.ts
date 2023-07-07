@@ -140,7 +140,9 @@ const get = async (
         cpinFileNumber: parseInt(intake.cpin_number, 20),
         cpinFileType: intake.cpin_file_type,
         familyName: intake.family_name,
-        referralDate: intake.referral_date,
+        referralDate: new Date(intake.referral_date).toLocaleDateString(
+          "en-GB",
+        ),
       },
       courtInformation: {
         courtStatus: intake.court_status,

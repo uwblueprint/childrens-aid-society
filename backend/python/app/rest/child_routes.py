@@ -22,6 +22,7 @@ def create_child():
         for undo in undos:
             service, fn, arg = undo
             service.__dict__[fn](arg)
+
     print(request.json)
     child_obj = {
         "intake_id": request.json["intake_id"],
@@ -34,8 +35,7 @@ def create_child():
         "special_needs": request.json["child"]["childInfo"]["specialNeeds"],
     }
     try:
-        child_response = child_service.add_new_child(
-            CreateChildDTO(**child_obj))
+        child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
         undos.append((child_service, "delete_child", child_response.id))
     except Exception as error:
         run_undos()
@@ -54,6 +54,7 @@ def edit_child():
         for undo in undos:
             service, fn, arg = undo
             service.__dict__[fn](arg)
+
     child_obj = {
         "intake_id": request.json["intake_id"],
         "first_name": request.json["child"]["childInfo"]["first_name"],
@@ -65,8 +66,7 @@ def edit_child():
         "special_needs": request.json["child"]["childInfo"]["specialNeeds"],
     }
     try:
-        child_response = child_service.edit_child(
-            child_obj, request.json["child_id"])
+        child_response = child_service.edit_child(child_obj, request.json["child_id"])
         # undos.append((child_service, "delete_child", child_response.id))
     except Exception as error:
         # run_undos()

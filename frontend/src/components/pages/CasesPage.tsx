@@ -121,7 +121,7 @@ const Cases = (): React.ReactElement | null => {
       />
       <Flex justifyContent="center">
         <Button
-          marginRight="1270px"
+          marginRight="1250px"
           variant="tertiary"
           onClick={goToHomepage}
           mt="32px"
@@ -135,11 +135,7 @@ const Cases = (): React.ReactElement | null => {
           }
         />
       </Flex>
-      <Text
-        textStyle="header-large"
-        marginLeft="calc(50% - 650px)"
-        pt="16px"
-      >
+      <Text textStyle="header-large" marginLeft="calc(50% - 630px)" pt="16px">
         {formattedStatus} Cases
       </Text>
       <Box pt="32px">

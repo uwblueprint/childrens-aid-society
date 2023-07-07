@@ -31,7 +31,7 @@ const FilteredCaseDisplay = ({
     const fillerBoxAmount = 4 - casesDisplayed.length;
 
     rows.push(
-      <Flex key={i} columnGap="12px" pb="24px">
+      <Flex key={i} pb="24px">
         {casesDisplayed.map((caseData: CaseCardProps) => {
           return (
             <Box px="12px" key={caseData.caseTitle}>

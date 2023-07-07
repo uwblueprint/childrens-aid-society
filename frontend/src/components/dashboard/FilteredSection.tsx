@@ -1,9 +1,17 @@
 import React from "react";
-import { Box, Button, Flex, Heading, Icon, Spacer } from "@chakra-ui/react";
-import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
-import { CaseCardProps } from "./CaseCard";
-import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Icon,
+  Spacer,
+  Text,
+  Center,
+} from "@chakra-ui/react";
+import { ArrowRight } from "react-feather";
+import CaseCard, { CaseCardProps } from "./CaseCard";
 
 const FilteredSection = ({
   status,
@@ -19,7 +27,7 @@ const FilteredSection = ({
 
   return (
     <Box height="40vh" minHeight="fit-content">
-      <Flex>
+      <Flex mb={5}>
         <Heading textStyle="header-medium">{status}</Heading>
         <Spacer />
         <Button
@@ -30,8 +38,29 @@ const FilteredSection = ({
           View All
         </Button>
       </Flex>
-      <Box width="100%" height="100%" pt="25px">
-        <FilteredCaseDisplay cases={cases} numberOfRows={1} status={status} />
+      <Box width="100%" height="100%">
+        {cases.length <= 0 ? (
+          <Center height="full">
+            <Text textStyle="text-medium">
+              No current {status.toLowerCase()} cases
+            </Text>
+          </Center>
+        ) : (
+          <Flex justifyContent="space-between">
+            {cases.slice(0, 4).map((caseData: CaseCardProps) => {
+              return (
+                <CaseCard
+                  key={caseData.caseTitle}
+                  caseTitle={caseData.caseTitle}
+                  caseLead={caseData.caseLead}
+                  date={caseData.date}
+                  familyName={caseData.familyName}
+                  caseTag={caseData.caseTag}
+                />
+              );
+            })}
+          </Flex>
+        )}
       </Box>
     </Box>
   );

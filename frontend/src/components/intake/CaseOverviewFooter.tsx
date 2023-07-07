@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { FileText } from "react-feather";
-import colors from "../../theme/colors";
 
 export type CaseOverviewFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;

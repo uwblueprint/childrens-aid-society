@@ -52,6 +52,7 @@ const SecondaryHeader = (): React.ReactElement => {
 const Home = (): React.ReactElement => {
   // TODO: remove console log
   const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
   console.log(casesFromContext);
 
   const cases: { [key: string]: CaseCardProps[] } = {

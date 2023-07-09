@@ -30,13 +30,11 @@ export type ModalProps = {
   mainButtonVariant?: string;
   showModalCloseButton?: boolean;
   onClearPage?: () => void;
-  meetingNotes?: string;
-  workerName?: string;
+  showClearButton?: () => void;
 };
 
 const ModalComponent = ({
-  meetingNotes,
-  workerName,
+  showClearButton,
   primaryTitle,
   modalContent,
   disabled,
@@ -55,7 +53,6 @@ const ModalComponent = ({
   showModalCloseButton = true,
   onClearPage,
 }: ModalProps): React.ReactElement => {
-  const shouldShowClearButton = meetingNotes !== "" || workerName !== "";
   return (
     <Modal
       isCentered
@@ -99,7 +96,7 @@ const ModalComponent = ({
                 <Spacer />
               </>
             )}
-            {shouldShowClearButton && (
+            {showClearButton && onClearPage && (
               <Button variant="tertiary" onClick={onClearPage}>
                 Clear Page
               </Button>

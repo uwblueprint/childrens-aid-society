@@ -12,11 +12,6 @@ import * as Routes from "./constants/Routes";
 import AUTHENTICATED_USER_KEY from "./constants/AuthConstants";
 import AuthContext from "./contexts/AuthContext";
 import { getLocalStorageObj } from "./utils/LocalStorageUtils";
-import SampleContext, {
-  DEFAULT_SAMPLE_CONTEXT,
-} from "./contexts/SampleContext";
-import sampleContextReducer from "./reducers/SampleContextReducer";
-import SampleContextDispatcherContext from "./contexts/SampleContextDispatcherContext";
 
 import customTheme from "./theme";
 
@@ -27,7 +22,6 @@ import Intake from "./components/pages/IntakePage";
 import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
-import Default from "./components/pages/Default";
 import { IntakeValueProvider } from "./contexts/IntakeValueContext";
 import CaseOverview from "./components/pages/CaseOverview";
 import CasesContext, { DEFAULT_CASES_CONTEXT } from "./contexts/CasesContext";
@@ -41,7 +35,8 @@ const App = (): React.ReactElement => {
     AUTHENTICATED_USER_KEY,
   );
 
-  const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(currentUser);
+  const [authenticatedUser, setAuthenticatedUser] =
+    useState<AuthenticatedUser>(currentUser);
 
   // Some sort of global state. Context API replaces redux.
   // Split related states into different contexts as necessary.
@@ -67,7 +62,6 @@ const App = (): React.ReactElement => {
                   <Route exact path={Routes.HOME_PAGE} component={Home} />
                   <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
                   <Route exact path={Routes.VISIT_PAGE} component={Visit} />
-                  <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
                   <Route
                     exact
                     path={Routes.CASEOVERVIEW_PAGE}

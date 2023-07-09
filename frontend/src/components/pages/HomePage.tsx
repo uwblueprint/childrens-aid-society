@@ -50,7 +50,9 @@ const SecondaryHeader = (): React.ReactElement => {
 };
 
 const Home = (): React.ReactElement => {
+  // TODO: remove console log
   const casesFromContext = useContext(CasesContext);
+  console.log(casesFromContext);
 
   const cases: { [key: string]: CaseCardProps[] } = {
     active: [

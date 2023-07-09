@@ -65,9 +65,9 @@ const Home = (): React.ReactElement => {
   ): CaseCardProps[] => {
     return intakes.map((intake) => ({
       caseId:
-        typeof intake.user_id === "number"
-          ? intake.user_id
-          : parseInt(intake.user_id, 10),
+        typeof intake.case_id === "number"
+          ? intake.case_id
+          : parseInt(intake.case_id, 10),
       caseLead: intake.caseReferral.referringWorkerName,
       date: intake.caseReferral.referralDate,
       familyName: intake.caseReferral.familyName,

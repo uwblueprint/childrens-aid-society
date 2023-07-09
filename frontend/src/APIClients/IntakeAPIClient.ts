@@ -4,6 +4,7 @@ import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
 
 export type IntakeResponse = {
   user_id: string | number;
+  case_id: string | number;
   caseReferral: {
     referringWorkerName: string;
     referringWorkerContact: string;
@@ -80,6 +81,7 @@ export type IntakeResponse = {
 
 interface Intake {
   user_id: number;
+  id: number;
   referring_worker_name: string;
   referring_worker_contact: string;
   cpin_number: string;
@@ -134,6 +136,7 @@ const get = async (
 
     const mappedData: IntakeResponse[] = data.map((intake) => ({
       user_id: intake.user_id.toString(),
+      case_id: intake.id.toString(),
       caseReferral: {
         referringWorkerName: intake.referring_worker_name,
         referringWorkerContact: intake.referring_worker_contact,

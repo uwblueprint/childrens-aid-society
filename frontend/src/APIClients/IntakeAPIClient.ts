@@ -1,88 +1,9 @@
 import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
+import { Case } from "../types/CasesContextTypes";
 
-export type IntakeResponse = {
-  user_id: string | number;
-  caseReferral: {
-    referringWorkerName: string;
-    referringWorkerContact: string;
-    cpinFileNumber: number;
-    cpinFileType: string;
-    familyName: string;
-    referralDate: string;
-  };
-  courtInformation: {
-    courtStatus: string;
-    orderReferral: number;
-    firstNationHeritage: string;
-    firstNationBand: string;
-  };
-  children: [
-    {
-      childInfo: {
-        name: string;
-        dateOfBirth: string;
-        cpinFileNumber: number;
-        serviceWorker: string;
-        specialNeeds: string;
-        concerns: string[];
-      };
-      daytimeContact: {
-        name: string;
-        contactInfo: string;
-        address: string;
-        dismissalTime: string;
-      };
-      provider: [
-        {
-          name: string;
-          fileNumber: number;
-          primaryPhoneNumber: number;
-          secondaryPhoneNumber: number;
-          email: string;
-          address: string;
-          additionalContactNotes: string;
-          relationshipToChild: string;
-        },
-      ];
-    },
-  ];
-  caregivers: [
-    {
-      name: string;
-      dateOfBirth: string;
-      primaryPhoneNumber: number;
-      secondaryPhoneNumber: number;
-      additionalContactNotes: string;
-      address: string;
-      relationshipToChild: string;
-      individualConsiderations: string;
-    },
-  ];
-  programDetails: {
-    transportRequirements: string;
-    schedulingRequirements: string;
-    suggestedStartDate: string;
-    shortTermGoals: string[];
-    longTermGoals: string[];
-    familialConcerns: string[];
-    permittedIndividuals: [
-      {
-        name: string;
-        phoneNumber: number;
-        relationshipToChildren: string;
-        additionalNotes: string;
-      },
-    ];
-  };
-};
-
-const post = async ({
-  formData,
-}: {
-  formData: FormData;
-}): Promise<IntakeResponse> => {
+const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -97,7 +18,7 @@ const post = async ({
   }
 };
 
-const get = async (): Promise<IntakeResponse[]> => {
+const get = async (): Promise<Case[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",

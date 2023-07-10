@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import CasesContext from "../../contexts/CasesContext";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -49,6 +50,11 @@ const SecondaryHeader = (): React.ReactElement => {
 };
 
 const Home = (): React.ReactElement => {
+  // TODO: remove console log
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
+
   const cases: { [key: string]: CaseCardProps[] } = {
     active: [
       {

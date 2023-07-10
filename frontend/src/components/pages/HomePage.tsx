@@ -90,7 +90,7 @@ const Home = (): React.ReactElement => {
           archived: mapIntakeResponsesToCaseCards(archivedCases),
         });
       } catch (error) {
-        console.error("Error fetching cases:", error);
+        throw error;
       }
     };
 

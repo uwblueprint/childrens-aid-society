@@ -77,21 +77,17 @@ const Home = (): React.ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
-        const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
-        const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
-        const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
+      const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
+      const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
+      const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
+      const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
 
-        setCases({
-          active: mapIntakeResponsesToCaseCards(activeCases),
-          submitted: mapIntakeResponsesToCaseCards(submittedCases),
-          pending: mapIntakeResponsesToCaseCards(pendingCases),
-          archived: mapIntakeResponsesToCaseCards(archivedCases),
-        });
-      } catch (error) {
-        throw error;
-      }
+      setCases({
+        active: mapIntakeResponsesToCaseCards(activeCases),
+        submitted: mapIntakeResponsesToCaseCards(submittedCases),
+        pending: mapIntakeResponsesToCaseCards(pendingCases),
+        archived: mapIntakeResponsesToCaseCards(archivedCases),
+      });
     };
 
     fetchData();

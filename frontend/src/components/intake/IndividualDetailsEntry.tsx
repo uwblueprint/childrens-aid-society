@@ -1,22 +1,24 @@
 import React from "react";
-import { VStack, Icon } from "@chakra-ui/react";
-import { UserPlus } from "react-feather";
-import { useHistory } from "react-router-dom";
-import PromptBox from "./PromptBox";
-import { ADD_CHILD_PAGE } from "../../constants/Routes";
+import { VStack } from "@chakra-ui/react";
 import { Caregivers } from "./NewCaregiverModal";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import ChildrenForm from "./indivDetails/ChildrenForm";
 import CaregiverForm from "./indivDetails/CaregiverProviderForm";
+import { Children } from "./child-information/AddChildPage";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   hideStepper?: boolean;
   hideFooter?: boolean;
+  childrens: Children;
+  setChildren: React.Dispatch<React.SetStateAction<Children>>;
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
+  selectedIndexChild: number;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const IndividualDetailsEntry = ({
@@ -24,11 +26,12 @@ const IndividualDetailsEntry = ({
   setStep,
   hideStepper,
   hideFooter,
+  childrens,
+  setChildren,
   caregivers,
   setCaregivers,
+  setSelectedIndexChild,
 }: IndividualDetailsEntryProp): React.ReactElement => {
-  const history = useHistory();
-
   const onNextStep = () => {
     nextStep();
     // TODO: SET UP SAVING INVIDUAL DETAILS
@@ -51,14 +54,11 @@ const IndividualDetailsEntry = ({
       )}
       <React.Fragment key="IndividualDetailsEntry">
         <VStack padding="32px" spacing="24px">
-          <PromptBox
-            headerText="Children"
-            descriptionText="No children have been added to the case yet. "
-            buttonText="Add child"
-            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
-            onButtonClick={() => {
-              history.push(ADD_CHILD_PAGE);
-            }}
+          <ChildrenForm
+            childrens={childrens}
+            setChildren={setChildren}
+            setStep={setStep}
+            setSelectedIndexChild={setSelectedIndexChild}
           />
           <CaregiverForm
             caregivers={caregivers}
@@ -68,7 +68,6 @@ const IndividualDetailsEntry = ({
       </React.Fragment>
       {!hideFooter && (
         <IntakeFooter
-          currentStep={IntakeSteps.INDIVIDUAL_DETAILS}
           nextButtonText="Next section"
           showClearPageBtn
           isStepComplete={() => true} // TODO: validate form

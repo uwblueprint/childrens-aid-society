@@ -142,7 +142,6 @@ const ReviewForm = ({
       </Stack>
 
       <IntakeFooter
-        currentStep={IntakeSteps.REVIEW_CASE_DETAILS}
         nextButtonText="Submit case"
         isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}

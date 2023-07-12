@@ -7,7 +7,7 @@ import NewCaregiverModal, {
 } from "../NewCaregiverModal";
 import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 
-export type CaregiverFormProps = {
+type CaregiverFormProps = {
   caregivers: Caregivers;
   setCaregivers: React.Dispatch<React.SetStateAction<Caregivers>>;
 };
@@ -17,6 +17,7 @@ const CaregiverForm = ({
   setCaregivers,
 }: CaregiverFormProps): React.ReactElement => {
   const [caregiversDeleted, setCaregiversDeleted] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const {
     onOpen: onOpenAddCaregivers,
     isOpen: isOpenAddCaregivers,
@@ -24,7 +25,11 @@ const CaregiverForm = ({
   } = useDisclosure();
 
   const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
-    caregivers.push(newCaregiver);
+    if (selectedIndex >= 0) {
+      caregivers.splice(selectedIndex, 1, newCaregiver);
+    } else {
+      caregivers.push(newCaregiver);
+    }
     setCaregivers(caregivers);
   };
 
@@ -46,6 +51,17 @@ const CaregiverForm = ({
     },
   );
 
+  const emptyCaregiver: CaregiverDetails = {
+    caregiverName: "",
+    dateOfBirth: "",
+    primaryPhoneNo: "",
+    secondaryPhoneNo: "",
+    contactNotes: "",
+    address: "",
+    relationship: "",
+    indivConsiderations: "",
+  };
+
   return (
     <>
       <PromptBox
@@ -56,11 +72,15 @@ const CaregiverForm = ({
         onButtonClick={onOpenAddCaregivers}
         individualDetails={caregiverDetailsOverview}
         deleteIndividual={deleteCaregiver}
+        setSelectedIndex={setSelectedIndex}
       />
       <NewCaregiverModal
         isOpen={isOpenAddCaregivers}
         onClick={onClickNewCaregiver}
         onClose={onCloseAddCaregivers}
+        caregiver={
+          selectedIndex >= 0 ? caregivers[selectedIndex] : emptyCaregiver
+        }
       />
     </>
   );

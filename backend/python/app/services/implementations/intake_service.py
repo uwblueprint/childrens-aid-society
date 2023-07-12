@@ -1,5 +1,8 @@
+from sqlalchemy import inspect
+
 from ...models import db
 from ...models.intake import Intake
+from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
 
@@ -8,7 +11,20 @@ class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
 
-    def create_intake(self, intake):
+    def get_all_intakes(self, intake_status, page_number, page_limit=20):
+        start = (page_number - 1) * page_limit
+        end = page_number * page_limit
+        try:
+            intakes = Intake.query.filter_by(intake_status=intake_status).all()
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes][
+                start:end
+            ]
+            return intakes_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def create_intake(self, intake: CreateIntakeDTO):
         try:
             if not intake:
                 raise Exception(
@@ -24,30 +40,54 @@ class IntakeService(IIntakeService):
             db.session.add(new_intake_entry)
             db.session.commit()
 
-            return IntakeDTO(
-                id=new_intake_entry.id,
-                user_id=new_intake_entry.user_id,
-                intake_status=new_intake_entry.intake_status,
-                referring_worker_name=new_intake_entry.referring_worker_name,
-                referring_worker_contact=new_intake_entry.referring_worker_contact,
-                referral_date=new_intake_entry.referral_date,
-                family_name=new_intake_entry.family_name,
-                cpin_number=new_intake_entry.cpin_number,
-                cpin_file_type=new_intake_entry.cpin_file_type,
-                court_status=new_intake_entry.court_status,
-                court_order_file=new_intake_entry.court_order_file,
-                first_nation_heritage=new_intake_entry.first_nation_heritage,
-                first_nation_band=new_intake_entry.first_nation_band,
-                transportation_requirements=new_intake_entry.transportation_requirements,
-                scheduling_requirements=new_intake_entry.scheduling_requirements,
-                suggested_start_date=new_intake_entry.suggested_start_date,
-                date_accepted=new_intake_entry.date_accepted,
-                access_weekday=new_intake_entry.access_weekday,
-                access_location=new_intake_entry.access_location,
-                access_time=new_intake_entry.access_time,
-                lead_access_worker_id=new_intake_entry.lead_access_worker_id,
-                denial_reason=new_intake_entry.denial_reason,
-            )
+            return IntakeDTO(**new_intake_entry.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def delete_intake(self, intake_id: int):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to delete_intake function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+
+            intake = Intake.query.filter_by(id=intake_id).first()
+            if not intake:
+                raise Exception("Intake with id {} not found".format(intake_id))
+
+            providers_to_delete = Provider.query.filter_by(child_id=intake_id).all()
+
+            for provider in providers_to_delete:
+                provider.child_id = None
+                db.session.delete(provider)
+
+            db.session.delete(intake)
+            db.session.commit()
+
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def update_intake(self, intake_id: int, updated_data):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to update_intake function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+
+            intake = Intake.query.filter_by(id=intake_id).first()
+            if not intake:
+                raise Exception("Intake with id {} not found".format(intake_id))
+
+            if "intake_status" in updated_data:
+                intake.intake_status = updated_data["intake_status"]
+            if "lead_access_worker_name" in updated_data:
+                intake.lead_access_worker_name = updated_data["lead_access_worker_name"]
+            if "intake_meeting_notes" in updated_data:
+                intake.intake_meeting_notes = updated_data["intake_meeting_notes"]
+            db.session.commit()
+            return IntakeDTO(**intake.to_dict())
         except Exception as error:
             db.session.rollback()
             raise error

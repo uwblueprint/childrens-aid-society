@@ -61,7 +61,7 @@ const Home = (): React.ReactElement => {
   });
 
   const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
-    if(intakes.length == 0) {
+    if (intakes.length === 0) {
       return [];
     }
     return intakes.map((intake) => ({

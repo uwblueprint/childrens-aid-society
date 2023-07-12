@@ -46,7 +46,9 @@ const get = async (
         cpinFileNumber: intake.caseReferral.cpinFileNumber,
         cpinFileType: intake.caseReferral.cpinFileType,
         familyName: intake.caseReferral.familyName,
-        referralDate: new Date(intake.caseReferral.referralDate).toLocaleDateString("en-GB"),
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
       },
       courtInformation: intake.courtInformation,
       children: intake.children,

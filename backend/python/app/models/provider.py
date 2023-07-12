@@ -15,3 +15,4 @@ class Provider(db.Model, BaseMixin):
     relationship_to_child = db.Column(db.String, nullable=False)
     additional_contact_notes = db.Column(db.String, nullable=True)
     child_id = db.Column(db.Integer, db.ForeignKey("children.id"), nullable=False)
+    child = db.relationship("Child", backref="providers")

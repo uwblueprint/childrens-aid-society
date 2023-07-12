@@ -134,7 +134,9 @@ def logout(user_id):
     """
     try:
         auth_service.revoke_tokens(user_id)
-        return "", 204
+        res = jsonify({})
+        res.set_cookie("refreshToken", "", expires=0)
+        return res, 204
     except Exception as e:
         error_message = getattr(e, "message", None)
         return jsonify({"error": (error_message if error_message else str(e))}), 500

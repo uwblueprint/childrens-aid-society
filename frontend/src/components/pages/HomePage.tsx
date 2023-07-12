@@ -61,19 +61,19 @@ const Home = (): React.ReactElement => {
   });
 
   const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
-    if (intakes.length === 0) {
-      return [];
+    if (intakes.length > 0) {
+      return intakes.map((intake) => ({
+        caseId:
+          typeof intake.case_id === "number"
+            ? intake.case_id
+            : parseInt(intake.case_id, 10),
+        caseLead: intake.caseReferral.referringWorkerName,
+        date: intake.caseReferral.referralDate,
+        familyName: intake.caseReferral.familyName,
+        caseTag: CaseStatus.ACTIVE,
+      }));
     }
-    return intakes.map((intake) => ({
-      caseId:
-        typeof intake.case_id === "number"
-          ? intake.case_id
-          : parseInt(intake.case_id, 10),
-      caseLead: intake.caseReferral.referringWorkerName,
-      date: intake.caseReferral.referralDate,
-      familyName: intake.caseReferral.familyName,
-      caseTag: CaseStatus.ACTIVE,
-    }));
+    return [];
   };
 
   // TODO: remove console log

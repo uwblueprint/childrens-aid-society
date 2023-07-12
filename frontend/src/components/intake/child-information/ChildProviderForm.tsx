@@ -11,13 +11,19 @@ import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 export type ChildProviderFormProps = {
   providers: Providers;
   setProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  allProviders: Providers;
+  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
 };
 
 const ChildProviderForm = ({
   providers,
   setProviders,
+  allProviders,
+  setAllProviders,
 }: ChildProviderFormProps): React.ReactElement => {
   const [providersDeleted, setProvidersDeleted] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const {
     onOpen: onOpenExistingProviders,
     isOpen: isOpenExistingProviders,
@@ -30,7 +36,18 @@ const ChildProviderForm = ({
   } = useDisclosure();
 
   const onClickNewProvider = (newProvider: ProviderDetails) => {
-    providers.push(newProvider);
+    if (selectedIndex >= 0) {
+      providers.splice(selectedIndex, 1, newProvider);
+    } else {
+      providers.push(newProvider);
+      allProviders.push(newProvider);
+    }
+    setProviders(providers);
+    setAllProviders(allProviders);
+  };
+
+  const onClickExistingProvider = (existingProvider: ProviderDetails) => {
+    providers.push(existingProvider);
     setProviders(providers);
   };
 
@@ -52,6 +69,17 @@ const ChildProviderForm = ({
     },
   );
 
+  const emptyProvider: ProviderDetails = {
+    providerName: "",
+    providerFileNo: "",
+    primaryPhoneNo: "",
+    secondaryPhoneNo: "",
+    email: "",
+    contactNotes: "",
+    address: "",
+    relationship: "",
+  };
+
   return (
     <>
       <VStack padding="100px">
@@ -65,16 +93,23 @@ const ChildProviderForm = ({
           secondaryOnButtonClick={onOpenNewProviders}
           individualDetails={providerDetailsOverview}
           deleteIndividual={deleteProvider}
+          setSelectedIndex={setSelectedIndex}
+          useSecondaryOnClick
         />
         <Box>
           <ExistingProvider
             isOpen={isOpenExistingProviders}
+            onClick={onClickExistingProvider}
             onClose={onCloseExistingProviders}
+            existingProviders={allProviders}
           />
           <NewProviderModal
             isOpen={isOpenNewProviders}
             onClick={onClickNewProvider}
             onClose={onCloseNewProviders}
+            provider={
+              selectedIndex >= 0 ? providers[selectedIndex] : emptyProvider
+            }
           />
         </Box>
       </VStack>

@@ -1,113 +1,126 @@
-import React from "react";
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
-import { ChevronDown, Cloud, Feather } from "react-feather";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Spacer,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
-import CustomTag from "../common/CustomTag";
+import IntakeHeader from "../intake/IntakeHeader";
+import CaseStatus from "../../types/CaseStatus";
+import FilteredSection from "../dashboard/FilteredSection";
+import { CaseCardProps } from "../dashboard/CaseCard";
+import IntakeApiClient from "../../APIClients/IntakeAPIClient";
+import CasesContext from "../../contexts/CasesContext";
+import { Case } from "../../types/CasesContextTypes";
+
+const SecondaryHeader = (): React.ReactElement => {
+  const history = useHistory();
+
+  function goToIntake() {
+    history.push("/intake");
+  }
+
+  return (
+    <Box>
+      <Text textStyle="header-large">Intake Cases</Text>
+      <Flex pt="10">
+        <Box w="20%">
+          <CustomInput
+            placeholder="Search By Family Name"
+            icon={<Icon as={Search} />}
+          />
+        </Box>
+        <Spacer />
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={goToIntake}
+          leftIcon={<Icon as={FilePlus} />}
+        >
+          New case
+        </Button>
+      </Flex>
+    </Box>
+  );
+};
 
 const Home = (): React.ReactElement => {
+  const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
+    active: [],
+    submitted: [],
+    pending: [],
+    archived: [],
+  });
+
+  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
+    if (intakes.length > 0) {
+      return intakes.map((intake) => ({
+        caseId:
+          typeof intake.case_id === "number"
+            ? intake.case_id
+            : parseInt(intake.case_id, 10),
+        caseLead: intake.caseReferral.referringWorkerName,
+        date: intake.caseReferral.referralDate,
+        familyName: intake.caseReferral.familyName,
+        caseTag: CaseStatus.ACTIVE,
+      }));
+    }
+    return [];
+  };
+
+  // TODO: remove console log
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
+      const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
+      const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
+      const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
+
+      setCases({
+        active: mapIntakeResponsesToCaseCards(activeCases),
+        submitted: mapIntakeResponsesToCaseCards(submittedCases),
+        pending: mapIntakeResponsesToCaseCards(pendingCases),
+        archived: mapIntakeResponsesToCaseCards(archivedCases),
+      });
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <Box style={{ textAlign: "center", paddingTop: "20px" }}>
-      <Text
-        style={{
-          marginBottom: "50px",
-        }}
-        textStyle="display-large"
-      >
-        Homepage 🏠
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="display-large">
-        display-large
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="display-medium">
-        display-medium
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="header-large">
-        header-large
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="header-medium">
-        header-medium
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="title-large">
-        title-large
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="title-medium">
-        title-medium
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="title-small">
-        title-small
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="body-large">
-        body-large
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="body-medium">
-        body-medium
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="button-medium">
-        button-medium
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="button-small">
-        button-small
-      </Text>
-      <Text style={{ margin: "10px" }} textStyle="label">
-        label
-      </Text>
-      <Button variant="primary">Primary</Button>
-      <Button variant="primary" disabled>
-        Primary Disabled
-      </Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="secondary" disabled>
-        Secondary Disabled
-      </Button>
-      <Button variant="tertiary">Tertiary</Button>
-      <Button variant="tertiary" disabled>
-        Tertiary Disabled
-      </Button>
-      <Box p="10px">
-        <CustomInput placeholder="Text" icon={<Icon as={Feather} />} />
-      </Box>
-      <Box p="10px">
-        <CustomInput
-          isInvalid
-          placeholder="Text"
-          icon={<Icon as={ChevronDown} />}
-        />
-      </Box>
-      <Box
-        background="blue.500"
-        width="100%"
-        p="25px"
-        borderRadius="0 0 5px 5px"
+    <Box>
+      <IntakeHeader
+        primaryTitle="Children's Aid Society of Algoma"
+        secondaryTitle="Case Management"
+        hasLogout
       />
-      <Box
-        background="red.400"
-        width="100%"
-        p="25px"
-        borderRadius="0 0 5px 5px"
-      />
-      <Box
-        background="green.50"
-        width="100%"
-        p="25px"
-        borderRadius="0 0 5px 5px"
-      />
-      <Icon as={Feather} />
-      <Icon as={Cloud} />
-      <Icon as={ChevronDown} />
-      <Box background="pink.400" margin={20}>
-        Test Spacing 20 (12 rem)
+      <Box px="100px" py="60px">
+        <SecondaryHeader />
+        <VStack spacing={15} align="stretch" my={12}>
+          <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
+          <FilteredSection
+            status={CaseStatus.SUBMITTED}
+            cases={cases.submitted}
+          />
+          <FilteredSection status={CaseStatus.PENDING} cases={cases.pending} />
+          <FilteredSection
+            status={CaseStatus.ARCHIVED}
+            cases={cases.archived}
+          />
+        </VStack>
       </Box>
-      <Box background="cyan.50" margin={8}>
-        Test Spacing 8 (2 rem)
-      </Box>
-      <Box background="orange.400" margin={2}>
-        Test Spacing 2 (0.5 rem)
-      </Box>
-      <Box bg="red.200" w={{ sm: 300, md: 400, base: 500 }}>
-        Breakpoint Box - Under 29em=300px width, 30em-53em=400px width, above
-        54=500px
-      </Box>
-      <CustomTag icon={<Icon as={Feather} />}>Option Name</CustomTag>
     </Box>
   );
 };

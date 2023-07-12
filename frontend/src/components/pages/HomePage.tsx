@@ -60,9 +60,10 @@ const Home = (): React.ReactElement => {
     archived: [],
   });
 
-  const mapIntakeResponsesToCaseCards = (
-    intakes: Case[],
-  ): CaseCardProps[] => {
+  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
+    if(intakes.length == 0) {
+      return [];
+    }
     return intakes.map((intake) => ({
       caseId:
         typeof intake.case_id === "number"
@@ -73,8 +74,8 @@ const Home = (): React.ReactElement => {
       familyName: intake.caseReferral.familyName,
       caseTag: CaseStatus.ACTIVE,
     }));
-  }
-    
+  };
+
   // TODO: remove console log
   const casesFromContext = useContext(CasesContext);
   // eslint-disable-next-line

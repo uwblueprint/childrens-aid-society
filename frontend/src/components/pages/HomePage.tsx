@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -18,6 +19,7 @@ import { CaseCardProps } from "../dashboard/CaseCard";
 import IntakeApiClient, {
   IntakeResponse,
 } from "../../APIClients/IntakeAPIClient";
+import CasesContext from "../../contexts/CasesContext";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -73,7 +75,11 @@ const Home = (): React.ReactElement => {
       familyName: intake.caseReferral.familyName,
       caseTag: CaseStatus.ACTIVE,
     }));
-  };
+    
+  // TODO: remove console log
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
 
   useEffect(() => {
     const fetchData = async () => {

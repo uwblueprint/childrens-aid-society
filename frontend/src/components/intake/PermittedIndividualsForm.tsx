@@ -1,125 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
-  SimpleGrid,
+  Center,
+  Icon,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
-import CustomInput from "../common/CustomInput";
-import { CustomSelectField } from "./Select";
+import { UserPlus } from "react-feather";
+import PermittedIndividualsModal, {
+  PermittedIndividuals,
+  PermittedIndividualsDetails,
+} from "./PermittedIndividualsModal";
+import PromptBox from "./PromptBox";
 
-export type PermittedIndividualDetails = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  relationship: string;
-};
-
-type PermittedIndividualFormProps = {
-  permittedIndividualDetails: PermittedIndividualDetails;
-  setPermittedIndividualDetails: React.Dispatch<
-    React.SetStateAction<PermittedIndividualDetails>
+export type PermittedIndividualsProps = {
+  permittedIndividuals: PermittedIndividuals;
+  setPermittedIndividuals: React.Dispatch<
+    React.SetStateAction<PermittedIndividuals>
   >;
-  prevStep: () => void;
-  nextStep: () => void;
 };
 
 const PermittedIndividualsForm = ({
-  permittedIndividualDetails,
-  setPermittedIndividualDetails,
-  nextStep,
-  prevStep,
-}: PermittedIndividualFormProps): React.ReactElement => {
-  const onSubmit = (values: PermittedIndividualDetails) =>
-    setPermittedIndividualDetails(values);
+  permittedIndividuals,
+  setPermittedIndividuals,
+}: PermittedIndividualsProps): React.ReactElement => {
+  const [
+    permittedIndividualsDeleted,
+    setPermittedIndividualsDeleted,
+  ] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const {
+    onOpen: onOpenAddPermittedIndividuals,
+    isOpen: isOpenAddPermittedIndividuals,
+    onClose: onCloseAddPermittedIndividuals,
+  } = useDisclosure();
+
+  const onClickAddPermittedIndividual = (
+    newPermittedIndividual: PermittedIndividualsDetails,
+  ) => {
+    if (selectedIndex >= 0) {
+      permittedIndividuals.splice(selectedIndex, 1, newPermittedIndividual);
+    } else {
+      permittedIndividuals.push(newPermittedIndividual);
+    }
+    setPermittedIndividuals(permittedIndividuals);
+  };
+
+  const deletePermittedIndividual = (index: number) => {
+    permittedIndividuals.splice(index, 1);
+    setPermittedIndividualsDeleted(permittedIndividualsDeleted + 1);
+    setPermittedIndividuals(permittedIndividuals);
+  };
+
+  const permittedIndividualsOverview: PermittedIndividualsDetails[] = permittedIndividuals.map(
+    (permittedIndividual) => {
+      const individualDetail: PermittedIndividualsDetails = {
+        providerName: permittedIndividual.providerName,
+        phoneNo: permittedIndividual.phoneNo,
+        relationshipToChild: permittedIndividual.relationshipToChild,
+        additionalNotes: permittedIndividual.additionalNotes,
+      };
+      return individualDetail;
+    },
+  );
+
+  const emptyPermittedIndividual: PermittedIndividualsDetails = {
+    providerName: "",
+    phoneNo: "",
+    relationshipToChild: "",
+    additionalNotes: "",
+  };
 
   return (
-    <Formik initialValues={permittedIndividualDetails} onSubmit={onSubmit}>
-      {({ handleSubmit }) => (
-        <Form>
-          <FormControl>
-            <SimpleGrid columns={2} spacing="70px">
-              <Box>
-                <FormLabel htmlFor="firstName" style={{ marginTop: "0px" }}>
-                  FIRST NAME
-                </FormLabel>
-                <Field
-                  as={CustomInput}
-                  name="firstName"
-                  id="firstName"
-                  type="string"
-                  placeholder="Enter name of worker..."
-                />
-              </Box>
-              <Box>
-                <FormLabel htmlFor="lastName" style={{ marginTop: "0px" }}>
-                  LAST NAME
-                </FormLabel>
-                <Field
-                  as={CustomInput}
-                  name="lastName"
-                  id="lastName"
-                  type="string"
-                  placeholder="Enter name of worker..."
-                />
-              </Box>
-            </SimpleGrid>
-            <SimpleGrid columns={2} spacing="70px">
-              <Box>
-                <FormLabel htmlFor="relationship">
-                  RELATIONSHIP TO CHILD
-                </FormLabel>
-                <Field
-                  as={CustomSelectField}
-                  name="relationship"
-                  placeholder="Choose relationship..."
-                  id="relationship"
-                >
-                  <option value="Option 1">Option 1</option>
-                  <option value="Option 2">Option 2</option>
-                  <option value="Option 3">Option 3</option>
-                </Field>
-              </Box>
-              <Box>
-                <FormLabel htmlFor="phoneNumber">PHONE NUMBER</FormLabel>
-                <Field
-                  as={CustomInput}
-                  name="phoneNumber"
-                  id="phoneNumber"
-                  type="string"
-                  placeholder="(ie. 223-2232-2323)"
-                />
-              </Box>
-            </SimpleGrid>
-          </FormControl>
-          <Box marginTop="16px">
-            <Button type="submit" marginRight="10px">
-              Add
-            </Button>
-            <Button
-              marginLeft="10px"
-              onClick={() => {
-                handleSubmit();
-                prevStep();
-              }}
-            >
-              Previous Button
-            </Button>
-            <Button
-              marginLeft="10px"
-              onClick={() => {
-                handleSubmit();
-                nextStep();
-              }}
-            >
-              Next Button
-            </Button>
-          </Box>
-        </Form>
+    <>
+      {permittedIndividuals.length > 0 ? (
+        <Center paddingTop="35px">
+          <PromptBox
+            headerText="Permitted Individuals"
+            descriptionText="No other permitted individuals have been added to the case yet."
+            buttonText="Add permitted individuals"
+            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+            onButtonClick={onOpenAddPermittedIndividuals}
+            permittedIndividualDetails={permittedIndividualsOverview}
+            deleteIndividual={deletePermittedIndividual}
+            setSelectedIndex={setSelectedIndex}
+            useSecondaryOnClick
+          />
+        </Center>
+      ) : (
+        <Box display="flex" justifyContent="space-between" paddingTop="35px">
+          <Text alignSelf="start" textStyle="title-medium">
+            Other permitted individuals
+          </Text>
+          <Button
+            alignSelf="end"
+            leftIcon={<Icon as={UserPlus} />}
+            variant="secondary"
+            mr={2}
+            onClick={onOpenAddPermittedIndividuals}
+          >
+            Add
+          </Button>
+        </Box>
       )}
-    </Formik>
+      <PermittedIndividualsModal
+        isOpen={isOpenAddPermittedIndividuals}
+        onClick={onClickAddPermittedIndividual}
+        onClose={onCloseAddPermittedIndividuals}
+        permittedIndividual={
+          selectedIndex >= 0
+            ? permittedIndividuals[selectedIndex]
+            : emptyPermittedIndividual
+        }
+      />
+    </>
   );
 };
 

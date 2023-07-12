@@ -4,6 +4,8 @@
 
 Made with [starter-code-v2](https://github.com/uwblueprint/starter-code-v2), brought to you by the @uwblueprint/internal-tools team!
 
+Frontend Staging: [https://childrens-aid-society.web.app](https://childrens-aid-society.web.app/intake)
+
 # Getting Started
 
 ## Environment Variables
@@ -13,7 +15,6 @@ Confirm that you have the following files added to your repository, with the cor
 ```
 .env
 frontend/.env
-e2e-tests/.env
 ```
 
 ## Prereqs

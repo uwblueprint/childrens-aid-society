@@ -3,7 +3,6 @@ import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
 import { Case } from "../types/CasesContextTypes";
 
-
 const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
@@ -29,7 +28,7 @@ const get = async (
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get<Intake[]>("/intake", {
+    const { data } = await baseAPIClient.get<Case[]>("/intake", {
       headers: { Authorization: bearerToken },
       params: {
         intake_status: intakeStatus,
@@ -40,81 +39,21 @@ const get = async (
 
     const mappedData: Case[] = data.map((intake) => ({
       user_id: intake.user_id.toString(),
-      case_id: intake.id.toString(),
+      case_id: intake.case_id.toString(),
       caseReferral: {
-        referringWorkerName: intake.referring_worker_name,
-        referringWorkerContact: intake.referring_worker_contact,
-        cpinFileNumber: parseInt(intake.cpin_number, 20),
-        cpinFileType: intake.cpin_file_type,
-        familyName: intake.family_name,
-        referralDate: new Date(intake.referral_date).toLocaleDateString(
+        referringWorkerName: intake.caseReferral.referringWorkerName,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: intake.caseReferral.cpinFileNumber,
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(intake.caseReferral.referralDate).toLocaleDateString(
           "en-GB",
         ),
       },
-      courtInformation: {
-        courtStatus: intake.court_status,
-        orderReferral: null,
-        firstNationHeritage: intake.first_nation_heritage,
-        firstNationBand: intake.first_nation_band,
-      },
-      children: [
-        {
-          childInfo: {
-            name: "",
-            dateOfBirth: "",
-            cpinFileNumber: 0,
-            serviceWorker: "",
-            specialNeeds: "",
-            concerns: [],
-          },
-          daytimeContact: {
-            name: "",
-            contactInfo: "",
-            address: "",
-            dismissalTime: "",
-          },
-          provider: [
-            {
-              name: "",
-              fileNumber: 0,
-              primaryPhoneNumber: 0,
-              secondaryPhoneNumber: 0,
-              email: "",
-              address: "",
-              additionalContactNotes: "",
-              relationshipToChild: "",
-            },
-          ],
-        },
-      ],
-      caregivers: [
-        {
-          name: "",
-          dateOfBirth: "",
-          primaryPhoneNumber: 0,
-          secondaryPhoneNumber: 0,
-          additionalContactNotes: "",
-          address: "",
-          relationshipToChild: "",
-          individualConsiderations: "",
-        },
-      ],
-      programDetails: {
-        transportRequirements: intake.transportation_requirements,
-        schedulingRequirements: intake.scheduling_requirements,
-        suggestedStartDate: intake.suggested_start_date,
-        shortTermGoals: [],
-        longTermGoals: [],
-        familialConcerns: [],
-        permittedIndividuals: [
-          {
-            name: "",
-            phoneNumber: 0,
-            relationshipToChildren: "",
-            additionalNotes: "",
-          },
-        ],
-      },
+      courtInformation: intake.courtInformation,
+      children: intake.children,
+      caregivers: intake.caregivers,
+      programDetails: intake.programDetails
     }));
 
     return mappedData;

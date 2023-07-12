@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -16,10 +15,9 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
-import IntakeApiClient, {
-  IntakeResponse,
-} from "../../APIClients/IntakeAPIClient";
+import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
+import { Case } from "../../types/CasesContextTypes";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
@@ -63,7 +61,7 @@ const Home = (): React.ReactElement => {
   });
 
   const mapIntakeResponsesToCaseCards = (
-    intakes: IntakeResponse[],
+    intakes: Case[],
   ): CaseCardProps[] => {
     return intakes.map((intake) => ({
       caseId:
@@ -75,6 +73,7 @@ const Home = (): React.ReactElement => {
       familyName: intake.caseReferral.familyName,
       caseTag: CaseStatus.ACTIVE,
     }));
+  }
     
   // TODO: remove console log
   const casesFromContext = useContext(CasesContext);

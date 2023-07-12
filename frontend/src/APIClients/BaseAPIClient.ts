@@ -48,11 +48,12 @@ baseAPIClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
       const accessToken = data.accessToken || data.access_token;
       setLocalStorageObjProperty(
         AUTHENTICATED_USER_KEY,
-        "accessToken",
+        "access_token",
         accessToken,
       );
 
-      newConfig.headers.Authorization = accessToken;
+      const bearerToken = `Bearer ${accessToken}`;
+      newConfig.headers.Authorization = bearerToken;
     }
   }
 

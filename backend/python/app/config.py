@@ -35,6 +35,7 @@ class TestingConfig(Config):
 
     DEBUG = False
     TESTING = True
+    SQLALCHEMY_ECHO = True
     MONGODB_URL = "mongomock://localhost"
 
 

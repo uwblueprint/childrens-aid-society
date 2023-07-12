@@ -18,16 +18,45 @@ const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
   }
 };
 
-const get = async (): Promise<Case[]> => {
+const get = async (
+  intakeStatus: string,
+  page: number,
+  limit: number,
+): Promise<Case[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get("/intake", {
+    const { data } = await baseAPIClient.get<Case[]>("/intake", {
       headers: { Authorization: bearerToken },
+      params: {
+        intake_status: intakeStatus,
+        page_number: page,
+        page_limit: limit,
+      },
     });
-    return data;
+
+    const mappedData: Case[] = data.map((intake) => ({
+      user_id: intake.user_id.toString(),
+      case_id: intake.case_id.toString(),
+      caseReferral: {
+        referringWorkerName: intake.caseReferral.referringWorkerName,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: intake.caseReferral.cpinFileNumber,
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
+      },
+      courtInformation: intake.courtInformation,
+      children: intake.children,
+      caregivers: intake.caregivers,
+      programDetails: intake.programDetails,
+    }));
+
+    return mappedData;
   } catch (error) {
     return error;
   }

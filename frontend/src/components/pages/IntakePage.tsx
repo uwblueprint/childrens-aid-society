@@ -1,120 +1,222 @@
 import React, { useState } from "react";
-import { Box, Container } from "@chakra-ui/react";
-import CourtInformationForm, {
-  CourtDetails,
-} from "../intake/CourtInformationForm";
-import ReferralForm, { ReferralDetails } from "../intake/ReferralForm";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { ArrowLeft } from "react-feather";
+import { useHistory } from "react-router-dom";
+import Logo from "../../assets/logo.png";
+import CourtInformationForm from "../intake/CourtInformationForm";
+import ReferralForm from "../intake/ReferralForm";
 import IntakeHeader from "../intake/IntakeHeader";
-import ProgramForm, { ProgramDetails } from "../intake/ProgramForm";
+import ProgramForm from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
-import Stepper from "../intake/Stepper";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
+import { Caregivers } from "../intake/NewCaregiverModal";
+import IntakeSteps from "../intake/intakeSteps";
+import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
+import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
+import UnsavedProgressModal from "../intake/UnsavedProgressModal";
+import AddChild, { Children } from "../intake/child-information/AddChildPage";
+import IntakeFooter from "../intake/IntakeFormFooter";
+import { Providers } from "../intake/NewProviderModal";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const Intake = (): React.ReactElement => {
-  const [step, setStep] = useState(0);
-  const [referralDetails, setReferralDetails] = useState<ReferralDetails>({
-    referringWorker: "",
-    referringWorkerContact: "",
-    familyName: "",
-    referralDate: "",
-    cpinFileNumber: "",
-    cpinFileType: "",
-    phoneNumber: "",
-  });
-  const [courtDetails, setCourtDetails] = useState<CourtDetails>({
-    currentCourtStatus: "",
-    firstNationHeritage: "",
-    firstNationBand: "",
-    orderReferral: null,
-  });
-  const [programDetails, setProgramDetails] = useState<ProgramDetails>({
-    test: "",
-  });
+  // TODO: remove useHistory once dashboard is implemented
+  const history = useHistory();
+  const {
+    onOpen: onOpenUnsavedProgress,
+    isOpen: isOpenUnsavedProgress,
+    onClose: onCloseUnsavedProgress,
+  } = useDisclosure();
+
+  const { step, setStep } = useStepValueContext();
+  const [reviewHeader, setReviewHeader] = useState(false);
+  const { referralDetails, setReferralDetails } = useStepValueContext();
+  const { courtDetails, setCourtDetails } = useStepValueContext();
+  const { programDetails, setProgramDetails } = useStepValueContext();
+
+  const [children, setChildren] = useState<Children>([]);
+  const [caregivers, setCaregivers] = useState<Caregivers>([]);
+  const [
+    permittedIndividuals,
+    setPermittedIndividuals,
+  ] = useState<PermittedIndividuals>([]);
+  const [allProviders, setAllProviders] = useState<Providers>([]);
+  const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
   const nextStep = () => setStep(step + 1);
 
-  const prevStep = () => setStep(step - 1);
-
   const renderDetailsForm = () => {
     switch (step) {
-      case 0:
+      default:
+      case IntakeSteps.CASE_REFERRAL:
         return (
           <ReferralForm
             referralDetails={referralDetails}
             setReferralDetails={setReferralDetails}
             nextStep={nextStep}
+            setStep={setStep}
           />
         );
-      case 1:
+      case IntakeSteps.COURT_INFORMATION:
         return (
           <CourtInformationForm
             courtDetails={courtDetails}
             setCourtDetails={setCourtDetails}
             nextStep={nextStep}
-            prevStep={prevStep}
+            setStep={setStep}
           />
         );
-      case 2:
+      case IntakeSteps.INDIVIDUAL_DETAILS:
         return (
-          <IndividualDetailsEntry nextStep={nextStep} prevStep={prevStep} />
+          <IndividualDetailsEntry
+            nextStep={nextStep}
+            setStep={setStep}
+            childrens={children}
+            setChildren={setChildren}
+            caregivers={caregivers}
+            setCaregivers={setCaregivers}
+            selectedIndexChild={selectedIndexChild}
+            setSelectedIndexChild={setSelectedIndexChild}
+          />
         );
-      case 3:
+      case IntakeSteps.PROGRAM_DETAILS:
         return (
           <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ProgramForm
-                programDetails={programDetails}
-                setProgramDetails={setProgramDetails}
-                prevStep={prevStep}
-                nextStep={nextStep}
-              />
-            </Box>
+            <ProgramForm
+              programDetails={programDetails}
+              setProgramDetails={setProgramDetails}
+              nextStep={nextStep}
+              setStep={setStep}
+            />
+            <PermittedIndividualsForm
+              permittedIndividuals={permittedIndividuals}
+              setPermittedIndividuals={setPermittedIndividuals}
+            />
           </>
+        );
+      case IntakeSteps.REVIEW_CASE_DETAILS:
+        return (
+          <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+            <ReviewForm
+              referralDetails={referralDetails}
+              setReferralDetails={setReferralDetails}
+              courtDetails={courtDetails}
+              setCourtDetails={setCourtDetails}
+              programDetails={programDetails}
+              setProgramDetails={setProgramDetails}
+              nextStep={nextStep}
+              setStep={setStep}
+              setReviewHeader={setReviewHeader}
+            />
+          </Box>
+        );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <Box textAlign="center">
+            <Center>
+              <Image src={Logo} alt="CAS Logo" marginBottom="45px" />
+            </Center>
+            <Heading size="xl">
+              Thank you for completing the intake form
+            </Heading>
+            <Text>The admin team will review it promptly.</Text>
+            <IntakeFooter
+              nextButtonText="Return to dashboard"
+              isStepComplete={() => true}
+              registrationLoading={false}
+              nextStepCallBack={() => {}}
+            />
+          </Box>
+        );
+    }
+  };
+
+  const renderIntakeHeader = () => {
+    switch (step) {
+      case IntakeSteps.REVIEW_CASE_DETAILS:
+        return (
+          <IntakeHeader
+            primaryTitle="Review Case Details"
+            secondaryTitle="Initiate New Case"
+          />
+        );
+      case IntakeSteps.FORM_COMPLETE:
+        return (
+          <IntakeHeader
+            primaryTitle="Intake Form Complete"
+            secondaryTitle="Initiate New Case"
+          />
         );
       default:
         return (
-          <>
-            <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-              <ReviewForm prevStep={prevStep} />
-            </Box>
-          </>
+          <IntakeHeader
+            primaryTitle={
+              reviewHeader ? "Edit Case Intake Submission" : "Initiate New Case"
+            }
+            secondaryTitle="Case Management"
+          />
         );
     }
   };
 
   return (
     <>
-      {step === 4 ? (
-        <IntakeHeader
-          primaryTitle="Review Case Details"
-          secondaryTitle="Initiate New Case"
+      {step === IntakeSteps.ADD_CHILD ? (
+        <AddChild
+          allProviders={allProviders}
+          setAllProviders={setAllProviders}
+          setStep={setStep}
+          childrens={children}
+          setChildren={setChildren}
+          selectedIndexChild={selectedIndexChild}
         />
       ) : (
-        <IntakeHeader
-          primaryTitle="Initiate New Case"
-          secondaryTitle="Case Management"
-        />
-      )}
-
-      <Box textAlign="center" padding="30px 0 40px 0">
-        {step !== 4 ? (
-          <Stepper
-            pages={[
-              "Case referral",
-              "Court information",
-              "Individual details",
-              "Program details",
-            ]}
-            setStep={setStep}
-            activePage={step}
+        <>
+          {renderIntakeHeader()}
+          <Box padding="30px 0 160px 0">
+            <Container maxWidth="container.xl" padding="30px 96px">
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+                step !== IntakeSteps.FORM_COMPLETE && (
+                  <Button
+                    leftIcon={<ArrowLeft />}
+                    marginBottom="30px"
+                    onClick={() => {
+                      onOpenUnsavedProgress();
+                    }}
+                    variant="tertiary"
+                  >
+                    {reviewHeader
+                      ? "Back to Submission Review"
+                      : "Back to Dashboard"}
+                  </Button>
+                )}
+              {renderDetailsForm()}
+            </Container>
+          </Box>
+          <UnsavedProgressModal
+            isOpen={isOpenUnsavedProgress}
+            onClick={() => {
+              if (reviewHeader) {
+                setStep(IntakeSteps.REVIEW_CASE_DETAILS);
+              } else {
+                // TODO: remove this once dashboard is implemented
+                history.goBack();
+              }
+            }}
+            onClose={onCloseUnsavedProgress}
+            reviewVersion={reviewHeader}
           />
-        ) : (
-          <></>
-        )}
-        <Container maxWidth="container.xl" padding="30px 96px">
-          {renderDetailsForm()}
-        </Container>
-      </Box>
+        </>
+      )}
     </>
   );
 };

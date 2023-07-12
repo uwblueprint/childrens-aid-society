@@ -33,7 +33,7 @@ def upgrade():
 
     # https://stackoverflow.com/questions/37848815/sqlalchemy-postgresql-enum-does-not-create-type-on-db-migrate
     intake_status = postgresql.ENUM(
-        "IN PROGRESS", "IN REVIEW", "ACCEPTED", "DENIED", name="intake_status"
+        "SUBMITTED", "PENDING", "ACTIVE", "ARCHIVED", name="intake_status"
     )
     intake_status.create(op.get_bind())
     op.add_column(

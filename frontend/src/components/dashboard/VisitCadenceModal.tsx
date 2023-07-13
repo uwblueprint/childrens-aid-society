@@ -36,6 +36,24 @@ const VisitCadenceModal = ({
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [frequency, setFrequency] = useState("");
+  const familyMembers = [
+    "Mom",
+    "Dad",
+    "Cousin",
+    "Aunt",
+    "Uncle",
+    "Grandpa",
+    "Grandma",
+  ];
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   return (
     <Box>
@@ -53,15 +71,7 @@ const VisitCadenceModal = ({
                 name="visitingFamily"
                 placeholder="Select Visiting Family Member"
                 val={visitingFamilyMember}
-                options={[
-                  "Mom",
-                  "Dad",
-                  "Cousin",
-                  "Aunt",
-                  "Uncle",
-                  "Grandpa",
-                  "Grandma",
-                ]}
+                options={familyMembers}
                 iconRight={<Icon as={ChevronDown} />}
                 readOnly={false}
                 setSelected={setVisitingFamilyMember}
@@ -87,15 +97,7 @@ const VisitCadenceModal = ({
                     name="date"
                     placeholder="Set Date"
                     val={date}
-                    options={[
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ]}
+                    options={daysOfWeek}
                     iconRight={<Icon as={ChevronDown} />}
                     readOnly={false}
                     setSelected={setDate}

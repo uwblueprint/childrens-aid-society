@@ -23,7 +23,7 @@ export type VisitCadenceSelectProps = CustomInputProps & {
   options: string[];
   readOnly?: boolean;
   // eslint-disable-next-line
-  setSelected?: any;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
   val: string;
   width: string;
   dropdownWidth: string;

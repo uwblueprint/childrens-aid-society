@@ -22,6 +22,7 @@ def init_app(app):
     from .transportation_method import TransportationMethod
     from .user import User
     from .visit_location import VisitLocation
+    from .visit_cadence import VisitCadence
 
     app.app_context().push()
     db.init_app(app)

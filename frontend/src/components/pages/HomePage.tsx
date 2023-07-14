@@ -76,7 +76,7 @@ const SecondaryHeader = (): React.ReactElement => {
           onClose={onCloseArchiveCaseModal}
           caseName="Case 1"
           onClick={onOpenVisitCadenceModal}
-        >
+        />
         <VisitCadenceModal
           caseNumber={1}
           status="ARCHIVED"

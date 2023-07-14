@@ -243,7 +243,7 @@ const CaseOverviewBody = (): React.ReactElement => {
               width="100px"
               onClick={onOpenVisitCadenceModal}
             >
-              Add Visit Cadence
+              Add
             </Button>
           </Box>
 

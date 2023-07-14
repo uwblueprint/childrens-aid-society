@@ -68,7 +68,7 @@ const put = async ({
 }: {
   changedData: Record<string, string>;
   intakeID: number;
-}): Promise<IntakeResponse> => {
+}): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",

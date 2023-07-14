@@ -16,6 +16,7 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import ArchiveCaseModal from "../dashboard/ArchiveCaseModal";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
@@ -29,6 +30,9 @@ const SecondaryHeader = (): React.ReactElement => {
   }
 
   const {
+    onOpen: onOpenArchiveCaseModal,
+    isOpen: isOpenArchiveCaseModal,
+    onClose: onCloseArchiveCaseModal,
     onOpen: onOpenVisitCadenceModal,
     isOpen: isOpenVisitCadenceModal,
     onClose: onCloseVisitCadenceModal,
@@ -61,10 +65,17 @@ const SecondaryHeader = (): React.ReactElement => {
           px="2"
           rounded="lg"
           border="1px"
-          onClick={onOpenVisitCadenceModal}
+          onClick={onOpenArchiveCaseModal}
         >
-          Test Cadence Modal
+          Test Archive Case Modal
         </Button>
+
+        <ArchiveCaseModal
+          intakeID={1}
+          isOpen={isOpenArchiveCaseModal}
+          onClose={onCloseArchiveCaseModal}
+          caseName="Case 1"
+        />
         <VisitCadenceModal
           caseNumber={1}
           status="ARCHIVED"

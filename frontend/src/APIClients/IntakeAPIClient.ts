@@ -62,6 +62,31 @@ const get = async (
   }
 };
 
+const put = async ({
+  changedData,
+  intakeID,
+}: {
+  changedData: Record<string, string>;
+  intakeID: number;
+}): Promise<Case> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+  try {
+    const { data } = await baseAPIClient.put(
+      `/intake/${intakeID}`,
+      changedData,
+      {
+        headers: { Authorization: bearerToken },
+      },
+    );
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const deleteIntake = async (intakeId: number): Promise<void> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
@@ -76,5 +101,4 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     return error;
   }
 };
-
-export default { post, get, deleteIntake };
+export default { post, get, put, deleteIntake };

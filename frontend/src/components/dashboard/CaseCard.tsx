@@ -56,7 +56,6 @@ const CaseCard = ({
 
   // TODO refactor to display proper case data
   const onCardClick = (status: string) => {
-    console.log(status);
     if (status === "ACTIVE") {
       history.push(`/caseoverview`);
     } else {

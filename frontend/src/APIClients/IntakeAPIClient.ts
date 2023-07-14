@@ -135,7 +135,6 @@ const get = async (
       },
     }));
 
-    console.log(mappedData);
     return mappedData;
   } catch (error) {
     return error;

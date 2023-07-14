@@ -3,6 +3,7 @@ export const INTAKE_PAGE = "/intake";
 export const VISIT_PAGE = "/visit";
 export const LOGIN_PAGE = "/login";
 export const SIGNUP_PAGE = "/signup";
+export const CASE_OVERVIEW = "/caseoverview";
 
 // TODO: Delete these
 export const EDIT_TEAM_PAGE = "/edit-team";

@@ -7,6 +7,7 @@ import {
   Spacer,
   VStack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -15,6 +16,7 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
@@ -25,6 +27,12 @@ const SecondaryHeader = (): React.ReactElement => {
   function goToIntake() {
     history.push("/intake");
   }
+
+  const {
+    onOpen: onOpenVisitCadenceModal,
+    isOpen: isOpenVisitCadenceModal,
+    onClose: onCloseVisitCadenceModal,
+  } = useDisclosure();
 
   return (
     <Box>
@@ -47,6 +55,26 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
+
+        <Button
+          height="100%"
+          px="2"
+          rounded="lg"
+          border="1px"
+          onClick={onOpenVisitCadenceModal}
+        >
+          Test Cadence Modal
+        </Button>
+        <VisitCadenceModal
+          caseNumber={1}
+          status="ARCHIVED"
+          isOpen={isOpenVisitCadenceModal}
+          onClick={() => {}}
+          onClose={onCloseVisitCadenceModal}
+          onDeleteClick={() => {}}
+          goToIntake={goToIntake}
+          childName="Anne Chovy"
+        />
       </Flex>
     </Box>
   );

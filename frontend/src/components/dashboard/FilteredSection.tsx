@@ -22,7 +22,9 @@ const FilteredSection = ({
   return (
     <Box height="40vh" minHeight="fit-content">
       <Flex mb={5}>
-        <Heading textStyle="header-medium">{status}</Heading>
+        <Heading textStyle="header-medium">
+          {status[0] + status.slice(1).toLowerCase()}
+        </Heading>
         <Spacer />
         <Button
           variant="tertiary"

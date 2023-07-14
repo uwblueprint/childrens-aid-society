@@ -23,10 +23,11 @@ import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
 import { IntakeValueProvider } from "./contexts/IntakeValueContext";
-import CaseOverview from "./components/pages/CaseOverview";
+// import CaseOverview from "./components/pages/CaseOverview";
 import CasesContext, { DEFAULT_CASES_CONTEXT } from "./contexts/CasesContext";
 import casesContextReducer from "./reducers/CasesReducer";
 import CasesDispatcherContext from "./contexts/CasesDispatcherContext";
+import Template from "./components/pages/TemplatePage";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 

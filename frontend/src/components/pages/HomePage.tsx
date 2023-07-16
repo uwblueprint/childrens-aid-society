@@ -7,7 +7,6 @@ import {
   Spacer,
   VStack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -16,8 +15,6 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
-import ArchiveCaseModal from "../dashboard/ArchiveCaseModal";
-import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
@@ -28,15 +25,6 @@ const SecondaryHeader = (): React.ReactElement => {
   function goToIntake() {
     history.push("/intake");
   }
-
-  const {
-    onOpen: onOpenArchiveCaseModal,
-    isOpen: isOpenArchiveCaseModal,
-    onClose: onCloseArchiveCaseModal,
-    onOpen: onOpenVisitCadenceModal,
-    isOpen: isOpenVisitCadenceModal,
-    onClose: onCloseVisitCadenceModal,
-  } = useDisclosure();
 
   return (
     <Box>
@@ -59,39 +47,17 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
-
-        <Button
-          height="100%"
-          px="2"
-          rounded="lg"
-          border="1px"
-          onClick={onOpenArchiveCaseModal}
-        >
-          Test Archive Case Modal
-        </Button>
-
-        <ArchiveCaseModal
-          intakeID={1}
-          isOpen={isOpenArchiveCaseModal}
-          onClose={onCloseArchiveCaseModal}
-          caseName="Case 1"
-        />
-        <VisitCadenceModal
-          caseNumber={1}
-          status="ARCHIVED"
-          isOpen={isOpenVisitCadenceModal}
-          onClick={() => {}}
-          onClose={onCloseVisitCadenceModal}
-          onDeleteClick={() => {}}
-          goToIntake={goToIntake}
-          childName="Anne Chovy"
-        />
       </Flex>
     </Box>
   );
 };
 
 const Home = (): React.ReactElement => {
+  // TODO: remove console log and use context instead of state
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
+
   const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
     active: [],
     submitted: [],
@@ -109,23 +75,26 @@ const Home = (): React.ReactElement => {
         caseLead: intake.caseReferral.referringWorkerName,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
-        caseTag: CaseStatus.ACTIVE,
+        caseTag: intake.intakeStatus,
       }));
     }
     return [];
   };
 
-  // TODO: remove console log
-  const casesFromContext = useContext(CasesContext);
-  // eslint-disable-next-line
-  console.log(casesFromContext);
-
   useEffect(() => {
     const fetchData = async () => {
-      const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
-      const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
-      const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
-      const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
+      const activeCases = await IntakeApiClient.get(CaseStatus.ACTIVE, 1, 20);
+      const submittedCases = await IntakeApiClient.get(
+        CaseStatus.SUBMITTED,
+        1,
+        20,
+      );
+      const pendingCases = await IntakeApiClient.get(CaseStatus.PENDING, 1, 20);
+      const archivedCases = await IntakeApiClient.get(
+        CaseStatus.ARCHIVED,
+        1,
+        20,
+      );
 
       setCases({
         active: mapIntakeResponsesToCaseCards(activeCases),

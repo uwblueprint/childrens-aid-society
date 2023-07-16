@@ -87,6 +87,23 @@ const cases: { [key: string]: CaseCardProps[] } = {
   ],
 };
 
+const LoadMoreButton = () => {
+  return (
+    <Flex justifyContent="center" py="45px">
+      <Button
+        variant="ghost"
+        px="2"
+        rounded="lg"
+        border="1px"
+        borderColor="blue.400"
+        color="blue.400"
+        bg="blue.50"
+      >
+        Load More Cases
+      </Button>
+    </Flex>
+  );
+};
 const Cases = (): React.ReactElement | null => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -145,19 +162,7 @@ const Cases = (): React.ReactElement | null => {
           status={status}
         />
       </Box>
-      <Flex justifyContent="center" py="45px">
-        <Button
-          variant="ghost"
-          px="2"
-          rounded="lg"
-          border="1px"
-          borderColor="blue.400"
-          color="blue.400"
-          bg="blue.50"
-        >
-          Load More Cases
-        </Button>
-      </Flex>
+      {cases[status].length && <LoadMoreButton />}
     </Box>
   );
 };

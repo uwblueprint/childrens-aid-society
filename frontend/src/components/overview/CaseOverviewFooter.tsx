@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { FileText } from "react-feather";
+import ArchiveCaseModal from "../dashboard/ArchiveCaseModal";
 
 export type CaseOverviewFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
@@ -10,6 +11,12 @@ export type CaseOverviewFooterProps = {
 };
 
 const CaseOverviewFooter = (): React.ReactElement => {
+  const {
+    onOpen: onOpenArchiveCaseModal,
+    isOpen: isOpenArchiveCaseModal,
+    onClose: onCloseArchiveCaseModal,
+  } = useDisclosure();
+
   return (
     <Flex
       bg="gray.50"
@@ -36,14 +43,19 @@ const CaseOverviewFooter = (): React.ReactElement => {
       <Button
         width={{ sm: "95vw", md: "45vw", lg: "auto" }}
         height="38px"
-        variant="archive"
-        // background={colors.red[600]}
-        // isLoading={}
-        onClick={() => {}}
+        variant="delete"
+        // TODO add isLoading={}
+        onClick={onOpenArchiveCaseModal}
       >
         <FileText width="13px" />
         <Box pl="2">Archive Case</Box>
       </Button>
+      <ArchiveCaseModal
+        intakeID={1} // TODO add isLoading
+        isOpen={isOpenArchiveCaseModal}
+        onClose={onCloseArchiveCaseModal}
+        caseName="Case 1"
+      />
     </Flex>
   );
 };

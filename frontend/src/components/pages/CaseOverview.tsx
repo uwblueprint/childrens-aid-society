@@ -1,14 +1,40 @@
 import React from "react";
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowLeft, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
+import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 
-const SecondaryHeader = (): React.ReactElement => {
+const CaseOverviewBody = (): React.ReactElement => {
+  const history = useHistory();
+
+  const {
+    onOpen: onOpenVisitCadenceModal,
+    isOpen: isOpenVisitCadenceModal,
+    onClose: onCloseVisitCadenceModal,
+  } = useDisclosure();
+
+  // TODO switch this with proper intake data passing
+  const goToIntake = () => {
+    history.push("/intake");
+  };
+
+  const goToHomepage = () => {
+    history.push("/");
+  };
+
   return (
     <Box>
-      <Button variant="ghost">
+      <Button variant="ghost" onClick={goToHomepage}>
         <ArrowLeft style={{ width: "50px", height: "50px" }} />
       </Button>
 
@@ -169,6 +195,7 @@ const SecondaryHeader = (): React.ReactElement => {
               borderColor={colors.blue[300]}
               backgroundColor={colors.blue[100]}
               width="100px"
+              onClick={goToIntake}
             >
               View
             </Button>
@@ -214,6 +241,7 @@ const SecondaryHeader = (): React.ReactElement => {
               borderColor={colors.blue[300]}
               backgroundColor={colors.blue[100]}
               width="100px"
+              onClick={onOpenVisitCadenceModal}
             >
               Add
             </Button>
@@ -265,6 +293,16 @@ const SecondaryHeader = (): React.ReactElement => {
           </Box>
         </Flex>
       </Flex>
+      <VisitCadenceModal
+        caseNumber={1} // TODO pass actual case data
+        status="ARCHIVED"
+        isOpen={isOpenVisitCadenceModal}
+        onClick={() => {}}
+        onClose={onCloseVisitCadenceModal}
+        onDeleteClick={() => {}}
+        goToIntake={goToIntake}
+        childName="Anne Chovy"
+      />
     </Box>
   );
 };
@@ -279,7 +317,7 @@ const CaseOverview = (): React.ReactElement => {
       />
       <Box px="100px" pt="60px">
         <div style={{ paddingBottom: "100px" }}>
-          <SecondaryHeader />
+          <CaseOverviewBody />
         </div>
       </Box>
       <CaseOverviewFooter />

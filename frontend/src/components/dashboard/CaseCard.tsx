@@ -16,11 +16,11 @@ export type CaseCardProps = {
 
 const colorChange = (value: string) => {
   let color;
-  if (value === "Active") {
+  if (value === "ACTIVE") {
     color = "green.400";
-  } else if (value === "Submitted") {
+  } else if (value === "SUBMITTED") {
     color = "blue.300";
-  } else if (value === "Archived") {
+  } else if (value === "ARCHIVED") {
     color = "gray.500";
   } else {
     color = "orange.400";
@@ -49,9 +49,19 @@ const CaseCard = ({
   } = useDisclosure();
 
   const history = useHistory();
-  function goToIntake() {
+
+  const goToIntake = () => {
     history.push("/intake");
-  }
+  };
+
+  // TODO refactor to display proper case data
+  const onCardClick = (status: string) => {
+    if (status === "ACTIVE") {
+      history.push(`/caseoverview`);
+    } else {
+      onOpenStatusModal();
+    }
+  };
 
   return (
     <>
@@ -64,7 +74,7 @@ const CaseCard = ({
         height="289px"
         borderWidth="1px"
         borderRadius="lg"
-        onClick={onOpenStatusModal}
+        onClick={() => onCardClick(caseTag)}
       >
         <Box
           display="flex"
@@ -100,7 +110,7 @@ const CaseCard = ({
             borderWidth="0"
             textStyle="button-medium"
           >
-            {caseTag.toUpperCase()}
+            {caseTag}
           </Tag>
         </Box>
       </Box>
@@ -112,11 +122,11 @@ const CaseCard = ({
           onCloseStatusModal();
         }}
         onClose={onClosePermanentDelete}
-        intakeId={2} // TODO implement so that this componet gets passed in real intakeId
+        intakeId={caseId}
       />
       <StatusModal
         caseId={caseId}
-        status={caseTag.toUpperCase()}
+        status={caseTag}
         isOpen={isOpenStatusModal}
         onClick={() => {}}
         onClose={onCloseStatusModal}

@@ -2,6 +2,7 @@ import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
 import { Case } from "../types/CasesContextTypes";
+import CaseStatus from "../types/CaseStatus";
 
 interface Intake {
   user_id: number;
@@ -37,7 +38,7 @@ const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
 };
 
 const get = async (
-  intakeStatus: string,
+  intakeStatus: CaseStatus,
   page: number,
   limit: number,
 ): Promise<Case[]> => {
@@ -58,7 +59,7 @@ const get = async (
     const mappedData: Case[] = data.map((intake) => ({
       user_id: intake.user_id.toString(),
       case_id: intake.id.toString(),
-      intakeStatus: intake.intake_status,
+      intakeStatus: <CaseStatus>intake.intake_status,
       caseReferral: {
         referringWorkerName: intake.referring_worker_name,
         referringWorkerContact: intake.referring_worker_contact,

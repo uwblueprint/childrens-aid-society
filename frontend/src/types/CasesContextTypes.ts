@@ -1,7 +1,9 @@
+import CaseStatus from "./CaseStatus";
+
 export type Case = {
   user_id: string | number;
   case_id: string | number;
-  intakeStatus: string;
+  intakeStatus: CaseStatus;
   caseReferral: {
     referringWorkerName: string;
     referringWorkerContact: string;

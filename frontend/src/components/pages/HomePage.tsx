@@ -75,7 +75,7 @@ const Home = (): React.ReactElement => {
         caseLead: intake.caseReferral.referringWorkerName,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
-        caseTag: intake.intakeStatus as CaseStatus,
+        caseTag: intake.intakeStatus,
       }));
     }
     return [];
@@ -83,10 +83,18 @@ const Home = (): React.ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const activeCases = await IntakeApiClient.get("ACTIVE", 1, 20);
-      const submittedCases = await IntakeApiClient.get("SUBMITTED", 1, 20);
-      const pendingCases = await IntakeApiClient.get("PENDING", 1, 20);
-      const archivedCases = await IntakeApiClient.get("ARCHIVED", 1, 20);
+      const activeCases = await IntakeApiClient.get(CaseStatus.ACTIVE, 1, 20);
+      const submittedCases = await IntakeApiClient.get(
+        CaseStatus.SUBMITTED,
+        1,
+        20,
+      );
+      const pendingCases = await IntakeApiClient.get(CaseStatus.PENDING, 1, 20);
+      const archivedCases = await IntakeApiClient.get(
+        CaseStatus.ARCHIVED,
+        1,
+        20,
+      );
 
       setCases({
         active: mapIntakeResponsesToCaseCards(activeCases),

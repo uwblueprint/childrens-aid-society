@@ -1,88 +1,9 @@
 import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
+import { Case } from "../types/CasesContextTypes";
 
-export type IntakeResponse = {
-  user_id: string | number;
-  caseReferral: {
-    referringWorkerName: string;
-    referringWorkerContact: string;
-    cpinFileNumber: number;
-    cpinFileType: string;
-    familyName: string;
-    referralDate: string;
-  };
-  courtInformation: {
-    courtStatus: string;
-    orderReferral: number;
-    firstNationHeritage: string;
-    firstNationBand: string;
-  };
-  children: [
-    {
-      childInfo: {
-        name: string;
-        dateOfBirth: string;
-        cpinFileNumber: number;
-        serviceWorker: string;
-        specialNeeds: string;
-        concerns: string[];
-      };
-      daytimeContact: {
-        name: string;
-        contactInfo: string;
-        address: string;
-        dismissalTime: string;
-      };
-      provider: [
-        {
-          name: string;
-          fileNumber: number;
-          primaryPhoneNumber: number;
-          secondaryPhoneNumber: number;
-          email: string;
-          address: string;
-          additionalContactNotes: string;
-          relationshipToChild: string;
-        },
-      ];
-    },
-  ];
-  caregivers: [
-    {
-      name: string;
-      dateOfBirth: string;
-      primaryPhoneNumber: number;
-      secondaryPhoneNumber: number;
-      additionalContactNotes: string;
-      address: string;
-      relationshipToChild: string;
-      individualConsiderations: string;
-    },
-  ];
-  programDetails: {
-    transportRequirements: string;
-    schedulingRequirements: string;
-    suggestedStartDate: string;
-    shortTermGoals: string[];
-    longTermGoals: string[];
-    familialConcerns: string[];
-    permittedIndividuals: [
-      {
-        name: string;
-        phoneNumber: number;
-        relationshipToChildren: string;
-        additionalNotes: string;
-      },
-    ];
-  };
-};
-
-const post = async ({
-  formData,
-}: {
-  formData: FormData;
-}): Promise<IntakeResponse> => {
+const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -97,15 +18,69 @@ const post = async ({
   }
 };
 
-const get = async (): Promise<IntakeResponse[]> => {
+const get = async (
+  intakeStatus: string,
+  page: number,
+  limit: number,
+): Promise<Case[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get("/intake", {
+    const { data } = await baseAPIClient.get<Case[]>("/intake", {
       headers: { Authorization: bearerToken },
+      params: {
+        intake_status: intakeStatus,
+        page_number: page,
+        page_limit: limit,
+      },
     });
+
+    const mappedData: Case[] = data.map((intake) => ({
+      user_id: intake.user_id.toString(),
+      case_id: intake.case_id.toString(),
+      caseReferral: {
+        referringWorkerName: intake.caseReferral.referringWorkerName,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: intake.caseReferral.cpinFileNumber,
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
+      },
+      courtInformation: intake.courtInformation,
+      children: intake.children,
+      caregivers: intake.caregivers,
+      programDetails: intake.programDetails,
+    }));
+
+    return mappedData;
+  } catch (error) {
+    return error;
+  }
+};
+
+const put = async ({
+  changedData,
+  intakeID,
+}: {
+  changedData: Record<string, string>;
+  intakeID: number;
+}): Promise<Case> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+  try {
+    const { data } = await baseAPIClient.put(
+      `/intake/${intakeID}`,
+      changedData,
+      {
+        headers: { Authorization: bearerToken },
+      },
+    );
     return data;
   } catch (error) {
     return error;
@@ -126,5 +101,4 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     return error;
   }
 };
-
-export default { post, get, deleteIntake };
+export default { post, get, put, deleteIntake };

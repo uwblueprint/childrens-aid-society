@@ -12,11 +12,6 @@ import * as Routes from "./constants/Routes";
 import AUTHENTICATED_USER_KEY from "./constants/AuthConstants";
 import AuthContext from "./contexts/AuthContext";
 import { getLocalStorageObj } from "./utils/LocalStorageUtils";
-import SampleContext, {
-  DEFAULT_SAMPLE_CONTEXT,
-} from "./contexts/SampleContext";
-import sampleContextReducer from "./reducers/SampleContextReducer";
-import SampleContextDispatcherContext from "./contexts/SampleContextDispatcherContext";
 
 import customTheme from "./theme";
 
@@ -27,10 +22,12 @@ import Intake from "./components/pages/IntakePage";
 import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
-import Default from "./components/pages/Default";
-import Template from "./components/pages/TemplatePage";
 import Cases from "./components/pages/CasesPage";
 import { IntakeValueProvider } from "./contexts/IntakeValueContext";
+import CaseOverview from "./components/pages/CaseOverview";
+import CasesContext, { DEFAULT_CASES_CONTEXT } from "./contexts/CasesContext";
+import casesContextReducer from "./reducers/CasesReducer";
+import CasesDispatcherContext from "./contexts/CasesDispatcherContext";
 
 // import PrivateRoute from "./components/auth/PrivateRoute";
 
@@ -46,17 +43,15 @@ const App = (): React.ReactElement => {
   // Some sort of global state. Context API replaces redux.
   // Split related states into different contexts as necessary.
   // Split dispatcher and state into separate contexts as necessary.
-  const [sampleContext, dispatchSampleContextUpdate] = useReducer(
-    sampleContextReducer,
-    DEFAULT_SAMPLE_CONTEXT,
+  const [casesContext, dispatchCasesContextUpdate] = useReducer(
+    casesContextReducer,
+    DEFAULT_CASES_CONTEXT,
   );
 
   return (
     <ChakraProvider theme={customTheme}>
-      <SampleContext.Provider value={sampleContext}>
-        <SampleContextDispatcherContext.Provider
-          value={dispatchSampleContextUpdate}
-        >
+      <CasesContext.Provider value={casesContext}>
+        <CasesDispatcherContext.Provider value={dispatchCasesContextUpdate}>
           <AuthContext.Provider
             value={{ authenticatedUser, setAuthenticatedUser }}
           >
@@ -69,11 +64,10 @@ const App = (): React.ReactElement => {
                   <Route exact path={Routes.HOME_PAGE} component={Home} />
                   <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
                   <Route exact path={Routes.VISIT_PAGE} component={Visit} />
-                  <Route exact path={Routes.DEFAULT_PAGE} component={Default} />
                   <Route
                     exact
-                    path={Routes.TEMPLATE_PAGE}
-                    component={Template}
+                    path={Routes.CASEOVERVIEW_PAGE}
+                    component={CaseOverview}
                   />
                   <Route exact path={Routes.CASES_PAGE} component={Cases} />
                   <Route exact path="*" component={NotFound} />
@@ -81,8 +75,8 @@ const App = (): React.ReactElement => {
               </IntakeValueProvider>
             </Router>
           </AuthContext.Provider>
-        </SampleContextDispatcherContext.Provider>
-      </SampleContext.Provider>
+        </CasesDispatcherContext.Provider>
+      </CasesContext.Provider>
     </ChakraProvider>
   );
 };

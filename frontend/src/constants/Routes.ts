@@ -4,6 +4,7 @@ export const VISIT_PAGE = "/visit";
 export const LOGIN_PAGE = "/login";
 export const SIGNUP_PAGE = "/signup";
 export const CASES_PAGE = "/cases";
+export const CASEOVERVIEW_PAGE = "/caseoverview";
 
 // TODO: Delete these
 export const EDIT_TEAM_PAGE = "/edit-team";

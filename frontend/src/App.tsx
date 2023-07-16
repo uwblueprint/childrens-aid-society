@@ -65,7 +65,7 @@ const App = (): React.ReactElement => {
                   <Route exact path={Routes.VISIT_PAGE} component={Visit} />
                   <Route
                     exact
-                    path={Routes.CASE_OVERVIEW}
+                    path={Routes.CASEOVERVIEW_PAGE}
                     component={CaseOverview}
                   />
                   <Route exact path="*" component={NotFound} />

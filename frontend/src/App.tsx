@@ -22,6 +22,7 @@ import Intake from "./components/pages/IntakePage";
 import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
 import NotFound from "./components/pages/NotFound";
+import Cases from "./components/pages/CasesPage";
 import { IntakeValueProvider } from "./contexts/IntakeValueContext";
 import CaseOverview from "./components/pages/CaseOverview";
 import CasesContext, { DEFAULT_CASES_CONTEXT } from "./contexts/CasesContext";
@@ -68,6 +69,7 @@ const App = (): React.ReactElement => {
                     path={Routes.CASEOVERVIEW_PAGE}
                     component={CaseOverview}
                   />
+                  <Route exact path={Routes.CASES_PAGE} component={Cases} />
                   <Route exact path="*" component={NotFound} />
                 </Switch>
               </IntakeValueProvider>

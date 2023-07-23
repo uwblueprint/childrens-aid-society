@@ -21,8 +21,8 @@ def init_app(app):
     from .provider import Provider
     from .transportation_method import TransportationMethod
     from .user import User
-    from .visit_location import VisitLocation
     from .visit_cadence import VisitCadence
+    from .visit_location import VisitLocation
 
     app.app_context().push()
     db.init_app(app)

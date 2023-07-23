@@ -36,8 +36,11 @@ class VisitCadence(db.Model, BaseMixin):
     family_member = db.Column(family_member_enum, nullable=False)
     notes = db.Column(db.String, nullable=True)
     intake_id = db.Column(
-      db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
+        db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
     )
     child_id = db.Column(
-      db.Integer, db.ForeignKey("children.id", ondelete="CASCADE"), nullable=False
+        db.Integer, db.ForeignKey("children.id", ondelete="CASCADE"), nullable=False
+    )
+    caregiver_id = db.Column(
+        db.Integer, db.ForeignKey("caregivers.id", ondelete="CASCADE"), nullable=True
     )

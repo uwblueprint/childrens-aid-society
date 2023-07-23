@@ -8,6 +8,7 @@ class VisitCadenceDTO:
         self.notes = kwargs.get("notes")
         self.intake_id = kwargs.get("intake_id")
         self.child_id = kwargs.get("child_id")
+        self.caregiver_id = kwargs.get("caregiver_id")
 
 
 class CreateVisitCadenceDTO(VisitCadenceDTO):
@@ -22,7 +23,7 @@ class CreateVisitCadenceDTO(VisitCadenceDTO):
             error_list.append("The time supplied is invalid")
         if not self.frequency or not type(self.frequency) == str:
             error_list.append("The frequency supplied is invalid")
-        if not self.family_member or not type(self.family_member) == int:
+        if not self.family_member or not type(self.family_member) == str:
             error_list.append("The family_member supplied is invalid")
 
         # optional args
@@ -32,5 +33,7 @@ class CreateVisitCadenceDTO(VisitCadenceDTO):
             error_list.append("The child_id supplied is invalid")
         if self.notes and not type(self.notes) == str:
             error_list.append("The notes supplied is invalid")
+        if self.caregiver_id and not type(self.caregiver_id) == int:
+            error_list.append("The caregiver_id supplied is invalid")
 
         return error_list

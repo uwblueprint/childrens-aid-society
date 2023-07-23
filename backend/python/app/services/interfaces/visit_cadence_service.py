@@ -29,11 +29,31 @@ class IVisitCadenceService(ABC):
         pass
 
     @abstractmethod
+    def get_cadences_by_intake_id(self, intakeId):
+        """
+        :param intakeId: the intake referenced
+        :type intakeId: Int
+        :return: list of cadences
+        :rtype: list of VisitCadenceDTO
+        :raises Exception: if get cadences fails
+        """
+        pass
+
+    @abstractmethod
     def delete_cadence(self, cadence_id):
         """
         Delete a cadence
         :param cadence_id: the id of the cadence to be deleted
         :type cadence_id: int
         :raises Exception: if delete cadence fails
+        """
+        pass
+    @abstractmethod
+    def update_cadence(self, cadence_id, updated_data):
+        """
+        Update a cadence
+        :param cadence_id: the id of the cadence
+        :type cadence_id: int
+        :raises Exception: if update cadence fails
         """
         pass

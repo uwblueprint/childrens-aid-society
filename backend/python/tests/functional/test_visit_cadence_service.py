@@ -2,12 +2,12 @@ import pytest
 from flask import current_app
 
 from app.models import db
-from app.models.visit_cadence import VisitCadence
-from app.models.child import Child
-from app.models.intake import Intake
 from app.models.caregiver import Caregiver
+from app.models.child import Child
 from app.models.daytime_contact import DaytimeContact
+from app.models.intake import Intake
 from app.models.user import User
+from app.models.visit_cadence import VisitCadence
 from app.resources.visit_cadence_dto import CreateVisitCadenceDTO, VisitCadenceDTO
 from app.services.implementations.visit_cadence_service import VisitCadenceService
 
@@ -20,15 +20,15 @@ DUMMY_USER_DATA = {
     "branch": "ALGOMA",
 }
 DEFAULT_VISIT_CADENCES = {
-        "id": 1,
-        "date": "Monday",
-        "time": "10:00 AM",
-        "frequency": "Weekly",
-        "family_member": "Dad",
-        "notes": "Regular visit",
-        "intake_id": 1,
-        "child_id": 1,
-        "caregiver_id": 1,
+    "id": 1,
+    "date": "Monday",
+    "time": "10:00 AM",
+    "frequency": "Weekly",
+    "family_member": "Dad",
+    "notes": "Regular visit",
+    "intake_id": 1,
+    "child_id": 1,
+    "caregiver_id": 1,
 }
 
 DUMMY_INTAKE_DATA = {
@@ -74,6 +74,7 @@ DUMMY_DAYTIME_CONTACT_DATA = {
     "contact_information": "8790832",
     "dismissal_time": "4:00PM",
 }
+
 
 @pytest.fixture
 def visit_cadence_service():

@@ -48,6 +48,7 @@ class IVisitCadenceService(ABC):
         :raises Exception: if delete cadence fails
         """
         pass
+
     @abstractmethod
     def update_cadence(self, cadence_id, updated_data):
         """

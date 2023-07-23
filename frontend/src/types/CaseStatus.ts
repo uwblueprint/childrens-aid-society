@@ -1,8 +1,8 @@
 enum CaseStatus {
-  ACTIVE = "Active",
-  SUBMITTED = "Submitted",
-  PENDING = "Pending",
-  ARCHIVED = "Archived",
+  ACTIVE = "ACTIVE",
+  SUBMITTED = "SUBMITTED",
+  PENDING = "PENDING",
+  ARCHIVED = "ARCHIVED",
 }
 
 export default CaseStatus;

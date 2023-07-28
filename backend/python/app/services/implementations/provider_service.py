@@ -51,3 +51,14 @@ class ProviderService(IProviderService):
         except Exception as error:
             db.session.rollback()
             raise error
+
+     def get_provider_by_intake_id(self, intake_id):
+        try:
+            provider = Provider.query.filter_by(intake_id=intake_id).first()
+            if not provider:
+                raise Exception("Provider with intake_id {} not found".format(intake_id))
+            return ProviderDTO(**provider.to_dict())
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+

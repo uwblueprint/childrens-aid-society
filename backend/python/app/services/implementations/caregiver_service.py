@@ -52,3 +52,26 @@ class CaregiverService(ICaregiverService):
             db.session.rollback()
             self.logger.error(str(error))
             raise error
+
+    def get_caregiver_by_intake_id(self, intake_id):
+        try:
+            caregiver = Caregiver.query.filter_by(intake_id=intake_id).first()
+            if not caregiver:
+                raise Exception("Caregiver with intake_id {} not found".format(intake_id))
+            return CaregiverDTO(
+                id=caregiver.id,
+                name=caregiver.name,
+                date_of_birth=caregiver.date_of_birth,
+                individual_considerations=caregiver.individual_considerations,
+                primary_phone_number=caregiver.primary_phone_number,
+                secondary_phone_number=caregiver.secondary_phone_number,
+                email=caregiver.email,
+                address=caregiver.address,
+                relationship_to_child=caregiver.relationship_to_child,
+                additional_contact_notes=caregiver.additional_contact_notes,
+                intake_id=caregiver.intake_id,
+            )
+            
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

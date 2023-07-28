@@ -61,3 +61,18 @@ class DaytimeContactService(IDaytimeContactService):
         except Exception as error:
             db.session.rollback()
             raise error
+    
+     def get_daytime_contact_by_intake_id(self, intake_id):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake_id/None passed to get_daytime_contact_by_intake_id function")
+            if not isinstance(intake_id, int):
+                raise Exception("intake_id passed is not of int type")
+
+            contact = DaytimeContact.query.get(intake_id)
+            if not contact:
+                raise Exception("DaytimeContact with id {} does not exist".format(intake_id))
+
+            return DaytimeContactDTO(**contact.__dict__)
+        except Exception as error:
+            raise error

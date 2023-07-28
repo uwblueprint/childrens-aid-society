@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -13,8 +13,10 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
+import intakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 const CaseOverviewBody = (): React.ReactElement => {
+  const [leadName, setLeadName] = useState("");
   const history = useHistory();
 
   const {
@@ -30,6 +32,17 @@ const CaseOverviewBody = (): React.ReactElement => {
 
   const goToHomepage = () => {
     history.push("/");
+  };
+  const changeLead = async () => {
+    const intakeID = 1; // TODO replace with actual intake id
+    const changedData: Record<string, string> = {
+      lead_access_worker_name: leadName,
+    };
+    try {
+      return await intakeAPIClient.put({ changedData, intakeID });
+    } catch (error) {
+      return error;
+    }
   };
 
   return (
@@ -54,12 +67,21 @@ const CaseOverviewBody = (): React.ReactElement => {
               gap: "20px",
             }}
           >
-            <Input variant="filled" placeholder="Search name" />
+            <Input
+              variant="filled"
+              placeholder="Search name"
+              value={leadName}
+              onChange={(event) => setLeadName(event.target.value)}
+            />
             <Button
               backgroundColor="#f8fcfc"
               color="#8397c0"
               borderColor="#8397c0"
               variant="outline"
+              disabled={leadName === ""}
+              onClick={() => {
+                changeLead();
+              }}
             >
               Save
             </Button>

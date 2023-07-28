@@ -23,3 +23,5 @@ class Goal(db.Model, BaseMixin):
     is_default = db.Column(
         db.Boolean, nullable=False, default=False, server_default=text("False")
     )
+    intake_id = db.Column(db.Integer, db.ForeignKey('intakes.id'), nullable=False)
+    intake = db.relationship('Intake', backref='goals')

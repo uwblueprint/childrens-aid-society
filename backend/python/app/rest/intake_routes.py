@@ -36,8 +36,8 @@ provider_service = ProviderService(current_app.logger)
 # defines a shared URL prefix for all routes
 blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 
+from flask import jsonify
 
-# get all intakes
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 def get_all_intakes():
@@ -55,9 +55,117 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+        response = []
+        for intake in intakes:
+            intake_data = {
+                "user_id": intake.user_id,
+                "case_id": intake.id,
+                "intake_status": intake.intake_status,
+                "caseReferral": {
+                    "referringWorkerName": intake.referring_worker_name or "",
+                    "referringWorkerContact": intake.referring_worker_contact or "",
+                    "cpinFileNumber": intake.cpin_number or "",
+                    "cpinFileType": intake.cpin_file_type or "",
+                    "familyName": intake.family_name or "",
+                    "referralDate": intake.referral_date or "",
+                },
+                "courtInformation": {
+                    "courtStatus": intake.court_status or "",
+                    "orderReferral": "file binary",  # Replace with actual file binary
+                    "firstNationHeritage": intake.first_nation_heritage or "",
+                    "firstNationBand": intake.first_nation_band or "",
+                },
+                "children": [],
+                "caregivers": [],
+                "visitingFamily": [],  # Add other related tables as needed
+                "daytimeContacts": [],
+                "goals": [],
+                "programDetails": {
+                    "transportRequirements": intake.transportation_requirements or "",
+                    "schedulingRequirements": intake.scheduling_requirements or "",
+                    "suggestedStartDate": intake.suggested_start_date or "",
+                    "shortTermGoals": [],
+                    "longTermGoals": [],
+                    "familialConcerns": [],
+                    "permittedIndividuals": [],
+                }
+            }
 
-        # call functions here
-        return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
+            # Fetch data for children and daytimeContact
+            children_data = child_service.get_by_intake_id(intake.id)
+            for child in children_data:
+                child_info = {
+                    "name": child.name or "",
+                    "dateOfBirth": child.date_of_birth or "",
+                    "cpinFileNumber": child.cpin_file_number or "",
+                    "serviceWorker": child.service_worker or "",
+                    "specialNeeds": child.special_needs or "",
+                    "concerns": child.concerns or [],
+                }
+                intake_data["children"].append({
+                    "childInfo": child_info,
+                    "daytimeContact": {
+                        "name": "",
+                        "contactInfo": "",
+                        "address": "",
+                        "dismissalTime": "",
+                    },
+                    "provider": [{
+                        "name": "",
+                        "fileNumber": "",
+                        "primaryPhoneNumber": "",
+                        "secondaryPhoneNumber": "",
+                        "email": "",
+                        "address": "",
+                        "additionalContactNotes": "",
+                        "relationshipToChild": "",
+                    }],
+                })
+
+            # Fetch data for caregivers and goals
+            caregivers_data = caregiver_service.get_by_intake_id(intake.id)
+            for caregiver in caregivers_data:
+                caregiver_info = {
+                    "name": caregiver.name or "",
+                    "dateOfBirth": caregiver.date_of_birth or "",
+                    "primaryPhoneNumber": caregiver.primary_phone_number or "",
+                    "secondaryPhoneNumber": caregiver.secondary_phone_number or "",
+                    "additionalContactNotes": caregiver.additional_contact_notes or "",
+                    "address": caregiver.address or "",
+                    "relationshipToChild": caregiver.relationship_to_child or "",
+                    "individualConsiderations": caregiver.individual_considerations or "",
+                }
+                intake_data["caregivers"].append(caregiver_info)
+
+            # Fetch data for daytimeContacts
+            daytime_contact_data = daytime_contact_service.get_by_intake_id(intake.id)
+            for contact in daytime_contact_data:
+                contact_info = {
+                    "name": contact.name or "",
+                    "contactInfo": contact.contact_information or "",
+                    "address": contact.address or "",
+                    "dismissalTime": contact.dismissal_time or "",
+                }
+                intake_data["daytimeContacts"].append(contact_info)
+
+            # Fetch data for goals
+            goals_data = goal_service.get_by_intake_id(intake.id)
+            for goal in goals_data:
+                goal_info = {
+                    "type": goal.type or "",
+                    "goal": goal.goal or "",
+                    "start_date": goal.start_date or "",
+                    "end_date": goal.end_date or "",
+                    "is_default": goal.is_default or False,
+                }
+                if goal.type == "SHORT_TERM":
+                    intake_data["programDetails"]["shortTermGoals"].append(goal_info)
+                elif goal.type == "LONG_TERM":
+                    intake_data["programDetails"]["longTermGoals"].append(goal_info)
+
+            response.append(intake_data)
+
+        return jsonify(response), 200
     except Exception as error:
         return jsonify(error), 400
 

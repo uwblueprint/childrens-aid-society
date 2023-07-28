@@ -85,3 +85,4 @@ class Intake(db.Model, BaseMixin):
     )
     lead_access_worker_name = db.Column(db.String, nullable=True)
     intake_meeting_notes = db.Column(db.String, nullable=True)
+    daytime_contacts = db.relationship('DaytimeContact', backref='intake')

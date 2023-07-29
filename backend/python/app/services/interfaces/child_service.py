@@ -33,3 +33,14 @@ class IChildService(ABC):
         :raises Exception: if there was an error on the database side
         """
         pass
+
+    @abstractmethod
+    def get_child_by_intake_id(self, intake_id):
+        """Get a child by its intake_id
+        :param intake_id: the intake_id of the child to retrieve
+        :type intake_id: str
+        :return: ChildDTO
+        :rtype: ChildDTO
+        :raises Exception: if the child with the specified intake_id is not found or if there was an error in the database layer
+        """
+        pass

@@ -2,7 +2,7 @@ from ...models import db
 from ...models.provider import Provider
 from ...resources.provider_dto import CreateProviderDTO, ProviderDTO
 from ..interfaces.provider_service import IProviderService
-
+from typing import List
 
 class ProviderService(IProviderService):
     def __init__(self, logger):
@@ -52,7 +52,7 @@ class ProviderService(IProviderService):
             db.session.rollback()
             raise error
 
-     def get_provider_by_intake_id(self, intake_id):
+    def get_provider_by_intake_id(self, intake_id):
         try:
             provider = Provider.query.filter_by(intake_id=intake_id).first()
             if not provider:

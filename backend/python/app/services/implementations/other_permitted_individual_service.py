@@ -67,18 +67,21 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
         except Exception as error:
             db.session.rollback()
             raise error
-        
-    def get_other_permitted_individual_by_intake_id(self, intake_id: int) -> List[OtherPermittedIndividualDTO]:
-            try:
-                # Query the database for OtherPermittedIndividual records with the given intake_id
-                other_permitted_individuals = OtherPermittedIndividual.query.filter_by(intake_id=intake_id).all()
 
-                # Convert the database records to a list of DTO objects
-                return [
+    def get_other_permitted_individual_by_intake_id(self, intake_id):
+        try:
+            if not isinstance(intake_id, int):
+                raise Exception("Intake ID must be an integer")
+
+            # Query the database to get all OtherPermittedIndividual entries with the given intake_id
+            other_permitted_individuals = OtherPermittedIndividual.query.filter_by(intake_id=intake_id).all()
+
+            # Convert the retrieved objects to DTOs and return as a list
+            return [
                     OtherPermittedIndividualDTO(**other_permitted_individual.__dict__)
                     for other_permitted_individual in other_permitted_individuals
-                ]
+            ]
 
-            except Exception as error:
-                self.logger.error(str(error))
-                raise error
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

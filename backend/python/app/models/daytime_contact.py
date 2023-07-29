@@ -12,9 +12,3 @@ class DaytimeContact(db.Model, BaseMixin):
     address = db.Column(db.String, nullable=False)
     contact_information = db.Column(db.String, nullable=False)
     dismissal_time = db.Column(db.String, nullable=True)
-
-    # Add the foreign key column for intake_id
-    intake_id = db.Column(db.Integer, db.ForeignKey('intakes.id'), nullable=False)
-
-    # Define the relationship with the Intake table
-    intake = db.relationship('Intake', backref='daytime_contacts')

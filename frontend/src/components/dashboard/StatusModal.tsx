@@ -39,6 +39,17 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
+
+  const handleClearPage = () => {
+    setWorkerName("");
+    setMeetingNotes("");
+  };
+
+  const showClearButton = () => {
+    const shouldShowClearButton = meetingNotes !== "" || workerName !== "";
+    return shouldShowClearButton;
+  };
+
   const {
     setStep,
     setReferralDetails,
@@ -84,6 +95,8 @@ const StatusModal = ({
   return (
     <Box>
       <ModalComponent
+        showClearButton={showClearButton}
+        onClearPage={handleClearPage}
         primaryTitle={`Case ${caseId}`}
         secondaryTitle=""
         showLeftButton={selectedOption === "ARCHIVED"}
@@ -117,6 +130,7 @@ const StatusModal = ({
                 </Button>
               </Flex>
             </Box>
+
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
               <Box>
                 <FormControl>
@@ -156,6 +170,7 @@ const StatusModal = ({
                 />
               </Box>
             </SimpleGrid>
+
             <Box marginTop="0.75rem">
               <FormLabel htmlFor="meetingNotes">
                 MEETING NOTES <OptionalLabel />

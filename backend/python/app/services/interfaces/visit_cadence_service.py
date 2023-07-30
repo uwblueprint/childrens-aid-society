@@ -55,6 +55,7 @@ class IVisitCadenceService(ABC):
         Update a cadence
         :param cadence_id: the id of the cadence
         :type cadence_id: int
+        :type update_data: VisitCadenceDTO
         :raises Exception: if update cadence fails
         """
         pass

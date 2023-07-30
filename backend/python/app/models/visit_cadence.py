@@ -18,7 +18,7 @@ frequency_enum = db.Enum(
     "Monthly",
     name="visit_cadence_frequency",
 )
-family_member_enum = db.Enum(
+family_member_enum = db.Enum( # TODO add more family member enums
     "Dad",
     "Mom",
     "Grandma",

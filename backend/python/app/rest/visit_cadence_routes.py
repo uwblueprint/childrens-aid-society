@@ -21,11 +21,10 @@ def get_all_cadences():
         return jsonify(error), 400
 
 
-# get all cadences
-@blueprint.route("/byIntake", methods=["GET"], strict_slashes=False)
+# get all cadences by intake id
+@blueprint.route("/<int:intake_id>", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
-def get_cadences_by_intake_id():
-    intake_id = int(request.args.get("intake_id"))
+def get_cadences_by_intake_id(intake_id):
     if intake_id:
         if type(intake_id) is not int:
             return jsonify({"error": "intake_id query parameter must be an int"}), 400

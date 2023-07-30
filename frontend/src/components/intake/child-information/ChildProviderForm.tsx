@@ -11,11 +11,15 @@ import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 export type ChildProviderFormProps = {
   providers: Providers;
   setProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  allProviders: Providers;
+  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
 };
 
 const ChildProviderForm = ({
   providers,
   setProviders,
+  allProviders,
+  setAllProviders,
 }: ChildProviderFormProps): React.ReactElement => {
   const [providersDeleted, setProvidersDeleted] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -36,7 +40,14 @@ const ChildProviderForm = ({
       providers.splice(selectedIndex, 1, newProvider);
     } else {
       providers.push(newProvider);
+      allProviders.push(newProvider);
     }
+    setProviders(providers);
+    setAllProviders(allProviders);
+  };
+
+  const onClickExistingProvider = (existingProvider: ProviderDetails) => {
+    providers.push(existingProvider);
     setProviders(providers);
   };
 
@@ -88,7 +99,9 @@ const ChildProviderForm = ({
         <Box>
           <ExistingProvider
             isOpen={isOpenExistingProviders}
+            onClick={onClickExistingProvider}
             onClose={onCloseExistingProviders}
+            existingProviders={allProviders}
           />
           <NewProviderModal
             isOpen={isOpenNewProviders}

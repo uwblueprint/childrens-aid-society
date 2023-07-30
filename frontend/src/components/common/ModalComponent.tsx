@@ -22,9 +22,19 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   unsavedProgressModal?: boolean;
+  showLeftButton?: boolean;
+  leftButtonTitle?: string;
+  leftButtonVariant?: string;
+  onLeftButtonClick?: () => void;
+  titleColor?: string;
+  mainButtonVariant?: string;
+  showModalCloseButton?: boolean;
+  onClearPage?: () => void;
+  showClearButton?: () => void;
 };
 
 const ModalComponent = ({
+  showClearButton,
   primaryTitle,
   modalContent,
   disabled,
@@ -34,42 +44,76 @@ const ModalComponent = ({
   isOpen,
   onClose,
   unsavedProgressModal,
-}: ModalProps): React.ReactElement => (
-  <Modal
-    isCentered
-    isOpen={isOpen}
-    onClose={onClose}
-    size="5xl"
-    scrollBehavior="inside"
-  >
-    <ModalOverlay />
-    <ModalContent padding="32px">
-      <ModalHeader>
-        <Text textStyle="label">{secondaryTitle.toUpperCase()}</Text>
-        <Text paddingBottom="12px" textStyle="header-medium">
-          {primaryTitle}
-        </Text>
-        <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
-      </ModalHeader>
-      <ModalBody>
-        {modalContent}
-        <ModalFooter
-          paddingTop="56px"
-          paddingBottom="0px"
-          paddingLeft="0px"
-          paddingRight="0px"
-        >
-          <Button variant="tertiary" onClick={onClose}>
-            Cancel
-          </Button>
-          {unsavedProgressModal && <Spacer />}
-          <Button variant="primary" disabled={disabled} onClick={onClick}>
-            {primaryButtonTitle}
-          </Button>
-        </ModalFooter>
-      </ModalBody>
-    </ModalContent>
-  </Modal>
-);
+  showLeftButton,
+  leftButtonTitle,
+  leftButtonVariant,
+  onLeftButtonClick,
+  titleColor,
+  mainButtonVariant,
+  showModalCloseButton = true,
+  onClearPage,
+}: ModalProps): React.ReactElement => {
+  return (
+    <Modal
+      isCentered
+      isOpen={isOpen}
+      onClose={onClose}
+      size="5xl"
+      scrollBehavior="inside"
+      returnFocusOnClose={false}
+      trapFocus={false}
+    >
+      <ModalOverlay />
+      <ModalContent padding="32px">
+        <ModalHeader>
+          <Text textStyle="label" color={titleColor}>
+            {secondaryTitle.toUpperCase()}
+          </Text>
+          <Text
+            paddingBottom="12px"
+            textStyle="header-medium"
+            color={titleColor}
+          >
+            {primaryTitle}
+          </Text>
+          {showModalCloseButton && (
+            <ModalCloseButton marginTop="40px" marginRight="40px" size="sm" />
+          )}
+        </ModalHeader>
+        <ModalBody>
+          {modalContent}
+          <ModalFooter
+            paddingTop="56px"
+            paddingBottom="0px"
+            paddingLeft="0px"
+            paddingRight="0px"
+          >
+            {showLeftButton && (
+              <>
+                <Button variant={leftButtonVariant} onClick={onLeftButtonClick}>
+                  {leftButtonTitle}
+                </Button>
+                <Spacer />
+              </>
+            )}
+            {showClearButton && onClearPage && (
+              <Button variant="tertiary" onClick={onClearPage}>
+                Clear Page
+              </Button>
+            )}
+            {unsavedProgressModal && <Spacer />}
+            <Button
+              variant={mainButtonVariant}
+              disabled={disabled}
+              onClick={onClick}
+            >
+              {primaryButtonTitle}
+            </Button>
+          </ModalFooter>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
 
 export default ModalComponent;

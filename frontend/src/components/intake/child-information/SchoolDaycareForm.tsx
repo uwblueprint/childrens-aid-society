@@ -32,7 +32,11 @@ const SchoolDaycareForm = ({
   };
 
   return (
-    <Formik initialValues={schoolDetails} onSubmit={onSubmit}>
+    <Formik
+      enableReinitialize
+      initialValues={schoolDetails}
+      onSubmit={onSubmit}
+    >
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -40,11 +44,17 @@ const SchoolDaycareForm = ({
               <FormLabel htmlFor="schoolName">NAME</FormLabel>
               <Field
                 as={CustomInput}
-                id="schooName"
-                name="schoolname"
+                id="schoolName"
+                name="schoolName"
                 type="string"
                 placeholder="Enter name of school or daycare"
                 icon={<Icon as={Home} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolName: e.target.value,
+                  })
+                }
               />
             </Box>
             <Box>
@@ -58,6 +68,12 @@ const SchoolDaycareForm = ({
                 type="string"
                 placeholder="e.g. 555-555-5555"
                 icon={<Icon as={Phone} />}
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolPhoneNo: e.target.value,
+                  })
+                }
               />
             </Box>
           </SimpleGrid>
@@ -70,6 +86,12 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter address of school or daycare"
               icon={<Icon as={Navigation} />}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  schoolAddress: e.target.value,
+                })
+              }
             />
           </Box>
           <Box paddingTop="10px">
@@ -83,12 +105,16 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter dismissal time of school or daycare"
               icon={<Icon as={Clock} />}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  dismissalTime: e.target.value,
+                })
+              }
             />
           </Box>
         </FormControl>
       </Form>
-
-      {/* TODO: trigger on submit when save child information button is clicked */}
     </Formik>
   );
 };

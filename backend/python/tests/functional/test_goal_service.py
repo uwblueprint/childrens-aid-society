@@ -1,5 +1,3 @@
-import datetime
-
 import pytest
 from flask import current_app
 
@@ -31,7 +29,7 @@ DUMMY_INTAKE_DATA = {
     "user_id": 1,
     "referring_worker_name": "John Doe",
     "referring_worker_contact": "johndoe@mail.com",
-    "referral_date": datetime.date(2020, 1, 1),
+    "referral_date": "2020-01-01",
     "family_name": "Doe",
     "cpin_number": "123456789",
     "cpin_file_type": "ONGOING",
@@ -39,7 +37,7 @@ DUMMY_INTAKE_DATA = {
     "court_order_file": "court_order.pdf",
     "transportation_requirements": "car",
     "scheduling_requirements": "flexible",
-    "suggested_start_date": datetime.date(2020, 1, 1),
+    "suggested_start_date": "2020-01-01",
 }
 
 # These are fake goals for testing purposes
@@ -57,14 +55,14 @@ DUMMY_INTAKES_GOALS_LONGTERM = [
     {
         "intake_id": 1,
         "goal_id": 1,
-        "start_date": datetime.date(2020, 1, 1),
-        "end_date": datetime.date(2020, 1, 1),
+        "start_date": "2020-01-01",
+        "end_date": "2020-01-01",
     },
     {
         "intake_id": 1,
         "goal_id": 2,
-        "start_date": datetime.date(2020, 1, 1),
-        "end_date": datetime.date(2020, 1, 1),
+        "start_date": "2020-01-01",
+        "end_date": "2020-01-01",
     },
 ]
 
@@ -72,14 +70,14 @@ DUMMY_INTAKES_GOALS_SHORTTERM = [
     {
         "intake_id": 1,
         "goal_id": 3,
-        "start_date": datetime.date(2020, 1, 1),
-        "end_date": datetime.date(2020, 1, 1),
+        "start_date": "2020-01-01",
+        "end_date": "2020-01-01",
     },
     {
         "intake_id": 1,
         "goal_id": 4,
-        "start_date": datetime.date(2020, 1, 1),
-        "end_date": datetime.date(2020, 1, 1),
+        "start_date": "2020-01-01",
+        "end_date": "2020-01-01",
     },
 ]
 

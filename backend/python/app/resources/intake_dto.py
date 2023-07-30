@@ -1,6 +1,3 @@
-import datetime
-
-
 class IntakeDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
@@ -20,11 +17,11 @@ class IntakeDTO:
         self.scheduling_requirements = kwargs.get("scheduling_requirements")
         self.suggested_start_date = kwargs.get("suggested_start_date")
         self.date_accepted = kwargs.get("date_accepted")
-        self.access_weekday = kwargs.get("access_weekday")
         self.access_location = kwargs.get("access_location")
-        self.access_time = kwargs.get("access_time")
         self.lead_access_worker_id = kwargs.get("lead_access_worker_id")
         self.denial_reason = kwargs.get("denial_reason")
+        self.lead_access_worker_name = kwargs.get("lead_access_worker_name")
+        self.intake_meeting_notes = kwargs.get("intake_meeting_notes")
 
 
 class CreateIntakeDTO(IntakeDTO):
@@ -44,7 +41,7 @@ class CreateIntakeDTO(IntakeDTO):
             self.referring_worker_contact, str
         ):
             error_list.append("referring_worker_contact is invalid")
-        if not self.referral_date or not isinstance(self.referral_date, datetime.date):
+        if not self.referral_date or not isinstance(self.referral_date, str):
             error_list.append("referral_date is invalid")
         if not self.family_name or not isinstance(self.family_name, str):
             error_list.append("family_name is invalid")
@@ -65,7 +62,7 @@ class CreateIntakeDTO(IntakeDTO):
         ):
             error_list.append("scheduling_requirements is invalid")
         if not self.suggested_start_date or not isinstance(
-            self.suggested_start_date, datetime.date
+            self.suggested_start_date, str
         ):
             error_list.append("suggested_start_date is invalid")
 
@@ -78,14 +75,10 @@ class CreateIntakeDTO(IntakeDTO):
             error_list.append("first_nation_heritage is invalid")
         if self.first_nation_band and not isinstance(self.first_nation_band, str):
             error_list.append("first_nation_band is invalid")
-        if self.date_accepted and not isinstance(self.date_accepted, datetime.date):
+        if self.date_accepted and not isinstance(self.date_accepted, str):
             error_list.append("date_accepted is invalid")
-        if self.access_weekday and not isinstance(self.access_weekday, list):
-            error_list.append("access_weekday is invalid")
         if self.access_location and not isinstance(self.access_location, str):
             error_list.append("access_location is invalid")
-        if self.access_time and not isinstance(self.access_time, datetime.time):
-            error_list.append("access_time is invalid")
         if self.lead_access_worker_id and not isinstance(
             self.lead_access_worker_id, int
         ):

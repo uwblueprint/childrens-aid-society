@@ -22,7 +22,6 @@ const CustomInput = ({
   rightIcon,
   rightIconShowPointerEvents,
   isInvalid,
-
   ...props
 }: CustomInputProps): React.ReactElement => {
   return (

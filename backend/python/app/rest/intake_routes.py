@@ -55,10 +55,132 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+        for intake in intakes:
+            caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
+            # print(caregivers)
+            children = child_service.get_child_by_intake_id(intake.id)
+            # print(children)
+            providers = provider_service.get_provider_by_intake_id(intake.id)
+            print(providers)
+            otherPermittedIndividuals = permittedIndividual.get_other_permitted_individual_by_intake_id(intake_id)
+            print(otherPermittedIndividuals)
+          
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400
 
+# get all intakes
+# @blueprint.route("/", methods=["GET"], strict_slashes=False)
+# # @require_authorization_by_role({"Admin"})
+# # ...
+
+# def get_all_intakes():
+#     args = request.args
+#     intake_status = args.get("intake_status")
+#     page_number = int(args.get("page_number", 1))
+#     page_limit = int(args.get("page_limit", 20))
+
+#     try:
+#         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+#     except Exception as error:
+#         return jsonify(str(error)), 400
+
+#     result = []
+#     for intake in intakes:
+#         intake_info = {
+#             "user_id": intake.user_id or "",
+#             "case_id": intake.id,
+#             "intake_status": intake.intake_status or "ACTIVE",
+#             "caseReferral": {
+#                 "referringWorkerName": intake.referring_worker_name or "",
+#                 "referringWorkerContact": intake.referring_worker_contact or "",
+#                 "cpinFileNumber": intake.cpin_number or "",
+#                 "cpinFileType": intake.cpin_file_type or "",
+#                 "familyName": intake.family_name or "",
+#                 "referralDate": intake.referral_date or "",
+#             },
+#             "courtInformation": {
+#                 "courtStatus": intake.court_status or "",
+#                 "orderReferral": "file binary",
+#                 "firstNationHeritage": intake.first_nation_heritage or "",
+#                 "firstNationBand": intake.first_nation_band or "",
+#             },
+#             "children": [],
+#             "caregivers": [],
+#             "programDetails": {
+#                 "transportRequirements": intake.transportation_requirements or "",
+#                 "schedulingRequirements": intake.scheduling_requirements or "",
+#                 "suggestedStartDate": intake.suggested_start_date or "",
+#                 "shortTermGoals": [],
+#                 "longTermGoals": [],
+#                 "familialConcerns": [],
+#                 "permittedIndividuals": [{
+#                     "name": "",
+#                     "phoneNumber": 0,
+#                     "relationshipToChildren": "",
+#                     "additionalNotes": ""}],
+#             }
+#         }
+
+#         # Children
+#         children = child_service.get_child_by_intake_id(intake.id)
+#         for child in children:
+#             child_info = {
+#                 "name": f"{child.first_name} {child.last_name}",
+#                 "dateOfBirth": child.date_of_birth or "",
+#                 "cpinFileNumber": child.cpin_number or "",
+#                 "serviceWorker": child.service_worker or "",
+#                 "specialNeeds": child.special_needs or "",
+#                 "concerns": child_behavior_service.get_child_behaviors_by_child_id(child.id)
+#             }
+#             daytime_contact = daytimeContact_service.get_daytime_contact_by_id(child.daytime_contact_id)
+#             if daytime_contact:
+#                 child_info["daytimeContact"] = {
+#                     "name": daytime_contact.name or "",
+#                     "contactInfo": daytime_contact.contact_information or "",
+#                     "address": daytime_contact.address or "",
+#                     "dismissalTime": daytime_contact.dismissal_time or "",
+#                 }
+
+#             # Providers for the child
+#             providers = provider_service.get_provider_by_intake_id(intake.id)
+#             child_providers = []
+#             for provider in providers:
+#                 child_provider = {
+#                     "name": provider.name or "",
+#                     "fileNumber": provider.file_number or "",
+#                     "primaryPhoneNumber": provider.primary_phone_number or "",
+#                     "secondaryPhoneNumber": provider.secondary_phone_number or "",
+#                     "email": provider.email or "",
+#                     "address": provider.address or "",
+#                     "relationshipToChild": provider.relationship_to_child or "",
+#                     "additionalContactNotes": provider.additional_contact_notes or "",
+#                 }
+#                 child_providers.append(child_provider)
+#             child_info["provider"] = child_providers
+
+#             intake_info["children"].append(child_info)
+
+#         # Caregivers
+#         caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
+#         for caregiver in caregivers:
+#             caregiver_info = {
+#                 "name": caregiver.name or "",
+#                 "dateOfBirth": caregiver.date_of_birth or "",
+#                 "primaryPhoneNumber": caregiver.primary_phone_number or "",
+#                 "secondaryPhoneNumber": caregiver.secondary_phone_number or "",
+#                 "additionalContactNotes": caregiver.additional_contact_notes or "",
+#                 "address": caregiver.address or "",
+#                 "relationshipToChild": caregiver.relationship_to_child or "",
+#                 "individualConsiderations": caregiver.individual_considerations or "",
+#             }
+#             intake_info["caregivers"].append(caregiver_info)
+
+#         result.append(intake_info)
+
+#     return jsonify(result), 200
+
+# # ...
 
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)

@@ -33,13 +33,5 @@ class IProviderService(ABC):
         pass
         
     @abstractmethod
-    def get_provider_by_intake_id(self, intake_id):
-        """Get a provider by its intake_id
-        :param intake_id: the intake_id of the provider to retrieve
-        :type intake_id: str
-        :return: ProviderDTO
-        :rtype: ProviderDTO
-        :raises Exception: if the provider with the specified intake_id is not found
-                           or if there was an error in the database layer
-        """
+    def get_provider_by_intake_id(self, intake_id: str) -> ProviderDTO:
         pass

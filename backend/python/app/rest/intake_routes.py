@@ -55,6 +55,10 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+        for intake in intakes:
+            caregivers = caregiver_service.get_caregiver_by_intake_id(2)
+            print("this is caregivers w intake " + str(intake.id)) 
+            print(caregivers.name)
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400

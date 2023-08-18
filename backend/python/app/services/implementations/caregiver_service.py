@@ -57,7 +57,9 @@ class CaregiverService(ICaregiverService):
         try:
             caregiver = Caregiver.query.filter_by(intake_id=intake_id).first()
             if not caregiver:
-                raise Exception("Caregiver with intake_id {} not found".format(intake_id))
+                return []
+    
+            # return list instead
             return CaregiverDTO(
                 id=caregiver.id,
                 name=caregiver.name,

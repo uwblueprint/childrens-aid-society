@@ -32,6 +32,6 @@ class IProviderService(ABC):
         """
         pass
         
-    @abstractmethod
-    def get_provider_by_intake_id(self, intake_id: str) -> ProviderDTO:
-        pass
+    # @abstractmethod
+    # def get_provider_by_child_id(self, child_id):
+    #     pass

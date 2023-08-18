@@ -57,19 +57,20 @@ def get_all_intakes():
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         for intake in intakes:
             caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
-            # print(caregivers)
+            print("this is caregivers w intake " + str(intake.id)) 
+            print(caregivers.name)
             children = child_service.get_child_by_intake_id(intake.id)
-            # print(children)
-            providers = provider_service.get_provider_by_intake_id(intake.id)
-            print(providers)
-            otherPermittedIndividuals = permittedIndividual.get_other_permitted_individual_by_intake_id(intake_id)
+            print("this is children") 
+            print(children)
+            otherPermittedIndividuals = permittedIndividual_service.get_other_permitted_individual_by_intake_id(intake_id)
+            print("this is permmitted indiv") 
             print(otherPermittedIndividuals)
           
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400
+# ----------------------
 
-# get all intakes
 # @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # # @require_authorization_by_role({"Admin"})
 # # ...
@@ -143,7 +144,7 @@ def get_all_intakes():
 #                 }
 
 #             # Providers for the child
-#             providers = provider_service.get_provider_by_intake_id(intake.id)
+#             providers = provider_service.get_providers_by_child_id(child.id)
 #             child_providers = []
 #             for provider in providers:
 #                 child_provider = {
@@ -180,7 +181,7 @@ def get_all_intakes():
 
 #     return jsonify(result), 200
 
-# # ...
+
 
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)

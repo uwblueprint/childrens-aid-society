@@ -13,7 +13,6 @@ class ProviderDTO:
         self.relationship_to_child = kwargs.get("relationship_to_child")
         self.additional_contact_notes = kwargs.get("additional_contact_notes")
         self.child_id = kwargs.get("child_id")
-        self.intake_id = kwargs.get("intake_id")
 
 
 class CreateProviderDTO(ProviderDTO):

@@ -55,7 +55,7 @@ class ChildService(IChildService):
         try:
             child = Child.query.filter_by(intake_id=intake_id).first()
             if not child:
-                raise Exception("Child with intake_id {} not found".format(intake_id))
+                return []
             return ChildDTO(**child.__dict__)
         except Exception as error:
             raise error

@@ -52,26 +52,16 @@ class ProviderService(IProviderService):
             db.session.rollback()
             raise error
 
+    # def get_providers_by_child_id(self, child_id):
+    #     try:
+    #         providers = Provider.query.filter_by(child_id=child_id).all()
 
-    def get_providers_by_intake_id(self, intake_id):
-        try:
-            # Find the child with the desired intake_id
-            child = Child.query.filter_by(intake_id=intake_id).first()
+    #         if not providers:
+    #             raise Exception("Providers with child_id {} not found")
 
-            if not child:
-                raise Exception("Child with intake_id {} not found".format(intake_id))
-
-            # Retrieve all providers associated with the child
-            providers = child.providers
-
-            if not providers:
-                raise Exception("No providers found for child with intake_id {}".format(intake_id))
-
-            # Convert the list of providers to a list of ProviderDTOs
-            providers_dto = [ProviderDTO(**provider.to_dict()) for provider in providers]
-
-            return providers_dto
-        except Exception as error:
-            self.logger.error(str(error))
-            raise error
+    #         providers_dto = [ProviderDTO(**provider.to_dict()) for provider in providers]
+    #         return providers_dto
+    #     except Exception as error:
+    #         self.logger.error(str(error))
+    #         raise error
 

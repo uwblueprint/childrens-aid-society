@@ -1,12 +1,11 @@
 import React from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowLeft } from "react-feather";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const Visit = (): React.ReactElement => {
   // url is /visit/caseId/visitId
-  const params = useParams();
-  console.log(params);
+  // const params = useParams();
   return (
     <>
       <Box bg="gray.50" style={{ padding: "50px 100px 25px 100px" }}>

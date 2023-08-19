@@ -37,3 +37,14 @@ class ICaregiverService(ABC):
         :raises Exception: if delete caregiver fails
         """
         pass
+        
+    @abstractmethod
+    def get_caregiver_by_intake_id(self, intake_id):
+        """Get the caregiver associated with a specific intake_id
+        :param intake_id: the ID of the intake to retrieve the caregiver for
+        :type intake_id: int
+        :return: CaregiverDTO representing the caregiver for the specified intake_id
+        :rtype: CaregiverDTO
+        :raises Exception: if no caregiver with the specified intake_id is found or if an error occurs
+                           in the database query
+        """

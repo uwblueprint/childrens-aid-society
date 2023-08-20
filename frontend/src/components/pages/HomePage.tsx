@@ -124,7 +124,7 @@ const Home = (): React.ReactElement => {
         caseLead: caseData.referring_worker_name,
         date: caseData.referral_date,
         familyName: caseData.family_name,
-        caseTag: caseData.intake_status as CaseStatus, // Assuming the CaseStatus matches the API data
+        caseTag: caseData.intake_status as CaseStatus,
       }));
       setSearchResults(caseCards);
     });
@@ -205,7 +205,6 @@ const Home = (): React.ReactElement => {
 
         <VStack spacing={15} align="stretch" my={12}>
           <FilteredSection status={CaseStatus.ACTIVE} cases={searchResults} />
-          <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}
             cases={cases.submitted}

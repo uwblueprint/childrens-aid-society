@@ -1,5 +1,5 @@
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
@@ -16,10 +16,29 @@ enum AddChildSteps {
 }
 
 type AddChildProps = {
+  allProviders: Providers;
+  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  childrens: Children;
+  setChildren: React.Dispatch<React.SetStateAction<Children>>;
+  selectedIndexChild: number;
 };
 
-const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
+export type ChildrenDetails = {
+  childDetails: ChildDetails;
+  schoolDetails: SchoolDetails;
+  providers: Providers;
+};
+export type Children = ChildrenDetails[];
+
+const AddChild = ({
+  allProviders,
+  setAllProviders,
+  setStep,
+  childrens,
+  setChildren,
+  selectedIndexChild,
+}: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
   const [childDetails, setChildDetails] = useState<ChildDetails>({
@@ -46,8 +65,29 @@ const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    // TODO: Do something with the information
+    const updatedChild = {
+      childDetails: { ...childDetails },
+      schoolDetails: { ...schoolDetails },
+      providers: [...providers],
+    };
+
+    if (selectedIndexChild >= 0) {
+      childrens.splice(selectedIndexChild, 1, updatedChild);
+    } else {
+      childrens.push(updatedChild);
+    }
+
+    setChildren([...childrens]);
+    setStep(IntakeSteps.INDIVIDUAL_DETAILS);
   };
+
+  useEffect(() => {
+    if (selectedIndexChild >= 0) {
+      setChildDetails(childrens[selectedIndexChild].childDetails);
+      setSchoolDetails(childrens[selectedIndexChild].schoolDetails);
+      setProviders(childrens[selectedIndexChild].providers);
+    }
+  }, [childrens, selectedIndexChild]);
 
   const renderChildForm = () => {
     switch (activeFormIndex) {
@@ -70,6 +110,8 @@ const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
           <ChildProviderForm
             providers={providers}
             setProviders={setProviders}
+            allProviders={allProviders}
+            setAllProviders={setAllProviders}
           />
         );
       default:
@@ -122,6 +164,7 @@ const AddChild = ({ setStep }: AddChildProps): React.ReactElement => {
         <Button
           type="submit"
           mr="96px"
+          // remove when error checking is implemented
           disabled={requiredInfomationMissing}
           onClick={childFormSubmitHandler}
         >

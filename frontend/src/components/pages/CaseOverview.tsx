@@ -39,7 +39,8 @@ const CaseOverviewBody = (): React.ReactElement => {
       lead_access_worker_name: leadName,
     };
     try {
-      return await intakeAPIClient.put({ changedData, intakeID });
+      const result = await intakeAPIClient.put({ changedData, intakeID });
+      return result;
     } catch (error) {
       return error;
     }

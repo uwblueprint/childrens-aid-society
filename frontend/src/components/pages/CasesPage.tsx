@@ -121,7 +121,7 @@ const Cases = (): React.ReactElement | null => {
 
   const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1);
   const validStatus = Object.values(CaseStatus).includes(
-    formattedStatus as CaseStatus,
+    status.toUpperCase() as CaseStatus,
   );
 
   if (!validStatus) {

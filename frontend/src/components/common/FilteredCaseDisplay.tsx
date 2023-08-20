@@ -30,7 +30,13 @@ const FilteredCaseDisplay = ({
     const casesDisplayed = cases.slice(start, end);
 
     rows.push(
-      <Flex key={i} flexBasis="100%" columnGap="8px" pb="24px">
+      <Flex
+        key={i}
+        flexBasis="100%"
+        columnGap="8px"
+        pb="24px"
+        alignItems="flex-start"
+      >
         {casesDisplayed.map((caseData: CaseCardProps) => {
           return (
             <CaseCard
@@ -50,7 +56,7 @@ const FilteredCaseDisplay = ({
   return (
     <Flex
       flexWrap="wrap"
-      justifyContent="center"
+      justifyContent="flex-start"
       width="min-content"
       marginLeft="auto"
       marginRight="auto"

@@ -116,18 +116,22 @@ const Home = (): React.ReactElement => {
   const [searchResults, setSearchResults] = useState<CaseCardProps[]>([]);
 
   const handleSearch = () => {
-    IntakeAPIClient.get(searchValue).then((data) => {
-      // Assuming the API response is an array of objects as shown in the example data
-      // Map through the response and transform it into an array of CaseCardProps objects
-      const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
-        caseTitle: caseData.cpin_number, // Use appropriate properties here
-        caseLead: caseData.referring_worker_name,
-        date: caseData.referral_date,
-        familyName: caseData.family_name,
-        caseTag: caseData.intake_status as CaseStatus,
-      }));
-      setSearchResults(caseCards);
-    });
+    if (searchValue.trim() !== "") {
+      IntakeAPIClient.get(searchValue).then((data) => {
+        // Assuming the API response is an array of objects as shown in the example data
+        // Map through the response and transform it into an array of CaseCardProps objects
+        const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
+          caseTitle: caseData.cpin_number, // Use appropriate properties here
+          caseLead: caseData.referring_worker_name,
+          date: caseData.referral_date,
+          familyName: caseData.family_name,
+          caseTag: caseData.intake_status as CaseStatus,
+        }));
+        setSearchResults(caseCards);
+      });
+    } else {
+      setSearchResults([]);
+    }
   };
 
   const cases: { [key: string]: CaseCardProps[] } = {
@@ -204,16 +208,28 @@ const Home = (): React.ReactElement => {
         />
 
         <VStack spacing={15} align="stretch" my={12}>
-          <FilteredSection status={CaseStatus.ACTIVE} cases={searchResults} />
-          <FilteredSection
-            status={CaseStatus.SUBMITTED}
-            cases={cases.submitted}
-          />
-          <FilteredSection status={CaseStatus.PENDING} cases={cases.pending} />
-          <FilteredSection
-            status={CaseStatus.ARCHIVED}
-            cases={cases.archived}
-          />
+          {searchResults.length > 0 ? (
+            <FilteredSection status="Search Results" cases={searchResults} />
+          ) : (
+            <>
+              <FilteredSection
+                status={CaseStatus.ACTIVE}
+                cases={cases.active}
+              />
+              <FilteredSection
+                status={CaseStatus.SUBMITTED}
+                cases={cases.submitted}
+              />
+              <FilteredSection
+                status={CaseStatus.PENDING}
+                cases={cases.pending}
+              />
+              <FilteredSection
+                status={CaseStatus.ARCHIVED}
+                cases={cases.archived}
+              />
+            </>
+          )}
         </VStack>
       </Box>
     </Box>

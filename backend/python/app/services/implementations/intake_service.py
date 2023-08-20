@@ -89,11 +89,12 @@ class IntakeService(IIntakeService):
                 raise Exception("Family name passed is not of str type")
 
             intake = Intake.query.filter_by(family_name=family_name)
+            if not intake:
+                return []
             intake_dto = [IntakeDTO(**i.to_dict()) for i in intake]
             self.logger.debug(intake)
 
-            if not intake:
-                raise Exception("Intake with name {} not found".format(family_name))
+            
 
             return intake_dto
 

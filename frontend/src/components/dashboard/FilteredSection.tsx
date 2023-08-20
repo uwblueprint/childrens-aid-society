@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,15 +20,22 @@ const FilteredSection = ({
   status: string;
   cases: CaseCardProps[];
 }): React.ReactElement => {
+  const history = useHistory();
+  const viewAllCases = () => {
+    history.push(`/cases?status=${status.toLowerCase()}`);
+  };
+
   return (
     <Box height="40vh" minHeight="fit-content">
       <Flex mb={5}>
-        <Heading textStyle="header-medium">{status}</Heading>
+        <Heading textStyle="header-medium">
+          {status[0] + status.slice(1).toLowerCase()}
+        </Heading>
         <Spacer />
         <Button
           variant="tertiary"
           rightIcon={<Icon as={ArrowRight} />}
-          onClick={() => {}}
+          onClick={viewAllCases}
         >
           View All
         </Button>
@@ -44,8 +52,8 @@ const FilteredSection = ({
             {cases.slice(0, 4).map((caseData: CaseCardProps) => {
               return (
                 <CaseCard
-                  key={caseData.caseTitle}
-                  caseTitle={caseData.caseTitle}
+                  key={caseData.caseId}
+                  caseId={caseData.caseId}
                   caseLead={caseData.caseLead}
                   date={caseData.date}
                   familyName={caseData.familyName}

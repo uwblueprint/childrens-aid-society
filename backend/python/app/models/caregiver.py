@@ -22,4 +22,6 @@ class Caregiver(db.Model, BaseMixin):
     address = db.Column(db.String, nullable=False)
     relationship_to_child = db.Column(relationship_to_child_enum, nullable=False)
     additional_contact_notes = db.Column(db.String, nullable=True)
-    intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=False)
+    intake_id = db.Column(
+        db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
+    )

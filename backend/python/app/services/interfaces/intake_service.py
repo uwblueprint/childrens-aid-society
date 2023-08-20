@@ -7,7 +7,7 @@ class IIntakeService(ABC):
     """
 
     @abstractmethod
-    def get_all_intakes(self):
+    def get_all_intakes(self, intake_status, page_number, page_limit=3):
         """
         Returns all intakes
         :rtype: list of IntakeDTO

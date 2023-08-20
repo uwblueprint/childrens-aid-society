@@ -60,6 +60,11 @@ def insert_test_data():
         (1, "ARCHIVED", "Bran Stark", "branstark@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
         (1, "ARCHIVED", "Jon Snow", "jonsnow@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
         (1, "ARCHIVED", "Samwell Tarly", "samwelltarly@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Billy Bob", "billybob@mail.com", "2020-01-01", "Bob", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Jonathan Johns", "jonjohns@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Peter Parker", "peterparker@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Matthew McDonald", "matthewmcdonald@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Lily Li", "Lily Li@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
     ]
 
     for value in values:

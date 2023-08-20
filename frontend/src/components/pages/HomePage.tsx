@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,7 +7,6 @@ import {
   Spacer,
   VStack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -19,6 +18,8 @@ import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import CasesContext from "../../contexts/CasesContext";
+import { Case } from "../../types/CasesContextTypes";
 
 const SecondaryHeader = ({
   searchValue,
@@ -30,9 +31,11 @@ const SecondaryHeader = ({
   handleSearch: () => void;
 }): React.ReactElement => {
   const history = useHistory();
+
   function goToIntake() {
     history.push("/intake");
   }
+
 
   const {
     onOpen: onOpenPermanentDelete,
@@ -76,37 +79,6 @@ const SecondaryHeader = ({
         >
           New case
         </Button>
-
-        <Button
-          height="100%"
-          px="2"
-          rounded="lg"
-          border="1px"
-          onClick={onOpenStatusModal}
-        >
-          Test Status Modal
-        </Button>
-
-        <PermanentDeleteModal
-          isOpen={isOpenPermanentDelete}
-          onClick={() => {
-            // TODO: add deletion logic
-            onClosePermanentDelete();
-            onCloseStatusModal();
-          }}
-          onClose={onClosePermanentDelete}
-        />
-        {/* //TODO: dynamically pass in case details 
-        and add onClick save functionality */}
-        <StatusModal
-          caseNumber={1}
-          status="ARCHIVED"
-          isOpen={isOpenStatusModal}
-          onClick={() => {}}
-          onClose={onCloseStatusModal}
-          onDeleteClick={onOpenPermanentDelete}
-          goToIntake={goToIntake}
-        />
       </Flex>
     </Box>
   );
@@ -192,7 +164,61 @@ const Home = (): React.ReactElement => {
         caseTag: CaseStatus.ARCHIVED,
       },
     ],
+
+  // TODO: remove console log and use context instead of state
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
+
+  const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
+    active: [],
+    submitted: [],
+    pending: [],
+    archived: [],
+  });
+
+  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
+    if (intakes.length > 0) {
+      return intakes.map((intake) => ({
+        caseId:
+          typeof intake.case_id === "number"
+            ? intake.case_id
+            : parseInt(intake.case_id, 10),
+        caseLead: intake.caseReferral.referringWorkerName,
+        date: intake.caseReferral.referralDate,
+        familyName: intake.caseReferral.familyName,
+        caseTag: intake.intakeStatus,
+      }));
+    }
+    return [];
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const activeCases = await IntakeApiClient.get(CaseStatus.ACTIVE, 1, 20);
+      const submittedCases = await IntakeApiClient.get(
+        CaseStatus.SUBMITTED,
+        1,
+        20,
+      );
+      const pendingCases = await IntakeApiClient.get(CaseStatus.PENDING, 1, 20);
+      const archivedCases = await IntakeApiClient.get(
+        CaseStatus.ARCHIVED,
+        1,
+        20,
+      );
+
+      setCases({
+        active: mapIntakeResponsesToCaseCards(activeCases),
+        submitted: mapIntakeResponsesToCaseCards(submittedCases),
+        pending: mapIntakeResponsesToCaseCards(pendingCases),
+        archived: mapIntakeResponsesToCaseCards(archivedCases),
+      });
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Box>
       <IntakeHeader

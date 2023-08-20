@@ -1,9 +1,8 @@
-import datetime
 import sys
 
 from flask_sqlalchemy import SQLAlchemy
 
-from app import create_app
+from app import app_config, create_app
 
 db = SQLAlchemy()
 
@@ -57,14 +56,19 @@ def insert_test_data():
 
     # Intakes
     values = [
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
-        (1, "DENIED", "Arya Stark", "aryastark@mail.com", datetime.date(2020, 1, 1), "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", datetime.date(2020, 1, 1)),
+        (1, "ARCHIVED", "Arya Stark", "aryastark@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ARCHIVED", "Bran Stark", "branstark@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ARCHIVED", "Jon Snow", "jonsnow@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ARCHIVED", "Samwell Tarly", "samwelltarly@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Billy Bob", "billybob@mail.com", "2020-01-01", "Bob", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Jonathan Johns", "jonjohns@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Peter Parker", "peterparker@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Matthew McDonald", "matthewmcdonald@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Lily Li", "Lily Li@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
     ]
 
     for value in values:
-        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_weekday", "access_location", "access_time", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason"), value)
 
     # Daytime Contact
     values = [
@@ -79,14 +83,14 @@ def insert_test_data():
 
     # Child
     values = [
-        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs', True, False),
-        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs', True, False),
-        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs', False, True),
-        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs', False, True),
+        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
+        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
+        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
+        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
     ]
 
     for value in values:
-        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "child_service_worker_id", "daytime_contact_id", "special_needs", "has_kinship_provider", "has_foster_placement"), value)
+        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
 
     # Caregivers
     values = [

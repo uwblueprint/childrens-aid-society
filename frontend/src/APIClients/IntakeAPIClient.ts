@@ -97,15 +97,16 @@ const post = async ({
   }
 };
 
-const get = async (): Promise<IntakeResponse[]> => {
+const get = async (parameter: string): Promise<IntakeResponse[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get("/intake", {
+    const { data } = await baseAPIClient.get(`/intake/${parameter}`, {
       headers: { Authorization: bearerToken },
     });
+    console.log(data);
     return data;
   } catch (error) {
     return error;

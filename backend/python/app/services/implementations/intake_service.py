@@ -1,8 +1,10 @@
+import logging
+
 from ...models import db
 from ...models.intake import Intake
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
-import logging
+
 
 class IntakeService(IIntakeService):
     def __init__(self, logger):
@@ -78,7 +80,6 @@ class IntakeService(IIntakeService):
         except Exception as error:
             db.session.rollback()
             raise error
-        
 
     def search_intake(self, family_name: str):
         try:
@@ -93,10 +94,9 @@ class IntakeService(IIntakeService):
 
             if not intake:
                 raise Exception("Intake with name {} not found".format(family_name))
-            
+
             return intake_dto
-        
+
         except Exception as error:
             db.session.rollback()
             raise error
-        

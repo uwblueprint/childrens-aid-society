@@ -310,6 +310,7 @@ def update_intake_route(intake_id):
     except Exception as error:
         return jsonify(str(error)), 400
 
+
 @blueprint.route("/<string:family_name>", methods=["GET"], strict_slashes=False)
 def search_intake(family_name):
     try:

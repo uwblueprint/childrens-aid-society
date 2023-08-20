@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -17,9 +17,18 @@ import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import StatusModal from "../dashboard/StatusModal";
 import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
-import { CaseCardProps } from "../dashboard/CaseCard";
+import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
-const SecondaryHeader = (): React.ReactElement => {
+const SecondaryHeader = ({
+  searchValue,
+  setSearchValue,
+  handleSearch,
+}: {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: () => void;
+}): React.ReactElement => {
   const history = useHistory();
   function goToIntake() {
     history.push("/intake");
@@ -37,6 +46,12 @@ const SecondaryHeader = (): React.ReactElement => {
     onClose: onCloseStatusModal,
   } = useDisclosure();
 
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <Box>
       <Text textStyle="header-large">Intake Cases</Text>
@@ -45,6 +60,9 @@ const SecondaryHeader = (): React.ReactElement => {
           <CustomInput
             placeholder="Search By Family Name"
             icon={<Icon as={Search} />}
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+            onKeyPress={handleEnter}
           />
         </Box>
         <Spacer />
@@ -93,8 +111,25 @@ const SecondaryHeader = (): React.ReactElement => {
     </Box>
   );
 };
-
 const Home = (): React.ReactElement => {
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState<CaseCardProps[]>([]);
+
+  const handleSearch = () => {
+    IntakeAPIClient.get(searchValue).then((data) => {
+      // Assuming the API response is an array of objects as shown in the example data
+      // Map through the response and transform it into an array of CaseCardProps objects
+      const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
+        caseTitle: caseData.cpin_number, // Use appropriate properties here
+        caseLead: caseData.referring_worker_name,
+        date: caseData.referral_date,
+        familyName: caseData.family_name,
+        caseTag: caseData.intake_status as CaseStatus, // Assuming the CaseStatus matches the API data
+      }));
+      setSearchResults(caseCards);
+    });
+  };
+
   const cases: { [key: string]: CaseCardProps[] } = {
     active: [
       {
@@ -162,8 +197,14 @@ const Home = (): React.ReactElement => {
         hasLogout
       />
       <Box px="100px" py="60px">
-        <SecondaryHeader />
+        <SecondaryHeader
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          handleSearch={handleSearch}
+        />
+
         <VStack spacing={15} align="stretch" my={12}>
+          <FilteredSection status={CaseStatus.ACTIVE} cases={searchResults} />
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Icon, SimpleGrid, FormLabel, Select } from "@chakra-ui/react";
-import { Calendar, Navigation, Phone, User } from "react-feather";
+import { Box, Icon, SimpleGrid, FormLabel } from "@chakra-ui/react";
+import { Calendar, ChevronDown, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
+import { CustomSelectNonFormik } from "./CustomSelectField";
 
 export type CaregiverDetails = {
   caregiverName: string;
@@ -31,6 +32,7 @@ const NewCaregiverModal = ({
   onClose,
   caregiver,
 }: NewCaregiverProps): React.ReactElement => {
+  // ideally refactor to have less complicated state logic
   const [caregiverName, setCaregiverName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
@@ -178,20 +180,35 @@ const NewCaregiverModal = ({
                 />
               </Box>
               <Box marginTop="0.75rem">
-                <FormLabel htmlFor="address">
+                <FormLabel htmlFor="relationship">
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
-                <Select
+                <CustomSelectNonFormik
+                  name="relationship"
+                  id="relationship"
+                  options={[
+                    "Adoptive parent",
+                    "Biological parent",
+                    "Foster parent",
+                    "Step-parent",
+                    "Maternal grandparent",
+                    "Paternal grandparent",
+                    "Sibling",
+                    "Half-sibling",
+                    "Step-sibling",
+                    "Uncle/Aunt",
+                    "Other Relative",
+                    "Other",
+                  ]}
                   placeholder="Select relationship to child(ren)"
-                  onChange={(event) => {
-                    setRelationship(event.target.value);
-                    setRelationshipChanged(true);
-                  }}
+                  iconRight={<Icon as={ChevronDown} />}
+                  value={
+                    relationshipChanged ? relationship : caregiver.relationship
+                  }
                   defaultValue={caregiver ? caregiver.relationship : ""}
-                >
-                  <option>TO DO:</option>
-                  <option>Add proper list options</option>
-                </Select>
+                  setValue={setRelationship}
+                  handler={() => setRelationshipChanged(true)}
+                />
               </Box>
             </SimpleGrid>
             <Box marginTop="0.75rem">

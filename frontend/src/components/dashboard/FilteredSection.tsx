@@ -42,7 +42,7 @@ const FilteredSection = ({
       </Flex>
       <Box width="100%" height="100%">
         {cases.length <= 0 ? (
-          <Center height="289px">
+          <Center height="289px" width="60vw">
             <Text textStyle="text-medium">
               No current {status.toLowerCase()} cases
             </Text>

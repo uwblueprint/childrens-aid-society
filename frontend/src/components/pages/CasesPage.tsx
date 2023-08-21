@@ -130,39 +130,41 @@ const Cases = (): React.ReactElement | null => {
   }
 
   return (
-    <Box>
+    <Box display="flex" justifyContent="center" flexDirection="column">
       <IntakeHeader
         primaryTitle="Children's Aid Society of Algoma"
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Flex justifyContent="center">
-        <Button
-          marginRight="1250px"
-          variant="tertiary"
-          onClick={goToHomepage}
-          mt="32px"
-          leftIcon={
-            <Icon
-              as={ArrowLeft}
-              boxSize={8}
-              color="black"
-              _hover={{ color: "gray" }}
-            />
-          }
-        />
-      </Flex>
-      <Text textStyle="header-large" marginLeft="calc(50% - 630px)" pt="16px">
-        {formattedStatus} Cases
-      </Text>
-      <Box pt="32px">
-        <FilteredCaseDisplay
-          cases={cases[status]}
-          numberOfRows={2}
-          status={status}
-        />
+      <Box display="flex" flexDirection="column" width="75%" alignSelf="center">
+        <Flex justifyContent="center">
+          <Button
+            marginRight="1250px"
+            variant="tertiary"
+            onClick={goToHomepage}
+            mt="32px"
+            leftIcon={
+              <Icon
+                as={ArrowLeft}
+                boxSize={8}
+                color="black"
+                _hover={{ color: "gray" }}
+              />
+            }
+          />
+        </Flex>
+        <Text textStyle="header-large" marginLeft="calc(50% - 630px)" pt="16px">
+          {formattedStatus} Cases
+        </Text>
+        <Box pt="60px" alignSelf="flex-start">
+          <FilteredCaseDisplay
+            cases={cases[status]}
+            numberOfRows={2}
+            status={status}
+          />
+        </Box>
+        {cases[status].length && <LoadMoreButton />}
       </Box>
-      {cases[status].length && <LoadMoreButton />}
     </Box>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box, Icon, SimpleGrid, FormLabel } from "@chakra-ui/react";
-import { Calendar, Navigation, Phone, User } from "react-feather";
+import { Calendar, ChevronDown, Navigation, Phone, User } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
-import { CustomSelectField } from "./CustomSelectField";
+import { CustomSelectNonFormik } from "./CustomSelectField";
 
 export type CaregiverDetails = {
   caregiverName: string;
@@ -32,6 +32,7 @@ const NewCaregiverModal = ({
   onClose,
   caregiver,
 }: NewCaregiverProps): React.ReactElement => {
+  // ideally refactor to have less complicated state logic
   const [caregiverName, setCaregiverName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
@@ -48,9 +49,8 @@ const NewCaregiverModal = ({
   const [contactNotesChanged, setContactNotesChanged] = useState(false);
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
-  const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
-    false,
-  );
+  const [indivConsiderationsChanged, setIndivConsiderationsChanged] =
+    useState(false);
 
   const handleClose = () => {
     setCaregiverName("");
@@ -182,20 +182,31 @@ const NewCaregiverModal = ({
                 <FormLabel htmlFor="relationship">
                   RELATIONSHIP TO CHILD(REN)
                 </FormLabel>
-                <CustomSelectField
+                <CustomSelectNonFormik
                   name="relationship"
                   id="relationship"
                   options={[
-                    "Foster caregiver",
-                    "Kinship caregiver",
-                    "Foster provider will transport",
+                    "Adoptive parent",
+                    "Biological parent",
+                    "Foster parent",
+                    "Step-parent",
+                    "Maternal grandparent",
+                    "Paternal grandparent",
+                    "Sibling",
+                    "Half-sibling",
+                    "Step-sibling",
+                    "Uncle/Aunt",
+                    "Other Relative",
+                    "Other",
                   ]}
                   placeholder="Select relationship to child(ren)"
+                  iconRight={<Icon as={ChevronDown} />}
+                  value={
+                    relationshipChanged ? relationship : caregiver.relationship
+                  }
                   defaultValue={caregiver ? caregiver.relationship : ""}
-                  onChange={(event) => {
-                    setRelationship(event.target.value);
-                    setRelationshipChanged(true);
-                  }}
+                  setValue={setRelationship}
+                  handler={() => setRelationshipChanged(true)}
                 />
               </Box>
             </SimpleGrid>

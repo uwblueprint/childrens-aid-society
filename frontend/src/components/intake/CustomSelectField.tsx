@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 import {
   FormControl,
@@ -9,6 +9,13 @@ import {
   PopoverContent,
   PopoverTrigger,
   Box,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  InputLeftAddon,
+  Tag,
+  TagLabel,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 import CustomTag from "../common/CustomTag";
@@ -21,6 +28,9 @@ export type CustomSelectProps = CustomInputProps & {
   iconRight?: JSX.Element;
   options: string[];
   readOnly?: boolean;
+  value?: string;
+  setValue?: Dispatch<SetStateAction<string>>;
+  handler?: () => void;
 };
 
 export const CustomSelectDropDown = ({
@@ -93,6 +103,68 @@ export const CustomSelectField = ({
         <CustomSelectDropDown
           options={options}
           onSelect={(value) => helpers.setValue(value)}
+        />
+      )}
+    </Popover>
+  );
+};
+
+export const CustomSelectNonFormik = ({
+  name,
+  options,
+  placeholder,
+  icon,
+  iconRight,
+  readOnly = false,
+  value,
+  setValue,
+  handler,
+  ...props
+}: CustomSelectProps): React.ReactElement => {
+  const [isFocused, setFocus] = useState(false);
+
+  return (
+    <Popover autoFocus={false} isOpen={isFocused} placement="bottom-start">
+      <PopoverTrigger>
+        <FormControl>
+          <InputGroup>
+            <InputLeftAddon
+              width="auto"
+              height="auto"
+              backgroundColor="gray.50"
+              paddingLeft="14px"
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+            >
+              <Tag>{value || placeholder}</Tag>
+            </InputLeftAddon>
+
+            <Input
+              border="transparent"
+              isReadOnly
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              _hover={{ backgroundColor: "gray.50" }}
+              _focus={{ boxShadow: "none" }}
+            />
+            <InputRightElement pointerEvents="none">
+              {iconRight}
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+      </PopoverTrigger>
+      {!readOnly && (
+        <CustomSelectDropDown
+          options={options}
+          onSelect={(selected) => {
+            if (setValue !== undefined) {
+              console.log(selected);
+              setValue(selected);
+            }
+            if (handler !== undefined) {
+              handler();
+            }
+          }}
         />
       )}
     </Popover>

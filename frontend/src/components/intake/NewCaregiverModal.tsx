@@ -50,7 +50,7 @@ const NewCaregiverModal = ({
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
   const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
-    false
+    false,
   );
 
   const handleClose = () => {

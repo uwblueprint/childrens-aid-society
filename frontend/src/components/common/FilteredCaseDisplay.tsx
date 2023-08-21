@@ -57,6 +57,7 @@ const FilteredCaseDisplay = ({
     <Flex
       flexWrap="wrap"
       justifyContent="flex-start"
+      alignSelf="flex-start"
       width="min-content"
       marginLeft="auto"
       marginRight="auto"

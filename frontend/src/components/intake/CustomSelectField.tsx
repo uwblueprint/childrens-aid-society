@@ -108,10 +108,8 @@ export const CustomSelectField = ({
 };
 
 export const CustomSelectNonFormik = ({
-  name,
   options,
   placeholder,
-  icon,
   iconRight,
   readOnly = false,
   value,

@@ -45,8 +45,10 @@ const Intake = (): React.ReactElement => {
 
   const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
-  const [permittedIndividuals, setPermittedIndividuals] =
-    useState<PermittedIndividuals>([]);
+  const [
+    permittedIndividuals,
+    setPermittedIndividuals
+  ] = useState<PermittedIndividuals>([]);
   const [allProviders, setAllProviders] = useState<Providers>([]);
   const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 

@@ -8,13 +8,12 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import React from "react";
-import { Field, Form, Formik, FormikProvider, useFormik } from "formik";
+import { Field, Form, Formik, useFormik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
 import CustomInput from "../../common/CustomInput";
 import OptionalLabel from "../OptionalLabel";
 
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const validationSchema = Yup.object().shape({
   schoolName: Yup.string().required("This is a required field"),

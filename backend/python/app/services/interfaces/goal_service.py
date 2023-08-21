@@ -57,3 +57,13 @@ class IGoalService(ABC):
         :raises Exception: If intake ID does not exist
         """
         pass
+
+    @abstractmethod
+    def delete_goal(self, goal_id):
+        """Delete a goal from the database
+        :param goal_id: int of goal ID
+        :return: None
+        :rtype: None
+        :raises Exception: If goal ID does not exist
+        """
+        pass

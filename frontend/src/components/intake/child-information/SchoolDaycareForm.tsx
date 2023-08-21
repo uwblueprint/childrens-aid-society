@@ -8,12 +8,13 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import React from "react";
-import { Field, Form, FormikProvider, useFormik } from "formik";
+import { Field, Form, Formik, FormikProvider, useFormik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
 import CustomInput from "../../common/CustomInput";
 import OptionalLabel from "../OptionalLabel";
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const validationSchema = Yup.object().shape({
   schoolName: Yup.string().required("This is a required field"),
@@ -55,7 +56,11 @@ const SchoolDaycareForm = ({
   });
 
   return (
-    <FormikProvider value={formik}>
+    <Formik
+      enableReinitialize
+      initialValues={schoolDetails}
+      onSubmit={onSubmit}
+    >
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -77,6 +82,12 @@ const SchoolDaycareForm = ({
                   formik.errors.schoolName && formik.touched.schoolName
                     ? "red.400"
                     : ""
+                }
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolName: e.target.value,
+                  })
                 }
               />
               {formik.errors.schoolName && formik.touched.schoolName ? (
@@ -104,6 +115,12 @@ const SchoolDaycareForm = ({
                     ? "red.400"
                     : ""
                 }
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSchoolDetails({
+                    ...schoolDetails,
+                    schoolPhoneNo: e.target.value,
+                  })
+                }
               />
               {formik.errors.schoolPhoneNo && formik.touched.schoolPhoneNo ? (
                 <Text color="red">{formik.errors.schoolPhoneNo}</Text>
@@ -129,6 +146,12 @@ const SchoolDaycareForm = ({
                   ? "red.400"
                   : ""
               }
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  schoolAddress: e.target.value,
+                })
+              }
             />
             {formik.errors.schoolAddress && formik.touched.schoolAddress ? (
               <Text color="red">{formik.errors.schoolAddress}</Text>
@@ -145,13 +168,17 @@ const SchoolDaycareForm = ({
               type="string"
               placeholder="Enter dismissal time of school or daycare"
               icon={<Icon as={Clock} />}
+              onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSchoolDetails({
+                  ...schoolDetails,
+                  dismissalTime: e.target.value,
+                })
+              }
             />
           </Box>
         </FormControl>
       </Form>
-
-      {/* TODO: trigger on submit when save child information button is clicked */}
-    </FormikProvider>
+    </Formik>
   );
 };
 

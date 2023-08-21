@@ -11,11 +11,9 @@ import {
   Box,
   Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   InputLeftAddon,
   Tag,
-  TagLabel,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 import CustomTag from "../common/CustomTag";
@@ -119,7 +117,6 @@ export const CustomSelectNonFormik = ({
   value,
   setValue,
   handler,
-  ...props
 }: CustomSelectProps): React.ReactElement => {
   const [isFocused, setFocus] = useState(false);
 
@@ -158,7 +155,6 @@ export const CustomSelectNonFormik = ({
           options={options}
           onSelect={(selected) => {
             if (setValue !== undefined) {
-              console.log(selected);
               setValue(selected);
             }
             if (handler !== undefined) {

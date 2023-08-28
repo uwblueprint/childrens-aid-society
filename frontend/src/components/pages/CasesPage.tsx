@@ -156,7 +156,7 @@ const Cases = (): React.ReactElement | null => {
         <Text textStyle="header-large" marginLeft="calc(50% - 630px)" pt="16px">
           {formattedStatus} Cases
         </Text>
-        <Box pt="60px" alignSelf="flex-start">
+        <Box pt="60px" marginLeft="calc(50% - 630px)" alignSelf="flex-start">
           <FilteredCaseDisplay
             cases={cases[status]}
             numberOfRows={2}

@@ -38,6 +38,7 @@ const Intake = (): React.ReactElement => {
   } = useDisclosure();
 
   const { step, setStep } = useStepValueContext();
+  const { isReviewOnly, setIsReviewOnly } = useStepValueContext();
   const [reviewHeader, setReviewHeader] = useState(false);
   const { referralDetails, setReferralDetails } = useStepValueContext();
   const { courtDetails, setCourtDetails } = useStepValueContext();
@@ -52,7 +53,14 @@ const Intake = (): React.ReactElement => {
   const [allProviders, setAllProviders] = useState<Providers>([]);
   const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
-  const nextStep = () => setStep(step + 1);
+  const nextStep = () => {
+    if (isReviewOnly) {
+      setIsReviewOnly(false);
+      history.push("/");
+    } else {
+      setStep(step + 1);
+    }
+  };
 
   const renderDetailsForm = () => {
     switch (step) {
@@ -116,6 +124,8 @@ const Intake = (): React.ReactElement => {
               nextStep={nextStep}
               setStep={setStep}
               setReviewHeader={setReviewHeader}
+              isReviewOnly={isReviewOnly}
+              setIsReviewOnly={setIsReviewOnly}
             />
           </Box>
         );

@@ -181,6 +181,7 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="shortTermGoals">SHORT-TERM GOALS</FormLabel>
                 <MultiTextInput
+                  name="shortTermGoals"
                   placeholder="Select goals..."
                   options={shortTermGoalsOptions}
                   icon={<Icon as={CheckSquare} />}
@@ -197,17 +198,19 @@ const ProgramForm = ({
               <Box>
                 <FormLabel htmlFor="longTermGoals">LONG-TERM GOALS</FormLabel>
                 <MultiTextInput
+                  name="longTermGoals"
                   placeholder="Select goals..."
                   options={longTermGoalsOptions}
                   icon={<Icon as={TrendingUp} />}
                   isReadOnly={readOnly}
                   values={programDetails.longTermGoals}
-                  newValue={(e: string[]) =>
+                  newValue={(e: string[]) => {
                     setProgramDetails((prevState) => ({
                       ...prevState,
                       longTermGoals: e,
-                    }))
-                  }
+                    }));
+                    console.log(programDetails);
+                  }}
                 />
               </Box>
             </SimpleGrid>
@@ -216,6 +219,7 @@ const ProgramForm = ({
                 FAMILIAL CONCERNS <OptionalLabel />
               </FormLabel>
               <MultiTextInput
+                name="familialConcerns"
                 placeholder="Select familial concerns..."
                 options={[
                   "abc",

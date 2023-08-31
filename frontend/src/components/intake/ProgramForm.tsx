@@ -209,7 +209,6 @@ const ProgramForm = ({
                       ...prevState,
                       longTermGoals: e,
                     }));
-                    console.log(programDetails);
                   }}
                 />
               </Box>

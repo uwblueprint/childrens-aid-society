@@ -18,6 +18,8 @@ type ReviewFormProps = {
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
+  isReviewOnly: boolean;
+  setIsReviewOnly: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReviewForm = ({
@@ -30,9 +32,28 @@ const ReviewForm = ({
   nextStep,
   setStep,
   setReviewHeader,
+  isReviewOnly,
+  setIsReviewOnly,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
     nextStep(); // TODO: Add functionality for nextStep (Currently we pass in empty nextStep() prop)
+  };
+
+  const editSectionButton = (targetStep: IntakeSteps): React.ReactElement => {
+    return (
+      <Button
+        textStyle="button-medium"
+        variant="primary"
+        rightIcon={<Icon as={Edit2} h="16px" />}
+        onClick={() => {
+          setStep(targetStep);
+          setReviewHeader(true);
+          setIsReviewOnly(false);
+        }}
+      >
+        Edit
+      </Button>
+    );
   };
 
   return (
@@ -42,17 +63,7 @@ const ReviewForm = ({
           <Text color="b&w.black" textStyle="header-large">
             Case referral
           </Text>
-          <Button
-            textStyle="button-medium"
-            variant="primary"
-            rightIcon={<Icon as={Edit2} h="16px" />}
-            onClick={() => {
-              setStep(IntakeSteps.CASE_REFERRAL);
-              setReviewHeader(true);
-            }}
-          >
-            Edit
-          </Button>
+          {editSectionButton(IntakeSteps.CASE_REFERRAL)};
         </HStack>
         <ReferralForm
           referralDetails={referralDetails}
@@ -70,17 +81,7 @@ const ReviewForm = ({
           <Text color="b&w.black" textStyle="header-large">
             Court information
           </Text>
-          <Button
-            textStyle="button-medium"
-            variant="primary"
-            rightIcon={<Icon as={Edit2} h="16px" />}
-            onClick={() => {
-              setStep(IntakeSteps.COURT_INFORMATION);
-              setReviewHeader(true);
-            }}
-          >
-            Edit
-          </Button>
+          {editSectionButton(IntakeSteps.COURT_INFORMATION)};
         </HStack>
         <CourtInformationForm
           courtDetails={courtDetails}
@@ -98,17 +99,7 @@ const ReviewForm = ({
           <Text color="b&w.black" textStyle="header-large">
             Individual details
           </Text>
-          <Button
-            textStyle="button-medium"
-            variant="primary"
-            rightIcon={<Icon as={Edit2} h="16px" />}
-            onClick={() => {
-              setStep(IntakeSteps.INDIVIDUAL_DETAILS);
-              setReviewHeader(true);
-            }}
-          >
-            Edit
-          </Button>
+          {editSectionButton(IntakeSteps.INDIVIDUAL_DETAILS)};
         </HStack>
         <IndividualDetails childrenDetails={[]} caregiverDetails={[]} />
       </Stack>
@@ -118,17 +109,7 @@ const ReviewForm = ({
           <Text color="b&w.black" textStyle="header-large">
             Program details
           </Text>
-          <Button
-            textStyle="button-medium"
-            variant="primary"
-            rightIcon={<Icon as={Edit2} h="16px" />}
-            onClick={() => {
-              setStep(IntakeSteps.PROGRAM_DETAILS);
-              setReviewHeader(true);
-            }}
-          >
-            Edit
-          </Button>
+          {editSectionButton(IntakeSteps.PROGRAM_DETAILS)};
         </HStack>
         <ProgramForm
           programDetails={programDetails}
@@ -142,7 +123,7 @@ const ReviewForm = ({
       </Stack>
 
       <IntakeFooter
-        nextButtonText="Submit case"
+        nextButtonText={isReviewOnly ? "Return to Dashboard" : "Submit case"}
         isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}
         nextStepCallBack={onNextStep}

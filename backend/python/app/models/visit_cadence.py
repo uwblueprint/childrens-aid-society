@@ -4,7 +4,7 @@ from .base_mixin import BaseMixin
 date_enum = db.Enum(
     "Monday",
     "Tuesday",
-    "wednesday",
+    "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
@@ -39,8 +39,8 @@ class VisitCadence(db.Model, BaseMixin):
         db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
     )
     child_id = db.Column(
-        db.Integer, db.ForeignKey("children.id", ondelete="CASCADE"), nullable=False
+        db.Integer, db.ForeignKey("children.id", ondelete="CASCADE"), nullable=True
     )
     caregiver_id = db.Column(
-        db.Integer, db.ForeignKey("caregivers.id", ondelete="CASCADE"), nullable=True
+        db.Integer, db.ForeignKey("caregivers.id", ondelete="CASCADE"), nullable=False
     )

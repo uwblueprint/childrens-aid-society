@@ -9,6 +9,7 @@ from ..resources.create_user_dto import CreateUserDTO
 from ..resources.intake_dto import CreateIntakeDTO
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
+from ..resources.visit_cadence_dto import CreateVisitCadenceDTO
 
 dtos = {
     "CreateUserDTO": CreateUserDTO,
@@ -17,6 +18,7 @@ dtos = {
     "CreateCaregiverDTO": CreateCaregiverDTO,
     "CreateIntakeDTO": CreateIntakeDTO,
     "CreateAttendanceSheetDTO": CreateAttendanceSheetDTO,
+    "CreateVisitCadenceDTO": CreateVisitCadenceDTO,
 }
 
 

@@ -126,6 +126,8 @@ const Intake = (): React.ReactElement => {
               setReviewHeader={setReviewHeader}
               isReviewOnly={isReviewOnly}
               setIsReviewOnly={setIsReviewOnly}
+              childrens={children}
+              caregivers={caregivers}
             />
           </Box>
         );

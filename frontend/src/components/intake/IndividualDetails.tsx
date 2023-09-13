@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
-import { IndividualDetailsOverview } from "./PromptBox";
+import { Children } from "./child-information/AddChildPage";
+import { Caregivers } from "./NewCaregiverModal";
 
 type IndividualDetailsProps = {
-  childrenDetails: IndividualDetailsOverview[];
-  caregiverDetails: IndividualDetailsOverview[];
+  childrenDetails: Children;
+  caregiverDetails: Caregivers;
 };
 
 const IndividualDetails = ({
@@ -29,10 +30,12 @@ const IndividualDetails = ({
             <HStack w="full">
               <VStack align="flex-start" w="full" spacing="0px">
                 <HStack>
-                  <Text textStyle="title-small">{indiv.name}</Text>
+                  <Text textStyle="title-small">
+                    {indiv.childDetails.childName}
+                  </Text>
                 </HStack>
                 <Text color="gray.600" textStyle="body-medium">
-                  {indiv.fileNumber}
+                  {indiv.childDetails.cpinFileNumber}
                 </Text>
               </VStack>
               <Button
@@ -66,10 +69,10 @@ const IndividualDetails = ({
             <HStack w="full">
               <VStack align="flex-start" w="full" spacing="0px">
                 <HStack>
-                  <Text textStyle="title-small">{indiv.name}</Text>
+                  <Text textStyle="title-small">{indiv.caregiverName}</Text>
                 </HStack>
                 <Text color="gray.600" textStyle="body-medium">
-                  {indiv.fileNumber}
+                  {indiv.relationship}
                 </Text>
               </VStack>
               <Button

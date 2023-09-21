@@ -68,7 +68,7 @@ def insert_test_data():
     ]
 
     for value in values:
-        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason", "lead_access_worker_name"), value)
 
     # Daytime Contact
     values = [

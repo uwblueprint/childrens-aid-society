@@ -20,3 +20,6 @@ class Child(db.Model, BaseMixin):
     intake = db.relationship("Intake")
     daytime_contact = db.relationship("DaytimeContact")
     behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)
+    visit_cadences = db.relationship(
+        "VisitCadence", backref="associated_child", cascade="all, delete"
+    )

@@ -16,6 +16,8 @@ interface IntakeValueProviderProps {
 interface IntakeStepContext {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  isReviewOnly: boolean;
+  setIsReviewOnly: React.Dispatch<React.SetStateAction<boolean>>;
   referralDetails: ReferralDetails;
   setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   courtDetails: CourtDetails;
@@ -27,6 +29,8 @@ interface IntakeStepContext {
 const StepValueContext = createContext<IntakeStepContext>({
   step: 0,
   setStep: () => {},
+  isReviewOnly: false,
+  setIsReviewOnly: () => {},
   referralDetails: DEFAULT_REFFERAL_DETAILS,
   setReferralDetails: () => {},
   courtDetails: DEFAULT_COURT_DETAILS,
@@ -44,6 +48,7 @@ export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
 }: IntakeValueProviderProps) => {
   const location = useLocation();
 
+  const [isReviewOnly, setIsReviewOnly] = useState<boolean>(false);
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>(
     DEFAULT_REFFERAL_DETAILS,
   );
@@ -59,6 +64,7 @@ export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
   useEffect(() => {
     if (step !== reviewCaseDetailsStep) {
       setStep(0);
+      setIsReviewOnly(false);
       setReferralDetails(DEFAULT_REFFERAL_DETAILS);
       setCourtDetails(DEFAULT_COURT_DETAILS);
       setProgramDetails(DEFAULT_PROGRAM_DETAILS);
@@ -69,6 +75,8 @@ export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
   const intakeValues = {
     step,
     setStep,
+    isReviewOnly,
+    setIsReviewOnly,
     referralDetails,
     setReferralDetails,
     courtDetails,

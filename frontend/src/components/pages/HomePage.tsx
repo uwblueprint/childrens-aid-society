@@ -27,10 +27,10 @@ const SecondaryHeader = (): React.ReactElement => {
   }
 
   return (
-    <Box>
+    <Box alignSelf="stretch" flexDirection="column">
       <Text textStyle="header-large">Intake Cases</Text>
-      <Flex pt="10">
-        <Box w="20%">
+      <Flex pt="10" alignItems="space-between" alignSelf="space-between">
+        <Box w="50%">
           <CustomInput
             placeholder="Search By Family Name"
             icon={<Icon as={Search} />}
@@ -108,15 +108,22 @@ const Home = (): React.ReactElement => {
   }, []);
 
   return (
-    <Box>
+    <Box display="flex" justifyContent="center" flexDirection="column">
       <IntakeHeader
         primaryTitle="Children's Aid Society of Algoma"
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Box px="100px" py="60px">
-        <SecondaryHeader />
-        <VStack spacing={15} align="stretch" my={12}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        py="60px"
+        width="75%"
+        alignSelf="center"
+      >
+        <VStack spacing={12} align="stretch" alignSelf="center">
+          <SecondaryHeader />
+
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}

@@ -52,6 +52,7 @@ const StatusModal = ({
 
   const {
     setStep,
+    setIsReviewOnly,
     setReferralDetails,
     setCourtDetails,
     setProgramDetails,
@@ -89,7 +90,7 @@ const StatusModal = ({
     setReferralDetails(mockReferralDetails);
     setCourtDetails(mockCourtDetails);
     setProgramDetails(mockProgramDetails);
-
+    setIsReviewOnly(true);
     goToIntake();
   }
   return (

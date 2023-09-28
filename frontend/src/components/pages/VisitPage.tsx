@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowLeft } from "react-feather";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Visit = (): React.ReactElement => {
   // url is /visit/caseId/visitId
-  // const params = useParams();
+  const params = useParams();
   return (
     <>
       <Box bg="gray.50" style={{ padding: "50px 100px 25px 100px" }}>
@@ -23,13 +23,19 @@ const Visit = (): React.ReactElement => {
           justifyContent: "center",
         }}
       >
-        <Box display="flex" pt="10" gap="32">
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          pt="10"
+          gap="24"
+        >
           <Box
-            width="40%"
+            width="15%"
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "2vh",
+              gap: "1vh",
               fontWeight: "bold",
             }}
           >
@@ -41,16 +47,24 @@ const Visit = (): React.ReactElement => {
             >
               <ArrowLeft /> Save and Exit {/* TODO implement save and exit */}
             </Box>
-            <Button variant="primary" width="fit-content">
-              Child Information
+            <Button variant="ghost" width="fit-content">
+              <Text fontWeight="bold">Child Information</Text>
             </Button>
-            <Box>Visit Timestamp</Box>
-            <Box>Attendance</Box>
-            <Box>Transportation</Box>
-            <Box>Child and Family Support Worker</Box>
+            <Button variant="ghost" width="fit-content">
+              <Text fontWeight="bold">Visit Timestamp</Text>
+            </Button>
+            <Button variant="ghost" width="fit-content">
+              <Text fontWeight="bold">Attendance</Text>
+            </Button>
+            <Button variant="ghost" width="fit-content">
+              <Text fontWeight="bold">Transportation</Text>
+            </Button>
+            <Button variant="ghost" width="fit-content">
+              <Text fontWeight="bold">Child and Family Support Worker</Text>
+            </Button>
           </Box>
           <Box
-            width="80%"
+            width="35%"
             style={{
               display: "flex",
               flexDirection: "column",

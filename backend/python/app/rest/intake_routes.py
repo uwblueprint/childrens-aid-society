@@ -37,7 +37,6 @@ provider_service = ProviderService(current_app.logger)
 blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 
 
-# get all intakes
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 def get_all_intakes():
@@ -57,12 +56,16 @@ def get_all_intakes():
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         for intake in intakes:
             caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
-            print("this is caregivers w intake " + str(intake.id)) 
-            print(caregivers.name)
+            child = child_service.get_child_by_intake_id(intake.id)
+            
+            # Append caregiver and child objects directly to the intake object
+            intake.caregiver = caregivers
+            intake.child = child
+           
+        
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400
-
 
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)

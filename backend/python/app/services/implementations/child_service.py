@@ -50,3 +50,27 @@ class ChildService(IChildService):
         except Exception as error:
             db.session.rollback()
             raise error
+            
+    def get_child_by_intake_id(self, intake_id):
+        try:
+            child = Child.query.filter_by(intake_id=intake_id).first()
+            if not child:
+                return []
+            
+            return ChildDTO(
+                id=child.id,
+                intake_id=child.intake_id,
+                first_name=child.first_name,
+                last_name=child.last_name,
+                date_of_birth=child.date_of_birth,
+                cpin_number=child.cpin_number,
+                service_worker=child.service_worker,
+                daytime_contact_id=child.daytime_contact_id,
+                special_needs=child.special_needs)
+                    
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+        
+
+

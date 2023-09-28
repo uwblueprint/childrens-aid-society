@@ -67,3 +67,24 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
         except Exception as error:
             db.session.rollback()
             raise error
+    def get_opi_by_intake_id(self, intake_id):
+        try:
+            opi = OtherPermittedIndividual.query.filter_by(intake_id=intake_id).first()
+            if not opi:
+                return []
+            
+            return OtherPermittedIndividualDTO(
+                id=opi.id,
+                intake_id=opi.intake_id,
+                name=opi.name,
+                phone_number=opi.phone_number,
+                relationship_to_child=opi.relationship_to_child,
+                notes=opi.notes
+            )
+                    
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+        
+
+

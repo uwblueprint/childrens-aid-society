@@ -57,10 +57,13 @@ def get_all_intakes():
         for intake in intakes:
             caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
             child = child_service.get_child_by_intake_id(intake.id)
-            
+            opi = permittedIndividual_service.get_opi_by_intake_id(intake.id)
+    
             # Append caregiver and child objects directly to the intake object
             intake.caregiver = caregivers
             intake.child = child
+
+          
            
         
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200

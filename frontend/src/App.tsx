@@ -66,7 +66,7 @@ const App = (): React.ReactElement => {
                   <PrivateRoute exact path={Routes.VISIT_PAGE} component={Visit} />
                   <PrivateRoute exact path={Routes.CASEOVERVIEW_PAGE} component={CaseOverview} />
                   <PrivateRoute exact path={Routes.CASES_PAGE} component={Cases} />
-                  <PrivateRoute exact path="*" component={NotFound} />
+                  <Route exact path="*" component={NotFound} />
                 </Switch>
               </IntakeValueProvider>
             </Router>

@@ -61,11 +61,31 @@ const App = (): React.ReactElement => {
                 <Switch>
                   <Route exact path={Routes.LOGIN_PAGE} component={Login} />
                   <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
-                  <PrivateRoute exact path={Routes.HOME_PAGE} component={Home} />
-                  <PrivateRoute exact path={Routes.INTAKE_PAGE} component={Intake} />
-                  <PrivateRoute exact path={Routes.VISIT_PAGE} component={Visit} />
-                  <PrivateRoute exact path={Routes.CASEOVERVIEW_PAGE} component={CaseOverview} />
-                  <PrivateRoute exact path={Routes.CASES_PAGE} component={Cases} />
+                  <PrivateRoute
+                    exact
+                    path={Routes.HOME_PAGE}
+                    component={Home}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.INTAKE_PAGE}
+                    component={Intake}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.VISIT_PAGE}
+                    component={Visit}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.CASEOVERVIEW_PAGE}
+                    component={CaseOverview}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.CASES_PAGE}
+                    component={Cases}
+                  />
                   <Route exact path="*" component={NotFound} />
                 </Switch>
               </IntakeValueProvider>

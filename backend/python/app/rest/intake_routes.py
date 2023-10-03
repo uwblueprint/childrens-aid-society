@@ -60,6 +60,7 @@ def get_all_intakes():
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
             for child in just_children:
+                providers = provider_service.get_providers_by_child_id(child.id)
                 child_info = {
                     "name": f"{child.first_name} {child.last_name}",
                     "dateOfBirth": child.date_of_birth,
@@ -76,29 +77,29 @@ def get_all_intakes():
                     "dismissalTime": ""
                 }
 
-                provider = [{
-                    "name": "",  # Add the actual provider data here
-                    "fileNumber": "",
-                    "primaryPhoneNumber": "",
-                    "secondaryPhoneNumber": "",
-                    "email": "",
-                    "address": "",
-                    "additionalContactNotes": "",
-                    "relationshipToChild": ""
-                }]
+                provider_list = []
+                for provider in providers:
+                    provider_list.append({
+                        "name": provider.name,
+                        "fileNumber": provider.file_number,
+                        "primaryPhoneNumber": provider.primary_phone_number,
+                        "secondaryPhoneNumber": provider.secondary_phone_number,
+                        "email": provider.email,
+                        "address": provider.address,
+                        "relationshipToChild": provider.relationship_to_child,
+                        "additionalContactNotes": provider.additional_contact_notes
+                    })
+                #should I leave as an empty array or still have a attributes but give it a default value?
+                    
 
                 new_child = {
                     "childInfo": child_info,
                     "daytimeContact": daytime_contact,
-                    "provider": provider
+                    "provider": provider_list
                 }
 
                 new_children.append(new_child)
             intake.children = new_children
-          
-
-            
-   
 
         
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200

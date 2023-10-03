@@ -57,21 +57,46 @@ def get_all_intakes():
         for i, intake in enumerate(intakes):
             caregivers = caregiver_service.get_caregivers_by_intake_id(intake.id)
             intake.caregivers = caregivers
-    
+            just_children = child_service.get_children_by_intake_id(intake.id) 
+            new_children = []
+            for child_data in just_children:
+                child_info = {
+                    "name": child_data["name"],
+                    "dateOfBirth": child_data["dateOfBirth"],
+                    "cpinFileNumber": child_data["cpinFileNumber"],
+                    "serviceWorker": child_data["serviceWorker"],
+                    "specialNeeds": child_data["specialNeeds"],
+                    "concerns": child_data["concerns"]
+                }
+
+                daytime_contact = {
+                    "name": "",  # Add the actual daytime contact data here
+                    "contactInfo": "",
+                    "address": "",
+                    "dismissalTime": ""
+                }
+
+                provider = [{
+                    "name": "",  # Add the actual provider data here
+                    "fileNumber": "",
+                    "primaryPhoneNumber": "",
+                    "secondaryPhoneNumber": "",
+                    "email": "",
+                    "address": "",
+                    "additionalContactNotes": "",
+                    "relationshipToChild": ""
+                }]
+
+                new_child = {
+                    "childInfo": child_info,
+                    "daytimeContact": daytime_contact,
+                    "provider": provider
+                }
+
+                new_children.append(new_child)
+            intake.children = new_children
 
             
-            # child = child_service.get_child_by_intake_id(intake.id)
-            # opi = permittedIndividual_service.get_opi_by_intake_id(intake.id)
-            # providers = provider_service.get_providers_by_intake_id(intake.id)
-            # # print("heloo")
-            # # print(str(providers[0].name))
-            # # print(str(providers[1].name))
-
-            
-            # intake.children = child
-            # # print("helloo")
-            # # print(str(intake.children[0].first_name))
-            # intake.permittedIndividual = opi
    
 
         

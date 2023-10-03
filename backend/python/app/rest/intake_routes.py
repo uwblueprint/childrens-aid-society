@@ -55,7 +55,20 @@ def get_all_intakes():
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         for i, intake in enumerate(intakes):
-            caregivers = caregiver_service.get_caregivers_by_intake_id(intake.id)
+            caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
+            caregivers = []
+            for caregiver in caregivers_dtos:
+                caregiver_obj = {
+                    "name": caregiver.name,
+                    "dateOfBirth": caregiver.date_of_birth,
+                    "individualConsiderations": caregiver.individual_considerations,
+                    "primaryPhoneNumber": caregiver.primary_phone_number,
+                    "secondaryPhoneNumber": caregiver.secondary_phone_number,
+                    "address": caregiver.address,
+                    "relationshipToChild": caregiver.relationship_to_child,
+                    "additionalContactNotes": caregiver.additional_contact_notes,
+                }
+                caregivers.append(caregiver_obj)
             intake.caregivers = caregivers
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []

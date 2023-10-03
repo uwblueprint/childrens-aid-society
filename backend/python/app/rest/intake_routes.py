@@ -53,6 +53,9 @@ def get_all_intakes():
     except:
         pass
     try:
+         #should I leave as an empty array or still have a attributes but give it a default value?
+         #why is get and post diff? in post request, intake id is in caregiver and other permitted individual
+                 
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         for i, intake in enumerate(intakes):
             caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
@@ -102,8 +105,7 @@ def get_all_intakes():
                         "relationshipToChild": provider.relationship_to_child,
                         "additionalContactNotes": provider.additional_contact_notes
                     })
-                #should I leave as an empty array or still have a attributes but give it a default value?
-                    
+                  
 
                 new_child = {
                     "childInfo": child_info,
@@ -113,6 +115,31 @@ def get_all_intakes():
 
                 new_children.append(new_child)
             intake.children = new_children
+
+            opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(intake.id) 
+            new_opis = []
+            for opi in opis:
+                new_opi = {
+                    "name": opi.name,
+                    "phoneNumber": opi.phone_number,
+                    "relationshipToChildren": opi.relationship_to_child,
+                    "additionalNotes": opi.notes
+                }
+                new_opis.append(new_opi)
+
+
+            program_details = {
+                "transportRequirements": "",  
+                "schedulingRequirements": "",
+                "suggestedStartDate": "",
+                "shortTermGoals": ["goal1", "goal2"],  
+                "longTermGoals": ["goal1", "goal2"], 
+                "familialConcerns": ["concern1", "concern2"],  
+                "permittedIndividuals": new_opis
+            }
+
+            intake.programDetails = program_details
+
 
         
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
@@ -184,7 +211,7 @@ def create_intake():
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
-            "intake_id": new_intake.id,
+            "intake_id": new_intake.id, 
         }
         caregiver = CreateCaregiverDTO(**caregiver)
         try:

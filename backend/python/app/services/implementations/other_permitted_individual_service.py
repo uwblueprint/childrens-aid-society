@@ -67,24 +67,16 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
         except Exception as error:
             db.session.rollback()
             raise error
-    def get_opi_by_intake_id(self, intake_id):
+
+    def get_other_permitted_individuals_by_intake_id(self, intake_id):
         try:
-            opi = OtherPermittedIndividual.query.filter_by(intake_id=intake_id).first()
-            if not opi:
-                return []
-            
-            return OtherPermittedIndividualDTO(
-                id=opi.id,
-                intake_id=opi.intake_id,
-                name=opi.name,
-                phone_number=opi.phone_number,
-                relationship_to_child=opi.relationship_to_child,
-                notes=opi.notes
-            )
-                    
+            other_permitted_individuals = OtherPermittedIndividual.query.filter_by(intake_id=intake_id)
+            other_permitted_individuals_dto = [
+                OtherPermittedIndividualDTO(**other_permitted_individual.to_dict()) for other_permitted_individual in other_permitted_individuals
+            ]
+            return other_permitted_individuals_dto
         except Exception as error:
             self.logger.error(str(error))
             raise error
-        
 
 

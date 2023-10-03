@@ -9,6 +9,7 @@ attendance_sheets_child = db.Table(
     db.Column("child_id", db.ForeignKey("children.id")),
 )
 
+
 class AttendanceSheets(db.Model, BaseMixin):
     __tablename__ = "attendance_sheets"
 
@@ -21,6 +22,4 @@ class AttendanceSheets(db.Model, BaseMixin):
     csw = db.Column(db.String, nullable=False)
     cpw = db.Column(db.String, nullable=False)
     fcc = db.Column(db.String, nullable=False)
-    children = db.relationship(
-        "Child", secondary=attendance_sheets_child
-    )
+    children = db.relationship("Child", secondary=attendance_sheets_child)

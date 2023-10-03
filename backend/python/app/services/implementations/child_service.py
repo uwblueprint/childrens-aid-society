@@ -54,25 +54,10 @@ class ChildService(IChildService):
     def get_children_by_intake_id(self, intake_id):
         try:
             children = Child.query.filter_by(intake_id=intake_id)
-         
-            children_data = []
-
-            for child in children:
-                child_data = {
-                    "name": f"{child.first_name} {child.last_name}",
-                    "dateOfBirth": child.date_of_birth,
-                    "cpinFileNumber": child.cpin_number,
-                    "serviceWorker": child.service_worker,
-                    "specialNeeds": child.special_needs,
-                    "concerns": []  
-                }
-                children_data.append(child_data)
-            
-            return children_data
-
+            children_dto = [ChildDTO(**child.to_dict()) for child in children]
+            return children_dto
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
 
 

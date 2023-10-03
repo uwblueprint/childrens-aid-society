@@ -57,16 +57,16 @@ def get_all_intakes():
         for i, intake in enumerate(intakes):
             caregivers = caregiver_service.get_caregivers_by_intake_id(intake.id)
             intake.caregivers = caregivers
-            just_children = child_service.get_children_by_intake_id(intake.id) 
+            just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
-            for child_data in just_children:
+            for child in just_children:
                 child_info = {
-                    "name": child_data["name"],
-                    "dateOfBirth": child_data["dateOfBirth"],
-                    "cpinFileNumber": child_data["cpinFileNumber"],
-                    "serviceWorker": child_data["serviceWorker"],
-                    "specialNeeds": child_data["specialNeeds"],
-                    "concerns": child_data["concerns"]
+                    "name": f"{child.first_name} {child.last_name}",
+                    "dateOfBirth": child.date_of_birth,
+                    "cpinFileNumber": child.cpin_number,
+                    "serviceWorker": child.service_worker,
+                    "specialNeeds": child.special_needs,
+                    "concerns": []  
                 }
 
                 daytime_contact = {
@@ -95,6 +95,7 @@ def get_all_intakes():
 
                 new_children.append(new_child)
             intake.children = new_children
+          
 
             
    

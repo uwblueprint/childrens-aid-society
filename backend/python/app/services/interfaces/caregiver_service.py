@@ -39,12 +39,12 @@ class ICaregiverService(ABC):
         pass
         
     @abstractmethod
-    def get_caregiver_by_intake_id(self, intake_id):
+    def get_caregivers_by_intake_id(self, intake_id):
         """Get the caregiver associated with a specific intake_id
         :param intake_id: the ID of the intake to retrieve the caregiver for
         :type intake_id: int
-        :return: CaregiverDTO representing the caregiver for the specified intake_id
-        :rtype: CaregiverDTO
-        :raises Exception: if no caregiver with the specified intake_id is found or if an error occurs
+        :return: list of CaregiverDTO representing the caregiver for the specified intake_id
+        :rtype: list
+        :raises Exception:  if an error occurs
                            in the database query
         """

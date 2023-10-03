@@ -53,14 +53,13 @@ class CaregiverService(ICaregiverService):
             self.logger.error(str(error))
             raise error
 
-    def get_caregiver_by_intake_id(self, intake_id):
-            try:
-                caregiver = Caregiver.query.filter_by(intake_id=intake_id).first()
-                if not caregiver:
-                    return []
-        
-                # return list instead
-                return CaregiverDTO(
+    def get_caregivers_by_intake_id(self, intake_id):
+        try:
+            caregivers = Caregiver.query.filter_by(intake_id=intake_id).all()
+            caregiver_dtos = []
+            
+            for caregiver in caregivers:
+                caregiver_dto = CaregiverDTO(
                     id=caregiver.id,
                     name=caregiver.name,
                     date_of_birth=caregiver.date_of_birth,
@@ -73,7 +72,10 @@ class CaregiverService(ICaregiverService):
                     additional_contact_notes=caregiver.additional_contact_notes,
                     intake_id=caregiver.intake_id,
                 )
-                
-            except Exception as error:
-                self.logger.error(str(error))
-                raise error
+                caregiver_dtos.append(caregiver_dto)
+
+            return caregiver_dtos
+
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

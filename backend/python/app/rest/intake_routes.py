@@ -54,17 +54,26 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
-        for intake in intakes:
-            caregivers = caregiver_service.get_caregiver_by_intake_id(intake.id)
-            child = child_service.get_child_by_intake_id(intake.id)
-            opi = permittedIndividual_service.get_opi_by_intake_id(intake.id)
+        for i, intake in enumerate(intakes):
+            caregivers = caregiver_service.get_caregivers_by_intake_id(intake.id)
+            intake.caregivers = caregivers
     
-            # Append caregiver and child objects directly to the intake object
-            intake.caregiver = caregivers
-            intake.child = child
 
-          
-           
+            
+            # child = child_service.get_child_by_intake_id(intake.id)
+            # opi = permittedIndividual_service.get_opi_by_intake_id(intake.id)
+            # providers = provider_service.get_providers_by_intake_id(intake.id)
+            # # print("heloo")
+            # # print(str(providers[0].name))
+            # # print(str(providers[1].name))
+
+            
+            # intake.children = child
+            # # print("helloo")
+            # # print(str(intake.children[0].first_name))
+            # intake.permittedIndividual = opi
+   
+
         
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
@@ -75,7 +84,6 @@ def get_all_intakes():
 # @require_authorization_by_role({"User", "Admin"})
 def create_intake():
     undos = []
-
     def run_undos():
         for undo in undos:
             service, fn, arg = undo

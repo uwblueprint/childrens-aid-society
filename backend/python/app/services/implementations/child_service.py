@@ -50,7 +50,7 @@ class ChildService(IChildService):
         except Exception as error:
             db.session.rollback()
             raise error
-            
+
     def get_children_by_intake_id(self, intake_id):
         try:
             children = Child.query.filter_by(intake_id=intake_id)
@@ -59,5 +59,3 @@ class ChildService(IChildService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
-

@@ -37,7 +37,7 @@ class ICaregiverService(ABC):
         :raises Exception: if delete caregiver fails
         """
         pass
-        
+
     @abstractmethod
     def get_caregivers_by_intake_id(self, intake_id):
         """Get the caregiver associated with a specific intake_id

@@ -1,6 +1,6 @@
 from ...models import db
-from ...models.provider import Provider
 from ...models.child import Child
+from ...models.provider import Provider
 from ...resources.provider_dto import CreateProviderDTO, ProviderDTO
 from ..interfaces.provider_service import IProviderService
 

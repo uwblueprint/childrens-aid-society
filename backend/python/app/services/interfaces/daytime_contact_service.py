@@ -34,7 +34,7 @@ class IDaytimeContactService(ABC):
                            during deletion
         """
         pass
-        
+
     @abstractmethod
     def delete_daytime_contact(self, daytime_contact_id):
         """Deletes the specified contact from the daytime_contact table.

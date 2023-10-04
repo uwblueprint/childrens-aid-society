@@ -70,13 +70,14 @@ class OtherPermittedIndividualService(IOtherPermittedIndividualService):
 
     def get_other_permitted_individuals_by_intake_id(self, intake_id):
         try:
-            other_permitted_individuals = OtherPermittedIndividual.query.filter_by(intake_id=intake_id)
+            other_permitted_individuals = OtherPermittedIndividual.query.filter_by(
+                intake_id=intake_id
+            )
             other_permitted_individuals_dto = [
-                OtherPermittedIndividualDTO(**other_permitted_individual.to_dict()) for other_permitted_individual in other_permitted_individuals
+                OtherPermittedIndividualDTO(**other_permitted_individual.to_dict())
+                for other_permitted_individual in other_permitted_individuals
             ]
             return other_permitted_individuals_dto
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
-

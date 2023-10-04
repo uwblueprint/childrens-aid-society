@@ -12,5 +12,5 @@ class DaytimeContact(db.Model, BaseMixin):
     address = db.Column(db.String, nullable=False)
     contact_information = db.Column(db.String, nullable=False)
     dismissal_time = db.Column(db.String, nullable=True)
-    intake_id = db.Column(db.Integer, db.ForeignKey('intakes.id'), nullable=True)
+    intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=True)
     intake = db.relationship("Intake", back_populates="daytime_contacts")

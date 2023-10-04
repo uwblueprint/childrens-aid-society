@@ -81,65 +81,77 @@ def get_all_intakes():
                     "cpinFileNumber": child.cpin_number,
                     "serviceWorker": child.service_worker,
                     "specialNeeds": child.special_needs,
-                    "concerns": []  
+                    "concerns": [],
                 }
 
-                daytime_contact = daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
+                daytime_contact = (
+                    daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
+                )
 
                 provider_list = []
                 for provider in providers:
-                    provider_list.append({
-                        "name": provider.name,
-                        "fileNumber": provider.file_number,
-                        "primaryPhoneNumber": provider.primary_phone_number,
-                        "secondaryPhoneNumber": provider.secondary_phone_number,
-                        "email": provider.email,
-                        "address": provider.address,
-                        "relationshipToChild": provider.relationship_to_child,
-                        "additionalContactNotes": provider.additional_contact_notes
-                    })
+                    provider_list.append(
+                        {
+                            "name": provider.name,
+                            "fileNumber": provider.file_number,
+                            "primaryPhoneNumber": provider.primary_phone_number,
+                            "secondaryPhoneNumber": provider.secondary_phone_number,
+                            "email": provider.email,
+                            "address": provider.address,
+                            "relationshipToChild": provider.relationship_to_child,
+                            "additionalContactNotes": provider.additional_contact_notes,
+                        }
+                    )
 
                 new_child = {
                     "childInfo": child_info,
                     "daytimeContact": daytime_contact,
-                    "provider": provider_list
+                    "provider": provider_list,
                 }
 
                 new_children.append(new_child)
             intake.children = new_children
-        
-            opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(intake.id) 
+
+            opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(
+                intake.id
+            )
             new_opis = []
             for opi in opis:
                 new_opi = {
                     "name": opi.name,
                     "phoneNumber": opi.phone_number,
                     "relationshipToChildren": opi.relationship_to_child,
-                    "additionalNotes": opi.notes
+                    "additionalNotes": opi.notes,
                 }
                 new_opis.append(new_opi)
 
             program_details = {
-                "transportRequirements": "",  
+                "transportRequirements": "",
                 "schedulingRequirements": "",
                 "suggestedStartDate": "",
-                "shortTermGoals": goal_service.get_goals_by_intake(intake.id, 'SHORT_TERM'), 
-                "longTermGoals": goal_service.get_goals_by_intake(intake.id, 'LONG_TERM'), 
-                "familialConcerns": ["concern1", "concern2"],  
-                "permittedIndividuals": new_opis
+                "shortTermGoals": goal_service.get_goals_by_intake(
+                    intake.id, "SHORT_TERM"
+                ),
+                "longTermGoals": goal_service.get_goals_by_intake(
+                    intake.id, "LONG_TERM"
+                ),
+                "familialConcerns": ["concern1", "concern2"],
+                "permittedIndividuals": new_opis,
             }
 
             intake.programDetails = program_details
-        
+
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400
+
 
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
 def create_intake():
     undos = []
+
     def run_undos():
         for undo in undos:
             service, fn, arg = undo
@@ -200,7 +212,7 @@ def create_intake():
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
-            "intake_id": new_intake.id, 
+            "intake_id": new_intake.id,
         }
         caregiver = CreateCaregiverDTO(**caregiver)
         try:

@@ -54,11 +54,7 @@ class GoalService(IGoalService):
         try:
             intake = Intake.query.filter_by(id=intake_id).first()
             goals = [
-                {
-                    'id': result.id,
-                    'goal': result.goal,
-                    'type': result.type
-                }
+                {"id": result.id, "goal": result.goal, "type": result.type}
                 for result in intake.goals
                 if type == result.type or type is None
             ]
@@ -66,7 +62,6 @@ class GoalService(IGoalService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
 
     def delete_goal(self, goal_id):
         try:

@@ -64,24 +64,26 @@ class DaytimeContactService(IDaytimeContactService):
 
     def get_daytime_contact_by_intake_id(self, intake_id):
         try:
-            daytime_contact = DaytimeContact.query.filter_by(intake_id=intake_id).first()
+            daytime_contact = DaytimeContact.query.filter_by(
+                intake_id=intake_id
+            ).first()
             if daytime_contact:
                 result = {
                     "name": daytime_contact.name,
                     "contactInfo": daytime_contact.contact_information,
                     "address": daytime_contact.address,
-                    "dismissalTime": daytime_contact.dismissal_time
-                } 
+                    "dismissalTime": daytime_contact.dismissal_time,
+                }
                 return result
             else:
-                return  {
-                    "name": "" ,
-                    "contactInfo": "" ,
-                    "address": "" ,
-                    "dismissalTime": "" ,
-            },
+                return (
+                    {
+                        "name": "",
+                        "contactInfo": "",
+                        "address": "",
+                        "dismissalTime": "",
+                    },
+                )
         except Exception as error:
             self.logger.error(str(error))
             raise error
-
-

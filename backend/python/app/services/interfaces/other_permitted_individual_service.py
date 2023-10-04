@@ -31,7 +31,7 @@ class IOtherPermittedIndividualService(ABC):
         :raises Exception: if no other_permitted_individual with the specified id exists
         """
         pass
-        
+
     @abstractmethod
     def get_other_permitted_individuals_by_intake_id(self, intake_id):
         """Get other_permitted_individuals by intake ID

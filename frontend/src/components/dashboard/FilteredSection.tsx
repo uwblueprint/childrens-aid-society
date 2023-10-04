@@ -26,7 +26,7 @@ const FilteredSection = ({
   };
 
   return (
-    <Box height="40vh" minHeight="fit-content">
+    <Box minHeight="fit-content">
       <Flex mb={5}>
         <Heading textStyle="header-medium">
           {status[0] + status.slice(1).toLowerCase()}
@@ -42,13 +42,18 @@ const FilteredSection = ({
       </Flex>
       <Box width="100%" height="100%">
         {cases.length <= 0 ? (
-          <Center height="full">
+          <Center height="289px" width="60vw">
             <Text textStyle="text-medium">
               No current {status.toLowerCase()} cases
             </Text>
           </Center>
         ) : (
-          <Flex justifyContent="space-between">
+          <Flex
+            flexBasis="100%"
+            columnGap="24px"
+            pb="24px"
+            alignItems="flex-start"
+          >
             {cases.slice(0, 4).map((caseData: CaseCardProps) => {
               return (
                 <CaseCard

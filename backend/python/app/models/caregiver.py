@@ -25,3 +25,6 @@ class Caregiver(db.Model, BaseMixin):
     intake_id = db.Column(
         db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
     )
+    visit_cadence = db.relationship(
+        "VisitCadence", backref="associated_caregiver", cascade="all, delete"
+    )

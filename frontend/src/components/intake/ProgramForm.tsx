@@ -43,14 +43,21 @@ type ProgramFormProps = {
   hideFooter?: boolean;
 };
 
-const shortTermGoalsOptions = ["a", "b"]; // TODO: replace with actual options
+const shortTermGoalsOptions = [
+  "Caregiver(s) attend consistently",
+  "Caregiver(s) attend sober",
+  "Caregiver(s) have positive, meaningful, and engaging access visits",
+  "Caregiver(s) refrain from physical discipline",
+  "Caregiver(s) demonstrate age appropriate parenting skills",
+  "Caregiver(s) demonstrates/meets the child(ren) medical / mental health needs",
+];
 
 const longTermGoalsOptions = [
   "Caregiver(s) encourages child(ren) to meet age appropriate physical and cognitive skills",
   "Caregiver(s) engage appropriately with their support system (ie. approved visitors)",
-  "Caregiver(s) appropriately encourages child(ren) to demosntrate age appropriate social skills",
+  "Caregiver(s) appropriately encourages child(ren) to demonstrate age appropriate social skills",
   "Caregiver(s) appropriately mitigates family conflict (ie. sibiling conflict, parent/child conflict)",
-  "Caregiver(s) demosntrates appropriate communication skills (ie. parent/child, parent/parent)",
+  "Caregiver(s) demonstrates appropriate communication skills (ie. parent/child, parent/parent)",
   "Caregiver(s) mental/physical health has minimal impact on parenting/family functioning during visits",
   "Caregiver(s) cultural differences has minimal impact on parenting/family functioning during visits",
 ];

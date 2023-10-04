@@ -53,15 +53,21 @@ class GoalService(IGoalService):
     def get_goals_by_intake(self, intake_id, type=None):
         try:
             intake = Intake.query.filter_by(id=intake_id).first()
-            return [
-                GoalDTO(result.id, result.goal, result.type)
+            goals = [
+                {
+                    'id': result.id,
+                    'goal': result.goal,
+                    'type': result.type
+                }
                 for result in intake.goals
                 if type == result.type or type is None
             ]
 
+            return goals
         except Exception as error:
             self.logger.error(str(error))
             raise error
+
 
     def delete_goal(self, goal_id):
         try:

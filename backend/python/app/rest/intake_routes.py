@@ -127,20 +127,17 @@ def get_all_intakes():
                 }
                 new_opis.append(new_opi)
 
-
             program_details = {
                 "transportRequirements": "",  
                 "schedulingRequirements": "",
                 "suggestedStartDate": "",
-                "shortTermGoals": ["goal1", "goal2"],  
-                "longTermGoals": ["goal1", "goal2"], 
+                "shortTermGoals": goal_service.get_goals_by_intake(intake.id, 'SHORT_TERM'), 
+                "longTermGoals": goal_service.get_goals_by_intake(intake.id, 'LONG_TERM'), 
                 "familialConcerns": ["concern1", "concern2"],  
                 "permittedIndividuals": new_opis
             }
 
             intake.programDetails = program_details
-
-
         
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:

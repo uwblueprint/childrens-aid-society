@@ -27,7 +27,7 @@ export type CustomSelectProps = CustomInputProps & {
   options: string[];
   readOnly?: boolean;
   value?: string;
-  setValue?: Dispatch<SetStateAction<string>>;
+  setValue?: Dispatch<SetStateAction<any>>;
   handler?: () => void;
 };
 

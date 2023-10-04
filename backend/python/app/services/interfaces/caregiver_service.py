@@ -27,7 +27,7 @@ class ICaregiverService(ABC):
         :raises Exception: if get all caregivers fails
         """
         pass
-    
+
     @abstractmethod
     def get_caregivers_by_intake_id(self, intake_id):
         """

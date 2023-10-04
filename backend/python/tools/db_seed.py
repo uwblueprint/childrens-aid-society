@@ -94,8 +94,8 @@ def insert_test_data():
 
     # Caregivers
     values = [
-        ('Yor Forger', '1999-01-01', 'considerations', '555-555-5555', '777-777-7777', 'email@email.com', 'address', 'FOSTER_CAREGIVER', 'NULL', 1),
-        ('Loid Forger', '1999-01-01', 'considerations', '777-777-7777', '555-555-5555', 'email@email.com', 'address', 'FOSTER_CAREGIVER', 'NULL', 1)
+        ('Yor Forger', '1999-01-01', 'considerations', '555-555-5555', '777-777-7777', 'email@email.com', 'address', 'FOSTER_PARENT', 'NULL', 1),
+        ('Loid Forger', '1999-01-01', 'considerations', '777-777-7777', '555-555-5555', 'email@email.com', 'address', 'FOSTER_PARENT', 'NULL', 1)
     ]
 
     for value in values:

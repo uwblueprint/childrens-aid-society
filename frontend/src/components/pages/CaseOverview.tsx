@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -6,6 +6,7 @@ import {
   Flex,
   Input,
   Text,
+  Icon,
   useDisclosure,
 } from "@chakra-ui/react";
 import { ArrowLeft, UserPlus } from "react-feather";
@@ -14,15 +15,91 @@ import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import intakeAPIClient from "../../APIClients/IntakeAPIClient";
+import NewCaregiverModal from "../intake/NewCaregiverModal";
+import CaregiverAPIClient from "../../APIClients/CaregiverAPIClient";
+import { Caregivers, CaregiverDetails } from "../../types/CaregiverDetailTypes";
+import CasePromptBox, {
+  IndividualDetailsOverview,
+} from "../overview/CasePromptBox";
 
 const CaseOverviewBody = (): React.ReactElement => {
   const [leadName, setLeadName] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const history = useHistory();
+
+  const [data, setData] = useState<{
+    [key: string]: any;
+  }>({
+    caregiversList: [],
+    caregiversDetailsOverview: [],
+  });
+
+  const mapCaregiversToCaregiverDetailsOverview = (
+    caregivers: Caregivers,
+  ): IndividualDetailsOverview[] => {
+    if (caregivers.length > 0) {
+      console.log(caregivers);
+      return caregivers.map((caregiver) => ({
+        name: caregiver.caregiverName,
+      }));
+    }
+    return [];
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const intakeId = 1;
+      const caregivers = await CaregiverAPIClient.getById(intakeId); // TODO: get intakeid from case
+
+      setData({
+        caregiversList: caregivers,
+        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview(
+          caregivers,
+        ),
+      });
+    };
+
+    fetchData();
+  }, []);
+
+  const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
+    console.log(selectedIndex);
+    const list = data.caregiversList;
+    if (selectedIndex >= 0) {
+      data.caregiversList.splice(selectedIndex, 1, newCaregiver);
+    } else {
+      setData({
+        caregiversList: [...list, newCaregiver],
+        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
+          ...list,
+          newCaregiver,
+        ]),
+      });
+    }
+  };
 
   const {
     onOpen: onOpenVisitCadenceModal,
     isOpen: isOpenVisitCadenceModal,
     onClose: onCloseVisitCadenceModal,
+  } = useDisclosure();
+
+  const dummyCaregiver = {
+    intakeId: 1,
+    caregiverName: "",
+    dateOfBirth: "",
+    email: "",
+    primaryPhoneNo: "",
+    secondaryPhoneNo: "",
+    contactNotes: "",
+    address: "",
+    relationship: "",
+    indivConsiderations: "",
+  };
+  const {
+    onOpen: onOpenAddCaregiver,
+    isOpen: isOpenNewCaregiverModal,
+    onClose: onCloseNewCaregiverModal,
   } = useDisclosure();
 
   // TODO switch this with proper intake data passing
@@ -145,44 +222,14 @@ const CaseOverviewBody = (): React.ReactElement => {
               Visiting Family
             </Text>
           </Flex>
-          <Box
-            border="1px"
-            borderColor={colors.gray[100]}
-            borderRadius="md"
-            p="4"
-            mt="4"
-            h="200px"
-            position="relative"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-          >
-            <Text
-              style={{
-                color: colors.gray[700],
-                fontSize: "20px",
-                fontWeight: 500,
-              }}
-            >
-              There are no visiting families under this case
-            </Text>
-
-            <Button
-              color={colors.blue[400]}
-              variant="outline"
-              position="absolute"
-              bottom="4"
-              right="4"
-              borderColor={colors.blue[300]}
-              backgroundColor={colors.blue[100]}
-            >
-              <div style={{ paddingRight: "10px" }}>
-                <UserPlus width="13px" />
-              </div>
-              Add visiting family
-            </Button>
-          </Box>
+          <CasePromptBox
+            descriptionText="No visiting families under this case"
+            buttonText="Add Visiting Family"
+            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+            onButtonClick={onOpenAddCaregiver}
+            individualDetails={data.caregiversDetailsOverview}
+            setSelectedIndex={setSelectedIndex}
+          />
 
           <Flex pt="50">
             <Text style={{ fontSize: "23px", fontWeight: 600 }}>
@@ -325,6 +372,16 @@ const CaseOverviewBody = (): React.ReactElement => {
         onDeleteClick={() => {}}
         goToIntake={goToIntake}
         childName="Anne Chovy"
+      />
+      <NewCaregiverModal
+        isOpen={isOpenNewCaregiverModal}
+        onClick={onClickNewCaregiver}
+        onClose={onCloseNewCaregiverModal}
+        caregiver={
+          selectedIndex >= 0
+            ? data.caregiversList[selectedIndex]
+            : dummyCaregiver
+        }
       />
     </Box>
   );

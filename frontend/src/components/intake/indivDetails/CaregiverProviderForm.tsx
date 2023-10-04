@@ -1,11 +1,12 @@
 import { useDisclosure, Icon } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { UserPlus } from "react-feather";
-import NewCaregiverModal, {
+import NewCaregiverModal from "../NewCaregiverModal";
+import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
+import {
   Caregivers,
   CaregiverDetails,
-} from "../NewCaregiverModal";
-import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
+} from "../../../types/CaregiverDetailTypes";
 
 type CaregiverFormProps = {
   caregivers: Caregivers;
@@ -52,7 +53,9 @@ const CaregiverForm = ({
   );
 
   const emptyCaregiver: CaregiverDetails = {
+    intakeId: 1,
     caregiverName: "",
+    email: "",
     dateOfBirth: "",
     primaryPhoneNo: "",
     secondaryPhoneNo: "",

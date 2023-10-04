@@ -5,19 +5,9 @@ import ModalComponent from "../common/ModalComponent";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 import { CustomSelectNonFormik } from "./CustomSelectField";
-
-export type CaregiverDetails = {
-  caregiverName: string;
-  dateOfBirth: string;
-  primaryPhoneNo: string;
-  secondaryPhoneNo?: string;
-  contactNotes?: string;
-  address: string;
-  relationship: string;
-  indivConsiderations?: string;
-};
-
-export type Caregivers = CaregiverDetails[];
+import CaregiverAPIClient from "../../APIClients/CaregiverAPIClient";
+import { CaregiverDetails } from "../../types/CaregiverDetailTypes";
+import CaregiverRelationship from "../../types/CaregiverRelationship";
 
 type NewCaregiverProps = {
   isOpen: boolean;
@@ -33,14 +23,28 @@ const NewCaregiverModal = ({
   caregiver,
 }: NewCaregiverProps): React.ReactElement => {
   // ideally refactor to have less complicated state logic
-  const [caregiverName, setCaregiverName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [primaryPhoneNo, setPrimaryPhoneNo] = useState("");
-  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState("");
-  const [contactNotes, setContactNotes] = useState("");
-  const [address, setAddress] = useState("");
-  const [relationship, setRelationship] = useState("");
-  const [indivConsiderations, setIndivConsiderations] = useState("");
+  const [caregiverName, setCaregiverName] = useState(
+    caregiver ? caregiver.caregiverName : "",
+  );
+  const [dateOfBirth, setDateOfBirth] = useState(
+    caregiver ? caregiver.dateOfBirth : "",
+  );
+  const [primaryPhoneNo, setPrimaryPhoneNo] = useState(
+    caregiver ? caregiver.primaryPhoneNo : "",
+  );
+  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState(
+    caregiver ? caregiver.secondaryPhoneNo : "",
+  );
+  const [contactNotes, setContactNotes] = useState(
+    caregiver ? caregiver.contactNotes : "",
+  );
+  const [address, setAddress] = useState(caregiver ? caregiver.address : "");
+  const [relationship, setRelationship] = useState<
+    CaregiverRelationship | string
+  >(caregiver ? caregiver.relationship : "");
+  const [indivConsiderations, setIndivConsiderations] = useState(
+    caregiver ? caregiver.indivConsiderations : "",
+  );
 
   const [caregiverNameChanged, setCaregiverNameChanged] = useState(false);
   const [dateOfBirthChanged, setDateOfBirthChanged] = useState(false);
@@ -54,14 +58,14 @@ const NewCaregiverModal = ({
   );
 
   const handleClose = () => {
-    setCaregiverName("");
-    setDateOfBirth("");
-    setPrimaryPhoneNo("");
-    setSecondaryPhoneNo("");
-    setContactNotes("");
-    setAddress("");
-    setRelationship("");
-    setIndivConsiderations("");
+    setCaregiverName(caregiver ? caregiver.caregiverName : "");
+    setDateOfBirth(caregiver ? caregiver.dateOfBirth : "");
+    setPrimaryPhoneNo(caregiver ? caregiver.primaryPhoneNo : "");
+    setSecondaryPhoneNo(caregiver ? caregiver.secondaryPhoneNo : "");
+    setContactNotes(caregiver ? caregiver.contactNotes : "");
+    setAddress(caregiver ? caregiver.address : "");
+    setRelationship(caregiver ? caregiver.relationship : "");
+    setIndivConsiderations(caregiver ? caregiver.indivConsiderations : "");
 
     setCaregiverNameChanged(false);
     setDateOfBirthChanged(false);
@@ -72,6 +76,21 @@ const NewCaregiverModal = ({
     setRelationshipChanged(false);
     setIndivConsiderationsChanged(false);
     onClose();
+  };
+
+  const RelationshipToChild: Record<string, CaregiverRelationship> = {
+    Other: CaregiverRelationship.OTHER,
+    Sibling: CaregiverRelationship.SIBLING,
+    "Biological Parent": CaregiverRelationship.BIOLOGICAL_PARENT,
+    "Adoptive Parent": CaregiverRelationship.ADOPTIVE_PARENT,
+    "Foster Parent": CaregiverRelationship.ADOPTIVE_PARENT,
+    "Step Parent": CaregiverRelationship.STEP_PARENT,
+    "Maternal Grandparent": CaregiverRelationship.MATERNAL_GRANDPARENT,
+    "Paternal Grandparent": CaregiverRelationship.PATERNAL_GRANDPARENT,
+    "Step Sibling": CaregiverRelationship.STEP_SIBLING,
+    "Half Sibling": CaregiverRelationship.HALF_SIBLING,
+    "Uncle/Aunt": CaregiverRelationship.UNCLE_AUNT,
+    "Other Relative": CaregiverRelationship.OTHER_RELATIVE,
   };
 
   return (
@@ -147,7 +166,7 @@ const NewCaregiverModal = ({
               </Box>
             </SimpleGrid>
             <Box marginTop="0.75rem">
-              <FormLabel htmlFor="address">
+              <FormLabel htmlFor="contactnotes">
                 ADDITIONAL CONTACT NOTES <OptionalLabel />
               </FormLabel>
               <CustomInput
@@ -187,15 +206,16 @@ const NewCaregiverModal = ({
                   name="relationship"
                   id="relationship"
                   options={[
-                    "Adoptive parent",
-                    "Biological parent",
-                    "Foster parent",
-                    "Step-parent",
-                    "Maternal grandparent",
-                    "Paternal grandparent",
+                    // TODO: Pair with enum values or POST and PUT calls
+                    "Adoptive Parent",
+                    "Biological Parent",
+                    "Foster Parent",
+                    "Step-Parent",
+                    "Maternal Grandparent",
+                    "Paternal Grandparent",
                     "Sibling",
-                    "Half-sibling",
-                    "Step-sibling",
+                    "Half-Sibling",
+                    "Step-Sibling",
                     "Uncle/Aunt",
                     "Other Relative",
                     "Other",
@@ -203,7 +223,9 @@ const NewCaregiverModal = ({
                   placeholder="Select relationship to child(ren)"
                   iconRight={<Icon as={ChevronDown} />}
                   value={
-                    relationshipChanged ? relationship : caregiver.relationship
+                    relationshipChanged
+                      ? RelationshipToChild[relationship]
+                      : caregiver.relationship
                   }
                   defaultValue={caregiver ? caregiver.relationship : ""}
                   setValue={setRelationship}
@@ -231,8 +253,10 @@ const NewCaregiverModal = ({
             </Box>
           </Box>
         }
-        onClick={() => {
+        onClick={async () => {
           const newCaregiver: CaregiverDetails = {
+            intakeId: caregiver.intakeId,
+            email: caregiver.email ? caregiver.email : "email@email.com",
             caregiverName: caregiverNameChanged
               ? caregiverName
               : caregiver.caregiverName,
@@ -250,13 +274,41 @@ const NewCaregiverModal = ({
               : caregiver.contactNotes,
             address: addressChanged ? address : caregiver.address,
             relationship: relationshipChanged
-              ? relationship
+              ? RelationshipToChild[relationship]
               : caregiver.relationship,
             indivConsiderations: indivConsiderationsChanged
               ? indivConsiderations
               : caregiver.indivConsiderations,
           };
-          onClick(newCaregiver);
+          if (caregiver.id) {
+            await CaregiverAPIClient.put(
+              caregiver.id,
+              newCaregiver.intakeId,
+              newCaregiver.caregiverName,
+              newCaregiver.email,
+              newCaregiver.dateOfBirth,
+              newCaregiver.primaryPhoneNo,
+              newCaregiver.relationship,
+              newCaregiver.address,
+              newCaregiver.secondaryPhoneNo,
+              newCaregiver.indivConsiderations,
+              newCaregiver.contactNotes,
+            );
+          } else {
+            await CaregiverAPIClient.post(
+              newCaregiver.intakeId,
+              newCaregiver.caregiverName,
+              newCaregiver.email,
+              newCaregiver.dateOfBirth,
+              newCaregiver.primaryPhoneNo,
+              newCaregiver.relationship,
+              newCaregiver.address,
+              newCaregiver.secondaryPhoneNo,
+              newCaregiver.indivConsiderations,
+              newCaregiver.contactNotes,
+            );
+            onClick(newCaregiver);
+          }
           handleClose();
         }}
         isOpen={isOpen}

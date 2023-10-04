@@ -20,6 +20,7 @@ def get_all_caregivers():
     except Exception as error:
         return jsonify(error), 400
 
+
 # get all caregivers by intake_id
 @blueprint.route("/<int:intake_id>", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})

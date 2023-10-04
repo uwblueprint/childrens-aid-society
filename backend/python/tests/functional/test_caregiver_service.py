@@ -79,6 +79,7 @@ DUMMY_CAREGIVER_DATA_3 = {
     "intake_id": 1,
 }
 
+
 def seed_database():
     user = User(**DUMMY_USER_DATA)
     intake = Intake(**DUMMY_INTAKE_DATA)
@@ -95,6 +96,7 @@ def seed_database():
     db.session.commit()
     db.session.add(caregiver3)
     db.session.commit()
+
 
 def teardown_database():
     Caregiver.query.delete()

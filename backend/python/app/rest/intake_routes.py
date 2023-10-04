@@ -53,11 +53,8 @@ def get_all_intakes():
     except:
         pass
     try:
-         #should I leave as an empty array or still have a attributes but give it a default value?
-         #why is get and post diff? in post request, intake id is in caregiver and other permitted individual
-                 
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
-        for i, intake in enumerate(intakes):
+        for intake in intakes:
             caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
             caregivers = []
             for caregiver in caregivers_dtos:
@@ -73,6 +70,7 @@ def get_all_intakes():
                 }
                 caregivers.append(caregiver_obj)
             intake.caregivers = caregivers
+
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
             for child in just_children:
@@ -86,12 +84,7 @@ def get_all_intakes():
                     "concerns": []  
                 }
 
-                daytime_contact = {
-                    "name": "",  # Add the actual daytime contact data here
-                    "contactInfo": "",
-                    "address": "",
-                    "dismissalTime": ""
-                }
+                daytime_contact = daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
 
                 provider_list = []
                 for provider in providers:
@@ -105,7 +98,6 @@ def get_all_intakes():
                         "relationshipToChild": provider.relationship_to_child,
                         "additionalContactNotes": provider.additional_contact_notes
                     })
-                  
 
                 new_child = {
                     "childInfo": child_info,
@@ -115,7 +107,7 @@ def get_all_intakes():
 
                 new_children.append(new_child)
             intake.children = new_children
-
+        
             opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(intake.id) 
             new_opis = []
             for opi in opis:

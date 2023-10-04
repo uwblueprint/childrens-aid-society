@@ -62,7 +62,6 @@ class GoalService(IGoalService):
                 for result in intake.goals
                 if type == result.type or type is None
             ]
-
             return goals
         except Exception as error:
             self.logger.error(str(error))

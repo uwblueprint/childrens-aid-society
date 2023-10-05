@@ -53,12 +53,27 @@ class GoalService(IGoalService):
     def get_goals_by_intake(self, intake_id, type=None):
         try:
             intake = Intake.query.filter_by(id=intake_id).first()
-            goals = [
-                {"id": result.id, "goal": result.goal, "type": result.type}
+            return [
+                GoalDTO(result.id, result.goal, result.type)
                 for result in intake.goals
                 if type == result.type or type is None
             ]
-            return goals
+
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_goal_names_by_intake(self, intake_id, type=None):
+        try:
+            intake = Intake.query.filter_by(id=intake_id).first()
+            goals = intake.goals
+
+            if type is not None:
+                goals = [goal for goal in goals if goal.type == type]
+
+            goal_names = [goal.goal for goal in goals]
+
+            return goal_names
         except Exception as error:
             self.logger.error(str(error))
             raise error

@@ -48,13 +48,19 @@ const get = async (
   intakeStatus: CaseStatus,
   page: number,
   limit: number,
+  parameter?: string,
 ): Promise<Case[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
+
+  let url = "/intake";
+  if (parameter) {
+    url += `/${parameter}`;
+  }
   try {
-    const { data } = await baseAPIClient.get<Intake[]>("/intake", {
+    const { data } = await baseAPIClient.get<Intake[]>(url, {
       headers: { Authorization: bearerToken },
       params: {
         intake_status: intakeStatus,

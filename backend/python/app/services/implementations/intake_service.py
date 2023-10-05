@@ -5,8 +5,7 @@ from ...models.intake import Intake
 from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
-
-
+import logging
 class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
@@ -90,6 +89,28 @@ class IntakeService(IIntakeService):
                 intake.referring_worker_name = updated_data["referring_worker_name"]
             db.session.commit()
             return IntakeDTO(**intake.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+
+    def search_intake(self, family_name: str):
+        try:
+            if not family_name:
+                raise Exception("Empty Family Name passed to search_intake function")
+            if not isinstance(family_name, str):
+                raise Exception("Family name passed is not of str type")
+
+            intake = Intake.query.filter_by(family_name=family_name)
+            if not intake:
+                return []
+            intake_dto = [IntakeDTO(**i.to_dict()) for i in intake]
+            self.logger.debug(intake)
+
+
+
+            return intake_dto
+
         except Exception as error:
             db.session.rollback()
             raise error

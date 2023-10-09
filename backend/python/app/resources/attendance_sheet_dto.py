@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class AttendanceSheetDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")

@@ -7,6 +7,8 @@ import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import { Children } from "./child-information/AddChildPage";
+import { Caregivers } from "./NewCaregiverModal";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;
@@ -20,6 +22,8 @@ type ReviewFormProps = {
   setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
   isReviewOnly: boolean;
   setIsReviewOnly: React.Dispatch<React.SetStateAction<boolean>>;
+  childrens: Children;
+  caregivers: Caregivers;
 };
 
 const ReviewForm = ({
@@ -34,6 +38,8 @@ const ReviewForm = ({
   setReviewHeader,
   isReviewOnly,
   setIsReviewOnly,
+  childrens,
+  caregivers,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
     nextStep(); // TODO: Add functionality for nextStep (Currently we pass in empty nextStep() prop)
@@ -101,7 +107,10 @@ const ReviewForm = ({
           </Text>
           {editSectionButton(IntakeSteps.INDIVIDUAL_DETAILS)};
         </HStack>
-        <IndividualDetails childrenDetails={[]} caregiverDetails={[]} />
+        <IndividualDetails
+          childrenDetails={childrens}
+          caregiverDetails={caregivers}
+        />
       </Stack>
 
       <Stack padding="32px" spacing="16px">

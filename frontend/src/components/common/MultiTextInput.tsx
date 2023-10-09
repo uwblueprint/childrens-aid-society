@@ -35,7 +35,7 @@ const MultiTextInput = ({
   const [inputValue, setInputValue] = useState<string>("");
   const [isFocused, setFocus] = useState(false);
 
-  const [field, , helpers] = useField<string[]>(name);
+  const [, , helpers] = useField<string[]>(name);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -89,9 +89,14 @@ const MultiTextInput = ({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           >
-            {icon && (
-              <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
-            )}
+            {icon &&
+              (values.length !== 0 ? (
+                <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
+              ) : (
+                <InputLeftElement pointerEvents="none" h="full">
+                  {icon}
+                </InputLeftElement>
+              ))}
             <Flex
               flexWrap="wrap"
               marginLeft={icon ? "30px" : ""}

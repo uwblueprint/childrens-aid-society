@@ -72,14 +72,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', 1),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', 1),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', 1),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', 1),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "intake_id"), value)
 
     # Child
     values = [
@@ -119,7 +119,6 @@ def insert_test_data():
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
-
 # fmt: on
 
 # fmt: off
@@ -134,7 +133,7 @@ def clear_rows():
     db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
-
+    
 # fmt: on
 
 

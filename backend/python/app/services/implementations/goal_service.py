@@ -63,6 +63,21 @@ class GoalService(IGoalService):
             self.logger.error(str(error))
             raise error
 
+    def get_goal_names_by_intake(self, intake_id, type=None):
+        try:
+            intake = Intake.query.filter_by(id=intake_id).first()
+            goals = intake.goals
+
+            if type is not None:
+                goals = [goal for goal in goals if goal.type == type]
+
+            goal_names = [goal.goal for goal in goals]
+
+            return goal_names
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def delete_goal(self, goal_id):
         try:
             goal = Goal.query.filter_by(id=goal_id).first()

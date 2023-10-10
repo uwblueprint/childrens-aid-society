@@ -133,7 +133,7 @@ def clear_rows():
     db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
-    
+
 # fmt: on
 
 

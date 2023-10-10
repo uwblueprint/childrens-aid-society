@@ -72,14 +72,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', 1),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', 1),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', 1),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', 1),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "intake_id"), value)
 
     # Child
     values = [
@@ -134,7 +134,6 @@ def insert_test_data():
 
     for value in values_records:
         insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time", "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min", "child_family_support_worker_id", "comments"), value)
-
 
 # fmt: on
 

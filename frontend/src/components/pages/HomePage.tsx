@@ -18,11 +18,15 @@ import { CaseCardProps } from "../dashboard/CaseCard";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
 
+  const { setStep } = useStepValueContext();
+
   function goToIntake() {
+    setStep(0);
     history.push("/intake");
   }
 

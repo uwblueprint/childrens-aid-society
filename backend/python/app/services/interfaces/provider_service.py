@@ -31,3 +31,14 @@ class IProviderService(ABC):
         :raises Exception: if the provider with the specified id does not exist
         """
         pass
+
+    @abstractmethod
+    def get_providers_by_child_id(self, child_id):
+        """Returns all providers associated with a child's ID
+        :param child_id: the ID of the child
+        :type child_id: int
+        :return: list of ProviderDTO
+        :rtype: list of ProviderDTO
+        :raises Exception: if an error occurs at the database level
+        """
+        pass

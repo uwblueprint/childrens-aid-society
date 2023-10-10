@@ -45,7 +45,9 @@ const Visit = (): React.ReactElement => {
               display="flex"
               gap="8px"
             >
+              <Button variant="ghost" width="fit-content">
               <ArrowLeft /> Save and Exit {/* TODO implement save and exit */}
+              </Button>
             </Box>
             <Button variant="ghost" width="fit-content">
               <Text fontWeight="bold">Child Information</Text>

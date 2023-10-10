@@ -126,15 +126,9 @@ def get_all_intakes():
                 new_opis.append(new_opi)
 
             program_details = {
-                "transportation_requirements": request.json["programDetails"][
-                    "transportRequirements"
-                ],
-                "scheduling_requirements": request.json["programDetails"][
-                    "schedulingRequirements"
-                ],
-                "suggested_start_date": request.json["programDetails"][
-                    "suggestedStartDate"
-                ],
+                "transportRequirements": "",
+                "schedulingRequirements": "",
+                "suggestedStartDate": "",
                 "shortTermGoals": goal_service.get_goal_names_by_intake(
                     intake.id, "SHORT_TERM"
                 ),

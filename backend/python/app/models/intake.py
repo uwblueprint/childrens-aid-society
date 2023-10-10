@@ -83,6 +83,9 @@ class Intake(db.Model, BaseMixin):
     caregivers = db.relationship(
         "Caregiver", backref="associated_intake", cascade="all, delete"
     )
+    daytime_contacts = db.relationship(
+        "DaytimeContact", back_populates="intake", cascade="all, delete"
+    )
     lead_access_worker_name = db.Column(db.String, nullable=True)
     intake_meeting_notes = db.Column(db.String, nullable=True)
     visit_cadences = db.relationship(

@@ -33,7 +33,6 @@ DEFAULT_ATTENDANCE_RECORDS = {
 DUMMY_ATTENDANCE_SHEET_DATA = {
     "id": 1,
     "family_name": "yes",
-    "month": "JANUARY",
     "csw": "asd",
     "cpw": "asd",
     "fcc": "asd",

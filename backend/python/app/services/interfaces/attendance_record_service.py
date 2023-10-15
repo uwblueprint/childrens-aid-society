@@ -1,42 +1,50 @@
-from abc import ABC, abstractmethod 
+from abc import ABC, abstractmethod
+
 
 class IAttendanceRecordService(ABC):
     """
-    Attendance record service interface
+    Attendance record service interface with attendance record management methods
     """
+
     @abstractmethod
     def create_attendance_record(self, record):
         """
-        :params: record
-        :return: AttendanceRecordsDTO
+        Create a new attendance record object
+        :param record: the record to be created
+        :type record: CreateAttendanceRecordDTO
+        :return: the created record
         :rtype: AttendanceRecordsDTO
-        :raised Exception if, record is not valid 
+        :raises Exception: if record creation fails
         """
         pass
+
     @abstractmethod
     def get_all_attendance_records(self):
-        """Get attendance record from database
-
-        :params none
-        :return: AttendanceRecordsDTO
-        :rtype: AttendanceRecordsDTO
+        """
+        Get all records
+        :return: list of records
+        :rtype: list of AttendanceRecordsDTO
+        :raises Exception: if get all attendance records fails
         """
         pass
+
     @abstractmethod
     def delete_attendance_record(self, record_id):
         """
-        :params: record_id
-        :return: 
-        :rtype: 
-        :raised Exception if, record is not valid or is not found 
+        Delete a record
+        :param record_id: the id of the record to be deleted
+        :type record_id: int
+        :raises Exception: if delete record fails
         """
         pass
+
     @abstractmethod
-    def update_attendance_record(self, record_id: int, updated_data):
+    def update_attendance_record(self, record_id, updated_data):
         """
-        :params: record_id, updated_data 
-        :return: 
-        :rtype: 
-        :raised Exception if, record_id is not of type int, is empty record, or record with id is not found.
+        Update a record
+        :param record_id: the id of the record
+        :type record_id: int
+        :type update_data: AttendanceRecordsDTO
+        :raises Exception: if update record fails
         """
         pass

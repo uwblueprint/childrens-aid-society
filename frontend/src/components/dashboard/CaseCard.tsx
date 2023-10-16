@@ -57,7 +57,10 @@ const CaseCard = ({
   // TODO refactor to display proper case data
   const onCardClick = (status: string) => {
     if (status === "ACTIVE") {
-      history.push(`/caseoverview`);
+      history.push({
+        pathname: `/caseoverview/${caseId}`,
+        state: { caseLead },
+      });
     } else {
       onOpenStatusModal();
     }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, useParams, useLocation} from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -17,11 +17,11 @@ import intakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 const CaseOverviewBody = (): React.ReactElement => {
   const history = useHistory();
-  const { id } = useParams<{ id: string}>();
-  const caseNumber : number = parseInt(id, 10);
+  const { id } = useParams<{ id: string }>();
+  const caseNumber: number = parseInt(id, 10);
 
-  const {state} = useLocation<{caseLead: string}>();
-  const {caseLead} = state;
+  const { state } = useLocation<{ caseLead: string }>();
+  const { caseLead } = state;
 
   const [leadName, setLeadName] = useState(caseLead);
 
@@ -40,7 +40,7 @@ const CaseOverviewBody = (): React.ReactElement => {
     history.push("/");
   };
   const changeLead = async () => {
-    const intakeID = caseNumber; 
+    const intakeID = caseNumber;
     const changedData: Record<string, string> = {
       lead_access_worker_name: leadName,
     };

@@ -9,9 +9,11 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import { X } from "react-feather";
+import { useField } from "formik";
 import { CustomSelectDropDown } from "../intake/CustomSelectField";
 
 type MultiTextInputProps = {
+  name: string;
   placeholder: string;
   icon?: JSX.Element;
   isReadOnly?: boolean;
@@ -21,6 +23,7 @@ type MultiTextInputProps = {
 };
 
 const MultiTextInput = ({
+  name,
   placeholder,
   icon,
   isReadOnly,
@@ -32,7 +35,14 @@ const MultiTextInput = ({
   const [inputValue, setInputValue] = useState<string>("");
   const [isFocused, setFocus] = useState(false);
 
+  const [, , helpers] = useField<string[]>(name);
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const updateField = (newValues: string[]) => {
+    newValue(newValues);
+    helpers.setValue(newValues);
+  };
 
   useEffect(() => {
     const newFilteredOptions = options.filter((option) =>
@@ -46,21 +56,21 @@ const MultiTextInput = ({
     const { key } = event;
 
     if (key === "Enter" && inputValue.trim() !== "") {
-      newValue([...values, inputValue.trim()]);
+      updateField([...values, inputValue.trim()]);
       setInputValue("");
     } else if (
       (key === "Backspace" || key === "Delete") &&
       inputValue === "" &&
       values.length > 0
     ) {
-      newValue(values.slice(0, -1));
+      updateField(values.slice(0, -1));
     }
   };
 
   const handleDeleteTag = (index: number) => {
     const newTags = [...values];
     newTags.splice(index, 1);
-    newValue(newTags);
+    updateField(newTags);
   };
 
   return (
@@ -79,9 +89,14 @@ const MultiTextInput = ({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           >
-            {icon && (
-              <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
-            )}
+            {icon &&
+              (values.length !== 0 ? (
+                <InputLeftElement pointerEvents="none">{icon}</InputLeftElement>
+              ) : (
+                <InputLeftElement pointerEvents="none" h="full">
+                  {icon}
+                </InputLeftElement>
+              ))}
             <Flex
               flexWrap="wrap"
               marginLeft={icon ? "30px" : ""}
@@ -145,7 +160,7 @@ const MultiTextInput = ({
         <CustomSelectDropDown
           options={filteredOptions}
           onSelect={(option) => {
-            newValue([...values, option]);
+            updateField([...values, option]);
             setInputValue("");
           }}
         />

@@ -1,20 +1,12 @@
 from . import db
 from .base_mixin import BaseMixin
 
-month_enum = db.Enum(
-    "JANUARY",
-    "FEBRUARY",
-    "MARCH",
-    "APRIL",
-    "MAY",
-    "JUNE",
-    "JULY",
-    "AUGUST",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER",
-    name="month",
+# association table (attendance_sheets & child)
+attendance_sheets_child = db.Table(
+    "attendance_child",
+    db.metadata,
+    db.Column("attendance_sheets_id", db.ForeignKey("attendance_sheets.id")),
+    db.Column("child_id", db.ForeignKey("children.id")),
 )
 
 
@@ -27,7 +19,7 @@ class AttendanceSheets(db.Model, BaseMixin):
         db.Integer, nullable=True
     )  # TODO: REMOVE THIS AND SWAP BACK TO USING intakes.id foreign key
     family_name = db.Column(db.String, nullable=False)
-    month = db.Column(month_enum, nullable=False)
     csw = db.Column(db.String, nullable=False)
     cpw = db.Column(db.String, nullable=False)
     fcc = db.Column(db.String, nullable=False)
+    children = db.relationship("Child", secondary=attendance_sheets_child)

@@ -11,7 +11,7 @@ blueprint = Blueprint("attendanceSheet", __name__, url_prefix="/attendanceSheet"
 
 # create an attendance sheet in db
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
-@require_authorization_by_role({"Admin", "User"})
+# @require_authorization_by_role({"Admin", "User"})
 @validate_request("CreateAttendanceSheetDTO")
 def create_attendance_sheet():
     try:
@@ -26,7 +26,7 @@ def create_attendance_sheet():
 
 # get all attendance sheets, optionally filter by intake_id or id
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
-@require_authorization_by_role({"Admin", "User"})
+# @require_authorization_by_role({"Admin", "User"})
 def get_attendance_sheet():
     intake_id = request.args.get("intakeId")
     id = request.args.get("id")
@@ -50,7 +50,7 @@ def get_attendance_sheet():
 
 # delete attendance sheet in db by intake id
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)
-@require_authorization_by_role({"Admin", "User"})
+# @require_authorization_by_role({"Admin", "User"})
 def delete_attendance_sheet():
     try:
         id = int(request.args.get("id"))

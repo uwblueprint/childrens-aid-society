@@ -52,3 +52,14 @@ class CaregiverService(ICaregiverService):
             db.session.rollback()
             self.logger.error(str(error))
             raise error
+
+    def get_caregivers_by_intake_id(self, intake_id):
+        try:
+            caregivers = Caregiver.query.filter_by(intake_id=intake_id)
+            caregivers_dto = [
+                CaregiverDTO(**caregiver.to_dict()) for caregiver in caregivers
+            ]
+            return caregivers_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

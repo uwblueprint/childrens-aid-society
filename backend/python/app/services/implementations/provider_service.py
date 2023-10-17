@@ -1,4 +1,5 @@
 from ...models import db
+from ...models.child import Child
 from ...models.provider import Provider
 from ...resources.provider_dto import CreateProviderDTO, ProviderDTO
 from ..interfaces.provider_service import IProviderService
@@ -50,4 +51,15 @@ class ProviderService(IProviderService):
             db.session.commit()
         except Exception as error:
             db.session.rollback()
+            raise error
+
+    def get_providers_by_child_id(self, child_id):
+        try:
+            providers = Provider.query.filter_by(child_id=child_id)
+            providers_dto = [
+                ProviderDTO(**provider.to_dict()) for provider in providers
+            ]
+            return providers_dto
+        except Exception as error:
+            self.logger.error(str(error))
             raise error

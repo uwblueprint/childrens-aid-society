@@ -119,7 +119,10 @@ def insert_test_data():
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
         
-    values = [(4,'JANUARY', 'Thing' , 'csw', 'cpw', 'fcc')]
+    values = [(1,'JANUARY', 'Thing' , 'csw', 'cpw', 'fcc'),
+              (2,'FEBRUARY', 'Odi' , 'csw', 'cpw', 'fcc'),
+              (3,'MARCH', 'Zhang' , 'csw', 'cpw', 'fcc'),
+              (4,'APRIL', 'Goblin' , 'csw', 'cpw', 'fcc')]
          
     for value in values:
         insert_values(db, "attendance_sheets", ("id","month", "family_name", "csw", "cpw", "fcc"), value) 

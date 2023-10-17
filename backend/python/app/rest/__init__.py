@@ -9,6 +9,7 @@ def init_app(app):
         user_routes,
         visit_cadence_routes,
         visit_routes,
+        visit
     )
 
     app.register_blueprint(auth_routes.blueprint)
@@ -20,3 +21,4 @@ def init_app(app):
     app.register_blueprint(visit_routes.blueprint)
     app.register_blueprint(attendance_sheet_routes.blueprint)
     app.register_blueprint(visit_cadence_routes.blueprint)
+    app.register_blueprint(visit.blueprint)

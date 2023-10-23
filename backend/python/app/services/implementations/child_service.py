@@ -51,7 +51,6 @@ class ChildService(IChildService):
             db.session.rollback()
             raise error
 
-<<<<<<< HEAD
     def edit_child(self, child_data, child_id):
         try:
             child = Child.query.filter_by(id=child_id).first()
@@ -70,7 +69,6 @@ class ChildService(IChildService):
             return ChildDTO(**child.to_dict())
         except Exception as error:
             db.session.rollback()
-=======
     def get_children_by_intake_id(self, intake_id):
         try:
             children = Child.query.filter_by(intake_id=intake_id)
@@ -78,5 +76,4 @@ class ChildService(IChildService):
             return children_dto
         except Exception as error:
             self.logger.error(str(error))
->>>>>>> main
             raise error

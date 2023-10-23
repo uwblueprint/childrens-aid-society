@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,33 +20,45 @@ const FilteredSection = ({
   status: string;
   cases: CaseCardProps[];
 }): React.ReactElement => {
+  const history = useHistory();
+  const viewAllCases = () => {
+    history.push(`/cases?status=${status.toLowerCase()}`);
+  };
+
   return (
-    <Box height="40vh" minHeight="fit-content">
+    <Box minHeight="fit-content">
       <Flex mb={5}>
-        <Heading textStyle="header-medium">{status}</Heading>
+        <Heading textStyle="header-medium">
+          {status[0] + status.slice(1).toLowerCase()}
+        </Heading>
         <Spacer />
         <Button
           variant="tertiary"
           rightIcon={<Icon as={ArrowRight} />}
-          onClick={() => {}}
+          onClick={viewAllCases}
         >
           View All
         </Button>
       </Flex>
       <Box width="100%" height="100%">
         {cases.length <= 0 ? (
-          <Center height="full">
+          <Center height="289px" width="60vw">
             <Text textStyle="text-medium">
               No current {status.toLowerCase()} cases
             </Text>
           </Center>
         ) : (
-          <Flex justifyContent="space-between">
+          <Flex
+            flexBasis="100%"
+            columnGap="24px"
+            pb="24px"
+            alignItems="flex-start"
+          >
             {cases.slice(0, 4).map((caseData: CaseCardProps) => {
               return (
                 <CaseCard
-                  key={caseData.caseTitle}
-                  caseTitle={caseData.caseTitle}
+                  key={caseData.caseId}
+                  caseId={caseData.caseId}
                   caseLead={caseData.caseLead}
                   date={caseData.date}
                   familyName={caseData.familyName}

@@ -1,8 +1,10 @@
 export const HOME_PAGE = "/";
 export const INTAKE_PAGE = "/intake";
-export const VISIT_PAGE = "/visit";
+export const VISIT_PAGE = "/visit/:caseId/:visitId";
 export const LOGIN_PAGE = "/login";
 export const SIGNUP_PAGE = "/signup";
+export const CASES_PAGE = "/cases";
+export const CASEOVERVIEW_PAGE = "/caseoverview";
 
 // TODO: Delete these
 export const EDIT_TEAM_PAGE = "/edit-team";

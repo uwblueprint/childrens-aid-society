@@ -60,21 +60,26 @@ def insert_test_data():
         (1, "ARCHIVED", "Bran Stark", "branstark@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
         (1, "ARCHIVED", "Jon Snow", "jonsnow@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
         (1, "ARCHIVED", "Samwell Tarly", "samwelltarly@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Billy Bob", "billybob@mail.com", "2020-01-01", "Bob", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Jonathan Johns", "jonjohns@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "ACTIVE", "Peter Parker", "peterparker@mail.com", "2020-01-01", "Snow", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Matthew McDonald", "matthewmcdonald@mail.com", "2020-01-01", "Stark", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
+        (1, "PENDING", "Lily Li", "Lily Li@mail.com", "2020-01-01", "Tarly", "123456789", "ONGOING", "OTHER", "court_order_file.pdf", "UNKNOWN", "", "transportation_requirements", "scheduling_requirements", "2020-01-01"),
     ]
 
     for value in values:
-        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason"), value)
+        insert_values(db, "intakes", ("user_id", "intake_status", "referring_worker_name", "referring_worker_contact", "referral_date", "family_name", "cpin_number", "cpin_file_type", "court_status", "court_order_file", "first_nation_heritage", "first_nation_band", "transportation_requirements", "scheduling_requirements", "suggested_start_date", "date_accepted", "access_location", "lead_access_worker_id", "denial_reason", "lead_access_worker_name"), value)
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', 1),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', 1),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', 1),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', 1),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "intake_id"), value)
 
     # Child
     values = [
@@ -113,7 +118,6 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
-
 
 # fmt: on
 

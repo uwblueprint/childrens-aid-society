@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,7 +7,6 @@ import {
   Spacer,
   VStack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -15,33 +14,27 @@ import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
-import StatusModal from "../dashboard/StatusModal";
-import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import { CaseCardProps } from "../dashboard/CaseCard";
+import IntakeApiClient from "../../APIClients/IntakeAPIClient";
+import CasesContext from "../../contexts/CasesContext";
+import { Case } from "../../types/CasesContextTypes";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
+
+  const { setStep } = useStepValueContext();
+
   function goToIntake() {
+    setStep(0);
     history.push("/intake");
   }
 
-  const {
-    onOpen: onOpenPermanentDelete,
-    isOpen: isOpenPermanentDelete,
-    onClose: onClosePermanentDelete,
-  } = useDisclosure();
-
-  const {
-    onOpen: onOpenStatusModal,
-    isOpen: isOpenStatusModal,
-    onClose: onCloseStatusModal,
-  } = useDisclosure();
-
   return (
-    <Box>
+    <Box alignSelf="stretch" flexDirection="column">
       <Text textStyle="header-large">Intake Cases</Text>
-      <Flex pt="10">
-        <Box w="20%">
+      <Flex pt="10" alignItems="space-between" alignSelf="space-between">
+        <Box w="50%">
           <CustomInput
             placeholder="Search By Family Name"
             icon={<Icon as={Search} />}
@@ -58,112 +51,83 @@ const SecondaryHeader = (): React.ReactElement => {
         >
           New case
         </Button>
-
-        <Button
-          height="100%"
-          px="2"
-          rounded="lg"
-          border="1px"
-          onClick={onOpenStatusModal}
-        >
-          Test Status Modal
-        </Button>
-
-        <PermanentDeleteModal
-          isOpen={isOpenPermanentDelete}
-          onClick={() => {
-            // TODO: add deletion logic
-            onClosePermanentDelete();
-            onCloseStatusModal();
-          }}
-          onClose={onClosePermanentDelete}
-        />
-        {/* //TODO: dynamically pass in case details 
-        and add onClick save functionality */}
-        <StatusModal
-          caseNumber={1}
-          status="ARCHIVED"
-          isOpen={isOpenStatusModal}
-          onClick={() => {}}
-          onClose={onCloseStatusModal}
-          onDeleteClick={onOpenPermanentDelete}
-          goToIntake={goToIntake}
-        />
       </Flex>
     </Box>
   );
 };
 
 const Home = (): React.ReactElement => {
-  const cases: { [key: string]: CaseCardProps[] } = {
-    active: [
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ACTIVE,
-      },
-    ],
-    submitted: [
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.SUBMITTED,
-      },
-    ],
-    pending: [
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.PENDING,
-      },
-    ],
-    archived: [
-      {
-        caseTitle: "Case 1",
-        caseLead: "Case Lead",
-        date: "11/06/2023",
-        familyName: "Family Name",
-        caseTag: CaseStatus.ARCHIVED,
-      },
-    ],
+  // TODO: remove console log and use context instead of state
+  const casesFromContext = useContext(CasesContext);
+  // eslint-disable-next-line
+  console.log(casesFromContext);
+
+  const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
+    active: [],
+    submitted: [],
+    pending: [],
+    archived: [],
+  });
+
+  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
+    if (intakes.length > 0) {
+      return intakes.map((intake) => ({
+        caseId:
+          typeof intake.case_id === "number"
+            ? intake.case_id
+            : parseInt(intake.case_id, 10),
+        caseLead: intake.caseReferral.referringWorkerName,
+        date: intake.caseReferral.referralDate,
+        familyName: intake.caseReferral.familyName,
+        caseTag: intake.intakeStatus,
+      }));
+    }
+    return [];
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const activeCases = await IntakeApiClient.get(CaseStatus.ACTIVE, 1, 20);
+      const submittedCases = await IntakeApiClient.get(
+        CaseStatus.SUBMITTED,
+        1,
+        20,
+      );
+      const pendingCases = await IntakeApiClient.get(CaseStatus.PENDING, 1, 20);
+      const archivedCases = await IntakeApiClient.get(
+        CaseStatus.ARCHIVED,
+        1,
+        20,
+      );
+
+      setCases({
+        active: mapIntakeResponsesToCaseCards(activeCases),
+        submitted: mapIntakeResponsesToCaseCards(submittedCases),
+        pending: mapIntakeResponsesToCaseCards(pendingCases),
+        archived: mapIntakeResponsesToCaseCards(archivedCases),
+      });
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <Box>
+    <Box display="flex" justifyContent="center" flexDirection="column">
       <IntakeHeader
         primaryTitle="Children's Aid Society of Algoma"
         secondaryTitle="Case Management"
         hasLogout
       />
-      <Box px="100px" py="60px">
-        <SecondaryHeader />
-        <VStack spacing={15} align="stretch" my={12}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        py="60px"
+        width="75%"
+        alignSelf="center"
+      >
+        <VStack spacing={12} align="stretch" alignSelf="center">
+          <SecondaryHeader />
+
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}

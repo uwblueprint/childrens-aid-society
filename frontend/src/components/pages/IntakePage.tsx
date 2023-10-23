@@ -38,6 +38,7 @@ const Intake = (): React.ReactElement => {
   } = useDisclosure();
 
   const { step, setStep } = useStepValueContext();
+  const { isReviewOnly, setIsReviewOnly } = useStepValueContext();
   const [reviewHeader, setReviewHeader] = useState(false);
   const { referralDetails, setReferralDetails } = useStepValueContext();
   const { courtDetails, setCourtDetails } = useStepValueContext();
@@ -52,7 +53,14 @@ const Intake = (): React.ReactElement => {
   const [allProviders, setAllProviders] = useState<Providers>([]);
   const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
-  const nextStep = () => setStep(step + 1);
+  const nextStep = () => {
+    if (isReviewOnly) {
+      setIsReviewOnly(false);
+      history.push("/");
+    } else {
+      setStep(step + 1);
+    }
+  };
 
   const renderDetailsForm = () => {
     switch (step) {
@@ -116,6 +124,10 @@ const Intake = (): React.ReactElement => {
               nextStep={nextStep}
               setStep={setStep}
               setReviewHeader={setReviewHeader}
+              isReviewOnly={isReviewOnly}
+              setIsReviewOnly={setIsReviewOnly}
+              childrens={children}
+              caregivers={caregivers}
             />
           </Box>
         );
@@ -185,7 +197,7 @@ const Intake = (): React.ReactElement => {
           {renderIntakeHeader()}
           <Box padding="30px 0 160px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
-              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS ? (
                 step !== IntakeSteps.FORM_COMPLETE && (
                   <Button
                     leftIcon={<ArrowLeft />}
@@ -199,7 +211,18 @@ const Intake = (): React.ReactElement => {
                       ? "Back to Submission Review"
                       : "Back to Dashboard"}
                   </Button>
-                )}
+                )
+              ) : (
+                <Button
+                  leftIcon={<ArrowLeft />}
+                  onClick={() => {
+                    onOpenUnsavedProgress();
+                  }}
+                  variant="tertiary"
+                >
+                  Back to Dashboard
+                </Button>
+              )}
               {renderDetailsForm()}
             </Container>
           </Box>

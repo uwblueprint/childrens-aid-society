@@ -18,7 +18,7 @@ import { StatusSelectField } from "./StatusSelectField";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type StatusModalProps = {
-  caseNumber?: number;
+  caseId?: number;
   status: string;
   isOpen: boolean;
   onClick: () => void;
@@ -28,7 +28,7 @@ export type StatusModalProps = {
 };
 
 const StatusModal = ({
-  caseNumber,
+  caseId,
   status,
   isOpen,
   onClose,
@@ -39,8 +39,20 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
+
+  const handleClearPage = () => {
+    setWorkerName("");
+    setMeetingNotes("");
+  };
+
+  const showClearButton = () => {
+    const shouldShowClearButton = meetingNotes !== "" || workerName !== "";
+    return shouldShowClearButton;
+  };
+
   const {
     setStep,
+    setIsReviewOnly,
     setReferralDetails,
     setCourtDetails,
     setProgramDetails,
@@ -78,13 +90,15 @@ const StatusModal = ({
     setReferralDetails(mockReferralDetails);
     setCourtDetails(mockCourtDetails);
     setProgramDetails(mockProgramDetails);
-
+    setIsReviewOnly(true);
     goToIntake();
   }
   return (
     <Box>
       <ModalComponent
-        primaryTitle={`Case ${caseNumber}`}
+        showClearButton={showClearButton}
+        onClearPage={handleClearPage}
+        primaryTitle={`Case ${caseId}`}
         secondaryTitle=""
         showLeftButton={selectedOption === "ARCHIVED"}
         leftButtonTitle="Delete"
@@ -117,6 +131,7 @@ const StatusModal = ({
                 </Button>
               </Flex>
             </Box>
+
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
               <Box>
                 <FormControl>
@@ -156,6 +171,7 @@ const StatusModal = ({
                 />
               </Box>
             </SimpleGrid>
+
             <Box marginTop="0.75rem">
               <FormLabel htmlFor="meetingNotes">
                 MEETING NOTES <OptionalLabel />

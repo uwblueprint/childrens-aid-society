@@ -3,12 +3,14 @@ from functools import wraps
 
 from flask import jsonify, request
 
+from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..resources.attendance_sheet_dto import CreateAttendanceSheetDTO
 from ..resources.caregiver_dto import CreateCaregiverDTO
 from ..resources.create_user_dto import CreateUserDTO
 from ..resources.intake_dto import CreateIntakeDTO
 from ..resources.register_user_dto import RegisterUserDTO
 from ..resources.update_user_dto import UpdateUserDTO
+from ..resources.visit_cadence_dto import CreateVisitCadenceDTO
 
 dtos = {
     "CreateUserDTO": CreateUserDTO,
@@ -17,6 +19,8 @@ dtos = {
     "CreateCaregiverDTO": CreateCaregiverDTO,
     "CreateIntakeDTO": CreateIntakeDTO,
     "CreateAttendanceSheetDTO": CreateAttendanceSheetDTO,
+    "CreateVisitCadenceDTO": CreateVisitCadenceDTO,
+    "CreateAttendanceRecordsDTO": CreateAttendanceRecordsDTO,
 }
 
 

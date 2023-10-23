@@ -31,3 +31,13 @@ class IOtherPermittedIndividualService(ABC):
         :raises Exception: if no other_permitted_individual with the specified id exists
         """
         pass
+
+    @abstractmethod
+    def get_other_permitted_individuals_by_intake_id(self, intake_id):
+        """Get other_permitted_individuals by intake ID
+        :param intake_id: the ID of the intake to filter other_permitted_individuals
+        :type intake_id: int
+        :return: list of other_permitted_individuals
+        :rtype: list of OtherPermittedIndividualDTO
+        :raises: if an error occurs in the database query
+        """

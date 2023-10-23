@@ -37,12 +37,109 @@ provider_service = ProviderService(current_app.logger)
 blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 
 
-# get all intakes
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 def get_all_intakes():
+    args = request.args
+    intake_status = args.get("intake_status")
+    page_number = 1
     try:
-        intakes = intake_service.get_all_intakes()
+        page_number = int(args.get("page_number"))
+    except:
+        pass
+    page_limit = 20
+    try:
+        page_limit = int(args.get("page_limit"))
+    except:
+        pass
+    try:
+        intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+        for intake in intakes:
+            caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
+            caregivers = []
+            for caregiver in caregivers_dtos:
+                caregiver_obj = {
+                    "name": caregiver.name,
+                    "dateOfBirth": caregiver.date_of_birth,
+                    "individualConsiderations": caregiver.individual_considerations,
+                    "primaryPhoneNumber": caregiver.primary_phone_number,
+                    "secondaryPhoneNumber": caregiver.secondary_phone_number,
+                    "address": caregiver.address,
+                    "relationshipToChild": caregiver.relationship_to_child,
+                    "additionalContactNotes": caregiver.additional_contact_notes,
+                }
+                caregivers.append(caregiver_obj)
+            intake.caregivers = caregivers
+
+            just_children = child_service.get_children_by_intake_id(intake.id)
+            new_children = []
+            for child in just_children:
+                providers = provider_service.get_providers_by_child_id(child.id)
+                child_info = {
+                    "name": f"{child.first_name} {child.last_name}",
+                    "dateOfBirth": child.date_of_birth,
+                    "cpinFileNumber": child.cpin_number,
+                    "serviceWorker": child.service_worker,
+                    "specialNeeds": child.special_needs,
+                    "concerns": [],
+                }
+
+                daytime_contact = (
+                    daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
+                )
+
+                provider_list = []
+                for provider in providers:
+                    provider_list.append(
+                        {
+                            "name": provider.name,
+                            "fileNumber": provider.file_number,
+                            "primaryPhoneNumber": provider.primary_phone_number,
+                            "secondaryPhoneNumber": provider.secondary_phone_number,
+                            "email": provider.email,
+                            "address": provider.address,
+                            "relationshipToChild": provider.relationship_to_child,
+                            "additionalContactNotes": provider.additional_contact_notes,
+                        }
+                    )
+
+                new_child = {
+                    "childInfo": child_info,
+                    "daytimeContact": daytime_contact,
+                    "provider": provider_list,
+                }
+
+                new_children.append(new_child)
+            intake.children = new_children
+
+            opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(
+                intake.id
+            )
+            new_opis = []
+            for opi in opis:
+                new_opi = {
+                    "name": opi.name,
+                    "phoneNumber": opi.phone_number,
+                    "relationshipToChildren": opi.relationship_to_child,
+                    "additionalNotes": opi.notes,
+                }
+                new_opis.append(new_opi)
+
+            program_details = {
+                "transportRequirements": "",
+                "schedulingRequirements": "",
+                "suggestedStartDate": "",
+                "shortTermGoals": goal_service.get_goal_names_by_intake(
+                    intake.id, "SHORT_TERM"
+                ),
+                "longTermGoals": goal_service.get_goal_names_by_intake(
+                    intake.id, "LONG_TERM"
+                ),
+                "familialConcerns": [],
+                "permittedIndividuals": new_opis,
+            }
+            intake.programDetails = program_details
+
         return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
     except Exception as error:
         return jsonify(error), 400
@@ -58,10 +155,6 @@ def create_intake():
         for undo in undos:
             service, fn, arg = undo
             service.__dict__[fn](arg)
-
-    # intake_id
-    intake_response = intake_service.get_all_intakes()
-    intake_id = len(intake_response) + 1
 
     # intake
     intake = {
@@ -118,7 +211,7 @@ def create_intake():
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationshipToChild"],
             "additional_contact_notes": caregiver["additionalContactNotes"],
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
         }
         caregiver = CreateCaregiverDTO(**caregiver)
         try:
@@ -136,7 +229,7 @@ def create_intake():
             "phone_number": permittedIndividual["phoneNumber"],
             "relationship_to_child": permittedIndividual["relationshipToChildren"],
             "notes": permittedIndividual["additionalNotes"],
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
         }
         try:
             permittedIndividual_response = (
@@ -234,7 +327,7 @@ def create_intake():
 
         # children
         child_obj = {
-            "intake_id": intake_id,
+            "intake_id": new_intake.id,
             "first_name": child["childInfo"]["first_name"],
             "last_name": child["childInfo"]["last_name"],
             "date_of_birth": child["childInfo"]["dateOfBirth"],
@@ -298,6 +391,33 @@ def create_intake():
                 return jsonify(error), 400
 
     return jsonify(new_intake.__dict__), 201
+
+
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_intake():
+    """
+    Delete intake by intake_id specified through a query parameter
+    """
+    intake_id = int(request.args.get("intake_id"))
+
+    if intake_id:
+        if type(intake_id) is not int:
+            return jsonify({"error": "intake_id query parameter must be an int"}), 400
+        else:
+            try:
+                intake_service.delete_intake(intake_id)
+                return "intake deleted", 200
+            except Exception as e:
+                error_message = getattr(e, "message", None)
+                return (
+                    jsonify({"error": (error_message if error_message else str(e))}),
+                    500,
+                )
+
+    return (
+        jsonify({"error": "Must supply intake id as query parameter."}),
+        400,
+    )
 
 
 @blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)

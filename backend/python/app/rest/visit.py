@@ -7,9 +7,8 @@ from ..services.implementations.attendance_sheet_service import AttendanceSheetS
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
-from ..services.implementations.attendance_record_service import AttendanceRecordService
-
 from ..resources.visit_dto import VisitDTO
+from ..services.implementations.attendance_record_service import AttendanceRecordService
 
 attendance_record_service = AttendanceRecordService(current_app.logger)
 

@@ -62,9 +62,7 @@ class AttendanceRecordService(IAttendanceRecordService):
 
     def get_attendance_record_by_id(self, id):
         try:
-            records = AttendanceRecords.query.filter_by(
-                attendance_sheet_id=id
-            ).all()
+            records = AttendanceRecords.query.filter_by(attendance_sheet_id=id).all()
             records_dto = [
                 AttendanceRecordsDTO(**record.to_dict()) for record in records
             ]

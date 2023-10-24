@@ -12,6 +12,8 @@ visit_service = VisitService(current_app.logger)
 
 # defines a shared URL prefix for all routes
 blueprint = Blueprint("visits", __name__, url_prefix="/visits")
+
+
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 @require_authorization_by_role({"User", "Admin"})
 @validate_request("VisitDTO")

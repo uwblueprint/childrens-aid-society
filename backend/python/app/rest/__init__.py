@@ -7,9 +7,9 @@ def init_app(app):
         documentation_routes,
         intake_routes,
         user_routes,
+        visit,
         visit_cadence_routes,
         visit_routes,
-        visit
     )
 
     app.register_blueprint(auth_routes.blueprint)

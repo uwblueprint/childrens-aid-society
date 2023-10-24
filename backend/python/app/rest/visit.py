@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, jsonify, request
+from ..services.implementations.attendance_sheet_service import AttendanceSheetService
 
 from ..resources.attendance_sheet_dto import CreateAttendanceSheetDTO
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
@@ -8,10 +9,11 @@ from ..middlewares.validate import validate_request
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
 from ..resources.attendance_sheet_dto import CreateAttendanceSheetDTO
 
+attendance_sheet_service = AttendanceSheetService(current_app.logger)
+
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
-
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 attendance_record_service = AttendanceRecordService(current_app.logger)
 blueprint = Blueprint("visit", __name__, url_prefix="/visit")

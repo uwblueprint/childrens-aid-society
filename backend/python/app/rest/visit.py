@@ -2,13 +2,14 @@ from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
-from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
 
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
+
+from ..resources.visit_dto import VisitDTO
 
 attendance_record_service = AttendanceRecordService(current_app.logger)
 

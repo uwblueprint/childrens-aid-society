@@ -60,10 +60,10 @@ class AttendanceRecordService(IAttendanceRecordService):
             self.logger.error(str(error))
             raise error
 
-    def get_attendance_record_by_id(self, attendance_sheet_id):
+    def get_attendance_record_by_id(self, id):
         try:
             records = AttendanceRecords.query.filter_by(
-                attendance_sheet_id=attendance_sheet_id
+                attendance_sheet_id=id
             ).all()
             records_dto = [
                 AttendanceRecordsDTO(**record.to_dict()) for record in records

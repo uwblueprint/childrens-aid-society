@@ -39,6 +39,7 @@ const CaregiverForm = ({
     // ideally should have something useEffect, but current way of passing data does not work well with it
     setCaregiversDeleted(caregiversDeleted + 1);
     setCaregivers(caregivers);
+    setSelectedIndex(-1);
   };
 
   const caregiverDetailsOverview: IndividualDetailsOverview[] = caregivers.map(

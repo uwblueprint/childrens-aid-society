@@ -10,6 +10,7 @@ def init_app(app):
         visit,
         visit_cadence_routes,
         visit_routes,
+        
     )
 
     app.register_blueprint(auth_routes.blueprint)

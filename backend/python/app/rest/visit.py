@@ -21,3 +21,4 @@ def delete_visit():
     else:
         return jsonify({"error": "Must supply id as a query parameter."}), 400
 
+

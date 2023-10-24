@@ -11,6 +11,7 @@ def init_app(app):
         visit_cadence_routes,
         visit_routes,
         visit   
+        
     )
     app.register_blueprint(auth_routes.blueprint)
     app.register_blueprint(caregiver_routes.blueprint)

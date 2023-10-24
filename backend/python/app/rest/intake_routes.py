@@ -55,6 +55,26 @@ def get_all_intakes():
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
         for intake in intakes:
+            caseReferral = {
+                "referringWorker": intake.referring_worker_name,
+                "referringWorkerContact": intake.referring_worker_contact,
+                "cpinFileNumber": intake.cpin_number,
+                "cpinFileType": intake.cpin_file_type,
+                "familyName": intake.family_name,
+                "referralDate": intake.referral_date,
+            }
+
+            intake.caseReferral = caseReferral
+
+            courtInformation = {
+                "courtStatus": intake.court_status,
+                "orderReferral": intake.court_order_file,
+                "firstNationHeritage": intake.first_nation_heritage,
+                "firstNationBand": intake.first_nation_band,
+            }
+
+            intake.courtInformation = courtInformation
+
             caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
             caregivers = []
             for caregiver in caregivers_dtos:
@@ -135,7 +155,7 @@ def get_all_intakes():
                 "longTermGoals": goal_service.get_goal_names_by_intake(
                     intake.id, "LONG_TERM"
                 ),
-                "familialConcerns": [],
+                "familialConcerns": [], #familialConcern_service.get_familial_concerns_str_by_intake(intake.id),
                 "permittedIndividuals": new_opis,
             }
             intake.programDetails = program_details

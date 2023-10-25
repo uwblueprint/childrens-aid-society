@@ -6,8 +6,11 @@ from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
 from ..resources.child_dto import ChildDTO, CreateChildDTO
 from ..services.implementations.child_service import ChildService
+from ..services.implementations.provider_service import ProviderService
+
 
 child_service = ChildService(current_app.logger)
+provider_service = ProviderService(current_app.logger)
 
 blueprint = Blueprint("child", __name__, url_prefix="/children")
 
@@ -23,16 +26,13 @@ def create_child():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
-    print(request.json)
     child_obj = {
         "intake_id": request.json["intake_id"],
-        "first_name": request.json["child"]["childInfo"]["first_name"],
-        "last_name": request.json["child"]["childInfo"]["last_name"],
-        "date_of_birth": request.json["child"]["childInfo"]["dateOfBirth"],
-        "cpin_number": request.json["child"]["childInfo"]["cpinFileNumber"],
-        "service_worker": request.json["child"]["childInfo"]["serviceWorker"],
-        "daytime_contact_id": request.json["daytimeContact_response"]["id"],
-        "special_needs": request.json["child"]["childInfo"]["specialNeeds"],
+        "name": request.json["name"],
+        "date_of_birth": request.json["dateOfBirth"],
+        "cpin_number": request.json["cpinFileNumber"],
+        "service_worker": request.json["serviceWorker"],
+        "special_needs": request.json["specialNeeds"],
     }
     try:
         child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
@@ -44,10 +44,10 @@ def create_child():
     return jsonify(child_response.__dict__), 201
 
 
-@blueprint.route("/", methods=["PUT"], strict_slashes=False)
+@blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 # @validate_request("ChildDTO")
-def edit_child():
+def edit_child(intake_id):
     undos = []
 
     def run_undos():

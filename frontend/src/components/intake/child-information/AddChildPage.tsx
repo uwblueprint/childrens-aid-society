@@ -8,6 +8,7 @@ import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
+import OverviewSection from "../../../types/OverviewSection";
 
 enum AddChildSteps {
   CHILD_INFORMATION_FORM,
@@ -63,7 +64,6 @@ const AddChild = ({
     !childDetails.childName ||
     !childDetails.cpinFileNumber ||
     !childDetails.dateOfBirth;
-
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
@@ -82,8 +82,8 @@ const AddChild = ({
     setChildren([...childrens]);
     if (referrer === "intake") {
       setStep(IntakeSteps.INDIVIDUAL_DETAILS);
-    } else {
-      // console.log("back");
+    } else if (referrer === "caseoverview") {
+      setStep(OverviewSection.MAIN_SECTION);
     }
   };
 
@@ -143,8 +143,8 @@ const AddChild = ({
           onClick={() => {
             if (referrer === "intake") {
               setStep(IntakeSteps.INDIVIDUAL_DETAILS);
-            } else {
-              // console.log("back");
+            } else if (referrer === "caseoverview") {
+              setStep(OverviewSection.MAIN_SECTION);
             }
           }}
           variant="tertiary"

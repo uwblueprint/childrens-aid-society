@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -14,8 +14,18 @@ import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import intakeAPIClient from "../../APIClients/IntakeAPIClient";
+import AddChild, { Children } from "../intake/child-information/AddChildPage";
+import { Providers } from "../intake/NewProviderModal";
+import OverviewSection from "../../types/OverviewSection"; 
+import CaseStatus from "../../types/CaseStatus";
 
-const CaseOverviewBody = (): React.ReactElement => {
+type OverviewBodyProps = {
+  setSectionIndex: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const CaseOverviewBody = ({
+  setSectionIndex,
+}: OverviewBodyProps): React.ReactElement => {
   const [leadName, setLeadName] = useState("");
   const history = useHistory();
 
@@ -32,6 +42,9 @@ const CaseOverviewBody = (): React.ReactElement => {
 
   const goToHomepage = () => {
     history.push("/");
+  };
+  const goToAddChild = () => {
+    setSectionIndex(OverviewSection.CHILD_SECTION);
   };
   const changeLead = async () => {
     const intakeID = 1; // TODO replace with actual intake id
@@ -132,6 +145,7 @@ const CaseOverviewBody = (): React.ReactElement => {
               right="4"
               borderColor={colors.blue[300]}
               backgroundColor={colors.blue[100]}
+              onClick={goToAddChild}
             >
               <div style={{ paddingRight: "10px" }}>
                 <UserPlus width="13px" />
@@ -331,21 +345,57 @@ const CaseOverviewBody = (): React.ReactElement => {
 };
 
 const CaseOverview = (): React.ReactElement => {
-  return (
-    <Box>
-      <IntakeHeader
-        primaryTitle="Case Name"
-        secondaryTitle="Case Management"
-        hasLogout
-      />
-      <Box px="100px" pt="60px">
-        <div style={{ paddingBottom: "100px" }}>
-          <CaseOverviewBody />
-        </div>
-      </Box>
-      <CaseOverviewFooter />
-    </Box>
-  );
+  const [sectionIndex, setSectionIndex] = useState(0);
+
+  const [allProviders, setAllProviders] = useState<Providers>([]);
+  const [children, setChildren] = useState<Children>([]);
+  const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
+
+  const caseId = 1
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+    };
+
+    fetchData();
+  }, []);
+
+  switch (sectionIndex) {
+    case OverviewSection.MAIN_SECTION: {
+      return (
+        <Box>
+          <IntakeHeader
+            primaryTitle="Case Name"
+            secondaryTitle="Case Management"
+            hasLogout
+          />
+          <Box px="100px" pt="60px">
+            <div style={{ paddingBottom: "100px" }}>
+              <CaseOverviewBody setSectionIndex={setSectionIndex} />
+            </div>
+          </Box>
+          <CaseOverviewFooter />
+        </Box>
+      );
+    }
+    case OverviewSection.CHILD_SECTION: {
+      return (
+        <AddChild
+          allProviders={allProviders}
+          setAllProviders={setAllProviders}
+          childrens={children}
+          setChildren={setChildren}
+          setStep={setSectionIndex}
+          selectedIndexChild={selectedIndexChild}
+          referrer="caseoverview"
+        />
+      );
+    }
+    default: {
+      return <Text>Error</Text>;
+    }
+  }
 };
 
 export default CaseOverview;

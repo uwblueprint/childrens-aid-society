@@ -101,7 +101,9 @@ def get_all_intakes():
                     "cpinFileNumber": child.cpin_number,
                     "serviceWorker": child.service_worker,
                     "specialNeeds": child.special_needs,
-                    "concerns": childBehavior_service.get_concerns_str_by_child(child.id),
+                    "concerns": childBehavior_service.get_concerns_str_by_child(
+                        child.id
+                    ),
                 }
 
                 daytime_contact = (
@@ -155,7 +157,7 @@ def get_all_intakes():
                 "longTermGoals": goal_service.get_goal_names_by_intake(
                     intake.id, "LONG_TERM"
                 ),
-                "familialConcerns": [], #familialConcern_service.get_familial_concerns_str_by_intake(intake.id),
+                "familialConcerns": [],  # familialConcern_service.get_familial_concerns_str_by_intake(intake.id),
                 "permittedIndividuals": new_opis,
             }
             intake.programDetails = program_details

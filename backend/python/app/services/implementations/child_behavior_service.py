@@ -35,8 +35,7 @@ class ChildBehaviorService(IChildBehaviorService):
         try:
             child = Child.query.filter_by(id=child_id).first()
             concerns = [
-                ChildBehaviorDTO(**result.to_dict())
-                for result in child.behaviors
+                ChildBehaviorDTO(**result.to_dict()) for result in child.behaviors
             ]
             concern_strings = [concern_obj.behavior for concern_obj in concerns]
             return concern_strings

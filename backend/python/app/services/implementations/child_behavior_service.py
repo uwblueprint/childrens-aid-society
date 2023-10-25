@@ -31,6 +31,19 @@ class ChildBehaviorService(IChildBehaviorService):
             self.logger.error(str(error))
             raise error
 
+    def get_concerns_str_by_child(self, child_id: int):
+        try:
+            child = Child.query.filter_by(id=child_id).first()
+            concerns = [
+                ChildBehaviorDTO(**result.to_dict())
+                for result in child.behaviors
+            ]
+            concern_strings = [concern_obj.behavior for concern_obj in concerns]
+            return concern_strings
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def get_all_child_behaviors(self, is_default=True):
         try:
             return [

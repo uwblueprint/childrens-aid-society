@@ -101,7 +101,7 @@ def get_all_intakes():
                     "cpinFileNumber": child.cpin_number,
                     "serviceWorker": child.service_worker,
                     "specialNeeds": child.special_needs,
-                    "concerns": [],
+                    "concerns": childBehavior_service.get_concerns_str_by_child(child.id),
                 }
 
                 daytime_contact = (

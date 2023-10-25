@@ -50,7 +50,7 @@ const FilteredSection = ({
         ) : (
           <Flex
             flexBasis="100%"
-            columnGap="24px"
+            columnGap="8px"
             pb="24px"
             alignItems="flex-start"
           >

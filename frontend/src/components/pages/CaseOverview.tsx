@@ -42,7 +42,7 @@ const CaseOverviewBody = (): React.ReactElement => {
   const changeLead = async () => {
     const intakeID = caseNumber;
     const changedData: Record<string, string> = {
-      lead_access_worker_name: leadName,
+      referringWorkerName: leadName,
     };
     try {
       const result = await intakeAPIClient.put({ changedData, intakeID });

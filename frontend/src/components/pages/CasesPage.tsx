@@ -137,9 +137,9 @@ const Cases = (): React.ReactElement | null => {
         hasLogout
       />
       <Box display="flex" flexDirection="column" width="75%" alignSelf="center">
-        <Flex justifyContent="center">
+        <Flex justifyContent="left">
           <Button
-            marginRight="1250px"
+            marginLeft="calc(-10% - 20px)"
             variant="tertiary"
             onClick={goToHomepage}
             mt="32px"
@@ -153,10 +153,10 @@ const Cases = (): React.ReactElement | null => {
             }
           />
         </Flex>
-        <Text textStyle="header-large" marginLeft="calc(50% - 630px)" pt="16px">
+        <Text textStyle="header-large" marginLeft="-10%" pt="16px">
           {formattedStatus} Cases
         </Text>
-        <Box pt="60px" marginLeft="calc(50% - 630px)" alignSelf="flex-start">
+        <Box pt="60px" marginLeft="-10%" alignSelf="flex-start">
           <FilteredCaseDisplay
             cases={cases[status]}
             numberOfRows={2}

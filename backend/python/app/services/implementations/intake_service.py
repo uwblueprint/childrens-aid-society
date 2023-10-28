@@ -86,6 +86,8 @@ class IntakeService(IIntakeService):
                 intake.lead_access_worker_name = updated_data["lead_access_worker_name"]
             if "intake_meeting_notes" in updated_data:
                 intake.intake_meeting_notes = updated_data["intake_meeting_notes"]
+            if "referring_worker_name" in updated_data:
+                intake.referring_worker_name = updated_data["referring_worker_name"]
             db.session.commit()
             return IntakeDTO(**intake.to_dict())
         except Exception as error:

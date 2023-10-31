@@ -1,5 +1,6 @@
 from ...models import db
 from ...models.attendance_records import AttendanceRecords
+from ...models.attendance_sheets import AttendanceSheets
 from ...resources.attendance_records_dto import (
     AttendanceRecordsDTO,
     CreateAttendanceRecordsDTO,
@@ -31,6 +32,42 @@ class AttendanceRecordService(IAttendanceRecordService):
             return AttendanceRecordsDTO(**new_record.to_dict())
         except Exception as error:
             db.session.rollback()
+            self.logger.error(str(error))
+            raise error
+
+    def get_attendance_record_by_intake(self, intake_id):
+        try:
+            attendance_sheets = AttendanceSheets.query.filter_by(
+                intake_id=intake_id
+            ).all()
+
+            ids = []
+            for sheet in attendance_sheets:
+                ids.append(sheet.id)
+
+            records = []
+            for id in ids:
+                temp_records = AttendanceRecords.query.filter_by(
+                    attendance_sheet_id=id
+                ).all()
+                records.extend(temp_records)
+
+            records_dto = [
+                AttendanceRecordsDTO(**record.to_dict()) for record in records
+            ]
+            return records_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_attendance_record_by_id(self, id):
+        try:
+            records = AttendanceRecords.query.filter_by(attendance_sheet_id=id).all()
+            records_dto = [
+                AttendanceRecordsDTO(**record.to_dict()) for record in records
+            ]
+            return records_dto
+        except Exception as error:
             self.logger.error(str(error))
             raise error
 

@@ -7,12 +7,13 @@ from ..services.implementations.attendance_sheet_service import AttendanceSheetS
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
+from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
 
 attendance_record_service = AttendanceRecordService(current_app.logger)
 
-blueprint = Blueprint("attendanceRecord", __name__, url_prefix="/attendanceRecord")
+blueprint = Blueprint("visit", __name__, url_prefix="/visit")
 
 
 # get all visits
@@ -39,9 +40,12 @@ def get_visits():
                 record.attendance_sheet_id
             )[0]
 
+            children = attendance_sheet_service.get_child_by_sheet(sheet.id)
+            children = [child.__dict__ for child in children]
+
             childInformation_obj = {
                 "familyName": sheet.family_name,
-                "children": sheet.children,
+                "children": children,
                 "childServiceWorker": sheet.csw,
                 "childProtectionWorker": sheet.cpw,
                 "fosterCareCoordinator": sheet.fcc,

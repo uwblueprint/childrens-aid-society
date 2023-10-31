@@ -4,7 +4,7 @@ class VisitDTO(object):
         self.childInformation = kwargs.get("childInformation")
         self.visitTimestamp = kwargs.get("visitTimestamp")
         self.attendance = kwargs.get("attendance")
-        self.transporation = kwargs.get("transportation")
+        self.transportation = kwargs.get("transportation")
         self.notes = kwargs.get("notes")
         self.childAndFamilySupportWorker = kwargs.get("childAndFamilySupportWorker")
 

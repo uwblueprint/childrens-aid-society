@@ -4,6 +4,7 @@ from ...resources.attendance_sheet_dto import (
     AttendanceSheetDTO,
     CreateAttendanceSheetDTO,
 )
+from ...resources.child_dto import ChildDTO
 from ..interfaces.attendance_sheet_service import IAttendanceSheetService
 
 
@@ -91,7 +92,6 @@ class AttendanceSheetService(IAttendanceSheetService):
         except Exception as error:
             db.session.rollback()
             self.logger.error(str(error))
-            raise error
     
     def update_attendance_sheet(self,attendance_id: int, updated_data):
         try:
@@ -118,3 +118,15 @@ class AttendanceSheetService(IAttendanceSheetService):
             db.session.rollback()
             raise error
     
+            raise error
+
+    def get_child_by_sheet(self, id):
+        try:
+            attendance_sheet = AttendanceSheets.query.get(id)
+            children = [
+                ChildDTO(**child.to_dict()) for child in attendance_sheet.children
+            ]
+            return children
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

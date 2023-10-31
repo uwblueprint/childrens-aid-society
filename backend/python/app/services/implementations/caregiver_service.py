@@ -63,3 +63,50 @@ class CaregiverService(ICaregiverService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
+
+    def update_caregiver(self, caregiver_id: int, updated_caregiver):
+        try:
+            if not caregiver_id:
+                raise Exception(
+                    "Empty caregiver id passed to update_caregiver function"
+                )
+            if not isinstance(caregiver_id, int):
+                raise Exception("Caregiver id passed is not of int type")
+
+            caregiver = Caregiver.query.filter_by(id=caregiver_id).first()
+            if not caregiver:
+                raise Exception("Caregiver with id {} not found".format(caregiver_id))
+
+            if "name" in updated_caregiver:
+                caregiver.name = updated_caregiver["name"]
+            if "date_of_birth" in updated_caregiver:
+                caregiver.date_of_birth = updated_caregiver["date_of_birth"]
+            if "individual_considerations" in updated_caregiver:
+                caregiver.individual_considerations = updated_caregiver[
+                    "individual_considerations"
+                ]
+            if "primary_phone_number" in updated_caregiver:
+                caregiver.primary_phone_number = updated_caregiver[
+                    "primary_phone_number"
+                ]
+            if "secondary_phone_number" in updated_caregiver:
+                caregiver.secondary_phone_number = updated_caregiver[
+                    "secondary_phone_number"
+                ]
+            if "email" in updated_caregiver:
+                caregiver.email = updated_caregiver["email"]
+            if "address" in updated_caregiver:
+                caregiver.address = updated_caregiver["address"]
+            if "relationship_to_child" in updated_caregiver:
+                caregiver.relationship_to_child = updated_caregiver[
+                    "relationship_to_child"
+                ]
+            if "additional_contact_notes" in updated_caregiver:
+                caregiver.additional_contact_notes = updated_caregiver[
+                    "additional_contact_notes"
+                ]
+            db.session.commit()
+            return CaregiverDTO(**caregiver.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error

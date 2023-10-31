@@ -1,11 +1,12 @@
 import { useDisclosure, Icon } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { UserPlus } from "react-feather";
-import NewCaregiverModal, {
+import NewCaregiverModal from "../NewCaregiverModal";
+import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
+import {
   Caregivers,
   CaregiverDetails,
-} from "../NewCaregiverModal";
-import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
+} from "../../../types/CaregiverDetailTypes";
 
 type CaregiverFormProps = {
   caregivers: Caregivers;
@@ -39,7 +40,6 @@ const CaregiverForm = ({
     // ideally should have something useEffect, but current way of passing data does not work well with it
     setCaregiversDeleted(caregiversDeleted + 1);
     setCaregivers(caregivers);
-    setSelectedIndex(-1);
   };
 
   const caregiverDetailsOverview: IndividualDetailsOverview[] = caregivers.map(
@@ -53,7 +53,9 @@ const CaregiverForm = ({
   );
 
   const emptyCaregiver: CaregiverDetails = {
+    intakeId: 1,
     caregiverName: "",
+    email: "",
     dateOfBirth: "",
     primaryPhoneNo: "",
     secondaryPhoneNo: "",
@@ -76,6 +78,7 @@ const CaregiverForm = ({
         setSelectedIndex={setSelectedIndex}
       />
       <NewCaregiverModal
+        intakeId={1} // TODO: set up with actual intake id
         isOpen={isOpenAddCaregivers}
         onClick={onClickNewCaregiver}
         onClose={onCloseAddCaregivers}

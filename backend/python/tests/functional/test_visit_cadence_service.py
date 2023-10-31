@@ -55,7 +55,7 @@ DUMMY_CAREGIVER_DATA = {
     "secondary_phone_number": "2345678901",
     "email": "test123@uwaterloo.ca",
     "address": "123 Fake Street",
-    "relationship_to_child": "FOSTER_CAREGIVER",
+    "relationship_to_child": "FOSTER_PARENT",
     "intake_id": 1,
 }
 DUMMY_CHILD_DATA = {

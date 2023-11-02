@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
-import { Children } from "./child-information/AddChildPage";
+import { Children } from "../../types/ChildTypes"
 import { Caregivers } from "./NewCaregiverModal";
 
 type IndividualDetailsProps = {

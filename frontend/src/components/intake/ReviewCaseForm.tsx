@@ -7,7 +7,7 @@ import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import { Children } from "./child-information/AddChildPage";
+import { Children } from "../../types/ChildTypes";
 import { Caregivers } from "./NewCaregiverModal";
 
 type ReviewFormProps = {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserPlus } from "react-feather";
 import { Icon } from "@chakra-ui/react";
-import { Children } from "../child-information/AddChildPage";
+import { Children } from "../../../types/ChildTypes";
 import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 import IntakeSteps from "../intakeSteps";
 

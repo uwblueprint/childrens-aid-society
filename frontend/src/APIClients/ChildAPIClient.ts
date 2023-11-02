@@ -1,35 +1,43 @@
 import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
-import { Children } from "../components/intake/child-information/AddChildPage";
+import { Children, ChildrenDetails } from "../types/ChildTypes";
 
-const post = async ({ formData }: { formData: FormData }): Promise<Children> => {
+const post = async ({
+  newChild,
+  intakeId,
+}: {
+  newChild: ChildrenDetails;
+  intakeId: number;
+}): Promise<Children> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.post("/children", formData, {
-      headers: { Authorization: bearerToken },
-    });
+    const { data } = await baseAPIClient.post(
+      `/children/${intakeId}`,
+      newChild,
+      {
+        headers: { Authorization: bearerToken },
+      },
+    );
     return data;
   } catch (error) {
     return error;
   }
 };
 
-const get = async (
-  intake_id: number,
-): Promise<Children[]> => {
+const get = async (intakeId: number): Promise<Children> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get<Children[]>("/children", {
+    const { data } = await baseAPIClient.get<Children>("/children", {
       headers: { Authorization: bearerToken },
       params: {
-        intake_id
+        intake_id: intakeId,
       },
     });
 
@@ -40,11 +48,11 @@ const get = async (
 };
 
 const put = async ({
-  changedData,
-  intake_id,
+  updatedChild,
+  intakeId,
 }: {
-  changedData: Record<string, string>;
-  intake_id: number;
+  updatedChild: ChildrenDetails;
+  intakeId: number;
 }): Promise<Children> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
@@ -52,11 +60,11 @@ const put = async ({
   )}`;
   try {
     const { data } = await baseAPIClient.put(
-      `/children/${intake_id}`,
-      changedData,
+      `/children/${intakeId}`,
+      updatedChild,
       {
         headers: { Authorization: bearerToken },
-      },      
+      },
     );
     return data;
   } catch (error) {
@@ -64,5 +72,4 @@ const put = async ({
   }
 };
 
-
-export default { post,put, get };
+export default { post, put, get };

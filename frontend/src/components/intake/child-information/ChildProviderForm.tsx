@@ -36,11 +36,14 @@ const ChildProviderForm = ({
   } = useDisclosure();
 
   const onClickNewProvider = (newProvider: ProviderDetails) => {
+    const provider: ProviderDetails = newProvider
     if (selectedIndex >= 0) {
-      providers.splice(selectedIndex, 1, newProvider);
+      provider.status = "edited"
+      providers.splice(selectedIndex, 1, provider);
     } else {
-      providers.push(newProvider);
-      allProviders.push(newProvider);
+      provider.status = "created"
+      providers.push(provider);
+      allProviders.push(provider);
     }
     setProviders(providers);
     setAllProviders(allProviders);
@@ -52,7 +55,6 @@ const ChildProviderForm = ({
   };
 
   const deleteProvider = (index: number) => {
-    providers.splice(index, 1);
     // this isn't really useful, but it helps refresh the component
     // ideally should have something useEffect, but current way of passing data does not work well with it
     setProvidersDeleted(providersDeleted + 1);
@@ -78,6 +80,7 @@ const ChildProviderForm = ({
     contactNotes: "",
     address: "",
     relationship: "",
+    status: ""
   };
 
   return (

@@ -9,6 +9,9 @@ import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
 import OverviewSection from "../../../types/OverviewSection";
+import childAPIClient from "../../../APIClients/ChildAPIClient";
+
+import { Children, ChildrenDetails } from "../../../types/ChildTypes";
 
 enum AddChildSteps {
   CHILD_INFORMATION_FORM,
@@ -25,13 +28,6 @@ type AddChildProps = {
   selectedIndexChild: number;
   referrer: string;
 };
-
-export type ChildrenDetails = {
-  childDetails: ChildDetails;
-  schoolDetails: SchoolDetails;
-  providers: Providers;
-};
-export type Children = ChildrenDetails[];
 
 const AddChild = ({
   allProviders,
@@ -51,12 +47,14 @@ const AddChild = ({
     workerName: "",
     specialNeeds: "",
     childBehaviours: "",
+    childId: "",
   });
   const [schoolDetails, setSchoolDetails] = useState<SchoolDetails>({
     schoolName: "",
     schoolPhoneNo: "",
     schoolAddress: "",
     dismissalTime: "",
+    schoolId: ""
   });
   const [providers, setProviders] = useState<Providers>([]);
 
@@ -67,22 +65,27 @@ const AddChild = ({
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    const updatedChild = {
+    const child: ChildrenDetails = {
       childDetails: { ...childDetails },
       schoolDetails: { ...schoolDetails },
       providers: [...providers],
     };
 
     if (selectedIndexChild >= 0) {
-      childrens.splice(selectedIndexChild, 1, updatedChild);
+      childrens.splice(selectedIndexChild, 1, child);
+      childAPIClient.put({
+        updatedChild: child,
+        intakeId: 1,
+      });
     } else {
-      childrens.push(updatedChild);
+      childrens.push(child);
+      childAPIClient.post({ newChild: child, intakeId: 1 });
     }
 
     setChildren([...childrens]);
     if (referrer === "intake") {
       setStep(IntakeSteps.INDIVIDUAL_DETAILS);
-    } else if (referrer === "caseoverview") {
+    } else if (referrer === "caseOverview") {
       setStep(OverviewSection.MAIN_SECTION);
     }
   };
@@ -92,6 +95,24 @@ const AddChild = ({
       setChildDetails(childrens[selectedIndexChild].childDetails);
       setSchoolDetails(childrens[selectedIndexChild].schoolDetails);
       setProviders(childrens[selectedIndexChild].providers);
+    } else {
+      setChildDetails({
+        childName: "",
+        cpinFileNumber: "",
+        dateOfBirth: "",
+        workerName: "",
+        specialNeeds: "",
+        childBehaviours: "",
+        childId: "",
+      });
+      setSchoolDetails({
+        schoolName: "",
+        schoolPhoneNo: "",
+        schoolAddress: "",
+        dismissalTime: "",
+        schoolId: ""
+      });
+      setProviders([]);
     }
   }, [childrens, selectedIndexChild]);
 
@@ -128,7 +149,7 @@ const AddChild = ({
   return (
     <>
       <IntakeHeader
-        primaryTitle="Add child"
+        primaryTitle={selectedIndexChild === -1 ? "Add child" : "Edit Child"}
         secondaryTitle="Initiate New Case"
       />
       <VStack
@@ -143,7 +164,7 @@ const AddChild = ({
           onClick={() => {
             if (referrer === "intake") {
               setStep(IntakeSteps.INDIVIDUAL_DETAILS);
-            } else if (referrer === "caseoverview") {
+            } else if (referrer === "caseOverview") {
               setStep(OverviewSection.MAIN_SECTION);
             }
           }}

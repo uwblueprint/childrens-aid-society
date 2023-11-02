@@ -7,24 +7,31 @@ import {
   Input,
   Text,
   useDisclosure,
+  Icon,
 } from "@chakra-ui/react";
-import { ArrowLeft, UserPlus } from "react-feather";
+import { ArrowLeft, ArrowRight, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import intakeAPIClient from "../../APIClients/IntakeAPIClient";
-import AddChild, { Children } from "../intake/child-information/AddChildPage";
+import AddChild from "../intake/child-information/AddChildPage";
+import { Children } from "../../types/ChildTypes";
 import { Providers } from "../intake/NewProviderModal";
-import OverviewSection from "../../types/OverviewSection"; 
+import OverviewSection from "../../types/OverviewSection";
 import CaseStatus from "../../types/CaseStatus";
+import childAPIClient from "../../APIClients/ChildAPIClient";
 
 type OverviewBodyProps = {
   setSectionIndex: React.Dispatch<React.SetStateAction<number>>;
+  childrens: Children;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const CaseOverviewBody = ({
   setSectionIndex,
+  childrens,
+  setSelectedIndexChild,
 }: OverviewBodyProps): React.ReactElement => {
   const [leadName, setLeadName] = useState("");
   const history = useHistory();
@@ -44,6 +51,11 @@ const CaseOverviewBody = ({
     history.push("/");
   };
   const goToAddChild = () => {
+    setSelectedIndexChild(-1);
+    setSectionIndex(OverviewSection.CHILD_SECTION);
+  };
+  const goToEditChild = (index: number) => {
+    setSelectedIndexChild(index);
     setSectionIndex(OverviewSection.CHILD_SECTION);
   };
   const changeLead = async () => {
@@ -123,19 +135,55 @@ const CaseOverviewBody = ({
             h="250px"
             position="relative"
             display="flex"
-            alignItems="center"
-            justifyContent="center"
+            alignItems={childrens.length === 0 ? "center" : "flex-start"}
+            justifyContent={childrens.length === 0 ? "center" : "flex-start"}
             flexDirection="column"
           >
-            <Text
-              style={{
-                color: colors.gray[700],
-                fontSize: "20px",
-                fontWeight: 500,
-              }}
-            >
-              There are no children under this case
-            </Text>
+            <>
+              {childrens.map((child, index) => {
+                return (
+                  <Box
+                    borderBottomWidth="1px"
+                    borderColor={colors.gray[100]}
+                    p="3"
+                    key={index}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    width="100%"
+                    onClick={() => goToEditChild(index)}
+                  >
+                    <Text
+                      style={{
+                        color: colors.black.default,
+                        fontSize: "20px",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {child.childDetails.childName}
+                    </Text>
+                    <Icon
+                      as={ArrowRight}
+                      w="25px"
+                      h="25px"
+                      color={colors.blue[400]}
+                    />
+                  </Box>
+                );
+              })}
+
+              {childrens.length === 0 && (
+                <Text
+                  style={{
+                    color: colors.gray[700],
+                    fontSize: "20px",
+                    fontWeight: 500,
+                  }}
+                >
+                  There are no children under this case
+                </Text>
+              )}
+            </>
 
             <Button
               color={colors.blue[400]}
@@ -351,11 +399,22 @@ const CaseOverview = (): React.ReactElement => {
   const [children, setChildren] = useState<Children>([]);
   const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
-  const caseId = 1
+  const caseId = 1;
 
   useEffect(() => {
     const fetchData = async () => {
+      const childrenData = await childAPIClient.get(caseId);
+      const childProviders: Providers = [];
 
+      for (let i = 0; i < childrenData.length; i += 1) {
+        for (let x = 0; x < childrenData[i].providers.length; x += 1) {
+          childProviders.push(childrenData[i].providers[x]);
+        }
+      }
+      console.log(childProviders);
+      console.log(childrenData);
+      setAllProviders(childProviders);
+      setChildren(childrenData);
     };
 
     fetchData();
@@ -372,7 +431,11 @@ const CaseOverview = (): React.ReactElement => {
           />
           <Box px="100px" pt="60px">
             <div style={{ paddingBottom: "100px" }}>
-              <CaseOverviewBody setSectionIndex={setSectionIndex} />
+              <CaseOverviewBody
+                setSectionIndex={setSectionIndex}
+                childrens={children}
+                setSelectedIndexChild={setSelectedIndexChild}
+              />
             </div>
           </Box>
           <CaseOverviewFooter />
@@ -388,7 +451,7 @@ const CaseOverview = (): React.ReactElement => {
           setChildren={setChildren}
           setStep={setSectionIndex}
           selectedIndexChild={selectedIndexChild}
-          referrer="caseoverview"
+          referrer="caseOverview"
         />
       );
     }

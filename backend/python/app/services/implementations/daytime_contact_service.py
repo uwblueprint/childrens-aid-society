@@ -38,6 +38,21 @@ class DaytimeContactService(IDaytimeContactService):
         except Exception as error:
             db.session.rollback()
             raise error
+    
+    def edit_daytime_contact(self, daytime_data, daytime_contact_id):
+        try:
+            daytime_contact = DaytimeContact.query.filter_by(id=daytime_contact_id).first()
+            if not daytime_contact:
+                raise Exception("Child with id {} not found".format(daytime_contact_id))
+            daytime_contact.name = daytime_data["name"]
+            daytime_contact.contact_information = daytime_data["contact_information"]
+            daytime_contact.address = daytime_data["address"]
+            daytime_contact.dismissal_time = daytime_data["dismissal_time"]
+            db.session.merge(daytime_contact)
+            db.session.commit()
+            return DaytimeContactDTO(**daytime_contact.to_dict())
+        except Exception as error:
+            db.session.rollback()
 
     def delete_daytime_contact(self, daytime_contact_id):
         try:
@@ -69,19 +84,21 @@ class DaytimeContactService(IDaytimeContactService):
             ).first()
             if daytime_contact:
                 result = {
-                    "name": daytime_contact.name,
-                    "contactInfo": daytime_contact.contact_information,
-                    "address": daytime_contact.address,
+                    "schoolName": daytime_contact.name,
+                    "schoolPhoneNo": daytime_contact.contact_information,
+                    "schoolAddress": daytime_contact.address,
                     "dismissalTime": daytime_contact.dismissal_time,
+                    "schoolId": daytime_contact.id
                 }
                 return result
             else:
                 return (
                     {
-                        "name": "",
-                        "contactInfo": "",
-                        "address": "",
+                        "schoolName": "",
+                        "schoolPhoneNo": "",
+                        "schoolAddress": "",
                         "dismissalTime": "",
+                        "schoolID": ""
                     },
                 )
         except Exception as error:

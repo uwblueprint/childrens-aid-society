@@ -6,7 +6,7 @@ import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import ChildrenForm from "./indivDetails/ChildrenForm";
 import CaregiverForm from "./indivDetails/CaregiverProviderForm";
-import { Children } from "./child-information/AddChildPage";
+import { Children } from "../../types/ChildTypes";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;

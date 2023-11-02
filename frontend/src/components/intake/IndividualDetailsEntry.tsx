@@ -1,6 +1,6 @@
 import React from "react";
 import { VStack } from "@chakra-ui/react";
-import { Caregivers } from "./NewCaregiverModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";

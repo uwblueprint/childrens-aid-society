@@ -8,7 +8,7 @@ import ProgramForm, { ProgramDetails } from "./ProgramForm";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import { Children } from "../../types/ChildTypes";
-import { Caregivers } from "./NewCaregiverModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;

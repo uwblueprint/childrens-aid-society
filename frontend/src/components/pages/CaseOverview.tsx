@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -26,15 +26,22 @@ type OverviewBodyProps = {
   setSectionIndex: React.Dispatch<React.SetStateAction<number>>;
   childrens: Children;
   setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
+  caseId: number;
 };
 
 const CaseOverviewBody = ({
   setSectionIndex,
   childrens,
   setSelectedIndexChild,
+  caseId,
 }: OverviewBodyProps): React.ReactElement => {
   const [leadName, setLeadName] = useState("");
   const history = useHistory();
+
+  const { state } = useLocation<{ caseLead: string }>();
+  const { caseLead } = state;
+
+  const [leadName, setLeadName] = useState(caseLead);
 
   const {
     onOpen: onOpenVisitCadenceModal,
@@ -59,9 +66,9 @@ const CaseOverviewBody = ({
     setSectionIndex(OverviewSection.CHILD_SECTION);
   };
   const changeLead = async () => {
-    const intakeID = 1; // TODO replace with actual intake id
+    const intakeID = caseNumber;
     const changedData: Record<string, string> = {
-      lead_access_worker_name: leadName,
+      referringWorkerName: leadName,
     };
     try {
       const result = await intakeAPIClient.put({ changedData, intakeID });
@@ -379,7 +386,7 @@ const CaseOverviewBody = ({
         </Flex>
       </Flex>
       <VisitCadenceModal
-        caseNumber={1} // TODO pass actual case data
+        caseNumber={caseNumber}
         status="ARCHIVED"
         isOpen={isOpenVisitCadenceModal}
         onClick={() => {}}
@@ -399,7 +406,8 @@ const CaseOverview = (): React.ReactElement => {
   const [children, setChildren] = useState<Children>([]);
   const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
-  const caseId = 1;
+  const { id } = useParams<{ id: string }>();
+  const caseId: number = parseInt(id, 10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -411,8 +419,6 @@ const CaseOverview = (): React.ReactElement => {
           childProviders.push(childrenData[i].providers[x]);
         }
       }
-      console.log(childProviders);
-      console.log(childrenData);
       setAllProviders(childProviders);
       setChildren(childrenData);
     };
@@ -425,7 +431,7 @@ const CaseOverview = (): React.ReactElement => {
       return (
         <Box>
           <IntakeHeader
-            primaryTitle="Case Name"
+            primaryTitle={`Case ${caseId}`}
             secondaryTitle="Case Management"
             hasLogout
           />
@@ -435,6 +441,7 @@ const CaseOverview = (): React.ReactElement => {
                 setSectionIndex={setSectionIndex}
                 childrens={children}
                 setSelectedIndexChild={setSelectedIndexChild}
+                caseId={caseId}
               />
             </div>
           </Box>

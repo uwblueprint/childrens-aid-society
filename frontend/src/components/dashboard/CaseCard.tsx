@@ -57,7 +57,10 @@ const CaseCard = ({
   // TODO refactor to display proper case data
   const onCardClick = (status: string) => {
     if (status === "ACTIVE") {
-      history.push(`/caseoverview`);
+      history.push({
+        pathname: `/caseoverview/${caseId}`,
+        state: { caseLead },
+      });
     } else {
       onOpenStatusModal();
     }
@@ -70,7 +73,7 @@ const CaseCard = ({
         _hover={{ boxShadow: "md", borderWidth: "2px" }}
         paddingRight="30px"
         paddingLeft="30px"
-        width="297px"
+        width="250px"
         height="289px"
         borderWidth="1px"
         borderRadius="lg"

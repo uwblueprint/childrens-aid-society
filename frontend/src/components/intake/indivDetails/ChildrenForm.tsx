@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { UserPlus } from "react-feather";
 import { Icon } from "@chakra-ui/react";
-import { Children } from "../../../types/ChildTypes";
 import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 import IntakeSteps from "../intakeSteps";
+import { Children } from "../../../types/ChildTypes";
+
 
 type ChildrenFormProps = {
   childrens: Children;

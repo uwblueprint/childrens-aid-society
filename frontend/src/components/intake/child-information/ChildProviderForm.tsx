@@ -12,7 +12,7 @@ export type ChildProviderFormProps = {
   providers: Providers;
   setProviders: React.Dispatch<React.SetStateAction<Providers>>;
   allProviders: Providers;
-  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  setAllProviders: (newProviders: Providers) => void | React.Dispatch<React.SetStateAction<Providers>> ;
 };
 
 const ChildProviderForm = ({

@@ -30,7 +30,7 @@ def get_child():
                 "childName": child.first_name,
                 "dateOfBirth": child.date_of_birth,
                 "cpinFileNumber": child.cpin_number,
-                "serviceWorker": child.service_worker,
+                "workerName": child.service_worker,
                 "specialNeeds": child.special_needs,
                 "concerns": [],
                 "childId": child.id
@@ -95,6 +95,7 @@ def create_child(intake_id):
 
     try:
         daytime_response = daytimeContact_service.create_new_daytime_contact(CreateDaytimeContactDTO(**daytimeContact_obj))
+        print(daytime_response, file=sys.stderr)
         undos.append((daytime_response,"delete_daytime_contact", daytime_response.id)) 
     except Exception as error:
         run_undos()
@@ -113,6 +114,7 @@ def create_child(intake_id):
 
     try:
         child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
+        print(child_response, file=sys.stderr)
         undos.append((child_service, "delete_child", child_response.id))
     except Exception as error:
         run_undos()
@@ -137,35 +139,34 @@ def edit_child(intake_id):
     providers = request.json["providers"]
 
     child_obj = {
-        "intake_id": intake_id,
         "first_name": child_details["child_name"],
         "last_name": ".",
         "date_of_birth": child_details["date_of_birth"],
         "cpin_number":  child_details["cpin_file_number"],
-        "service_worker": child_details["service_worker"],
-        "daytime_contact_id": daytimeContact_details["school_id"],
+        "service_worker": child_details["worker_name"],
         "special_needs": child_details["special_needs"],
     }
 
     try:
         child_response = child_service.edit_child(child_obj, child_details["child_id"])
+        #print(child_response, file=sys.stderr)
         # undos.append((child_service, "delete_child", child_response.id))
     except Exception as error:
         # run_undos()
         return jsonify(error),400
     
-    daytimeContact_obj ={
-        "name": daytimeContact_details["school_name"],
-        "contact_information": daytimeContact_details["school_phone_no"],
-        "address": daytimeContact_details["school_address"],
-        "dismissal_time": daytimeContact_details["dismissal_time"],
-    }
+    # daytimeContact_obj ={
+    #     "name": daytimeContact_details["school_name"],
+    #     "contact_information": daytimeContact_details["school_phone_no"],
+    #     "address": daytimeContact_details["school_address"],
+    #     "dismissal_time": daytimeContact_details["dismissal_time"],
+    # }
 
-    try: 
-       daytime_response = daytimeContact_service.edit_daytime_contact(daytimeContact_obj, daytimeContact_details["school_id"])
-    except Exception as error:
-        # run_undos()
-        return jsonify(error),400
+    # try: 
+    #    daytime_response = daytimeContact_service.edit_daytime_contact(daytimeContact_obj, daytimeContact_details["school_id"])
+    # except Exception as error:
+    #     # run_undos()
+    #     return jsonify(error),400
 
 
     return jsonify(child_response.__dict__), 200

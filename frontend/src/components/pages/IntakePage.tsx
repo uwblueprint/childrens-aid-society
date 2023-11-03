@@ -191,6 +191,7 @@ const Intake = (): React.ReactElement => {
           childrens={children}
           setChildren={setChildren}
           selectedIndexChild={selectedIndexChild}
+          setSelectedIndexChild={setSelectedIndexChild}
           referrer="intake"
         />
       ) : (

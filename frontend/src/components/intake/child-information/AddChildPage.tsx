@@ -4,13 +4,12 @@ import { ArrowLeft } from "react-feather";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
 import { Providers } from "../NewProviderModal";
+import OverviewSection from "../../../types/OverviewSection";
 import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
-import OverviewSection from "../../../types/OverviewSection";
 import childAPIClient from "../../../APIClients/ChildAPIClient";
-
 import { Children, ChildrenDetails } from "../../../types/ChildTypes";
 
 enum AddChildSteps {
@@ -21,12 +20,14 @@ enum AddChildSteps {
 
 type AddChildProps = {
   allProviders: Providers;
-  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  setAllProviders: (newProviders: Providers) => void | React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   childrens: Children;
-  setChildren: React.Dispatch<React.SetStateAction<Children>>;
+  setChildren: (newChildren: Children) => void;
   selectedIndexChild: number;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
   referrer: string;
+  caseNumber?: number;
 };
 
 const AddChild = ({
@@ -36,7 +37,9 @@ const AddChild = ({
   childrens,
   setChildren,
   selectedIndexChild,
+  setSelectedIndexChild,
   referrer,
+  caseNumber,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -54,7 +57,7 @@ const AddChild = ({
     schoolPhoneNo: "",
     schoolAddress: "",
     dismissalTime: "",
-    schoolId: ""
+    schoolId: "",
   });
   const [providers, setProviders] = useState<Providers>([]);
 
@@ -73,19 +76,25 @@ const AddChild = ({
 
     if (selectedIndexChild >= 0) {
       childrens.splice(selectedIndexChild, 1, child);
-      childAPIClient.put({
-        updatedChild: child,
-        intakeId: 1,
-      });
+      console.log(child)
+      if (caseNumber) {
+        childAPIClient.put({
+          updatedChild: child,
+          intakeId: caseNumber,
+        });
+      }
     } else {
       childrens.push(child);
-      childAPIClient.post({ newChild: child, intakeId: 1 });
+      if (caseNumber) {
+        childAPIClient.post({ newChild: child, intakeId: caseNumber });
+      }
     }
 
     setChildren([...childrens]);
     if (referrer === "intake") {
       setStep(IntakeSteps.INDIVIDUAL_DETAILS);
     } else if (referrer === "caseOverview") {
+      setSelectedIndexChild(-1);
       setStep(OverviewSection.MAIN_SECTION);
     }
   };
@@ -110,7 +119,7 @@ const AddChild = ({
         schoolPhoneNo: "",
         schoolAddress: "",
         dismissalTime: "",
-        schoolId: ""
+        schoolId: "",
       });
       setProviders([]);
     }
@@ -165,6 +174,7 @@ const AddChild = ({
             if (referrer === "intake") {
               setStep(IntakeSteps.INDIVIDUAL_DETAILS);
             } else if (referrer === "caseOverview") {
+              setSelectedIndexChild(-1);
               setStep(OverviewSection.MAIN_SECTION);
             }
           }}

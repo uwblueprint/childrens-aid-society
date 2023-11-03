@@ -5,9 +5,9 @@ import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
 import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import { Children } from "../../types/ChildTypes";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import { Children } from "../../types/ChildTypes";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
 
 type ReviewFormProps = {
@@ -116,7 +116,7 @@ const ReviewForm = ({
       <Stack padding="32px" spacing="16px">
         <HStack w="full" display="flex" justifyContent="space-between">
           <Text color="b&w.black" textStyle="header-large">
-            Program details
+          Program details
           </Text>
           {editSectionButton(IntakeSteps.PROGRAM_DETAILS)};
         </HStack>

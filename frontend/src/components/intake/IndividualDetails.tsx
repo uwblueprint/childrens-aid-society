@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, VStack, Text, HStack, Icon, Divider } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
-import { Children } from "../../types/ChildTypes"
 import { Caregivers } from "../../types/CaregiverDetailTypes";
+import { Children } from "../../types/ChildTypes"
 
 type IndividualDetailsProps = {
   childrenDetails: Children;

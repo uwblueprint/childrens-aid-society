@@ -16,28 +16,38 @@ import colors from "../../theme/colors";
 import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import intakeAPIClient from "../../APIClients/IntakeAPIClient";
 import AddChild from "../intake/child-information/AddChildPage";
-import { Children } from "../../types/ChildTypes";
 import { Providers } from "../intake/NewProviderModal";
-import OverviewSection from "../../types/OverviewSection";
 import childAPIClient from "../../APIClients/ChildAPIClient";
 import NewCaregiverModal from "../intake/NewCaregiverModal";
+import { Children } from "../../types/ChildTypes";
 import CaregiverAPIClient from "../../APIClients/CaregiverAPIClient";
 import { Caregivers, CaregiverDetails } from "../../types/CaregiverDetailTypes";
 import CasePromptBox, {
   IndividualDetailsOverview,
 } from "../overview/CasePromptBox";
+import OverviewSection from "../../types/OverviewSection";
+
+interface CaseOverviewData {
+  caregiversList: Caregivers;
+  childrenList: Children;
+  providerList: Providers;
+}
 
 type OverviewBodyProps = {
   setSectionIndex: React.Dispatch<React.SetStateAction<number>>;
-  childrens: Children;
-  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
+  caseData: CaseOverviewData;
+  setCaseData: React.Dispatch<React.SetStateAction<CaseOverviewData>>;
+  selectedIndex: number;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   caseNumber: number;
 };
 
 const CaseOverviewBody = ({
   setSectionIndex,
-  childrens,
-  setSelectedIndexChild,
+  caseData,
+  setCaseData,
+  selectedIndex,
+  setSelectedIndex,
   caseNumber,
 }: OverviewBodyProps): React.ReactElement => {
   const history = useHistory();
@@ -46,17 +56,6 @@ const CaseOverviewBody = ({
   const { caseLead } = state;
 
   const [leadName, setLeadName] = useState(caseLead);
-
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
-  interface StateType {
-    caregiversList: Caregivers;
-    caregiversDetailsOverview: IndividualDetailsOverview[];
-  }
-  const [data, setData] = useState<StateType>({
-    caregiversList: [],
-    caregiversDetailsOverview: [],
-  });
 
   const dummyCaregiver = {
     intakeId: 1,
@@ -90,14 +89,7 @@ const CaseOverviewBody = ({
   const goToHomepage = () => {
     history.push("/");
   };
-  const goToAddChild = () => {
-    setSelectedIndexChild(-1);
-    setSectionIndex(OverviewSection.CHILD_SECTION);
-  };
-  const goToEditChild = (index: number) => {
-    setSelectedIndexChild(index);
-    setSectionIndex(OverviewSection.CHILD_SECTION);
-  };
+
   const changeLead = async () => {
     const intakeID = caseNumber;
     const changedData: Record<string, string> = {
@@ -122,40 +114,35 @@ const CaseOverviewBody = ({
     return [];
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const caregivers = await CaregiverAPIClient.getById(caseNumber); // TODO: get intakeid from case
-
-      setData({
-        caregiversList: caregivers,
-        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview(
-          caregivers,
-        ),
-      });
-    };
-
-    fetchData();
-  });
-
   const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
-    const list = data.caregiversList;
+    const list = caseData.caregiversList;
     if (selectedIndex >= 0) {
       list.splice(selectedIndex, 1, newCaregiver);
-      setData({
+      setCaseData({
+        ...caseData,
         caregiversList: [...list],
-        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
-          ...list,
-        ]),
       });
     } else {
-      setData({
+      setCaseData({
+        ...caseData,
         caregiversList: [...list, newCaregiver],
-        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
-          ...list,
-          newCaregiver,
-        ]),
       });
     }
+  };
+
+  const mapChildrenToChildrenDetailsOverview = (
+    childrens: Children,
+  ): IndividualDetailsOverview[] => {
+    if (childrens.length > 0) {
+      return childrens.map((child) => ({
+        name: child.childDetails.childName,
+      }));
+    }
+    return [];
+  };
+
+  const onClickChildren = () => {
+    setSectionIndex(OverviewSection.CHILD_SECTION);
   };
 
   return (
@@ -212,83 +199,16 @@ const CaseOverviewBody = ({
           <Flex pt="50">
             <Text style={{ fontSize: "23px", fontWeight: 600 }}>Children</Text>
           </Flex>
-
-          <Box
-            border="1px"
-            borderColor={colors.gray[100]}
-            borderRadius="md"
-            p="4"
-            mt="4"
-            h="250px"
-            position="relative"
-            display="flex"
-            alignItems={childrens.length === 0 ? "center" : "flex-start"}
-            justifyContent={childrens.length === 0 ? "center" : "flex-start"}
-            flexDirection="column"
-          >
-            <>
-              {childrens.map((child, index) => {
-                return (
-                  <Box
-                    borderBottomWidth="1px"
-                    borderColor={colors.gray[100]}
-                    p="3"
-                    key={index}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    width="100%"
-                    onClick={() => goToEditChild(index)}
-                  >
-                    <Text
-                      style={{
-                        color: colors.black.default,
-                        fontSize: "20px",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {child.childDetails.childName}
-                    </Text>
-                    <Icon
-                      as={ArrowRight}
-                      w="25px"
-                      h="25px"
-                      color={colors.blue[400]}
-                    />
-                  </Box>
-                );
-              })}
-
-              {childrens.length === 0 && (
-                <Text
-                  style={{
-                    color: colors.gray[700],
-                    fontSize: "20px",
-                    fontWeight: 500,
-                  }}
-                >
-                  There are no children under this case
-                </Text>
-              )}
-            </>
-
-            <Button
-              color={colors.blue[400]}
-              variant="outline"
-              position="absolute"
-              bottom="4"
-              right="4"
-              borderColor={colors.blue[300]}
-              backgroundColor={colors.blue[100]}
-              onClick={goToAddChild}
-            >
-              <div style={{ paddingRight: "10px" }}>
-                <UserPlus width="13px" />
-              </div>
-              Add Child
-            </Button>
-          </Box>
-
+          <CasePromptBox
+            descriptionText="No children under this case"
+            buttonText="Add Child"
+            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+            onButtonClick={onClickChildren}
+            individualDetails={mapChildrenToChildrenDetailsOverview(
+              caseData.childrenList,
+            )}
+            setSelectedIndex={setSelectedIndex}
+          />
           <Flex pt="50">
             <Text style={{ fontSize: "23px", fontWeight: 600 }}>
               Visiting Family
@@ -299,7 +219,9 @@ const CaseOverviewBody = ({
             buttonText="Add Visiting Family"
             buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
             onButtonClick={onOpenAddCaregiver}
-            individualDetails={data.caregiversDetailsOverview}
+            individualDetails={mapCaregiversToCaregiverDetailsOverview(
+              caseData.caregiversList,
+            )}
             setSelectedIndex={setSelectedIndex}
           />
 
@@ -451,7 +373,7 @@ const CaseOverviewBody = ({
         onClose={onCloseNewCaregiverModal}
         caregiver={
           selectedIndex >= 0
-            ? data.caregiversList[selectedIndex]
+            ? caseData.caregiversList[selectedIndex]
             : dummyCaregiver
         }
       />
@@ -464,14 +386,31 @@ const CaseOverview = (): React.ReactElement => {
 
   const [allProviders, setAllProviders] = useState<Providers>([]);
   const [children, setChildren] = useState<Children>([]);
-  const [selectedIndexChild, setSelectedIndexChild] = useState(-1);
 
   const { id } = useParams<{ id: string }>();
   const caseNumber: number = parseInt(id, 10);
 
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const [caseData, setCaseData] = useState<CaseOverviewData>({
+    caregiversList: [],
+    childrenList: [],
+    providerList: [],
+  });
+
+  const setProviderList = (newProviders: Providers) => {
+    setCaseData({ ...caseData, providerList: newProviders });
+  };
+
+  const setChildrenList = (newChildren: Children) => {
+    setCaseData({ ...caseData, childrenList: newChildren });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const childrenData = await childAPIClient.get(caseNumber);
+      const caregivers = await CaregiverAPIClient.getById(caseNumber);
+
       const childProviders: Providers = [];
 
       for (let i = 0; i < childrenData.length; i += 1) {
@@ -479,8 +418,13 @@ const CaseOverview = (): React.ReactElement => {
           childProviders.push(childrenData[i].providers[x]);
         }
       }
-      setAllProviders(childProviders);
-      setChildren(childrenData);
+
+      setCaseData({
+        ...caseData,
+        caregiversList: caregivers,
+        childrenList: childrenData,
+        providerList: childProviders,
+      });
     };
 
     fetchData();
@@ -499,9 +443,11 @@ const CaseOverview = (): React.ReactElement => {
             <div style={{ paddingBottom: "100px" }}>
               <CaseOverviewBody
                 setSectionIndex={setSectionIndex}
-                childrens={children}
-                setSelectedIndexChild={setSelectedIndexChild}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
                 caseNumber={caseNumber}
+                caseData={caseData}
+                setCaseData={setCaseData}
               />
             </div>
           </Box>
@@ -512,13 +458,15 @@ const CaseOverview = (): React.ReactElement => {
     case OverviewSection.CHILD_SECTION: {
       return (
         <AddChild
-          allProviders={allProviders}
-          setAllProviders={setAllProviders}
-          childrens={children}
-          setChildren={setChildren}
+          allProviders={caseData.providerList}
+          setAllProviders={setProviderList}
+          childrens={caseData.childrenList}
+          setChildren={setChildrenList}
           setStep={setSectionIndex}
-          selectedIndexChild={selectedIndexChild}
+          selectedIndexChild={selectedIndex}
+          setSelectedIndexChild={setSelectedIndex}
           referrer="caseOverview"
+          caseNumber={caseNumber}
         />
       );
     }

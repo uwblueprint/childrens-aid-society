@@ -59,6 +59,6 @@ class IAttendanceSheetService(ABC):
         :type: int
         :return: List of ChildDTO
         :rtype: List of ChildDTO
-        :raises Exception: if an error encountered when querying database
+        :raises Exception: if id is invalid
         """
         pass

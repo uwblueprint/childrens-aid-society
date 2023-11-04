@@ -67,6 +67,7 @@ class ChildService(IChildService):
             return ChildDTO(**child.to_dict())
         except Exception as error:
             db.session.rollback()
+
     def get_children_by_intake_id(self, intake_id):
         try:
             children = Child.query.filter_by(intake_id=intake_id)

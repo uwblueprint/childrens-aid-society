@@ -235,7 +235,7 @@ const NewProviderModal = ({
             relationship: relationshipChanged
               ? relationship
               : provider.relationship,
-            status: ""
+            status: "",
           };
           onClick(newProvider);
           handleClose();

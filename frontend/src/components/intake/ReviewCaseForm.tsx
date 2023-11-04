@@ -116,7 +116,7 @@ const ReviewForm = ({
       <Stack padding="32px" spacing="16px">
         <HStack w="full" display="flex" justifyContent="space-between">
           <Text color="b&w.black" textStyle="header-large">
-          Program details
+            Program details
           </Text>
           {editSectionButton(IntakeSteps.PROGRAM_DETAILS)};
         </HStack>

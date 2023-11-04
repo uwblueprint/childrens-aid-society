@@ -9,7 +9,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ArrowLeft, ArrowRight, UserPlus } from "react-feather";
+import { ArrowLeft, UserPlus } from "react-feather";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseOverviewFooter from "../overview/CaseOverviewFooter";
 import colors from "../../theme/colors";
@@ -384,9 +384,6 @@ const CaseOverviewBody = ({
 const CaseOverview = (): React.ReactElement => {
   const [sectionIndex, setSectionIndex] = useState(0);
 
-  const [allProviders, setAllProviders] = useState<Providers>([]);
-  const [children, setChildren] = useState<Children>([]);
-
   const { id } = useParams<{ id: string }>();
   const caseNumber: number = parseInt(id, 10);
 
@@ -419,16 +416,16 @@ const CaseOverview = (): React.ReactElement => {
         }
       }
 
-      setCaseData({
-        ...caseData,
+      setCaseData((data: CaseOverviewData) => ({
+        ...data,
         caregiversList: caregivers,
         childrenList: childrenData,
         providerList: childProviders,
-      });
+      }));
     };
 
     fetchData();
-  }, []);
+  }, [caseNumber]);
 
   switch (sectionIndex) {
     case OverviewSection.MAIN_SECTION: {

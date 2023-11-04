@@ -5,7 +5,6 @@ import PromptBox, { IndividualDetailsOverview } from "../PromptBox";
 import IntakeSteps from "../intakeSteps";
 import { Children } from "../../../types/ChildTypes";
 
-
 type ChildrenFormProps = {
   childrens: Children;
   setChildren: React.Dispatch<React.SetStateAction<Children>>;

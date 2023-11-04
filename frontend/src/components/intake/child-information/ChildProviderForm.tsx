@@ -12,7 +12,9 @@ export type ChildProviderFormProps = {
   providers: Providers;
   setProviders: React.Dispatch<React.SetStateAction<Providers>>;
   allProviders: Providers;
-  setAllProviders: (newProviders: Providers) => void | React.Dispatch<React.SetStateAction<Providers>> ;
+  setAllProviders: (
+    newProviders: Providers,
+  ) => void | React.Dispatch<React.SetStateAction<Providers>>;
 };
 
 const ChildProviderForm = ({
@@ -36,12 +38,12 @@ const ChildProviderForm = ({
   } = useDisclosure();
 
   const onClickNewProvider = (newProvider: ProviderDetails) => {
-    const provider: ProviderDetails = newProvider
+    const provider: ProviderDetails = newProvider;
     if (selectedIndex >= 0) {
-      provider.status = "edited"
+      provider.status = "edited";
       providers.splice(selectedIndex, 1, provider);
     } else {
-      provider.status = "created"
+      provider.status = "created";
       providers.push(provider);
       allProviders.push(provider);
     }
@@ -55,6 +57,7 @@ const ChildProviderForm = ({
   };
 
   const deleteProvider = (index: number) => {
+    providers.splice(index, 1);
     // this isn't really useful, but it helps refresh the component
     // ideally should have something useEffect, but current way of passing data does not work well with it
     setProvidersDeleted(providersDeleted + 1);
@@ -80,7 +83,7 @@ const ChildProviderForm = ({
     contactNotes: "",
     address: "",
     relationship: "",
-    status: ""
+    status: "",
   };
 
   return (

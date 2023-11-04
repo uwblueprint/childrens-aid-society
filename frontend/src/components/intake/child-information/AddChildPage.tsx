@@ -20,7 +20,9 @@ enum AddChildSteps {
 
 type AddChildProps = {
   allProviders: Providers;
-  setAllProviders: (newProviders: Providers) => void | React.Dispatch<React.SetStateAction<Providers>>;
+  setAllProviders: (
+    newProviders: Providers,
+  ) => void | React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   childrens: Children;
   setChildren: (newChildren: Children) => void;
@@ -76,7 +78,6 @@ const AddChild = ({
 
     if (selectedIndexChild >= 0) {
       childrens.splice(selectedIndexChild, 1, child);
-      console.log(child)
       if (caseNumber) {
         childAPIClient.put({
           updatedChild: child,

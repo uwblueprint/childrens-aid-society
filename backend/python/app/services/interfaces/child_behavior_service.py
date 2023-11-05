@@ -59,4 +59,4 @@ class IChildBehaviorService(ABC):
         :return: list of strings
         :raises Exception: if child_id is invalid or any error occurs
         """
-        pass   
+        pass

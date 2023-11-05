@@ -51,3 +51,12 @@ class IChildBehaviorService(ABC):
         :raises Exception: if an error occurs on the database side
         """
         pass
+
+    def get_concerns_str_by_child(self, child_id: int):
+        """Get behavior concerns as strings for a given child_id
+
+        :param child_id: int of Child id
+        :return: list of strings
+        :raises Exception: if child_id is invalid or any error occurs
+        """
+        pass   

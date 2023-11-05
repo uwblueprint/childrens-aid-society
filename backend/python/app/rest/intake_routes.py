@@ -70,7 +70,6 @@ def get_all_intakes():
                     "additionalContactNotes": caregiver.additional_contact_notes,
                 }
                 caregivers.append(caregiver_obj)
-            intake.caregivers = caregivers
 
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
@@ -130,7 +129,7 @@ def get_all_intakes():
             intake_new = {
                 "user_id": intake.user_id,
                 "case_id": intake.id,
-                "intake_status": "ACTIVE",
+                "intake_status": intake.intake_status,
                 "caseReferral": {
                     "referringWorker": intake.referring_worker_name,
                     "referringWorkerContact": intake.referring_worker_contact,
@@ -146,7 +145,7 @@ def get_all_intakes():
                     "firstNationBand": intake.first_nation_band,
                 },
                 "children": new_children,
-                "caregivers": [],
+                "caregivers": caregivers,
                 "programDetails": {
                     "transportationRequirements": intake.transportation_requirements,
                     "schedulingRequirements": intake.scheduling_requirements,

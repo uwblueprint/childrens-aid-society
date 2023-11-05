@@ -94,7 +94,7 @@ class AttendanceSheetService(IAttendanceSheetService):
             self.logger.error(str(error))
             raise error
 
-    def get_child_by_sheet(self, id):
+    def get_children_by_sheet(self, id):
         try:
             attendance_sheet = AttendanceSheets.query.get(id)
             children = [

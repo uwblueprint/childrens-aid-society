@@ -58,7 +58,7 @@ def get_visits():
                 record.attendance_sheet_id
             )[0]
 
-            children = attendance_sheet_service.get_child_by_sheet(sheet.id)
+            children = attendance_sheet_service.get_children_by_sheet(sheet.id)
             children = [child.__dict__ for child in children]
 
             childInformation_obj = {

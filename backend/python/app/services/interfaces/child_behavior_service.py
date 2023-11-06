@@ -13,6 +13,16 @@ class IChildBehaviorService(ABC):
         """
         pass
 
+    def get_child_behaviors_by_child(self, child_id):
+        """Get all the behaviors from database that's tied to a given child_id
+
+        :param child_id: int of Child id
+        :return: ChildBehaviorDTOs
+        :rtype: list of ChildBehaviorDTO
+        :raises Exception: if child_id is invalid
+        """
+        pass
+
     def get_child_behaviors_by_intake(self, child_id):
         """Get all the behaviors from database that's tied to a given child_id
 

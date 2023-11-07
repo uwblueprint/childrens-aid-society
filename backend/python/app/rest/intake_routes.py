@@ -160,7 +160,7 @@ def create_intake():
     intake = {
         "user_id": request.json["userId"],
         "intake_status": "SUBMITTED",
-        "referring_worker_name": request.json["caseReferral"]["referringWorker"],
+        "referring_worker_name": request.json["caseReferral"]["referringWorkerName"],
         "referring_worker_contact": request.json["caseReferral"][
             "referringWorkerContact"
         ],
@@ -328,8 +328,8 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": new_intake.id,
-            "first_name": child["childInfo"]["first_name"],
-            "last_name": child["childInfo"]["last_name"],
+            "first_name": child["childInfo"]["name"],
+            "last_name": "",
             "date_of_birth": child["childInfo"]["dateOfBirth"],
             "cpin_number": child["childInfo"]["cpinFileNumber"],
             "service_worker": child["childInfo"]["serviceWorker"],

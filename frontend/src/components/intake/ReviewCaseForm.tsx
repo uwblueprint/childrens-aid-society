@@ -136,6 +136,11 @@ const ReviewForm = ({
         isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}
         nextStepCallBack={onNextStep}
+        referralDetails={referralDetails}
+        courtDetails={courtDetails}
+        programDetails={programDetails}
+        childrens={childrens}
+        caregivers={caregivers}
       />
     </>
   );

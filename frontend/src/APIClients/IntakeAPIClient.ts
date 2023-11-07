@@ -22,12 +22,13 @@ interface Intake {
   suggested_start_date: string;
 }
 
-const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
+const post = async (formData: Case): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
+    console.log(formData);
     const { data } = await baseAPIClient.post("/intake", formData, {
       headers: { Authorization: bearerToken },
     });

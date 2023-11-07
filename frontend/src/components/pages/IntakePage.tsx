@@ -24,6 +24,7 @@ import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
 import AddChild, { Children } from "../intake/child-information/AddChildPage";
+// eslint-disable-next-line import/no-named-as-default
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
@@ -141,11 +142,23 @@ const Intake = (): React.ReactElement => {
               Thank you for completing the intake form
             </Heading>
             <Text>The admin team will review it promptly.</Text>
+            {
+              (console.log("footer"),
+              console.log(referralDetails),
+              console.log(courtDetails),
+              console.log(children),
+              console.log(programDetails))
+            }
             <IntakeFooter
               nextButtonText="Return to dashboard"
               isStepComplete={() => true}
               registrationLoading={false}
               nextStepCallBack={() => {}}
+              referralDetails={referralDetails}
+              courtDetails={courtDetails}
+              programDetails={programDetails}
+              childrens={children}
+              caregivers={caregivers}
             />
           </Box>
         );

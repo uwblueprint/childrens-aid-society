@@ -1,9 +1,18 @@
+/* eslint-disable import/no-cycle */
 import React from "react";
 import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
 import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
+import { ReferralDetails } from "./ReferralForm";
+import { CourtDetails } from "./CourtInformationForm";
+import { ProgramDetails } from "./ProgramForm";
+import { Children } from "./child-information/AddChildPage";
+import { Caregivers } from "./NewCaregiverModal";
+import { Case } from "../../types/CasesContextTypes";
+import CaseStatus from "../../types/CaseStatus";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -18,6 +27,12 @@ export type IntakeFooterProps = {
   registrationLoading: boolean;
   nextStepCallBack: () => void;
   clearFields?: () => void;
+  // fields for creating intake put request
+  referralDetails?: ReferralDetails;
+  courtDetails?: CourtDetails;
+  programDetails?: ProgramDetails;
+  childrens?: Children;
+  caregivers?: Caregivers;
 };
 
 const IntakeFooter = ({
@@ -28,6 +43,11 @@ const IntakeFooter = ({
   registrationLoading,
   nextStepCallBack,
   clearFields,
+  referralDetails,
+  courtDetails,
+  programDetails,
+  childrens,
+  caregivers,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
   // TODO: remove useHistory once dashboard is implemented
@@ -57,6 +77,112 @@ const IntakeFooter = ({
         status: "error",
         position: "top",
       });
+    }
+  };
+
+  const submitForm = async () => {
+    console.log("clicked");
+    console.log(referralDetails);
+    console.log(courtDetails);
+    console.log(childrens);
+    console.log(programDetails);
+    if (
+      referralDetails &&
+      courtDetails &&
+      childrens &&
+      caregivers &&
+      programDetails
+    ) {
+      const intakeData: Case = {
+        user_id: 1,
+        case_id: 1,
+        intakeStatus: CaseStatus.ACTIVE,
+        caseReferral: {
+          referringWorkerName: referralDetails.referringWorker,
+          referringWorkerContact: referralDetails.referringWorkerContact,
+          cpinFileNumber: parseInt(referralDetails.cpinFileNumber, 10),
+          cpinFileType: referralDetails.cpinFileType,
+          familyName: referralDetails.familyName,
+          referralDate: referralDetails.referralDate,
+        },
+        courtInformation: {
+          courtStatus: courtDetails.currentCourtStatus,
+          orderReferral: 0,
+          firstNationHeritage: courtDetails.firstNationHeritage,
+          firstNationBand: courtDetails.firstNationBand,
+        },
+        children: childrens.map((child) => {
+          return {
+            childInfo: {
+              name: child.childDetails.childName,
+              dateOfBirth: child.childDetails.dateOfBirth,
+              cpinFileNumber: parseInt(child.childDetails.cpinFileNumber, 10),
+              serviceWorker: child.childDetails.workerName,
+              specialNeeds: child.childDetails.specialNeeds,
+              concerns: [], // don't know field
+            },
+            daytimeContact: {
+              name: child.schoolDetails.schoolName,
+              contactInfo: child.schoolDetails.schoolPhoneNo,
+              address: child.schoolDetails.schoolAddress,
+              dismissalTime: child.schoolDetails.dismissalTime,
+            },
+            provider: child.providers.map((provider) => {
+              return {
+                name: provider.providerName,
+                fileNumber: parseInt(provider.providerFileNo, 10),
+                primaryPhoneNumber: parseInt(provider.primaryPhoneNo, 10),
+                secondaryPhoneNumber: provider.secondaryPhoneNo
+                  ? parseInt(provider.secondaryPhoneNo, 10)
+                  : 0,
+                email: provider.email ? provider.email : "",
+                address: provider.address,
+                additionalContactNotes: provider.contactNotes
+                  ? provider.contactNotes
+                  : "",
+                relationshipToChild: provider.relationship,
+              };
+            }),
+          };
+        }),
+        caregivers: caregivers.map((cg) => {
+          return {
+            name: cg.caregiverName,
+            dateOfBirth: cg.dateOfBirth,
+            primaryPhoneNumber: parseInt(cg.primaryPhoneNo, 10),
+            secondaryPhoneNumber: cg.secondaryPhoneNo
+              ? parseInt(cg.secondaryPhoneNo, 10)
+              : 0,
+            additionalContactNotes: cg.contactNotes ? cg.contactNotes : "",
+            address: cg.address,
+            relationshipToChild: cg.relationship,
+            individualConsiderations: cg.indivConsiderations
+              ? cg.indivConsiderations
+              : "",
+          };
+        }),
+        programDetails: {
+          transportRequirements: programDetails.transportationRequirements,
+          schedulingRequirements: programDetails.schedulingRequirements,
+          suggestedStartDate: programDetails.suggestedStartDate,
+          shortTermGoals: programDetails.shortTermGoals,
+          longTermGoals: programDetails.longTermGoals,
+          familialConcerns: programDetails.familialConcerns,
+          permittedIndividuals: [
+            {
+              name: "temp",
+              phoneNumber: 123,
+              relationshipToChildren: "temp",
+              additionalNotes: "temp",
+            },
+          ],
+        },
+      };
+      console.log(intakeData);
+      await IntakeAPIClient.post(intakeData);
+      onNextStep();
+    } else {
+      onNextStep();
     }
   };
 
@@ -116,10 +242,7 @@ const IntakeFooter = ({
 
       <SubmitCaseModal
         isOpen={isOpenSubmitCase}
-        onClick={() => {
-          // TODO: implement submit/POST functionality
-          onNextStep();
-        }}
+        onClick={submitForm}
         onClose={onCloseSubmitCase}
       />
       <SubmitErrorModal

@@ -45,6 +45,19 @@ class FamilialConcernService(IFamilialConcernService):
             self.logger.error(str(error))
             raise error
 
+    def get_familial_concerns_str_by_intake(self, intake_id: int):
+        try:
+            intake_instance = Intake.query.filter_by(id=intake_id).first()
+            familial_concerns = [
+                FamilialConcernDTO(**result.to_dict())
+                for result in intake_instance.concerns
+            ]
+            concern_strings = [concern_obj.concern for concern_obj in familial_concerns]
+            return concern_strings
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def add_familial_concern(self, concern: str, is_default=False):
         try:
             new_familial_concern_entry = FamilialConcern(

@@ -3,12 +3,12 @@ from abc import ABC, abstractmethod
 
 class IAttendanceSheetService(ABC):
     """
-    Attedance sheet service interface
+    Attendance sheet service interface
     """
 
     @abstractmethod
     def get_attendance_sheet_by_intake(self, intake_id):
-        """Get attedance sheet from database tied to intake_id
+        """Get attendance sheet from database tied to intake_id
 
         :param intake_id: int of Intake id
         :return: AttendanceSheetDTO
@@ -48,5 +48,17 @@ class IAttendanceSheetService(ABC):
         :return: None
         :rtype: None
         :raises Exception: if an error occurs on the database deletion side
+        """
+        pass
+
+    @abstractmethod
+    def get_children_by_sheet(self, id):
+        """Gets all children associated with the attendance sheet
+
+        :param id: the id for attendance sheet
+        :type: int
+        :return: List of ChildDTO
+        :rtype: List of ChildDTO
+        :raises Exception: if id is invalid
         """
         pass

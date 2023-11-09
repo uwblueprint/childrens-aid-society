@@ -119,13 +119,7 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
-                
-    values = [(1,'JANUARY', 'Zhang' , 'csw', 'cpw', 'fcc'), 
-              (2,'FEBRUARY', 'Ama' , 'csw', 'cpw', 'fcc'), 
-              (3,'MARCH', 'Kevin' , 'csw', 'cpw', 'fcc')]
-         
-    for value in values:
-        insert_values(db, "attendance_sheets", ("id","month", "family_name", "csw", "cpw", "fcc"), value) 
+        
             
     values_sheets = [(999, 'Zhang' , 'csw', 'cpw', 'fcc'),
                      (1000, 'Zhang' , 'csw', 'cpw', 'fcc')]
@@ -141,6 +135,7 @@ def insert_test_data():
 
     for value in values_records:
         insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time", "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min", "child_family_support_worker_id", "comments"), value)
+
 
 # fmt: on
 

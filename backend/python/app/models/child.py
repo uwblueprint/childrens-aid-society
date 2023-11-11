@@ -1,6 +1,7 @@
 from . import db
 from .base_mixin import BaseMixin
 from .children_child_behaviors import children_child_behaviors
+from .child_providers import child_providers
 
 
 class Child(db.Model, BaseMixin):
@@ -20,6 +21,7 @@ class Child(db.Model, BaseMixin):
     intake = db.relationship("Intake")
     daytime_contact = db.relationship("DaytimeContact")
     behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)
+    providers = db.relationship("Provider", backref="children", secondary=child_providers)
     visit_cadences = db.relationship(
         "VisitCadence", backref="associated_child", cascade="all, delete"
     )

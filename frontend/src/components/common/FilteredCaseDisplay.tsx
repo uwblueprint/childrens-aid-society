@@ -42,7 +42,7 @@ const FilteredCaseDisplay = ({
             <CaseCard
               key={caseData.caseId}
               caseId={caseData.caseId}
-              caseLead={caseData.caseLead}
+              referringWorker={caseData.referringWorker}
               date={caseData.date}
               familyName={caseData.familyName}
               caseTag={caseData.caseTag}

@@ -11,42 +11,42 @@ const cases: { [key: string]: CaseCardProps[] } = {
   active: [
     {
       caseId: 0,
-      caseLead: "Case 0",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
       caseId: 1,
-      caseLead: "Case 1",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
       caseId: 2,
-      caseLead: "Case 2",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
       caseId: 3,
-      caseLead: "Case 3",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
       caseId: 4,
-      caseLead: "Case 4",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
     },
     {
       caseId: 5,
-      caseLead: "Case 5",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ACTIVE,
@@ -56,7 +56,7 @@ const cases: { [key: string]: CaseCardProps[] } = {
   pending: [
     {
       caseId: 6,
-      caseLead: "Case 1",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.PENDING,
@@ -65,21 +65,21 @@ const cases: { [key: string]: CaseCardProps[] } = {
   archived: [
     {
       caseId: 7,
-      caseLead: "Case 1",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ARCHIVED,
     },
     {
       caseId: 8,
-      caseLead: "Case 1",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ARCHIVED,
     },
     {
       caseId: 9,
-      caseLead: "Case 1",
+      referringWorker: "John Doe Worker",
       date: "11/06/2023",
       familyName: "Family Name",
       caseTag: CaseStatus.ARCHIVED,

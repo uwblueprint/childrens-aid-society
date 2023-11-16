@@ -20,10 +20,12 @@ const CaseOverviewBody = (): React.ReactElement => {
   const { id } = useParams<{ id: string }>();
   const caseNumber: number = parseInt(id, 10);
 
-  const { state } = useLocation<{ caseLead: string }>();
-  const { caseLead } = state;
+  const { state } = useLocation<{ referringWorker: string }>();
+  const { referringWorker } = state;
 
-  const [leadName, setLeadName] = useState(caseLead);
+  const [referringWorkerName, setReferringWorkerName] = useState(
+    referringWorker,
+  );
 
   const {
     onOpen: onOpenVisitCadenceModal,
@@ -42,7 +44,7 @@ const CaseOverviewBody = (): React.ReactElement => {
   const changeLead = async () => {
     const intakeID = caseNumber;
     const changedData: Record<string, string> = {
-      referringWorkerName: leadName,
+      referringWorkerName,
     };
     try {
       const result = await intakeAPIClient.put({ changedData, intakeID });
@@ -77,15 +79,15 @@ const CaseOverviewBody = (): React.ReactElement => {
             <Input
               variant="filled"
               placeholder="Search name"
-              value={leadName}
-              onChange={(event) => setLeadName(event.target.value)}
+              value={referringWorkerName}
+              onChange={(event) => setReferringWorkerName(event.target.value)}
             />
             <Button
               backgroundColor="#f8fcfc"
               color="#8397c0"
               borderColor="#8397c0"
               variant="outline"
-              disabled={leadName === ""}
+              disabled={referringWorkerName === ""}
               onClick={() => {
                 changeLead();
               }}

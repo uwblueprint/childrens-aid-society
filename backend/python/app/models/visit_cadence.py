@@ -33,7 +33,7 @@ class VisitCadence(db.Model, BaseMixin):
     date = db.Column(date_enum, nullable=False)
     time = db.Column(db.String, nullable=False)
     frequency = db.Column(frequency_enum, nullable=False)
-    family_member = db.Column(family_member_enum, nullable=False)
+    family_member = db.Column(family_member_enum, nullable=True)
     notes = db.Column(db.String, nullable=True)
     intake_id = db.Column(
         db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False

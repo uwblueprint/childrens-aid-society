@@ -1,133 +1,91 @@
 import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import { CaseCardProps } from "../dashboard/CaseCard";
 import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
+import { Case } from "../../types/CasesContextTypes";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
-const cases: { [key: string]: CaseCardProps[] } = {
-  active: [
-    {
-      caseId: 0,
-      caseLead: "Case 0",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-    {
-      caseId: 1,
-      caseLead: "Case 1",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-    {
-      caseId: 2,
-      caseLead: "Case 2",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-    {
-      caseId: 3,
-      caseLead: "Case 3",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-    {
-      caseId: 4,
-      caseLead: "Case 4",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-    {
-      caseId: 5,
-      caseLead: "Case 5",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ACTIVE,
-    },
-  ],
-  submitted: [],
-  pending: [
-    {
-      caseId: 6,
-      caseLead: "Case 1",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.PENDING,
-    },
-  ],
-  archived: [
-    {
-      caseId: 7,
-      caseLead: "Case 1",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ARCHIVED,
-    },
-    {
-      caseId: 8,
-      caseLead: "Case 1",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ARCHIVED,
-    },
-    {
-      caseId: 9,
-      caseLead: "Case 1",
-      date: "11/06/2023",
-      familyName: "Family Name",
-      caseTag: CaseStatus.ARCHIVED,
-    },
-  ],
-};
-
-const LoadMoreButton = () => {
-  return (
-    <Flex justifyContent="center" py="45px">
-      <Button
-        variant="ghost"
-        px="2"
-        rounded="lg"
-        border="1px"
-        borderColor="blue.400"
-        color="blue.400"
-        bg="blue.50"
-      >
-        Load More Cases
-      </Button>
-    </Flex>
-  );
-};
 const Cases = (): React.ReactElement | null => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const status = queryParams.get("status");
+  const { status } = useParams<{ status: string }>();
   const history = useHistory();
 
   const goToHomepage = () => {
     history.push("/");
   };
 
-  if (!status) {
-    goToHomepage();
-    return null;
-  }
-
   const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1);
-  const validStatus = Object.values(CaseStatus).includes(
-    status.toUpperCase() as CaseStatus,
-  );
 
-  if (!validStatus) {
-    goToHomepage();
-    return null;
-  }
+  const statusToCaseStatus: Record<string, CaseStatus> = {
+    active: CaseStatus.ACTIVE,
+    archived: CaseStatus.ARCHIVED,
+    submitted: CaseStatus.SUBMITTED,
+    pending: CaseStatus.PENDING,
+  };
+
+  const enumStatus = statusToCaseStatus[status];
+
+  const [cases, setCases] = useState<CaseCardProps[]>([]);
+  const [capacity, setCapacity] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
+    if (intakes.length > 0) {
+      return intakes.map((intake) => ({
+        caseId:
+          typeof intake.case_id === "number"
+            ? intake.case_id
+            : parseInt(intake.case_id, 10),
+        caseLead: intake.caseReferral.referringWorkerName,
+        date: intake.caseReferral.referralDate,
+        familyName: intake.caseReferral.familyName,
+        caseTag: intake.intakeStatus,
+      }));
+    }
+    return [];
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const moreCases = mapIntakeResponsesToCaseCards(
+        await IntakeAPIClient.get(enumStatus, page, 8),
+      );
+
+      if (moreCases.length === 0) {
+        setCapacity(true);
+      } else {
+        setCases((prevData) => [...prevData, ...moreCases]);
+      }
+    };
+
+    fetchData();
+  }, [enumStatus, page]);
+
+  const handleLoadMore = () => {
+    setPage(page + 1); // Increment the page number to load the next page
+  };
+
+  const LoadMoreButton = () => {
+    return (
+      <Flex justifyContent="center" py="45px">
+        <Button
+          variant="ghost"
+          px="2"
+          rounded="lg"
+          border="1px"
+          borderColor="blue.400"
+          color="blue.400"
+          bg="blue.50"
+          onClick={handleLoadMore}
+        >
+          Load More Cases
+        </Button>
+      </Flex>
+    );
+  };
 
   return (
     <Box display="flex" justifyContent="center" flexDirection="column">
@@ -158,12 +116,12 @@ const Cases = (): React.ReactElement | null => {
         </Text>
         <Box pt="60px" marginLeft="-10%" alignSelf="flex-start">
           <FilteredCaseDisplay
-            cases={cases[status]}
-            numberOfRows={2}
+            cases={cases}
+            numberOfRows={2 + (page - 1) * 2}
             status={status}
           />
         </Box>
-        {cases[status].length && <LoadMoreButton />}
+        {!capacity && <LoadMoreButton />}
       </Box>
     </Box>
   );

@@ -74,7 +74,7 @@ def get_all_intakes():
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
             for child in just_children:
-                providers = provider_service.get_providers_by_child_id(child.id)
+                providers = provider_service.get_providers_by_child(child.id)
                 child_info = {
                     "name": f"{child.first_name} {child.last_name}",
                     "dateOfBirth": child.date_of_birth,
@@ -299,8 +299,11 @@ def create_intake():
         except Exception as error:
             run_undos()
             return jsonify(error), 400
-
+     
+    children_providers = {}
+    all_providers = []
     children = request.json["children"]
+    #children
     for child in children:
         # daytime contact
         daytimeContact = child["daytimeContact"]
@@ -342,32 +345,18 @@ def create_intake():
         except Exception as error:
             run_undos()
             return jsonify(error), 400
+        
+        #provider
+        providers_by_child = child["provider"]
+        for provider in providers_by_child:
+            if provider.providerId in children_providers:
+                children_providers[provider["providerId"]].append(child_response.id)
+            else:
+                children_providers[provider["providerId"]] = [child_response.id]
 
-        # provider
-        providers = child["provider"]
-        for provider in providers:
-            provider_obj = {
-                "name": provider["name"],
-                "file_number": provider["fileNumber"],
-                "primary_phone_number": provider["primaryPhoneNumber"],
-                "secondary_phone_number": provider["secondaryPhoneNumber"],
-                "email": provider["email"],
-                "address": provider["address"],
-                "relationship_to_child": provider["relationshipToChild"],
-                "additional_contact_notes": provider["additionalContactNotes"],
-                "child_id": child_response.id,
-            }
-            try:
-                provider_response = provider_service.create_new_provider(
-                    CreateProviderDTO(**provider_obj)
-                )
-                undos.append(
-                    (provider_service, "delete_provider", provider_response.id)
-                )
-            except Exception as error:
-                run_undos()
-                return jsonify(error), 400
-
+            if not any(x.providerId == provider.providerId for x in all_providers):
+                all_providers.append(provider)
+            
         # concerns
         concerns = child["childInfo"]["concerns"]
         for concern in concerns:
@@ -389,7 +378,32 @@ def create_intake():
             except Exception as error:
                 run_undos()
                 return jsonify(error), 400
+            
+    #create providers
+    for provider in all_providers:
+        provider_obj = {
+            "name": provider["name"],
+            "intake_id": new_intake.id,
+            "file_number": provider["fileNumber"],
+            "primary_phone_number": provider["primaryPhoneNumber"],
+            "secondary_phone_number": provider["secondaryPhoneNumber"],
+            "email": provider["email"],
+            "address": provider["address"],
+            "relationship_to_child": provider["relationshipToChild"],
+            "additional_contact_notes": provider["additionalContactNotes"],
+        }
 
+        try:    
+            provider_response = provider_service.create_new_provider(
+                CreateProviderDTO(**provider_obj), children_providers[provider["providerId"]]
+            )   
+            undos.append(
+                (provider_service, "delete_provider", provider_response.id)
+            )
+        except Exception as error:
+            run_undos()
+            return jsonify(error), 400
+            
     return jsonify(new_intake.__dict__), 201
 
 

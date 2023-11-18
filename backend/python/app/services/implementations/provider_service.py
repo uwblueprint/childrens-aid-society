@@ -21,7 +21,7 @@ class ProviderService(IProviderService):
             self.logger.error(str(error))
             raise error
 
-    def create_new_provider(self, provider):
+    def create_new_provider(self, provider, children_ids):
         try:
             if not provider:
                 raise Exception(
@@ -34,6 +34,11 @@ class ProviderService(IProviderService):
                 raise Exception(error_list)
 
             new_provider_entry = Provider(**provider.__dict__)
+                        
+            for child_id in children_ids:
+                child = Child.query.filter_by(id=child_id)
+                new_provider_entry.children.append(child)
+
             db.session.add(new_provider_entry)
             db.session.commit()
 

@@ -54,6 +54,7 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
+        intake_new_list = []
         for intake in intakes:
             caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
             caregivers = []
@@ -69,7 +70,6 @@ def get_all_intakes():
                     "additionalContactNotes": caregiver.additional_contact_notes,
                 }
                 caregivers.append(caregiver_obj)
-            intake.caregivers = caregivers
 
             just_children = child_service.get_children_by_intake_id(intake.id)
             new_children = []
@@ -81,7 +81,9 @@ def get_all_intakes():
                     "cpinFileNumber": child.cpin_number,
                     "serviceWorker": child.service_worker,
                     "specialNeeds": child.special_needs,
-                    "concerns": [],
+                    "concerns": childBehavior_service.get_concerns_str_by_child(
+                        child.id
+                    ),
                 }
 
                 daytime_contact = (
@@ -110,7 +112,6 @@ def get_all_intakes():
                 }
 
                 new_children.append(new_child)
-            intake.children = new_children
 
             opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(
                 intake.id
@@ -125,22 +126,46 @@ def get_all_intakes():
                 }
                 new_opis.append(new_opi)
 
-            program_details = {
-                "transportRequirements": "",
-                "schedulingRequirements": "",
-                "suggestedStartDate": "",
-                "shortTermGoals": goal_service.get_goal_names_by_intake(
-                    intake.id, "SHORT_TERM"
-                ),
-                "longTermGoals": goal_service.get_goal_names_by_intake(
-                    intake.id, "LONG_TERM"
-                ),
-                "familialConcerns": [],
-                "permittedIndividuals": new_opis,
+            intake_new = {
+                "user_id": intake.user_id,
+                "case_id": intake.id,
+                "intake_status": intake.intake_status,
+                "caseReferral": {
+                    "referringWorker": intake.referring_worker_name,
+                    "referringWorkerContact": intake.referring_worker_contact,
+                    "cpinFileNumber": intake.cpin_number,
+                    "cpinFileType": intake.cpin_file_type,
+                    "familyName": intake.family_name,
+                    "referralDate": intake.referral_date,
+                },
+                "courtInformation": {
+                    "courtStatus": intake.court_status,
+                    "orderReferral": intake.court_order_file,
+                    "firstNationHeritage": intake.first_nation_heritage,
+                    "firstNationBand": intake.first_nation_band,
+                },
+                "children": new_children,
+                "caregivers": caregivers,
+                "programDetails": {
+                    "transportationRequirements": intake.transportation_requirements,
+                    "schedulingRequirements": intake.scheduling_requirements,
+                    "suggestedStartDate": intake.suggested_start_date,
+                    "shortTermGoals": goal_service.get_goal_names_by_intake(
+                        intake.id, "SHORT_TERM"
+                    ),
+                    "longTermGoals": goal_service.get_goal_names_by_intake(
+                        intake.id, "LONG_TERM"
+                    ),
+                    "familialConcerns": familialConcern_service.get_familial_concerns_str_by_intake(
+                        intake.id
+                    ),
+                    "permittedIndividuals": new_opis,
+                },
             }
-            intake.programDetails = program_details
 
-        return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
+            intake_new_list.append(intake_new)
+
+        return jsonify(intake_new_list), 200
     except Exception as error:
         return jsonify(error), 400
 

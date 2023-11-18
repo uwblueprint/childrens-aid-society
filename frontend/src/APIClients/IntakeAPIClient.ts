@@ -6,20 +6,27 @@ import CaseStatus from "../types/CaseStatus";
 
 interface Intake {
   user_id: number;
-  id: number;
-  referring_worker_name: string;
-  referring_worker_contact: string;
-  cpin_number: string;
-  cpin_file_type: string;
-  family_name: string;
+  case_id: number;
   intake_status: string;
-  referral_date: string;
-  court_status: string;
-  first_nation_heritage: string;
-  first_nation_band: string;
-  transportation_requirements: string;
-  scheduling_requirements: string;
-  suggested_start_date: string;
+  caseReferral: {
+    referringWorkerName: string;
+    referringWorkerContact: string;
+    cpinFileNumber: string;
+    cpinFileType: string;
+    familyName: string;
+    referralDate: string;
+  };
+  courtInformation: {
+    courtStatus: string;
+    orderReferral: string;
+    firstNationHeritage: string;
+    firstNationBand: string;
+  };
+  programDetails: {
+    transportationRequirements: string;
+    schedulingRequirements: string;
+    suggestedStartDate: string;
+  };
 }
 
 const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
@@ -58,23 +65,23 @@ const get = async (
 
     const mappedData: Case[] = data.map((intake) => ({
       user_id: intake.user_id.toString(),
-      case_id: intake.id.toString(),
+      case_id: intake.case_id.toString(),
       intakeStatus: <CaseStatus>intake.intake_status,
       caseReferral: {
-        referringWorkerName: intake.referring_worker_name,
-        referringWorkerContact: intake.referring_worker_contact,
-        cpinFileNumber: parseInt(intake.cpin_number, 20),
-        cpinFileType: intake.cpin_file_type,
-        familyName: intake.family_name,
-        referralDate: new Date(intake.referral_date).toLocaleDateString(
-          "en-GB",
-        ),
+        referringWorkerName: intake.caseReferral.referringWorkerName,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 20),
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
       },
       courtInformation: {
-        courtStatus: intake.court_status,
+        courtStatus: intake.courtInformation.courtStatus,
         orderReferral: 0,
-        firstNationHeritage: intake.first_nation_heritage,
-        firstNationBand: intake.first_nation_band,
+        firstNationHeritage: intake.courtInformation.firstNationHeritage,
+        firstNationBand: intake.courtInformation.firstNationBand,
       },
       children: [
         {
@@ -119,9 +126,9 @@ const get = async (
         },
       ],
       programDetails: {
-        transportRequirements: intake.transportation_requirements,
-        schedulingRequirements: intake.scheduling_requirements,
-        suggestedStartDate: intake.suggested_start_date,
+        transportRequirements: intake.programDetails.transportationRequirements,
+        schedulingRequirements: intake.programDetails.schedulingRequirements,
+        suggestedStartDate: intake.programDetails.suggestedStartDate,
         shortTermGoals: [],
         longTermGoals: [],
         familialConcerns: [],
@@ -135,7 +142,6 @@ const get = async (
         ],
       },
     }));
-
     return mappedData;
   } catch (error) {
     return error;

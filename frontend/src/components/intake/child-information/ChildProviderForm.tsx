@@ -78,7 +78,7 @@ const ChildProviderForm = ({
     contactNotes: "",
     address: "",
     relationship: "",
-    providerId: 0
+    providerId: 0,
   };
 
   return (
@@ -111,7 +111,9 @@ const ChildProviderForm = ({
             provider={
               selectedIndex >= 0 ? providers[selectedIndex] : emptyProvider
             }
-            providerId={selectedIndex >= 0 ? selectedIndex : allProviders.length -1}
+            providerId={
+              selectedIndex >= 0 ? selectedIndex : allProviders.length - 1
+            }
           />
         </Box>
       </VStack>

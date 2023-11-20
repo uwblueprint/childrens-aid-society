@@ -14,7 +14,7 @@ export type ProviderDetails = {
   contactNotes?: string;
   address: string;
   relationship: string;
-  providerId: number
+  providerId: number;
 };
 
 export type Providers = ProviderDetails[];
@@ -24,7 +24,7 @@ type NewProviderProps = {
   onClick: (newProvider: ProviderDetails) => void;
   onClose: () => void;
   provider: ProviderDetails;
-  providerId: number
+  providerId: number;
 };
 
 const NewProviderModal = ({
@@ -32,7 +32,7 @@ const NewProviderModal = ({
   onClick,
   onClose,
   provider,
-  providerId
+  providerId,
 }: NewProviderProps): React.ReactElement => {
   const [providerName, setProviderName] = useState("");
   const [providerFileNo, setProviderFileNo] = useState("");
@@ -237,7 +237,7 @@ const NewProviderModal = ({
             relationship: relationshipChanged
               ? relationship
               : provider.relationship,
-            providerId
+            providerId,
           };
           onClick(newProvider);
           handleClose();

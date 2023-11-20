@@ -10,7 +10,6 @@ import { CourtDetails } from "./CourtInformationForm";
 import { ProgramDetails } from "./ProgramForm";
 import { Children } from "./child-information/AddChildPage";
 import { Caregivers } from "./NewCaregiverModal";
-import { Case } from "../../types/CasesContextTypes";
 import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
@@ -81,11 +80,6 @@ const IntakeFooter = ({
   };
 
   const submitForm = async () => {
-    console.log("clicked");
-    console.log(referralDetails);
-    console.log(courtDetails);
-    console.log(childrens);
-    console.log(programDetails);
     if (
       referralDetails &&
       courtDetails &&
@@ -93,22 +87,25 @@ const IntakeFooter = ({
       caregivers &&
       programDetails
     ) {
-      const intakeData: Case = {
-        user_id: 1,
-        case_id: 1,
+      const intakeData = {
+        userId: 1,
         intakeStatus: CaseStatus.ACTIVE,
         caseReferral: {
           referringWorkerName: referralDetails.referringWorker,
           referringWorkerContact: referralDetails.referringWorkerContact,
-          cpinFileNumber: parseInt(referralDetails.cpinFileNumber, 10),
-          cpinFileType: referralDetails.cpinFileType,
+          cpinFileNumber: referralDetails.cpinFileNumber,
+          cpinFileType: referralDetails.cpinFileType || "INVESTIGATION",
           familyName: referralDetails.familyName,
           referralDate: referralDetails.referralDate,
         },
         courtInformation: {
-          courtStatus: courtDetails.currentCourtStatus,
-          orderReferral: 0,
-          firstNationHeritage: courtDetails.firstNationHeritage,
+          courtStatus: courtDetails.currentCourtStatus
+            .toUpperCase()
+            .replace(/ /g, "_"), // for enum
+          orderReferral: "file binary",
+          firstNationHeritage:
+            courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
+            "FIRST_NATION_REGISTERED",
           firstNationBand: courtDetails.firstNationBand,
         },
         children: childrens.map((child) => {
@@ -171,14 +168,13 @@ const IntakeFooter = ({
           permittedIndividuals: [
             {
               name: "temp",
-              phoneNumber: 123,
+              phoneNumber: "123-123-1231",
               relationshipToChildren: "temp",
               additionalNotes: "temp",
             },
           ],
         },
       };
-      console.log(intakeData);
       await IntakeAPIClient.post(intakeData);
       onNextStep();
     } else {

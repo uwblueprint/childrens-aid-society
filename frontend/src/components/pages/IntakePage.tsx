@@ -142,13 +142,6 @@ const Intake = (): React.ReactElement => {
               Thank you for completing the intake form
             </Heading>
             <Text>The admin team will review it promptly.</Text>
-            {
-              (console.log("footer"),
-              console.log(referralDetails),
-              console.log(courtDetails),
-              console.log(children),
-              console.log(programDetails))
-            }
             <IntakeFooter
               nextButtonText="Return to dashboard"
               isStepComplete={() => true}

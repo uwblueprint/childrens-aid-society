@@ -29,13 +29,13 @@ interface Intake {
   };
 }
 
-const post = async (formData: Case): Promise<Case> => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+const post = async (formData: any): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    console.log(formData);
     const { data } = await baseAPIClient.post("/intake", formData, {
       headers: { Authorization: bearerToken },
     });

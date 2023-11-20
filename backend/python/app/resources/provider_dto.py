@@ -14,6 +14,7 @@ class ProviderDTO:
         self.relationship_to_child = kwargs.get("relationship_to_child")
         self.additional_contact_notes = kwargs.get("additional_contact_notes")
 
+
 class CreateProviderDTO(ProviderDTO):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -30,7 +30,7 @@ class ChildService(IChildService):
                 raise Exception("Child passed is not of CreateChildDTO type")
             error_list = child.validate()
             if error_list:
-                raise Exception(error_list)            
+                raise Exception(error_list)
             new_child_entry = Child(**child.__dict__)
             db.session.add(new_child_entry)
             db.session.commit()

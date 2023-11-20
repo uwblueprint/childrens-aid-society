@@ -324,11 +324,11 @@ def create_intake():
         except Exception as error:
             run_undos()
             return jsonify(error), 400
-     
+
     children_providers = {}
     all_providers = []
     children = request.json["children"]
-    #children
+    # children
     for child in children:
         # daytime contact
         daytimeContact = child["daytimeContact"]
@@ -370,8 +370,8 @@ def create_intake():
         except Exception as error:
             run_undos()
             return jsonify(error), 400
-        
-        #provider
+
+        # provider
         providers_by_child = child["provider"]
         for provider in providers_by_child:
             if provider.providerId in children_providers:
@@ -381,7 +381,7 @@ def create_intake():
 
             if not any(x.providerId == provider.providerId for x in all_providers):
                 all_providers.append(provider)
-            
+
         # concerns
         concerns = child["childInfo"]["concerns"]
         for concern in concerns:
@@ -403,8 +403,8 @@ def create_intake():
             except Exception as error:
                 run_undos()
                 return jsonify(error), 400
-            
-    #create providers
+
+    # create providers
     for provider in all_providers:
         provider_obj = {
             "name": provider["name"],
@@ -418,17 +418,16 @@ def create_intake():
             "additional_contact_notes": provider["additionalContactNotes"],
         }
 
-        try:    
+        try:
             provider_response = provider_service.create_new_provider(
-                CreateProviderDTO(**provider_obj), children_providers[provider["providerId"]]
-            )   
-            undos.append(
-                (provider_service, "delete_provider", provider_response.id)
+                CreateProviderDTO(**provider_obj),
+                children_providers[provider["providerId"]],
             )
+            undos.append((provider_service, "delete_provider", provider_response.id))
         except Exception as error:
             run_undos()
             return jsonify(error), 400
-            
+
     return jsonify(new_intake.__dict__), 201
 
 

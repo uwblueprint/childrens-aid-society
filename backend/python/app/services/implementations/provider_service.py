@@ -1,7 +1,7 @@
 from ...models import db
 from ...models.child import Child
-from ...resources.child_dto import ChildDTO
 from ...models.provider import Provider
+from ...resources.child_dto import ChildDTO
 from ...resources.provider_dto import CreateProviderDTO, ProviderDTO
 from ..interfaces.provider_service import IProviderService
 
@@ -34,7 +34,7 @@ class ProviderService(IProviderService):
                 raise Exception(error_list)
 
             new_provider_entry = Provider(**provider.__dict__)
-                        
+
             for child_id in children_ids:
                 child = Child.query.filter_by(id=child_id)
                 new_provider_entry.children.append(child)
@@ -62,14 +62,12 @@ class ProviderService(IProviderService):
     def get_children_by_provider(self, provider_id):
         try:
             provider = Provider.query.filter_by(id=provider_id).first()
-            children_dto = [
-                ChildDTO(**child.to_dict()) for child in provider.children
-            ]
+            children_dto = [ChildDTO(**child.to_dict()) for child in provider.children]
             return children_dto
         except Exception as error:
             self.logger.error(str(error))
             raise error
-    
+
     def get_providers_by_child(self, child_id):
         try:
             child = Child.query.filter_by(id=child_id).first()

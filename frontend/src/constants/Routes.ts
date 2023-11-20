@@ -3,7 +3,7 @@ export const INTAKE_PAGE = "/intake";
 export const VISIT_PAGE = "/visit/:caseId/:visitId";
 export const LOGIN_PAGE = "/login";
 export const SIGNUP_PAGE = "/signup";
-export const CASES_PAGE = "/cases";
+export const CASES_PAGE = "/cases/:status";
 export const CASEOVERVIEW_PAGE = "/caseoverview/:id";
 
 // TODO: Delete these

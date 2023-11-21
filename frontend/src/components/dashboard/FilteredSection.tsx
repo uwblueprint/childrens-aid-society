@@ -22,7 +22,7 @@ const FilteredSection = ({
 }): React.ReactElement => {
   const history = useHistory();
   const viewAllCases = () => {
-    history.push(`/cases?status=${status.toLowerCase()}`);
+    history.push(`/cases/${status.toLowerCase()}`);
   };
 
   return (

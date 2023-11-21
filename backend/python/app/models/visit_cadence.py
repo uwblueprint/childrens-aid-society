@@ -42,5 +42,5 @@ class VisitCadence(db.Model, BaseMixin):
         db.Integer, db.ForeignKey("children.id", ondelete="CASCADE"), nullable=True
     )
     caregiver_id = db.Column(
-        db.Integer, db.ForeignKey("caregivers.id", ondelete="CASCADE"), nullable=False
+        db.Integer, db.ForeignKey("caregivers.id", ondelete="CASCADE"), nullable=True
     )

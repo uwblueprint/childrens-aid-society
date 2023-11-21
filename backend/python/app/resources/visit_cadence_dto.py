@@ -23,8 +23,7 @@ class CreateVisitCadenceDTO(VisitCadenceDTO):
             error_list.append("The time supplied is invalid")
         if not self.frequency or not type(self.frequency) == str:
             error_list.append("The frequency supplied is invalid")
-        if not self.family_member or not type(self.family_member) == str:
-            error_list.append("The family_member supplied is invalid")
+       
 
         # optional args
         if self.intake_id and not type(self.intake_id) == int:
@@ -35,5 +34,7 @@ class CreateVisitCadenceDTO(VisitCadenceDTO):
             error_list.append("The notes supplied is invalid")
         if self.caregiver_id and not type(self.caregiver_id) == int:
             error_list.append("The caregiver_id supplied is invalid")
+        if self.family_member and not type(self.family_member) == str:
+            error_list.append("The family_member supplied is invalid")
 
         return error_list

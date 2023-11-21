@@ -9,10 +9,10 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDown, X, Plus } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
-
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 import { VisitCadenceSelectField } from "./VisitCadenceSelectField";
+import VisitCadenceAPIClient from "../../APIClients/VisitCadenceAPIClient";
 
 export type VisitCadenceModalProps = {
   caseNumber?: number;
@@ -181,7 +181,11 @@ const VisitCadenceModal = ({
         }
         disabled={!visitingFamilyMember || !time || !date || !frequency}
         primaryButtonTitle="Save"
-        onClick={onClick}
+        onClick={async () => {
+          console.log(date, time, 6, frequency);
+          console.log("hello");
+          await VisitCadenceAPIClient.post(date, frequency, 6, time);
+        }}
         isOpen={isOpen}
         onClose={onClose}
         unsavedProgressModal={false}
@@ -189,5 +193,4 @@ const VisitCadenceModal = ({
     </Box>
   );
 };
-
 export default VisitCadenceModal;

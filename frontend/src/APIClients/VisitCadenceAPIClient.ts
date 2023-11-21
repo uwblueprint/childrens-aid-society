@@ -3,32 +3,82 @@ import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
 import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
 
 interface VisitCadence {
-  caregiver_id: number;
-  child_id: number;
   date: string;
-  family_member: string;
   frequency: string;
-  id: number;
   intake_id: number;
-  notes: string;
   time: string;
+  caregiver_id?: number;
+  child_id?: number;
+  family_member?: string;
+  id?: number;
+  notes?: string;
 }
 
-const post = async ({
-  formData,
-}: {
-  formData: FormData;
-}): Promise<VisitCadence> => {
+const post = async (
+  date: string,
+  frequency: string,
+  intake_id: number,
+  time: string,
+  caregiver_id?: number,
+  child_id?: number,
+  family_member?: string,
+  id?: number,
+  notes?: string,
+): Promise<VisitCadence> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.post("/cadence", formData, {
+    let visitCadenceData = {
+      date,
+      frequency,
+      intake_id,
+      time,
+    };
+    if (caregiver_id) {
+      const updatedData = {
+        ...visitCadenceData,
+        caregiver_id,
+      };
+      visitCadenceData = updatedData;
+    }
+    if (child_id) {
+      const updatedData = {
+        ...visitCadenceData,
+        child_id,
+      };
+      visitCadenceData = updatedData;
+    }
+    if (family_member) {
+      const updatedData = {
+        ...visitCadenceData,
+        family_member,
+      };
+      visitCadenceData = updatedData;
+    }
+    if (id) {
+      const updatedData = {
+        ...visitCadenceData,
+        id,
+      };
+      visitCadenceData = updatedData;
+    }
+    if (notes) {
+      const updatedData = {
+        ...visitCadenceData,
+        notes,
+      };
+      visitCadenceData = updatedData;
+    }
+    console.log(visitCadenceData);
+
+    const { data } = await baseAPIClient.post("/cadence", visitCadenceData, {
       headers: { Authorization: bearerToken },
     });
     return data;
   } catch (error) {
+    console.log(error);
     return error;
   }
 };

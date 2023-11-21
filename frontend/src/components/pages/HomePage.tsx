@@ -16,6 +16,7 @@ import CaseStatus from "../../types/CaseStatus";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
+import VisitCadenceAPIClient from "../../APIClients/VisitCadenceAPIClient";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";

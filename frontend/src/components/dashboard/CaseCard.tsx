@@ -8,7 +8,7 @@ import PermanentDeleteModal from "./PermanentDeleteModal";
 
 export type CaseCardProps = {
   caseId: number;
-  caseLead: string;
+  referringWorker: string;
   date: string;
   familyName: string;
   caseTag: CaseStatus;
@@ -31,7 +31,7 @@ const colorChange = (value: string) => {
 
 const CaseCard = ({
   caseId,
-  caseLead,
+  referringWorker,
   date,
   familyName,
   caseTag,
@@ -59,7 +59,7 @@ const CaseCard = ({
     if (status === "ACTIVE") {
       history.push({
         pathname: `/caseoverview/${caseId}`,
-        state: { caseLead },
+        state: { referringWorker },
       });
     } else {
       onOpenStatusModal();
@@ -96,7 +96,7 @@ const CaseCard = ({
           marginBottom="10px"
         >
           <Text textStyle="body-medium" marginBottom="15px">
-            {caseLead}
+            {referringWorker}
           </Text>
           <Text textStyle="body-medium" marginBottom="15px">
             {date}

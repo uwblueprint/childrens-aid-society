@@ -21,7 +21,7 @@ class ProviderService(IProviderService):
             self.logger.error(str(error))
             raise error
 
-    def create_new_provider(self, provider, children_ids):
+    def create_new_provider(self, provider, children_ids=[]):
         try:
             if not provider:
                 raise Exception(

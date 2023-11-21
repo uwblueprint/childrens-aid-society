@@ -34,8 +34,6 @@ class CreateProviderDTO(ProviderDTO):
             or not type(self.relationship_to_child) == str
         ):
             error_list.append("The relationship to child supplied is invalid")
-        if not self.child_id or not type(self.child_id) == int:
-            error_list.append("The child id supplied is invalid")
 
         # optional fields
         if self.secondary_phone_number and not type(self.secondary_phone_number) == str:

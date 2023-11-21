@@ -119,6 +119,13 @@ def insert_test_data():
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
+    # AttendanceRecord
+    values = [
+        ('2000-10-09', 'idk', 'PARTIAL','10:00 AM', '01:00 PM', 'Room', [{1,1,'MOM', 'description', 'Ann', 'PRESENT', ''}], [{1,1,'parent', 'john', '30'}], 'comments', 'worker')
+    ]
+
+    for value in values:
+       insert_values(db, "attendance_records", ("visitDate", "visitDay", "visitSupervision", "startTime", "endTime", "location", "visiting_members", "transportation", "notes", "childAndFamilySupportWorker"), value)
 
 # fmt: on
 

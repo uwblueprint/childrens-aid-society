@@ -136,7 +136,6 @@ def insert_test_data():
     for value in values_records:
         insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time", "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min", "child_family_support_worker_id", "comments"), value)
 
-
 # fmt: on
 
 # fmt: off

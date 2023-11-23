@@ -102,14 +102,14 @@ class AttendanceRecordService(IAttendanceRecordService):
                 )
             if not isinstance(record_id, int):
                 raise Exception("Record id passed is not of int type")
-            
+
             record = AttendanceRecords.query.filter_by(id=record_id).first()
             if not record:
                 raise Exception(
                     "Attendance Record with id {} not found".format(record_id)
                 )
 
-            # edit with which fields can be updated - date 
+            # edit with which fields can be updated
             if "date" in updated_data:
                 record.date = updated_data["date"]
 

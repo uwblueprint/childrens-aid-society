@@ -117,8 +117,6 @@ class AttendanceSheetService(IAttendanceSheetService):
         except Exception as error:
             db.session.rollback()
             raise error
-    
-            raise error
 
     def get_children_by_sheet(self, id):
         try:
@@ -131,28 +129,3 @@ class AttendanceSheetService(IAttendanceSheetService):
             self.logger.error(str(error))
             raise error
 
-    def update_attendance_sheet(self,attendance_id: int, updated_data):
-        try:
-            if not attendance_id:
-                raise Exception("Empty attendance id passed to update_attendance_sheet function")
-            if not isinstance(attendance_id, int):
-                raise Exception("Sheet id passed is not of int type")
-            attendance_sheet = AttendanceSheets.query.filter_by(id=attendance_id).first()
-            # attendance_sheet = AttendanceSheetService.query.filter_by(id=attendance_id).first()
-            if not attendance_sheet:
-                raise Exception( "Attendance Sheet with id {} not found".format(attendance_id))
-            
-            #update these fields on put request 
-            if "cpw" in updated_data:
-                attendance_sheet.cpw = updated_data["cpw"]
-            if "csw" in updated_data:
-                attendance_sheet.csw = updated_data["csw"]
-            if "fcc" in updated_data:
-                attendance_sheet.fcc = updated_data["fcc"]
-                
-            db.session.commit()
-            return AttendanceSheetDTO(**attendance_sheet.to_dict())
-        except Exception as error:
-            db.session.rollback()
-            raise error
-    

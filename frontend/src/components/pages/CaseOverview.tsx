@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -16,8 +16,16 @@ import VisitCadenceModal from "../dashboard/VisitCadenceModal";
 import intakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 const CaseOverviewBody = (): React.ReactElement => {
-  const [leadName, setLeadName] = useState("");
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();
+  const caseNumber: number = parseInt(id, 10);
+
+  const { state } = useLocation<{ referringWorker: string }>();
+  const { referringWorker } = state;
+
+  const [referringWorkerName, setReferringWorkerName] = useState(
+    referringWorker,
+  );
 
   const {
     onOpen: onOpenVisitCadenceModal,
@@ -34,9 +42,9 @@ const CaseOverviewBody = (): React.ReactElement => {
     history.push("/");
   };
   const changeLead = async () => {
-    const intakeID = 1; // TODO replace with actual intake id
+    const intakeID = caseNumber;
     const changedData: Record<string, string> = {
-      lead_access_worker_name: leadName,
+      referringWorkerName,
     };
     try {
       const result = await intakeAPIClient.put({ changedData, intakeID });
@@ -71,15 +79,15 @@ const CaseOverviewBody = (): React.ReactElement => {
             <Input
               variant="filled"
               placeholder="Search name"
-              value={leadName}
-              onChange={(event) => setLeadName(event.target.value)}
+              value={referringWorkerName}
+              onChange={(event) => setReferringWorkerName(event.target.value)}
             />
             <Button
               backgroundColor="#f8fcfc"
               color="#8397c0"
               borderColor="#8397c0"
               variant="outline"
-              disabled={leadName === ""}
+              disabled={referringWorkerName === ""}
               onClick={() => {
                 changeLead();
               }}
@@ -317,7 +325,7 @@ const CaseOverviewBody = (): React.ReactElement => {
         </Flex>
       </Flex>
       <VisitCadenceModal
-        caseNumber={1} // TODO pass actual case data
+        caseNumber={caseNumber}
         status="ARCHIVED"
         isOpen={isOpenVisitCadenceModal}
         onClick={() => {}}
@@ -331,10 +339,12 @@ const CaseOverviewBody = (): React.ReactElement => {
 };
 
 const CaseOverview = (): React.ReactElement => {
+  const { id } = useParams<{ id: string }>();
+
   return (
     <Box>
       <IntakeHeader
-        primaryTitle="Case Name"
+        primaryTitle={`Case ${id}`}
         secondaryTitle="Case Management"
         hasLogout
       />

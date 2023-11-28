@@ -22,7 +22,7 @@ const FilteredSection = ({
 }): React.ReactElement => {
   const history = useHistory();
   const viewAllCases = () => {
-    history.push(`/cases?status=${status.toLowerCase()}`);
+    history.push(`/cases/${status.toLowerCase()}`);
   };
 
   return (
@@ -50,7 +50,7 @@ const FilteredSection = ({
         ) : (
           <Flex
             flexBasis="100%"
-            columnGap="24px"
+            columnGap="8px"
             pb="24px"
             alignItems="flex-start"
           >
@@ -59,7 +59,7 @@ const FilteredSection = ({
                 <CaseCard
                   key={caseData.caseId}
                   caseId={caseData.caseId}
-                  caseLead={caseData.caseLead}
+                  referringWorker={caseData.referringWorker}
                   date={caseData.date}
                   familyName={caseData.familyName}
                   caseTag={caseData.caseTag}

@@ -18,11 +18,15 @@ import { CaseCardProps } from "../dashboard/CaseCard";
 import IntakeApiClient from "../../APIClients/IntakeAPIClient";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const SecondaryHeader = (): React.ReactElement => {
   const history = useHistory();
 
+  const { setStep } = useStepValueContext();
+
   function goToIntake() {
+    setStep(0);
     history.push("/intake");
   }
 
@@ -72,7 +76,7 @@ const Home = (): React.ReactElement => {
           typeof intake.case_id === "number"
             ? intake.case_id
             : parseInt(intake.case_id, 10),
-        caseLead: intake.caseReferral.referringWorkerName,
+        referringWorker: intake.caseReferral.referringWorkerName,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
         caseTag: intake.intakeStatus,

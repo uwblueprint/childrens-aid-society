@@ -196,7 +196,7 @@ const Intake = (): React.ReactElement => {
           {renderIntakeHeader()}
           <Box padding="30px 0 160px 0">
             <Container maxWidth="container.xl" padding="30px 96px">
-              {step !== IntakeSteps.REVIEW_CASE_DETAILS &&
+              {step !== IntakeSteps.REVIEW_CASE_DETAILS ? (
                 step !== IntakeSteps.FORM_COMPLETE && (
                   <Button
                     leftIcon={<ArrowLeft />}
@@ -210,7 +210,18 @@ const Intake = (): React.ReactElement => {
                       ? "Back to Submission Review"
                       : "Back to Dashboard"}
                   </Button>
-                )}
+                )
+              ) : (
+                <Button
+                  leftIcon={<ArrowLeft />}
+                  onClick={() => {
+                    onOpenUnsavedProgress();
+                  }}
+                  variant="tertiary"
+                >
+                  Back to Dashboard
+                </Button>
+              )}
               {renderDetailsForm()}
             </Container>
           </Box>

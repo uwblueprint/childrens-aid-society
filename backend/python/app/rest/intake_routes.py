@@ -37,7 +37,6 @@ provider_service = ProviderService(current_app.logger)
 blueprint = Blueprint("intake", __name__, url_prefix="/intake")
 
 
-# get all intakes
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
 def get_all_intakes():
@@ -55,7 +54,118 @@ def get_all_intakes():
         pass
     try:
         intakes = intake_service.get_all_intakes(intake_status, page_number, page_limit)
-        return jsonify(list(map(lambda intake: intake.__dict__, intakes))), 200
+        intake_new_list = []
+        for intake in intakes:
+            caregivers_dtos = caregiver_service.get_caregivers_by_intake_id(intake.id)
+            caregivers = []
+            for caregiver in caregivers_dtos:
+                caregiver_obj = {
+                    "name": caregiver.name,
+                    "dateOfBirth": caregiver.date_of_birth,
+                    "individualConsiderations": caregiver.individual_considerations,
+                    "primaryPhoneNumber": caregiver.primary_phone_number,
+                    "secondaryPhoneNumber": caregiver.secondary_phone_number,
+                    "address": caregiver.address,
+                    "relationshipToChild": caregiver.relationship_to_child,
+                    "additionalContactNotes": caregiver.additional_contact_notes,
+                }
+                caregivers.append(caregiver_obj)
+
+            just_children = child_service.get_children_by_intake_id(intake.id)
+            new_children = []
+            for child in just_children:
+                providers = provider_service.get_providers_by_child_id(child.id)
+                child_info = {
+                    "name": f"{child.first_name} {child.last_name}",
+                    "dateOfBirth": child.date_of_birth,
+                    "cpinFileNumber": child.cpin_number,
+                    "serviceWorker": child.service_worker,
+                    "specialNeeds": child.special_needs,
+                    "concerns": childBehavior_service.get_concerns_str_by_child(
+                        child.id
+                    ),
+                }
+
+                daytime_contact = (
+                    daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
+                )
+
+                provider_list = []
+                for provider in providers:
+                    provider_list.append(
+                        {
+                            "name": provider.name,
+                            "fileNumber": provider.file_number,
+                            "primaryPhoneNumber": provider.primary_phone_number,
+                            "secondaryPhoneNumber": provider.secondary_phone_number,
+                            "email": provider.email,
+                            "address": provider.address,
+                            "relationshipToChild": provider.relationship_to_child,
+                            "additionalContactNotes": provider.additional_contact_notes,
+                        }
+                    )
+
+                new_child = {
+                    "childInfo": child_info,
+                    "daytimeContact": daytime_contact,
+                    "provider": provider_list,
+                }
+
+                new_children.append(new_child)
+
+            opis = permittedIndividual_service.get_other_permitted_individuals_by_intake_id(
+                intake.id
+            )
+            new_opis = []
+            for opi in opis:
+                new_opi = {
+                    "name": opi.name,
+                    "phoneNumber": opi.phone_number,
+                    "relationshipToChildren": opi.relationship_to_child,
+                    "additionalNotes": opi.notes,
+                }
+                new_opis.append(new_opi)
+
+            intake_new = {
+                "user_id": intake.user_id,
+                "case_id": intake.id,
+                "intake_status": intake.intake_status,
+                "caseReferral": {
+                    "referringWorker": intake.referring_worker_name,
+                    "referringWorkerContact": intake.referring_worker_contact,
+                    "cpinFileNumber": intake.cpin_number,
+                    "cpinFileType": intake.cpin_file_type,
+                    "familyName": intake.family_name,
+                    "referralDate": intake.referral_date,
+                },
+                "courtInformation": {
+                    "courtStatus": intake.court_status,
+                    "orderReferral": intake.court_order_file,
+                    "firstNationHeritage": intake.first_nation_heritage,
+                    "firstNationBand": intake.first_nation_band,
+                },
+                "children": new_children,
+                "caregivers": caregivers,
+                "programDetails": {
+                    "transportationRequirements": intake.transportation_requirements,
+                    "schedulingRequirements": intake.scheduling_requirements,
+                    "suggestedStartDate": intake.suggested_start_date,
+                    "shortTermGoals": goal_service.get_goal_names_by_intake(
+                        intake.id, "SHORT_TERM"
+                    ),
+                    "longTermGoals": goal_service.get_goal_names_by_intake(
+                        intake.id, "LONG_TERM"
+                    ),
+                    "familialConcerns": familialConcern_service.get_familial_concerns_str_by_intake(
+                        intake.id
+                    ),
+                    "permittedIndividuals": new_opis,
+                },
+            }
+
+            intake_new_list.append(intake_new)
+
+        return jsonify(intake_new_list), 200
     except Exception as error:
         return jsonify(error), 400
 

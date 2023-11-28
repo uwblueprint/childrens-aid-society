@@ -2,11 +2,12 @@ from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
-from ..services.implementations.attendance_sheet_service import AttendanceSheetService
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
+from ..services.implementations.attendance_sheet_service import AttendanceSheetService
+
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 attendance_record_service = AttendanceRecordService(current_app.logger)
 
@@ -90,19 +91,21 @@ def update_visit(id):
     try:
         updated_data = request.json
 
-        # Update record 
-        update_record = attendance_record_service.update_attendance_record(id, updated_data)
-        
-        # Update sheet 
-        update_sheet = attendance_sheet_service.update_attendance_sheet(id, updated_data)
-        
-        # The response for both 
+        # Update record
+        update_record = attendance_record_service.update_attendance_record(
+            id, updated_data
+        )
+
+        # Update sheet
+        update_sheet = attendance_sheet_service.update_attendance_sheet(
+            id, updated_data
+        )
+
+        # The response for both
         response_data = {
             "update_record": update_record.__dict__,
-            "update_sheet": update_sheet.__dict__
+            "update_sheet": update_sheet.__dict__,
         }
         return jsonify(response_data), 200
     except Exception as error:
         return jsonify(str(error)), 400
-
-

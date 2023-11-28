@@ -13,7 +13,8 @@ from app.resources.child_dto import ChildDTO, CreateChildDTO
 from app.services.implementations.child_service import ChildService
 
 DUMMY_USER_DATA = {
-    "name": "Hamza Yusuff",
+    "first_name": "Hamza",
+    "last_name": "Yusuff",
     "auth_id": "hbyusuff",
     "role": "User",
     "branch": "ALGOMA",
@@ -133,7 +134,7 @@ def test_null_case(child_service):
 
 def test_empty_input_string(child_service):
     param = CreateChildDTO(
-        name="Test",
+        name="",
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
@@ -144,7 +145,7 @@ def test_empty_input_string(child_service):
 
 def test_missing_field(child_service):
     param = CreateChildDTO(
-        name="Child",
+        name="",
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",

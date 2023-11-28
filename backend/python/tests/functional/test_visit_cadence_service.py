@@ -60,8 +60,7 @@ DUMMY_CAREGIVER_DATA = {
 }
 DUMMY_CHILD_DATA = {
     "intake_id": 1,
-    "first_name": "Test",
-    "last_name": "Child",
+    "name": "Test Child",
     "date_of_birth": "2020-05-17",
     "cpin_number": "1",
     "service_worker": "Test Worker",

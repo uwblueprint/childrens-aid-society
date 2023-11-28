@@ -87,7 +87,7 @@ def get_all_intakes():
                 }
 
                 daytime_contact = (
-                    daytimeContact_service.get_daytime_contact_by_intake_id(intake.id)
+                    daytimeContact_service.get_daytime_contact_by_child_id(child.id)
                 )
 
                 provider_list = []
@@ -334,6 +334,7 @@ def create_intake():
             "address": daytimeContact["address"],
             "contact_information": daytimeContact["contactInfo"],
             "dismissal_time": daytimeContact["dismissalTime"],
+            "child_id": child["id"],
         }
         try:
             daytimeContact_response = daytimeContact_service.create_new_daytime_contact(

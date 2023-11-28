@@ -14,8 +14,7 @@ from app.resources.child_behavior_dto import ChildBehaviorDTO
 from app.services.implementations.child_behavior_service import ChildBehaviorService
 
 DUMMY_USER_DATA = {
-    "first_name": "Hamza",
-    "last_name": "Yusuff",
+    "name": "Hamza Yusuff",
     "auth_id": "hbyusuff",
     "role": "User",
     "branch": "ALGOMA",

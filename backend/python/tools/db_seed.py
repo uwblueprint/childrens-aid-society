@@ -83,14 +83,14 @@ def insert_test_data():
 
     # Child
     values = [
-        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
-        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
-        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
-        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
+        (1, 'Anya Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
+        (1, 'Damian Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
+        (2, 'Becky Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
+        (3, 'Ewen Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
     ]
 
     for value in values:
-        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
+        insert_values(db, "children", ("intake_id", "name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
 
     # Caregivers
     values = [

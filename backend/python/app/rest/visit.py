@@ -109,3 +109,18 @@ def update_visit(id):
         return jsonify(response_data), 200
     except Exception as error:
         return jsonify(str(error)), 400
+
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_visit():
+    args = request.args
+    id = int(args.get("id"))
+    if id:
+        try:
+            attendance_record_service.delete_attendance_record(id)
+            attendance_sheet_service.delete_attendance_sheet(id)
+            return f"Attendance sheet and record with id: {id} has been deleted", 200
+        except Exception as error:
+            return jsonify({"error": str(error)}), 500
+    else:
+        return jsonify({"error": "Must supply id as a query parameter."}), 400
+

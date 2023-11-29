@@ -11,7 +11,7 @@ from ..services.implementations.visit_service import VisitService
 visit_service = VisitService(current_app.logger)
 
 # defines a shared URL prefix for all routes
-blueprint = Blueprint("visitRoutes", __name__, url_prefix="/visitRoutes")
+blueprint = Blueprint("visits", __name__, url_prefix="/visits")
 
 
 @blueprint.route("/", methods=["POST"], strict_slashes=False)

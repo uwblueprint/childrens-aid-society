@@ -14,6 +14,7 @@ export type ProviderDetails = {
   contactNotes?: string;
   address: string;
   relationship: string;
+  status: string;
 };
 
 export type Providers = ProviderDetails[];
@@ -234,6 +235,7 @@ const NewProviderModal = ({
             relationship: relationshipChanged
               ? relationship
               : provider.relationship,
+            status: "",
           };
           onClick(newProvider);
           handleClose();

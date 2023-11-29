@@ -12,7 +12,9 @@ export type ChildProviderFormProps = {
   providers: Providers;
   setProviders: React.Dispatch<React.SetStateAction<Providers>>;
   allProviders: Providers;
-  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  setAllProviders: (
+    newProviders: Providers,
+  ) => void | React.Dispatch<React.SetStateAction<Providers>>;
 };
 
 const ChildProviderForm = ({
@@ -36,11 +38,14 @@ const ChildProviderForm = ({
   } = useDisclosure();
 
   const onClickNewProvider = (newProvider: ProviderDetails) => {
+    const provider: ProviderDetails = newProvider;
     if (selectedIndex >= 0) {
-      providers.splice(selectedIndex, 1, newProvider);
+      provider.status = "edited";
+      providers.splice(selectedIndex, 1, provider);
     } else {
-      providers.push(newProvider);
-      allProviders.push(newProvider);
+      provider.status = "created";
+      providers.push(provider);
+      allProviders.push(provider);
     }
     setProviders(providers);
     setAllProviders(allProviders);
@@ -78,6 +83,7 @@ const ChildProviderForm = ({
     contactNotes: "",
     address: "",
     relationship: "",
+    status: "",
   };
 
   return (

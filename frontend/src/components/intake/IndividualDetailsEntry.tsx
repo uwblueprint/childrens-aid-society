@@ -1,12 +1,12 @@
 import React from "react";
 import { VStack } from "@chakra-ui/react";
-import { Caregivers } from "./NewCaregiverModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
+import { Children } from "../../types/ChildTypes";
 import ChildrenForm from "./indivDetails/ChildrenForm";
 import CaregiverForm from "./indivDetails/CaregiverProviderForm";
-import { Children } from "./child-information/AddChildPage";
 
 export type IndividualDetailsEntryProp = {
   nextStep: () => void;

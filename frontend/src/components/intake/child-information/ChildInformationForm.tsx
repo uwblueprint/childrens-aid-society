@@ -18,6 +18,7 @@ export type ChildDetails = {
   workerName: string;
   specialNeeds: string;
   childBehaviours: string;
+  childId: string;
 };
 
 type ChildFormProps = {

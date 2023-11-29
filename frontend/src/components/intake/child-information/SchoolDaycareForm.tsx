@@ -16,6 +16,7 @@ export type SchoolDetails = {
   schoolPhoneNo: string;
   schoolAddress: string;
   dismissalTime: string;
+  schoolId: string;
 };
 
 type SchoolDaycareFormProps = {

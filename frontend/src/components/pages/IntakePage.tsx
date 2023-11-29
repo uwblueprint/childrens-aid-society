@@ -18,12 +18,13 @@ import IntakeHeader from "../intake/IntakeHeader";
 import ProgramForm from "../intake/ProgramForm";
 import ReviewForm from "../intake/ReviewCaseForm";
 import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
-import { Caregivers } from "../intake/NewCaregiverModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 import IntakeSteps from "../intake/intakeSteps";
 import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
-import AddChild, { Children } from "../intake/child-information/AddChildPage";
+import AddChild from "../intake/child-information/AddChildPage";
+import { Children } from "../../types/ChildTypes";
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
@@ -190,6 +191,8 @@ const Intake = (): React.ReactElement => {
           childrens={children}
           setChildren={setChildren}
           selectedIndexChild={selectedIndexChild}
+          setSelectedIndexChild={setSelectedIndexChild}
+          referrer="intake"
         />
       ) : (
         <>

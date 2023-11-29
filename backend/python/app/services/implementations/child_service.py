@@ -51,6 +51,23 @@ class ChildService(IChildService):
             db.session.rollback()
             raise error
 
+    def edit_child(self, child_data, child_id):
+        try:
+            child = Child.query.filter_by(id=child_id).first()
+            if not child:
+                raise Exception("Child with id {} not found".format(child_id))
+            child.first_name = child_data["first_name"]
+            child.last_name = child_data["last_name"]
+            child.date_of_birth = child_data["date_of_birth"]
+            child.cpin_number = child_data["cpin_number"]
+            child.service_worker = child_data["service_worker"]
+            child.special_needs = child_data["special_needs"]
+            db.session.merge(child)
+            db.session.commit()
+            return ChildDTO(**child.to_dict())
+        except Exception as error:
+            db.session.rollback()
+
     def get_children_by_intake_id(self, intake_id):
         try:
             children = Child.query.filter_by(intake_id=intake_id)

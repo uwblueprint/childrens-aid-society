@@ -5,10 +5,10 @@ import IndividualDetails from "./IndividualDetails";
 import ReferralForm, { ReferralDetails } from "./ReferralForm";
 import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
 import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import { Children } from "../../types/ChildTypes";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
-import { Children } from "./child-information/AddChildPage";
-import { Caregivers } from "./NewCaregiverModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;

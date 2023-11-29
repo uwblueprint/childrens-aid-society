@@ -4,10 +4,13 @@ import { ArrowLeft } from "react-feather";
 import IntakeHeader from "../IntakeHeader";
 import IntakeSteps from "../intakeSteps";
 import { Providers } from "../NewProviderModal";
+import OverviewSection from "../../../types/OverviewSection";
 import ChildInformationForm, { ChildDetails } from "./ChildInformationForm";
 import ChildProviderForm from "./ChildProviderForm";
 import FormSelector from "./FormSelector";
 import SchoolDaycareForm, { SchoolDetails } from "./SchoolDaycareForm";
+import childAPIClient from "../../../APIClients/ChildAPIClient";
+import { Children, ChildrenDetails } from "../../../types/ChildTypes";
 
 enum AddChildSteps {
   CHILD_INFORMATION_FORM,
@@ -17,19 +20,17 @@ enum AddChildSteps {
 
 type AddChildProps = {
   allProviders: Providers;
-  setAllProviders: React.Dispatch<React.SetStateAction<Providers>>;
+  setAllProviders: (
+    newProviders: Providers,
+  ) => void | React.Dispatch<React.SetStateAction<Providers>>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   childrens: Children;
-  setChildren: React.Dispatch<React.SetStateAction<Children>>;
+  setChildren: (newChildren: Children) => void;
   selectedIndexChild: number;
+  setSelectedIndexChild: React.Dispatch<React.SetStateAction<number>>;
+  referrer: string;
+  caseNumber?: number;
 };
-
-export type ChildrenDetails = {
-  childDetails: ChildDetails;
-  schoolDetails: SchoolDetails;
-  providers: Providers;
-};
-export type Children = ChildrenDetails[];
 
 const AddChild = ({
   allProviders,
@@ -38,6 +39,9 @@ const AddChild = ({
   childrens,
   setChildren,
   selectedIndexChild,
+  setSelectedIndexChild,
+  referrer,
+  caseNumber,
 }: AddChildProps): React.ReactElement => {
   const [activeFormIndex, setActiveFormIndex] = useState(0);
 
@@ -48,12 +52,14 @@ const AddChild = ({
     workerName: "",
     specialNeeds: "",
     childBehaviours: "",
+    childId: "",
   });
   const [schoolDetails, setSchoolDetails] = useState<SchoolDetails>({
     schoolName: "",
     schoolPhoneNo: "",
     schoolAddress: "",
     dismissalTime: "",
+    schoolId: "",
   });
   const [providers, setProviders] = useState<Providers>([]);
 
@@ -61,24 +67,37 @@ const AddChild = ({
     !childDetails.childName ||
     !childDetails.cpinFileNumber ||
     !childDetails.dateOfBirth;
-
   // TODO: Check other required fields
 
   const childFormSubmitHandler = () => {
-    const updatedChild = {
+    const child: ChildrenDetails = {
       childDetails: { ...childDetails },
       schoolDetails: { ...schoolDetails },
       providers: [...providers],
     };
 
     if (selectedIndexChild >= 0) {
-      childrens.splice(selectedIndexChild, 1, updatedChild);
+      childrens.splice(selectedIndexChild, 1, child);
+      if (caseNumber) {
+        childAPIClient.put({
+          updatedChild: child,
+          intakeId: caseNumber,
+        });
+      }
     } else {
-      childrens.push(updatedChild);
+      childrens.push(child);
+      if (caseNumber) {
+        childAPIClient.post({ newChild: child, intakeId: caseNumber });
+      }
     }
 
     setChildren([...childrens]);
-    setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+    if (referrer === "intake") {
+      setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+    } else if (referrer === "caseOverview") {
+      setSelectedIndexChild(-1);
+      setStep(OverviewSection.MAIN_SECTION);
+    }
   };
 
   useEffect(() => {
@@ -86,6 +105,24 @@ const AddChild = ({
       setChildDetails(childrens[selectedIndexChild].childDetails);
       setSchoolDetails(childrens[selectedIndexChild].schoolDetails);
       setProviders(childrens[selectedIndexChild].providers);
+    } else {
+      setChildDetails({
+        childName: "",
+        cpinFileNumber: "",
+        dateOfBirth: "",
+        workerName: "",
+        specialNeeds: "",
+        childBehaviours: "",
+        childId: "",
+      });
+      setSchoolDetails({
+        schoolName: "",
+        schoolPhoneNo: "",
+        schoolAddress: "",
+        dismissalTime: "",
+        schoolId: "",
+      });
+      setProviders([]);
     }
   }, [childrens, selectedIndexChild]);
 
@@ -122,7 +159,7 @@ const AddChild = ({
   return (
     <>
       <IntakeHeader
-        primaryTitle="Add child"
+        primaryTitle={selectedIndexChild === -1 ? "Add child" : "Edit Child"}
         secondaryTitle="Initiate New Case"
       />
       <VStack
@@ -135,7 +172,12 @@ const AddChild = ({
         <Button
           leftIcon={<ArrowLeft />}
           onClick={() => {
-            setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+            if (referrer === "intake") {
+              setStep(IntakeSteps.INDIVIDUAL_DETAILS);
+            } else if (referrer === "caseOverview") {
+              setSelectedIndexChild(-1);
+              setStep(OverviewSection.MAIN_SECTION);
+            }
           }}
           variant="tertiary"
         >

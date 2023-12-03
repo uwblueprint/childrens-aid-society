@@ -62,10 +62,10 @@ class DaytimeContactService(IDaytimeContactService):
             db.session.rollback()
             raise error
 
-    def get_daytime_contact_by_child_id(self, child_id):
+    def get_daytime_contact_by_id(self, daytime_contact_id):
         try:
             daytime_contact = DaytimeContact.query.filter_by(
-                child_id=child_id
+                id=daytime_contact_id
             ).first()
             if daytime_contact:
                 result = {

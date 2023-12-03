@@ -113,7 +113,7 @@ const IntakeFooter = ({
             childInfo: {
               name: child.childDetails.childName,
               dateOfBirth: child.childDetails.dateOfBirth,
-              cpinFileNumber: parseInt(child.childDetails.cpinFileNumber, 10),
+              cpinFileNumber: child.childDetails.cpinFileNumber,
               serviceWorker: child.childDetails.workerName,
               specialNeeds: child.childDetails.specialNeeds,
               concerns: [], // don't know field
@@ -127,11 +127,11 @@ const IntakeFooter = ({
             provider: child.providers.map((provider) => {
               return {
                 name: provider.providerName,
-                fileNumber: parseInt(provider.providerFileNo, 10),
-                primaryPhoneNumber: parseInt(provider.primaryPhoneNo, 10),
+                fileNumber: provider.providerFileNo,
+                primaryPhoneNumber: provider.primaryPhoneNo,
                 secondaryPhoneNumber: provider.secondaryPhoneNo
-                  ? parseInt(provider.secondaryPhoneNo, 10)
-                  : 0,
+                  ? provider.secondaryPhoneNo
+                  : "",
                 email: provider.email ? provider.email : "",
                 address: provider.address,
                 additionalContactNotes: provider.contactNotes
@@ -146,10 +146,8 @@ const IntakeFooter = ({
           return {
             name: cg.caregiverName,
             dateOfBirth: cg.dateOfBirth,
-            primaryPhoneNumber: parseInt(cg.primaryPhoneNo, 10),
-            secondaryPhoneNumber: cg.secondaryPhoneNo
-              ? parseInt(cg.secondaryPhoneNo, 10)
-              : 0,
+            primaryPhoneNumber: cg.primaryPhoneNo,
+            secondaryPhoneNumber: cg.secondaryPhoneNo ? cg.secondaryPhoneNo : 0,
             additionalContactNotes: cg.contactNotes ? cg.contactNotes : "",
             address: cg.address,
             relationshipToChild: cg.relationship,

@@ -18,7 +18,7 @@ class Caregiver(db.Model, BaseMixin):
     individual_considerations = db.Column(db.String, nullable=True)
     primary_phone_number = db.Column(db.String, nullable=False)
     secondary_phone_number = db.Column(db.String, nullable=True)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=False)
     relationship_to_child = db.Column(relationship_to_child_enum, nullable=False)
     additional_contact_notes = db.Column(db.String, nullable=True)

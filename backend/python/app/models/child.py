@@ -12,11 +12,11 @@ class Child(db.Model, BaseMixin):
     last_name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.String, nullable=True)
     cpin_number = db.Column(db.String, nullable=True)
-    service_worker = db.Column(db.String, nullable=False)
+    service_worker = db.Column(db.String, nullable=True)
     daytime_contact_id = db.Column(
         db.Integer, db.ForeignKey("daytime_contacts.id"), nullable=False
     )
-    special_needs = db.Column(db.String, nullable=False)
+    special_needs = db.Column(db.String, nullable=True)
     intake = db.relationship("Intake")
     daytime_contact = db.relationship("DaytimeContact")
     behaviors = db.relationship("ChildBehavior", secondary=children_child_behaviors)

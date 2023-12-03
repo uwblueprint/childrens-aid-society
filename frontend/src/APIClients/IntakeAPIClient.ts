@@ -9,7 +9,7 @@ interface Intake {
   case_id: number;
   intake_status: string;
   caseReferral: {
-    referringWorkerName: string;
+    referringWorker: string;
     referringWorkerContact: string;
     cpinFileNumber: string;
     cpinFileType: string;
@@ -69,9 +69,9 @@ const get = async (
       case_id: intake.case_id.toString(),
       intakeStatus: <CaseStatus>intake.intake_status,
       caseReferral: {
-        referringWorkerName: intake.caseReferral.referringWorkerName,
+        referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
-        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 20),
+        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 10),
         cpinFileType: intake.caseReferral.cpinFileType,
         familyName: intake.caseReferral.familyName,
         referralDate: new Date(

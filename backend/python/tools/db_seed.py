@@ -119,6 +119,22 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
+        
+            
+    values_sheets = [(999, 'Zhang' , 'csw', 'cpw', 'fcc'),
+                     (1000, 'Zhang' , 'csw', 'cpw', 'fcc')]
+
+    for value in values_sheets:
+        insert_values(db, "attendance_sheets", ("id", "family_name", "csw", "cpw", "fcc"), value) 
+    
+
+    values_records = [
+    (999, 999, 'FULL', '2023-01-01', '08:00:00', '17:00:00', 'Location Value', 'PRESENT', 'MOM', 30, 15, 10, 1, 'Comments Value'),
+    (1000, 1000, 'PARTIAL', '2023-01-02', '09:00:00', '18:00:00', 'Location Value', 'NO_SHOW', 'DAD', 45, 20, 12, 2, 'Comments Value'),
+]
+
+    for value in values_records:
+        insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time", "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min", "child_family_support_worker_id", "comments"), value)
 
 # fmt: on
 

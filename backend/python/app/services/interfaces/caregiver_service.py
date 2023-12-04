@@ -48,3 +48,18 @@ class ICaregiverService(ABC):
         :raises Exception:  if an error occurs
                            in the database query
         """
+        pass
+
+    @abstractmethod
+    def update_caregiver(self, caregiver_id, updated_caregiver):
+        """Updates the Caregiver with new name, date of birth, individual considerations,
+            primary and/or secondary phone number, email, address, relationship to child, additional contact notes
+        :param Caregiver_id: the caregiver_id of the caregiver to be updated
+        :type caregiver_id: int
+        :param updated_caregiver: the new updated CaregiverDTO object
+        :type updated_caregiver: CaregiverDTO
+        :return: CaregiverDTO
+        :rtype: CaregiverDTO
+        :raises Exception: if caregiver_id or updated_caregiver is not valid or if an error occurs during update
+        """
+        pass

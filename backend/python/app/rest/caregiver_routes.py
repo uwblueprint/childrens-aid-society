@@ -21,6 +21,20 @@ def get_all_caregivers():
         return jsonify(error), 400
 
 
+# get all caregivers by intake_id
+@blueprint.route("/<int:intake_id>", methods=["GET"], strict_slashes=False)
+# @require_authorization_by_role({"Admin"})
+def get_caregivers_by_intake_id(intake_id):
+    if intake_id:
+        if type(intake_id) is not int:
+            return jsonify({"error:" "intake_id query parameter must be an int"})
+    try:
+        caregivers = caregiver_service.get_caregivers_by_intake_id(intake_id)
+        return jsonify(list(map(lambda user: user.__dict__, caregivers))), 200
+    except Exception as error:
+        return jsonify(error), 400
+
+
 # create a caregiver
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
@@ -32,3 +46,47 @@ def create_caregiver():
         return jsonify(new_caregiver.__dict__), 201
     except Exception as error:
         return jsonify(str(error)), 400
+
+
+# update a caregiver
+@blueprint.route("/<int:caregiver_id>", methods=["PUT"], strict_slashes=False)
+def update_caregiver(caregiver_id):
+    try:
+        new_caregiver = request.json
+        updated_caregiver = caregiver_service.update_caregiver(
+            caregiver_id, new_caregiver
+        )
+        return jsonify(updated_caregiver.__dict__), 200
+
+    except Exception as error:
+        return jsonify(str(error)), 400
+
+
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_intake():
+    """
+    Delete intake by caretgiver_id specified through a query parameter
+    """
+    caregiver_id = int(request.args.get("caregiver_id"))
+
+    if caregiver_id:
+        if type(caregiver_id) is not int:
+            return (
+                jsonify({"error": "caregiver_id query parameter must be an int"}),
+                400,
+            )
+        else:
+            try:
+                caregiver_service.delete_caregiver(caregiver_id)
+                return "caregiver deleted", 200
+            except Exception as e:
+                error_message = getattr(e, "message", None)
+                return (
+                    jsonify({"error": (error_message if error_message else str(e))}),
+                    500,
+                )
+
+    return (
+        jsonify({"error": "Must supply intake id as query parameter."}),
+        400,
+    )

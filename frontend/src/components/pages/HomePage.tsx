@@ -192,7 +192,9 @@ const Home = (): React.ReactElement => {
                     cases={searchResults}
                   />
                 ) : (
-                  <h3>Sorry, we couldn`t find that for you.</h3>
+                  <h3 style={{ marginTop: "20px" }}>
+                    Sorry, we couldn`t find that for you.
+                  </h3>
                 )}
               </>
             ))}

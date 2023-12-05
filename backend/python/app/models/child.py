@@ -8,8 +8,7 @@ class Child(db.Model, BaseMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=True)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.String, nullable=True)
     cpin_number = db.Column(db.String, nullable=True)
     service_worker = db.Column(db.String, nullable=False)

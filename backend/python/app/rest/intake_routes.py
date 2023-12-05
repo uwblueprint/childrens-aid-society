@@ -76,7 +76,7 @@ def get_all_intakes():
             for child in just_children:
                 providers = provider_service.get_providers_by_child_id(child.id)
                 child_info = {
-                    "name": f"{child.first_name} {child.last_name}",
+                    "name": child.name,
                     "dateOfBirth": child.date_of_birth,
                     "cpinFileNumber": child.cpin_number,
                     "serviceWorker": child.service_worker,
@@ -353,8 +353,7 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": new_intake.id,
-            "first_name": child["childInfo"]["first_name"],
-            "last_name": child["childInfo"]["last_name"],
+            "name": child["childInfo"]["name"],
             "date_of_birth": child["childInfo"]["dateOfBirth"],
             "cpin_number": child["childInfo"]["cpinFileNumber"],
             "service_worker": child["childInfo"]["serviceWorker"],

@@ -44,8 +44,7 @@ DUMMY_DAYTIME_CONTACT_DATA = {
 
 DUMMY_CHILD_DATA = {
     "intake_id": 1,
-    "first_name": "Test",
-    "last_name": "Child",
+    "name": "Test Child",
     "date_of_birth": "2020-05-17",
     "cpin_number": "1",
     "service_worker": "Test Worker",
@@ -102,8 +101,7 @@ def empty_database():
 def test_add_new_child_valid(child_service):
     param = CreateChildDTO(
         intake_id=1,
-        first_name="Test",
-        last_name="Child",
+        name="Test Child",
         date_of_birth="2020-05-17",
         cpin_number="1",
         service_worker="Service Worker",
@@ -118,8 +116,7 @@ def test_add_new_child_valid(child_service):
 
 def test_nullable_false_case(child_service):
     param = CreateChildDTO(
-        first_name="Test",
-        last_name="Child",
+        name="Test",
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
@@ -137,8 +134,7 @@ def test_null_case(child_service):
 
 def test_empty_input_string(child_service):
     param = CreateChildDTO(
-        first_name="Test",
-        last_name="",
+        name="",
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",
@@ -149,7 +145,7 @@ def test_empty_input_string(child_service):
 
 def test_missing_field(child_service):
     param = CreateChildDTO(
-        last_name="Child",
+        name="",
         service_worker="Test Worker",
         daytime_contact_id=1,
         special_needs="None",

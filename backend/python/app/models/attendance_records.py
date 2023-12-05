@@ -1,7 +1,8 @@
-from . import db
-from .base_mixin import BaseMixin
 from sqlalchemy import *
 from sqlalchemy.dialects.postgresql import ARRAY
+
+from . import db
+from .base_mixin import BaseMixin
 
 supervision_enum = db.Enum("FULL", "PARTIAL", "UNSUPERVISED", name="supervision")
 
@@ -22,15 +23,18 @@ attending_family_enum = db.Enum(
     "HALF_SIBLING",
     "UNCLE/AUNT",
     "OTHER_RELATIVE",
-    "OTHER", 
-    name="visitorRelationship")
+    "OTHER",
+    name="visitorRelationship",
+)
 
 
 class AttendanceRecords(db.Model, BaseMixin):
     __tablename__ = "attendance_records"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    attendance_sheet_id = db.Column(db.Integer, db.ForeignKey("attendance_sheets.id"), nullable=False)
+    attendance_sheet_id = db.Column(
+        db.Integer, db.ForeignKey("attendance_sheets.id"), nullable=False
+    )
 
     visit_date = db.Column(db.String, nullable=False)
     visit_day = db.Column(db.String, nullable=False)
@@ -39,23 +43,32 @@ class AttendanceRecords(db.Model, BaseMixin):
     end_time = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
 
-    visiting_members = db.relationship("VisitingMember", backref="associated_record", cascade="all, delete")
-    transportation = db.relationship("Transportation", backref="associated_record", cascade="all, delete")
+    visiting_members = db.relationship(
+        "VisitingMember", backref="associated_record", cascade="all, delete"
+    )
+    transportation = db.relationship(
+        "Transportation", backref="associated_record", cascade="all, delete"
+    )
 
     staff_transport_time_min = db.Column(db.Integer, nullable=True)
     driver_transport_time_min = db.Column(db.Integer, nullable=True)
     foster_parent_transport_time_min = db.Column(db.Integer, nullable=True)
 
     notes = db.Column(db.String, nullable=True)
-    child_family_support_worker_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    
+    child_family_support_worker_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), nullable=True
+    )
+
     user = db.relationship("User")
+
 
 class VisitingMember(db.Model):
     __tablename__ = "visiting_members"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    attendance_record_id = db.Column(db.Integer, db.ForeignKey("attendance_records.id"), nullable=False)
+    attendance_record_id = db.Column(
+        db.Integer, db.ForeignKey("attendance_records.id"), nullable=False
+    )
 
     visitor_relationship = db.Column(attending_family_enum, nullable=False)
     description = db.Column(db.String, nullable=False)
@@ -63,16 +76,18 @@ class VisitingMember(db.Model):
     visit_attendance = db.Column(attendance_enum, nullable=False)
     reason_for_absence = db.Column(db.String, nullable=True)
 
+
 class Transportation(db.Model):
     __tablename__ = "transportation"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    attendance_record_id = db.Column(db.Integer, db.ForeignKey("attendance_records.id"), nullable=False)
-    
+    attendance_record_id = db.Column(
+        db.Integer, db.ForeignKey("attendance_records.id"), nullable=False
+    )
+
     guardian = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
-
 
     # meta = MetaData()
     # visitingMembers = Table('visiting_members', meta,

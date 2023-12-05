@@ -54,6 +54,7 @@ class AttendanceRecordsDTO:
         )
         self.user = kwargs.get("user")
 
+
 class VisitingMemberDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
@@ -64,6 +65,7 @@ class VisitingMemberDTO:
         self.visit_attendance = kwargs.get("visit_attendance")
         self.reason_for_absence = kwargs.get("reason_for_absence")
 
+
 class TransportationDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
@@ -71,6 +73,7 @@ class TransportationDTO:
         self.guardian = kwargs.get("guardian")
         self.name = kwargs.get("name")
         self.duration = kwargs.get("duration")
+
 
 class CreateAttendanceRecordsDTO(AttendanceRecordsDTO):
     def __init__(self, **kwargs):
@@ -133,6 +136,7 @@ class CreateAttendanceRecordsDTO(AttendanceRecordsDTO):
         if type(self.child_family_support_worker_id) is not int:
             error_list.append("child_family_support_worker_id must be an integer")
 
+
 class CreateVisitingMemberDTO(VisitingMemberDTO):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -164,6 +168,7 @@ class CreateVisitingMemberDTO(VisitingMemberDTO):
         if type(self.reason_for_absence) is not str:
             error_list.append("reason_for_absence must be a string")
 
+
 class CreateTransportationDTO(TransportationDTO):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -185,4 +190,3 @@ class CreateTransportationDTO(TransportationDTO):
                 error_list.append("duration must be non-negative")
         else:
             error_list.append("duration must be an integer")
-

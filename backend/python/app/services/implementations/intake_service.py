@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy import inspect
 
 from ...models import db
@@ -5,7 +7,8 @@ from ...models.intake import Intake
 from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
-import logging
+
+
 class IntakeService(IIntakeService):
     def __init__(self, logger):
         self.logger = logger
@@ -93,7 +96,6 @@ class IntakeService(IIntakeService):
             db.session.rollback()
             raise error
 
-
     def search_intake_family_name(self, family_name: str):
         try:
             if not family_name:
@@ -107,4 +109,3 @@ class IntakeService(IIntakeService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
-        

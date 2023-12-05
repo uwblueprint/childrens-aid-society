@@ -169,6 +169,7 @@ def get_all_intakes():
     except Exception as error:
         return jsonify(error), 400
 
+
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
@@ -487,10 +488,10 @@ def search_intake():
                         "transportationRequirements": intake.transportation_requirements,
                         "schedulingRequirements": intake.scheduling_requirements,
                         "suggestedStartDate": intake.suggested_start_date,
-                    }
+                    },
                 }
                 intake_list.append(intake_new)
-        
+
             return jsonify(intake_list), 200
         except Exception as error:
             return jsonify(str(error)), 200

@@ -120,13 +120,39 @@ def insert_test_data():
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
-    # AttendanceRecord
+    # Attendance Sheets
+    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc')]
+    for value in values:
+        insert_values(db, "attendance_sheets", ("intake_id", "family_name", "csw", "cpw", "fcc"), value)
+
+    # attendance_record
     values = [
-        ('2000-10-09', 'idk', 'PARTIAL','10:00 AM', '01:00 PM', 'Room', [{1,1,'MOM', 'description', 'Ann', 'PRESENT', ''}], [{1,1,'parent', 'john', '30'}], 'comments', 'worker')
+        (1, '2000-10-09', 'Monday', 'PARTIAL','10:00 AM', '01:00 PM', 'Room', 'comments', 1),
+        (1, '2010-03-15', 'Friday', 'FULL','07:00 PM', '12:00 AM', 'R1', 'more comments', 2),
+        (1, '2011-03-15', 'Tuesday', 'UNSUPERVISED','07:00 PM', '12:00 AM', 'R1', '')
     ]
 
     for value in values:
-       insert_values(db, "attendance_records", ("visitDate", "visitDay", "visitSupervision", "startTime", "endTime", "location", "visiting_members", "transportation", "notes", "childAndFamilySupportWorker"), value)
+       insert_values(db, "attendance_records", ("attendance_sheet_id", "visit_date", "visit_day", "visit_supervision", "start_time", "end_time", "location", "notes", "child_family_support_worker_id"), value)
+
+    # visiting_members
+    values = [
+        (2,'FOSTER_CAREGIVER','description','Ann', 'PRESENT', ''),
+        (2,'STEP_SIBLING','description','Jake', 'NO_SHOW', 'busy')
+    ]
+
+    for value in values:
+        insert_values(db, "visiting_members", ("attendance_record_id", "visitor_relationship", "description", "visiting_member_name", "visit_attendance", "reason_for_absence"), value)
+
+    # transportation
+    values = [
+        (2,'Parent','Ann', '10'),
+        (2,'Sibling','Ed', '250')
+    ]
+
+    for value in values:
+        insert_values(db, "transportation", ("attendance_record_id", "guardian", "name", "duration"), value)
+
 
 # fmt: on
 

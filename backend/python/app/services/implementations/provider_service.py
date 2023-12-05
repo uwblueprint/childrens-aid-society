@@ -1,6 +1,7 @@
 from ...models import db
 from ...models.child import Child
 from ...models.provider import Provider
+from ...resources.child_dto import ChildDTO
 from ...resources.provider_dto import CreateProviderDTO, ProviderDTO
 from ..interfaces.provider_service import IProviderService
 
@@ -20,7 +21,7 @@ class ProviderService(IProviderService):
             self.logger.error(str(error))
             raise error
 
-    def create_new_provider(self, provider):
+    def create_new_provider(self, provider, children_ids=[]):
         try:
             if not provider:
                 raise Exception(
@@ -33,6 +34,11 @@ class ProviderService(IProviderService):
                 raise Exception(error_list)
 
             new_provider_entry = Provider(**provider.__dict__)
+
+            for child_id in children_ids:
+                child = Child.query.filter_by(id=child_id)
+                new_provider_entry.children.append(child)
+
             db.session.add(new_provider_entry)
             db.session.commit()
 
@@ -53,13 +59,13 @@ class ProviderService(IProviderService):
             db.session.rollback()
             raise error
 
-    def get_providers_by_child_id(self, child_id):
+    def get_providers_by_child(self, child_id):
         try:
-            providers = Provider.query.filter_by(child_id=child_id)
-            providers_dto = [
-                ProviderDTO(**provider.to_dict()) for provider in providers
+            child = Child.query.filter_by(id=child_id).first()
+            provider_dto = [
+                ProviderDTO(**provider.to_dict()) for provider in child.providers
             ]
-            return providers_dto
+            return provider_dto
         except Exception as error:
             self.logger.error(str(error))
             raise error

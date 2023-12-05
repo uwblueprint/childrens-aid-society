@@ -33,7 +33,7 @@ class IProviderService(ABC):
         pass
 
     @abstractmethod
-    def get_providers_by_child_id(self, child_id):
+    def get_providers_by_child(self, child_id):
         """Returns all providers associated with a child's ID
         :param child_id: the ID of the child
         :type child_id: int

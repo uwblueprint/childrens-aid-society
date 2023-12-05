@@ -44,3 +44,14 @@ class IChildService(ABC):
         :raises Exception: if an error occurs in the database layer
         """
         pass
+
+    @abstractmethod
+    def get_children_by_provider(self, id):
+        """Returns all children associated with a provider's ID
+        :param id: the ID of the provider
+        :type id: int
+        :return: list of ChildDTO
+        :rtype: list of  ChildDTO
+        :raises Exception: if an error occurs at the database level
+        """
+        pass

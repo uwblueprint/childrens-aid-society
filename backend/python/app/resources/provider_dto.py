@@ -4,6 +4,7 @@ import re
 class ProviderDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
+        self.intake_id = kwargs.get("intake_id")
         self.name = kwargs.get("name")
         self.file_number = kwargs.get("file_number")
         self.primary_phone_number = kwargs.get("primary_phone_number")
@@ -12,7 +13,6 @@ class ProviderDTO:
         self.address = kwargs.get("address")
         self.relationship_to_child = kwargs.get("relationship_to_child")
         self.additional_contact_notes = kwargs.get("additional_contact_notes")
-        self.child_id = kwargs.get("child_id")
 
 
 class CreateProviderDTO(ProviderDTO):
@@ -34,8 +34,6 @@ class CreateProviderDTO(ProviderDTO):
             or not type(self.relationship_to_child) == str
         ):
             error_list.append("The relationship to child supplied is invalid")
-        if not self.child_id or not type(self.child_id) == int:
-            error_list.append("The child id supplied is invalid")
 
         # optional fields
         if self.secondary_phone_number and not type(self.secondary_phone_number) == str:

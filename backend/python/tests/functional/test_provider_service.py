@@ -40,7 +40,6 @@ DEFAULT_PROVIDER = {
     "secondary_phone_number": "1234567890",
     "address": "123 Main St",
     "relationship_to_child": "Mother",
-    "child_id": 1,
 }
 
 
@@ -90,7 +89,6 @@ def test_create_new_provider_valid(provider_service):
         secondary_phone_number="0987654321",
         address="321 Main St",
         relationship_to_child="Father",
-        child_id=1,
     )
 
     provider_instance = provider_service.create_new_provider(param)
@@ -112,7 +110,6 @@ def test_invalid_arg(provider_service):
         secondary_phone_number="0987654321",
         address="321 Main St",
         relationship_to_child="Father",
-        child_id=1,
     )
     with pytest.raises(Exception):
         provider_service.create_new_provider(param)

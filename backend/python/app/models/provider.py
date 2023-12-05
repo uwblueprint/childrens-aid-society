@@ -6,6 +6,7 @@ class Provider(db.Model, BaseMixin):
     __tablename__ = "providers"
 
     id = db.Column(db.Integer, primary_key=True)
+    intake_id = db.Column(db.Integer, db.ForeignKey("intakes.id"), nullable=True)
     name = db.Column(db.String, nullable=False)
     file_number = db.Column(db.String, nullable=False)
     primary_phone_number = db.Column(db.String, nullable=False)
@@ -14,5 +15,3 @@ class Provider(db.Model, BaseMixin):
     address = db.Column(db.String, nullable=False)
     relationship_to_child = db.Column(db.String, nullable=False)
     additional_contact_notes = db.Column(db.String, nullable=True)
-    child_id = db.Column(db.Integer, db.ForeignKey("children.id"), nullable=False)
-    child = db.relationship("Child", backref="providers")

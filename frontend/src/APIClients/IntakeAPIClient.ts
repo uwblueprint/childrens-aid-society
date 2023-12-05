@@ -44,21 +44,120 @@ const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
   }
 };
 
+const search = async (searchParam: string): Promise<Case[]> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+
+  const url = "/intake/search";
+
+  try {
+    const { data } = await baseAPIClient.get<Intake[]>(url, {
+      headers: { Authorization: bearerToken },
+      params: {
+        family_name: searchParam,
+      },
+    });
+
+    const mappedData: Case[] = data.map((intake) => ({
+      user_id: intake.user_id.toString(),
+      case_id: intake.case_id.toString(),
+      intakeStatus: <CaseStatus>intake.intake_status,
+      caseReferral: {
+        referringWorkerName: intake.caseReferral.referringWorker,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 10),
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
+      },
+      courtInformation: {
+        courtStatus: intake.courtInformation.courtStatus,
+        orderReferral: 0,
+        firstNationHeritage: intake.courtInformation.firstNationHeritage,
+        firstNationBand: intake.courtInformation.firstNationBand,
+      },
+      children: [
+        {
+          childInfo: {
+            name: "",
+            dateOfBirth: "",
+            cpinFileNumber: 0,
+            serviceWorker: "",
+            specialNeeds: "",
+            concerns: [],
+          },
+          daytimeContact: {
+            name: "",
+            contactInfo: "",
+            address: "",
+            dismissalTime: "",
+          },
+          provider: [
+            {
+              name: "",
+              fileNumber: 0,
+              primaryPhoneNumber: 0,
+              secondaryPhoneNumber: 0,
+              email: "",
+              address: "",
+              additionalContactNotes: "",
+              relationshipToChild: "",
+            },
+          ],
+        },
+      ],
+      caregivers: [
+        {
+          name: "",
+          dateOfBirth: "",
+          primaryPhoneNumber: 0,
+          secondaryPhoneNumber: 0,
+          additionalContactNotes: "",
+          address: "",
+          relationshipToChild: "",
+          individualConsiderations: "",
+        },
+      ],
+      programDetails: {
+        transportRequirements: intake.programDetails.transportationRequirements,
+        schedulingRequirements: intake.programDetails.schedulingRequirements,
+        suggestedStartDate: intake.programDetails.suggestedStartDate,
+        shortTermGoals: [],
+        longTermGoals: [],
+        familialConcerns: [],
+        permittedIndividuals: [
+          {
+            name: "",
+            phoneNumber: 0,
+            relationshipToChildren: "",
+            additionalNotes: "",
+          },
+        ],
+      },
+    }));
+    console.log("mappedData", mappedData);
+    return mappedData;
+  } catch (error) {
+    return error;
+  }
+};
+
 const get = async (
   intakeStatus: CaseStatus,
   page: number,
   limit: number,
-  parameter?: string,
 ): Promise<Case[]> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
 
-  let url = "/intake";
-  if (parameter) {
-    url += `/${parameter}`;
-  }
+  const url = "/intake";
+
   try {
     const { data } = await baseAPIClient.get<Intake[]>(url, {
       headers: { Authorization: bearerToken },
@@ -148,6 +247,7 @@ const get = async (
         ],
       },
     }));
+    console.log(mappedData);
     return mappedData;
   } catch (error) {
     return error;
@@ -193,4 +293,4 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     return error;
   }
 };
-export default { post, get, put, deleteIntake };
+export default { post, get, put, deleteIntake, search };

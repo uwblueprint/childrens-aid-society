@@ -55,7 +55,6 @@ const SecondaryHeader = ({
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      console.log("enter has been pressed");
       handleSearch();
     }
   };
@@ -92,23 +91,20 @@ const SecondaryHeader = ({
 const Home = (): React.ReactElement => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<CaseCardProps[]>([]);
+  const [enterClicked, setEnterClicked] = useState(false);
   const handleSearch = () => {
+    setEnterClicked(true);
     if (searchValue.trim() !== "") {
-      IntakeAPIClient.get(CaseStatus.SUBMITTED, 1, 10, searchValue).then(
-        (data) => {
-          const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
-            caseTitle: caseData.cpin_number, // Use appropriate properties here
-            caseLead: caseData.referring_worker_name,
-            date: caseData.referral_date,
-            familyName: caseData.family_name,
-            caseTag: caseData.intake_status as CaseStatus,
-            caseId: caseData.caseID,
-          }));
-          setSearchResults(caseCards);
-        },
-      );
-    } else {
-      setSearchResults([]);
+      IntakeAPIClient.search(searchValue).then((data) => {
+        const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
+          caseId: caseData.case_id,
+          referringWorker: caseData.caseReferral.referringWorkerName,
+          date: caseData.caseReferral.referralDate,
+          familyName: caseData.caseReferral.familyName,
+          caseTag: caseData.intakeStatus,
+        }));
+        setSearchResults(caseCards);
+      });
     }
   };
 
@@ -186,7 +182,20 @@ const Home = (): React.ReactElement => {
             setSearchValue={setSearchValue}
             handleSearch={handleSearch}
           />
-
+          {enterClicked &&
+            (console.log("enteredClicked: ", enterClicked),
+            (
+              <>
+                {searchResults.length > 0 ? (
+                  <FilteredSection
+                    status="Search Results"
+                    cases={searchResults}
+                  />
+                ) : (
+                  <h3>Sorry, we couldn`t find that for you.</h3>
+                )}
+              </>
+            ))}
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}
@@ -197,30 +206,6 @@ const Home = (): React.ReactElement => {
             status={CaseStatus.ARCHIVED}
             cases={cases.archived}
           />
-
-          <h3>Search Results</h3>
-          {searchResults.length > 0 ? (
-            <FilteredSection status="Search Results" cases={searchResults} />
-          ) : (
-            <>
-              <FilteredSection
-                status={CaseStatus.ACTIVE}
-                cases={cases.active}
-              />
-              <FilteredSection
-                status={CaseStatus.SUBMITTED}
-                cases={cases.submitted}
-              />
-              <FilteredSection
-                status={CaseStatus.PENDING}
-                cases={cases.pending}
-              />
-              <FilteredSection
-                status={CaseStatus.ARCHIVED}
-                cases={cases.archived}
-              />
-            </>
-          )}
         </VStack>
       </Box>
     </Box>

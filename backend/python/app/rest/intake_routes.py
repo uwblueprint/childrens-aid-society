@@ -169,7 +169,6 @@ def get_all_intakes():
     except Exception as error:
         return jsonify(error), 400
 
-
 # create an intake
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
@@ -456,16 +455,44 @@ def update_intake_route(intake_id):
         return jsonify(str(error)), 400
 
 
-@blueprint.route("/<string:family_name>", methods=["GET"], strict_slashes=False)
+@blueprint.route("/search", methods=["GET"], strict_slashes=False)
 def search_intake():
     args = request.args
     try:
         family_name = args.get("family_name")
         print(f"Received request for family_name: {family_name}")
+        intake_list = []
         try:
-            search = intake_service.search_intake(family_name=family_name)
-            return jsonify(list(map(lambda intake: intake.__dict__, search))), 200
+            intakes = intake_service.search_intake_family_name(family_name=family_name)
+            for intake in intakes:
+                intake_new = {
+                    "user_id": intake.user_id,
+                    "case_id": intake.id,
+                    "intake_status": intake.intake_status,
+                    "caseReferral": {
+                        "referringWorker": intake.referring_worker_name,
+                        "referringWorkerContact": intake.referring_worker_contact,
+                        "cpinFileNumber": intake.cpin_number,
+                        "cpinFileType": intake.cpin_file_type,
+                        "familyName": intake.family_name,
+                        "referralDate": intake.referral_date,
+                    },
+                    "courtInformation": {
+                        "courtStatus": intake.court_status,
+                        "orderReferral": intake.court_order_file,
+                        "firstNationHeritage": intake.first_nation_heritage,
+                        "firstNationBand": intake.first_nation_band,
+                    },
+                    "programDetails": {
+                        "transportationRequirements": intake.transportation_requirements,
+                        "schedulingRequirements": intake.scheduling_requirements,
+                        "suggestedStartDate": intake.suggested_start_date,
+                    }
+                }
+                intake_list.append(intake_new)
+        
+            return jsonify(intake_list), 200
         except Exception as error:
-            return jsonify(str(error)), 400
+            return jsonify(str(error)), 200
     except:
         pass

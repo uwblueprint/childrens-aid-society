@@ -94,23 +94,17 @@ class IntakeService(IIntakeService):
             raise error
 
 
-    def search_intake(self, family_name: str):
+    def search_intake_family_name(self, family_name: str):
         try:
             if not family_name:
                 raise Exception("Empty Family Name passed to search_intake function")
             if not isinstance(family_name, str):
                 raise Exception("Family name passed is not of str type")
-
-            intake = Intake.query.filter_by(family_name=family_name)
-            if not intake:
-                return []
-            intake_dto = [IntakeDTO(**i.to_dict()) for i in intake]
-            self.logger.debug(intake)
-
-
-
-            return intake_dto
-
+            intakes = Intake.query.filter_by(family_name=family_name).all()
+            print(intakes)
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
+            return intakes_dto
         except Exception as error:
-            db.session.rollback()
+            self.logger.error(str(error))
             raise error
+        

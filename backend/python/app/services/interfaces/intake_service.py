@@ -51,7 +51,7 @@ class IIntakeService(ABC):
         pass
 
     @abstractmethod
-    def search_intake(self, family_name):
+    def search_intake_family_name(self, family_name):
         """
         Searches for all cases attributed to a Family Name
         """

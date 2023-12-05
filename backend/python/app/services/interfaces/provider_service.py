@@ -33,17 +33,6 @@ class IProviderService(ABC):
         pass
 
     @abstractmethod
-    def get_children_by_provider(self, id):
-        """Returns all children associated with a provider's ID
-        :param id: the ID of the provider
-        :type id: int
-        :return: list of ChildDTO
-        :rtype: list of  ChildDTO
-        :raises Exception: if an error occurs at the database level
-        """
-        pass
-
-    @abstractmethod
     def get_providers_by_child(self, child_id):
         """Returns all providers associated with a child's ID
         :param child_id: the ID of the child

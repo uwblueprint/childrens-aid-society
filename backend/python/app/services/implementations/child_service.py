@@ -1,5 +1,6 @@
 from ...models import db
 from ...models.child import Child
+from ...models.provider import Provider
 from ...resources.child_dto import ChildDTO, CreateChildDTO
 from ..interfaces.child_service import IChildService
 
@@ -55,6 +56,15 @@ class ChildService(IChildService):
         try:
             children = Child.query.filter_by(intake_id=intake_id)
             children_dto = [ChildDTO(**child.to_dict()) for child in children]
+            return children_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
+    def get_children_by_provider(self, provider_id):
+        try:
+            provider = Provider.query.filter_by(id=provider_id).first()
+            children_dto = [ChildDTO(**child.to_dict()) for child in provider.children]
             return children_dto
         except Exception as error:
             self.logger.error(str(error))

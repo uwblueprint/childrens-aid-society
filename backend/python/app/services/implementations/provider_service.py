@@ -59,15 +59,6 @@ class ProviderService(IProviderService):
             db.session.rollback()
             raise error
 
-    def get_children_by_provider(self, provider_id):
-        try:
-            provider = Provider.query.filter_by(id=provider_id).first()
-            children_dto = [ChildDTO(**child.to_dict()) for child in provider.children]
-            return children_dto
-        except Exception as error:
-            self.logger.error(str(error))
-            raise error
-
     def get_providers_by_child(self, child_id):
         try:
             child = Child.query.filter_by(id=child_id).first()

@@ -1,16 +1,17 @@
-"""change child-provider relationship
+"""Change child provider relationship
 
-Revision ID: 05393a9f6f23
-Revises: 2e3a95429cdf
-Create Date: 2023-11-11 18:52:37.274933
+Revision ID: 142c528373ea
+Revises: db7c2f31d3ea
+Create Date: 2023-12-05 00:58:54.363918
 
 """
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
+
 
 # revision identifiers, used by Alembic.
-revision = "05393a9f6f23"
-down_revision = "2e3a95429cdf"
+revision = "142c528373ea"
+down_revision = "db7c2f31d3ea"
 branch_labels = None
 depends_on = None
 

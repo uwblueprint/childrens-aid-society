@@ -11,7 +11,6 @@ def init_app(app):
         AttendanceRecords,
         Transportation,
         VisitingMember,
-        attending_family_enum,
     )
     from .attendance_sheets import AttendanceSheets
     from .branch import Branch

@@ -13,7 +13,7 @@ from app.services.implementations.attendance_record_service import (
 )
 
 DEFAULT_ATTENDANCE_RECORDS = {
-    "id": 2,
+    "id": 1,
     "attendance_sheet_id": 1,
     "visit_date": "2023-01-01",
     "visit_day": "Wednesday",

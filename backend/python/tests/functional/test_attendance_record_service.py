@@ -26,6 +26,9 @@ DEFAULT_ATTENDANCE_RECORDS = {
     "driver_transport_time_min": None,
     "foster_parent_transport_time_min": None,
     "staff_transport_time_min": None,
+    "transportation": None,
+    "visiting_members": None,
+    "user": None,
 }
 
 

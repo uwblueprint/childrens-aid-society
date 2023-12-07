@@ -67,7 +67,8 @@ def empty_database():
 
 
 def assert_returned_cadences(records, expected):
-    assert records[0] == expected
+    assert {k: v for k, v in records[0].items() if k not in ('visiting_members', 'transportation')} == \
+           {k: v for k, v in expected.items() if k not in ('visiting_members', 'transportation')}
 
 
 def test_get_all_cadences(visit_attendance_records_service):

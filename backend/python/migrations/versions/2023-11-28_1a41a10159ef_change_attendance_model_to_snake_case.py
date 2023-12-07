@@ -37,7 +37,8 @@ def upgrade():
         sa.Column("attendance_record_id", sa.Integer(), nullable=False),
         sa.Column(
             "visitor_relationship",
-            sa.Enum("FOSTER_CAREGIVER",
+            sa.Enum(
+                "FOSTER_CAREGIVER",
                 "KINSHIP_CAREGIVER",
                 "BIOLOGICAL_FAMILY",
                 "ADOPTIVE_PARENT",
@@ -51,7 +52,9 @@ def upgrade():
                 "HALF_SIBLING",
                 "UNCLE/AUNT",
                 "OTHER_RELATIVE",
-                "OTHER", name="visitorRelationship"),
+                "OTHER",
+                name="visitorRelationship",
+            ),
             nullable=False,
         ),
         sa.Column("description", sa.String(), nullable=False),

@@ -14,11 +14,9 @@ import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
-import StatusModal from "../dashboard/StatusModal";
-import PermanentDeleteModal from "../dashboard/PermanentDeleteModal";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import FilteredSection from "../dashboard/FilteredSection";
-import caseCard, { CaseCardProps } from "../dashboard/CaseCard";
+import { CaseCardProps } from "../dashboard/CaseCard";
 import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
@@ -41,17 +39,17 @@ const SecondaryHeader = ({
     history.push("/intake");
   }
 
-  const {
-    onOpen: onOpenPermanentDelete,
-    isOpen: isOpenPermanentDelete,
-    onClose: onClosePermanentDelete,
-  } = useDisclosure();
+  // const {
+  //   onOpen: onOpenPermanentDelete,
+  //   isOpen: isOpenPermanentDelete,
+  //   onClose: onClosePermanentDelete,
+  // } = useDisclosure();
 
-  const {
-    onOpen: onOpenStatusModal,
-    isOpen: isOpenStatusModal,
-    onClose: onCloseStatusModal,
-  } = useDisclosure();
+  // const {
+  //   onOpen: onOpenStatusModal,
+  //   isOpen: isOpenStatusModal,
+  //   onClose: onCloseStatusModal,
+  // } = useDisclosure();
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -96,12 +94,12 @@ const Home = (): React.ReactElement => {
     setEnterClicked(true);
     if (searchValue.trim() !== "") {
       IntakeAPIClient.search(searchValue).then((data) => {
-        const caseCards: CaseCardProps[] = data.map((caseData: any) => ({
-          caseId: caseData.case_id,
+        const caseCards: CaseCardProps[] = data.map((caseData: Case) => ({
+          caseId: Number(caseData.case_id),
           referringWorker: caseData.caseReferral.referringWorkerName,
           date: caseData.caseReferral.referralDate,
-          familyName: caseData.caseReferral.familyName,
           caseTag: caseData.intakeStatus,
+          familyName: caseData.caseReferral.familyName,
         }));
         setSearchResults(caseCards);
       });
@@ -111,7 +109,6 @@ const Home = (): React.ReactElement => {
   // TODO: remove console log and use context instead of state
   const casesFromContext = useContext(CasesContext);
   // eslint-disable-next-line
-  console.log(casesFromContext);
 
   const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
     active: [],
@@ -182,22 +179,20 @@ const Home = (): React.ReactElement => {
             setSearchValue={setSearchValue}
             handleSearch={handleSearch}
           />
-          {enterClicked &&
-            (console.log("enteredClicked: ", enterClicked),
-            (
-              <>
-                {searchResults.length > 0 ? (
-                  <FilteredSection
-                    status="Search Results"
-                    cases={searchResults}
-                  />
-                ) : (
-                  <h3 style={{ marginTop: "20px" }}>
-                    Sorry, we couldn`t find that for you.
-                  </h3>
-                )}
-              </>
-            ))}
+          {enterClicked && (
+            <>
+              {searchResults.length > 0 ? (
+                <FilteredSection
+                  status="Search Results"
+                  cases={searchResults}
+                />
+              ) : (
+                <h3 style={{ marginTop: "20px" }}>
+                  Sorry, we couldn`t find that for you.
+                </h3>
+              )}
+            </>
+          )}
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}

@@ -60,7 +60,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
     });
 
-    const mappedData: Case[] = data.map((intake) => ({
+    const mappedDataCase: Case[] = data.map((intake) => ({
       user_id: intake.user_id.toString(),
       case_id: intake.case_id.toString(),
       intakeStatus: <CaseStatus>intake.intake_status,
@@ -139,8 +139,8 @@ const search = async (searchParam: string): Promise<Case[]> => {
         ],
       },
     }));
-    console.log("mappedData", mappedData);
-    return mappedData;
+
+    return mappedDataCase;
   } catch (error) {
     return error;
   }
@@ -247,7 +247,7 @@ const get = async (
         ],
       },
     }));
-    console.log(mappedData);
+
     return mappedData;
   } catch (error) {
     return error;

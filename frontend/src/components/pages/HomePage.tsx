@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,7 +7,6 @@ import {
   Spacer,
   VStack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { FilePlus, Search } from "react-feather";
@@ -17,7 +16,6 @@ import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
-import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
@@ -107,7 +105,7 @@ const Home = (): React.ReactElement => {
   };
 
   // TODO: remove console log and use context instead of state
-  const casesFromContext = useContext(CasesContext);
+  // const casesFromContext = useContext(CasesContext);
   // eslint-disable-next-line
 
   const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({

@@ -110,6 +110,7 @@ def update_visit(id):
     except Exception as error:
         return jsonify(str(error)), 400
 
+
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)
 def delete_visit():
     args = request.args
@@ -123,4 +124,3 @@ def delete_visit():
             return jsonify({"error": str(error)}), 500
     else:
         return jsonify({"error": "Must supply id as a query parameter."}), 400
-

@@ -355,12 +355,12 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": new_intake.id,
-            "name": child["childInfo"]["name"],
-            "date_of_birth": child["childInfo"]["dateOfBirth"],
-            "cpin_number": child["childInfo"]["cpinFileNumber"],
-            "service_worker": child["childInfo"]["serviceWorker"],
+            "name": child["child_info"]["name"],
+            "date_of_birth": child["child_info"]["date_of_birth"],
+            "cpin_number": child["child_info"]["cpin_file_number"],
+            "service_worker": child["child_info"]["service_worker"],
             "daytime_contact_id": daytime_contact_response.id,
-            "special_needs": child["childInfo"]["specialNeeds"],
+            "special_needs": child["child_info"]["special_needs"],
         }
         try:
             child_response = child_service.add_new_child(CreateChildDTO(**child_obj))

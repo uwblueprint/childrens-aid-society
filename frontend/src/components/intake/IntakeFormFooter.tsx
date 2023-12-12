@@ -9,10 +9,10 @@ import { ReferralDetails } from "./ReferralForm";
 import { CourtDetails } from "./CourtInformationForm";
 import { ProgramDetails } from "./ProgramForm";
 import { Children } from "./child-information/AddChildPage";
-import { Caregivers } from "./NewCaregiverModal";
 import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import { PermittedIndividuals } from "./PermittedIndividualsModal";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;

@@ -2,9 +2,17 @@ from . import db
 from .base_mixin import BaseMixin
 
 relationship_to_child_enum = db.Enum(
-    "FOSTER_CAREGIVER",
-    "KINSHIP_CAREGIVER",
-    "BIOLOGICAL_FAMILY",
+    "ADOPTIVE_PARENT",
+    "BIOLOGICAL_PARENT",
+    "STEP-PARENT",
+    "MATERNAL_GRANDPARENT",
+    "PATERNAL_GRANDPARENT",
+    "SIBLING",
+    "HALF_SIBLING",
+    "STEP_SIBLING",
+    "UNCLE/AUNT",
+    "OTHER_RELATIVE",
+    "OTHER",
     name="caregivers_relationship_to_child",
 )
 

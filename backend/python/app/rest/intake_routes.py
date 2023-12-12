@@ -232,7 +232,7 @@ def create_intake():
             "individual_considerations": caregiver["individual_considerations"],
             "primary_phone_number": caregiver["primary_phone_number"],
             "secondary_phone_number": caregiver["secondary_phone_number"],
-            "email": caregiver["email"],
+            "email": caregiver.get("email", ""),
             "address": caregiver["address"],
             "relationship_to_child": caregiver["relationship_to_child"],
             "additional_contact_notes": caregiver["additional_contact_notes"],

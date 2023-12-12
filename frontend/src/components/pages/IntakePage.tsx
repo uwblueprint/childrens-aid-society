@@ -129,6 +129,7 @@ const Intake = (): React.ReactElement => {
               setIsReviewOnly={setIsReviewOnly}
               childrens={children}
               caregivers={caregivers}
+              permittedIndividuals={permittedIndividuals}
             />
           </Box>
         );
@@ -152,6 +153,7 @@ const Intake = (): React.ReactElement => {
               programDetails={programDetails}
               childrens={children}
               caregivers={caregivers}
+              permittedIndividuals={permittedIndividuals}
             />
           </Box>
         );

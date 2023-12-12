@@ -12,6 +12,7 @@ import { Children } from "./child-information/AddChildPage";
 import { Caregivers } from "./NewCaregiverModal";
 import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import { PermittedIndividuals } from "./PermittedIndividualsModal";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -32,6 +33,7 @@ export type IntakeFooterProps = {
   programDetails?: ProgramDetails;
   childrens?: Children;
   caregivers?: Caregivers;
+  permittedIndividuals?: PermittedIndividuals;
 };
 
 const IntakeFooter = ({
@@ -47,6 +49,7 @@ const IntakeFooter = ({
   programDetails,
   childrens,
   caregivers,
+  permittedIndividuals,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
   // TODO: remove useHistory once dashboard is implemented
@@ -85,7 +88,8 @@ const IntakeFooter = ({
       courtDetails &&
       childrens &&
       caregivers &&
-      programDetails
+      programDetails &&
+      permittedIndividuals
     ) {
       const intakeData = {
         userId: 1,
@@ -147,10 +151,12 @@ const IntakeFooter = ({
             name: cg.caregiverName,
             dateOfBirth: cg.dateOfBirth,
             primaryPhoneNumber: cg.primaryPhoneNo,
-            secondaryPhoneNumber: cg.secondaryPhoneNo ? cg.secondaryPhoneNo : 0,
-            additionalContactNotes: cg.contactNotes ? cg.contactNotes : "",
+            secondaryPhoneNumber: cg.secondaryPhoneNo,
+            additionalContactNotes: cg.contactNotes,
             address: cg.address,
-            relationshipToChild: cg.relationship,
+            relationshipToChild: cg.relationship
+              .toUpperCase()
+              .replace(/ /g, "_"), // for enum,
             individualConsiderations: cg.indivConsiderations
               ? cg.indivConsiderations
               : "",
@@ -163,14 +169,14 @@ const IntakeFooter = ({
           shortTermGoals: programDetails.shortTermGoals,
           longTermGoals: programDetails.longTermGoals,
           familialConcerns: programDetails.familialConcerns,
-          permittedIndividuals: [
-            {
-              name: "temp",
-              phoneNumber: "123-123-1231",
-              relationshipToChildren: "temp",
-              additionalNotes: "temp",
-            },
-          ],
+          permittedIndividuals: permittedIndividuals.map((individual) => {
+            return {
+              name: individual.providerName,
+              phoneNumber: individual.phoneNo,
+              relationshipToChildren: individual.relationshipToChild,
+              additionalNotes: individual.additionalNotes,
+            };
+          }),
         },
       };
       await IntakeAPIClient.post(intakeData);

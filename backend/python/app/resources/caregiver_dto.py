@@ -55,7 +55,7 @@ class CreateCaregiverDTO(CaregiverDTO):
                 r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", self.email
             ):
                 error_list.append("email must be a valid email address")
-        else:
+        if self.email and type(self.email) is not str:
             error_list.append("email must be a string")
 
         if type(self.address) is str:

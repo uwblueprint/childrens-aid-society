@@ -12,6 +12,7 @@ import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
+// eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
 
 export type ReferralDetails = {

@@ -29,7 +29,8 @@ interface Intake {
   };
 }
 
-const post = async ({ formData }: { formData: FormData }): Promise<Case> => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+const post = async (formData: any): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",

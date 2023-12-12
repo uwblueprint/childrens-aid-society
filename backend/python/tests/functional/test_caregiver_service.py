@@ -51,7 +51,7 @@ DUMMY_CAREGIVER_DATA = {
     "secondary_phone_number": "2345678901",
     "email": "test123@uwaterloo.ca",
     "address": "123 Fake Street",
-    "relationship_to_child": "FOSTER_PARENT",
+    "relationship_to_child": "ADOPTIVE_PARENT",
     "intake_id": 1,
 }
 
@@ -87,7 +87,7 @@ class TestCreateCaregiverValid:
             secondary_phone_number="2345678901",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
-            relationship_to_child="FOSTER_PARENT",
+            relationship_to_child="ADOPTIVE_PARENT",
             intake_id=1,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
@@ -101,7 +101,7 @@ class TestCreateCaregiverValid:
             primary_phone_number="1234567890",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
-            relationship_to_child="FOSTER_PARENT",
+            relationship_to_child="ADOPTIVE_PARENT",
             intake_id=1,
         )
         caregiver_instance = caregiver_service.create_caregiver(param)
@@ -116,7 +116,7 @@ class TestCreateCaregiverInvalidFails:
             primary_phone_number="1234567890",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
-            relationship_to_child="FOSTER_PARENT",
+            relationship_to_child="ADOPTIVE_PARENT",
             intake_id=1,
         )
         with pytest.raises(Exception):
@@ -131,7 +131,7 @@ class TestCreateCaregiverInvalidFails:
             secondary_phone_number="2345678901",
             email="test123@uwaterloo.ca",
             address="1234 Lester Street",
-            relationship_to_child="FOSTER_PARENT",
+            relationship_to_child="ADOPTIVE_PARENT",
             intake_id=1,
         )
         with pytest.raises(Exception):

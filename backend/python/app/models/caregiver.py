@@ -3,14 +3,13 @@ from .base_mixin import BaseMixin
 
 relationship_to_child_enum = db.Enum(
     "ADOPTIVE_PARENT",
-    "FOSTER_PARENT",
     "BIOLOGICAL_PARENT",
-    "STEP_PARENT",
+    "STEP-PARENT",
     "MATERNAL_GRANDPARENT",
     "PATERNAL_GRANDPARENT",
     "SIBLING",
-    "STEP_SIBLING",
     "HALF_SIBLING",
+    "STEP_SIBLING",
     "UNCLE/AUNT",
     "OTHER_RELATIVE",
     "OTHER",

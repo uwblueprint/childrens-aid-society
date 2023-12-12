@@ -9,6 +9,7 @@ import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import { Children } from "./child-information/AddChildPage";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
+import { PermittedIndividuals } from "./PermittedIndividualsModal";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;
@@ -24,6 +25,7 @@ type ReviewFormProps = {
   setIsReviewOnly: React.Dispatch<React.SetStateAction<boolean>>;
   childrens: Children;
   caregivers: Caregivers;
+  permittedIndividuals: PermittedIndividuals;
 };
 
 const ReviewForm = ({
@@ -40,6 +42,7 @@ const ReviewForm = ({
   setIsReviewOnly,
   childrens,
   caregivers,
+  permittedIndividuals,
 }: ReviewFormProps): React.ReactElement => {
   const onNextStep = () => {
     nextStep(); // TODO: Add functionality for nextStep (Currently we pass in empty nextStep() prop)
@@ -136,6 +139,12 @@ const ReviewForm = ({
         isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}
         nextStepCallBack={onNextStep}
+        referralDetails={referralDetails}
+        courtDetails={courtDetails}
+        programDetails={programDetails}
+        childrens={childrens}
+        caregivers={caregivers}
+        permittedIndividuals={permittedIndividuals}
       />
     </>
   );

@@ -72,14 +72,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', 1),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', 1),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', 1),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', 1),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "intake_id"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
 
     # Child
     values = [
@@ -94,8 +94,8 @@ def insert_test_data():
 
     # Caregivers
     values = [
-        ('Yor Forger', '1999-01-01', 'considerations', '555-555-5555', '777-777-7777', 'email@email.com', 'address', 'FOSTER_PARENT', 'NULL', 1),
-        ('Loid Forger', '1999-01-01', 'considerations', '777-777-7777', '555-555-5555', 'email@email.com', 'address', 'MATERNAL_GRANDPARENT', 'NULL', 1)
+        ('Yor Forger', '1999-01-01', 'considerations', '555-555-5555', '777-777-7777', 'email@email.com', 'address', 'ADOPTIVE_PARENT', 'NULL', 1),
+        ('Loid Forger', '1999-01-01', 'considerations', '777-777-7777', '555-555-5555', 'email@email.com', 'address', 'ADOPTIVE_PARENT', 'NULL', 1)
     ]
 
     for value in values:

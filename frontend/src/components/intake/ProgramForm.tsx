@@ -21,6 +21,7 @@ import OptionalLabel from "./OptionalLabel";
 import { CustomSelectField } from "./CustomSelectField";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
+// eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
 import MultiTextInput from "../common/MultiTextInput";
 

@@ -53,16 +53,16 @@ def get_visits():
                 "user_id": record.id,
                 "childInformation": childInformation_obj,
                 "visitTimestamp": {
-                    "visitDate": record.date,
-                    "visitDay": "",
-                    "visitSupervision": record.supervision,
+                    "visitDate": record.visit_date,
+                    "visitDay": record.visit_day,
+                    "visitSupervision": record.visit_supervision,
                     "startTime": record.start_time,
                     "endTime": record.end_time,
                     "location": record.location,
                 },
                 "attendance": {"visitingMembers": []},
                 "transportation": [],
-                "notes": record.comments,
+                "notes": record.notes,
                 "childAndFamilySupportWorker": record.child_family_support_worker_id,
             }
             visits.append(visit)

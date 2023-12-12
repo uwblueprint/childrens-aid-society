@@ -83,14 +83,14 @@ def insert_test_data():
 
     # Child
     values = [
-        (1, 'Anya', 'Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
-        (1, 'Damian', 'Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
-        (2, 'Becky', 'Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
-        (3, 'Ewen', 'Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
+        (1, 'Anya Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
+        (1, 'Damian Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
+        (2, 'Becky Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
+        (3, 'Ewen Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
     ]
 
     for value in values:
-        insert_values(db, "children", ("intake_id", "first_name", "last_name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
+        insert_values(db, "children", ("intake_id", "name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
 
     # Caregivers
     values = [
@@ -119,22 +119,40 @@ def insert_test_data():
 
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
-        
-            
-    values_sheets = [(999, 'Zhang' , 'csw', 'cpw', 'fcc'),
-                     (1000, 'Zhang' , 'csw', 'cpw', 'fcc')]
 
-    for value in values_sheets:
-        insert_values(db, "attendance_sheets", ("id", "family_name", "csw", "cpw", "fcc"), value) 
-    
+    # Attendance Sheets
+    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc')]
+    for value in values:
+        insert_values(db, "attendance_sheets", ("intake_id", "family_name", "csw", "cpw", "fcc"), value)
 
-    values_records = [
-    (999, 999, 'FULL', '2023-01-01', '08:00:00', '17:00:00', 'Location Value', 'PRESENT', 'MOM', 30, 15, 10, 1, 'Comments Value'),
-    (1000, 1000, 'PARTIAL', '2023-01-02', '09:00:00', '18:00:00', 'Location Value', 'NO_SHOW', 'DAD', 45, 20, 12, 2, 'Comments Value'),
-]
+    # attendance_record
+    values = [
+        (1, '2000-10-09', 'Monday', 'PARTIAL','10:00 AM', '01:00 PM', 'Room', 'comments', 1),
+        (1, '2010-03-15', 'Friday', 'FULL','07:00 PM', '12:00 AM', 'R1', 'more comments', 2),
+        (1, '2011-03-15', 'Tuesday', 'UNSUPERVISED','07:00 PM', '12:00 AM', 'R1', '')
+    ]
 
-    for value in values_records:
-        insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time", "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min", "child_family_support_worker_id", "comments"), value)
+    for value in values:
+       insert_values(db, "attendance_records", ("attendance_sheet_id", "visit_date", "visit_day", "visit_supervision", "start_time", "end_time", "location", "notes", "child_family_support_worker_id"), value)
+
+    # visiting_members
+    values = [
+        (2,'FOSTER_CAREGIVER','description','Ann', 'PRESENT', ''),
+        (2,'STEP_SIBLING','description','Jake', 'NO_SHOW', 'busy')
+    ]
+
+    for value in values:
+        insert_values(db, "visiting_members", ("attendance_record_id", "visitor_relationship", "description", "visiting_member_name", "visit_attendance", "reason_for_absence"), value)
+
+    # transportation
+    values = [
+        (2,'Parent','Ann', '10'),
+        (2,'Sibling','Ed', '250')
+    ]
+
+    for value in values:
+        insert_values(db, "transportation", ("attendance_record_id", "guardian", "name", "duration"), value)
+
 
 # fmt: on
 

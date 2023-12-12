@@ -41,8 +41,6 @@ class AttendanceRecordsDTO:
         self.start_time = kwargs.get("start_time")
         self.end_time = kwargs.get("end_time")
         self.location = kwargs.get("location")
-        self.visiting_members = kwargs.get("visiting_members")
-        self.transportation = kwargs.get("transportation")
         self.staff_transport_time_min = kwargs.get("staff_transport_time_min")
         self.driver_transport_time_min = kwargs.get("driver_transport_time_min")
         self.foster_parent_transport_time_min = kwargs.get(

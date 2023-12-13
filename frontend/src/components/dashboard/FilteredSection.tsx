@@ -64,20 +64,33 @@ const FilteredSection = ({
             pb="24px"
             alignItems="flex-start"
           >
-            {groupedCases.map((row, rowIndex) => (
-              <Flex key={rowIndex} marginBottom="20px">
-                {row.map((caseData: CaseCardProps) => (
-                  <CaseCard
-                    key={caseData.caseId}
-                    caseId={caseData.caseId}
-                    referringWorker={caseData.referringWorker}
-                    date={caseData.date}
-                    familyName={caseData.familyName}
-                    caseTag={caseData.caseTag}
-                  />
-                ))}
-              </Flex>
-            ))}
+            {!showViewAll
+              ? groupedCases.map((row, rowIndex) => (
+                  <Flex key={rowIndex} marginBottom="20px">
+                    {row.map((caseData) => (
+                      <CaseCard
+                        key={caseData.caseId}
+                        caseId={caseData.caseId}
+                        referringWorker={caseData.referringWorker}
+                        date={caseData.date}
+                        familyName={caseData.familyName}
+                        caseTag={caseData.caseTag}
+                      />
+                    ))}
+                  </Flex>
+                ))
+              : cases
+                  .slice(0, 4)
+                  .map((caseData) => (
+                    <CaseCard
+                      key={caseData.caseId}
+                      caseId={caseData.caseId}
+                      referringWorker={caseData.referringWorker}
+                      date={caseData.date}
+                      familyName={caseData.familyName}
+                      caseTag={caseData.caseTag}
+                    />
+                  ))}
           </Flex>
         )}
       </Box>

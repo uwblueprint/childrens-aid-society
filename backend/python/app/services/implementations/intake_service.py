@@ -103,7 +103,6 @@ class IntakeService(IIntakeService):
             if not isinstance(family_name, str):
                 raise Exception("Family name passed is not of str type")
             intakes = Intake.query.filter_by(family_name=family_name).all()
-            print(intakes)
             intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
             return intakes_dto
         except Exception as error:

@@ -461,7 +461,6 @@ def search_intake():
     args = request.args
     try:
         family_name = args.get("family_name")
-        print(f"Received request for family_name: {family_name}")
         intake_list = []
         try:
             intakes = intake_service.search_intake_family_name(family_name=family_name)

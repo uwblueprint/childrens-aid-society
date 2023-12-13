@@ -183,10 +183,11 @@ const Home = (): React.ReactElement => {
                 <FilteredSection
                   status="Search Results"
                   cases={searchResults}
+                  showViewAll={false}
                 />
               ) : (
                 <h3 style={{ marginTop: "20px" }}>
-                  Sorry, we couldn`t find that for you.
+                  Sorry, we could not find that for you.
                 </h3>
               )}
             </>

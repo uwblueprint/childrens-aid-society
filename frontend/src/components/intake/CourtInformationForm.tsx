@@ -16,6 +16,7 @@ import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
+// eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
 
 export type CourtDetails = {

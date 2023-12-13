@@ -45,8 +45,7 @@ DUMMY_DAYTIME_CONTACT_DATA = {
 
 DUMMY_CHILD = {
     "id": 1,
-    "first_name": "Jane",
-    "last_name": "Doe",
+    "name": "Jane Doe",
     "service_worker": "Test Worker",
     "daytime_contact_id": 1,
     "special_needs": "None",

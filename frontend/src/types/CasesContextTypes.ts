@@ -18,48 +18,42 @@ export type Case = {
     firstNationHeritage: string;
     firstNationBand: string;
   };
-  children: [
-    {
-      childInfo: {
-        name: string;
-        dateOfBirth: string;
-        cpinFileNumber: number;
-        serviceWorker: string;
-        specialNeeds: string;
-        concerns: string[];
-      };
-      daytimeContact: {
-        name: string;
-        contactInfo: string;
-        address: string;
-        dismissalTime: string;
-      };
-      provider: [
-        {
-          name: string;
-          fileNumber: number;
-          primaryPhoneNumber: number;
-          secondaryPhoneNumber: number;
-          email: string;
-          address: string;
-          additionalContactNotes: string;
-          relationshipToChild: string;
-        },
-      ];
-    },
-  ];
-  caregivers: [
-    {
+  children: {
+    childInfo: {
       name: string;
       dateOfBirth: string;
+      cpinFileNumber: number;
+      serviceWorker: string;
+      specialNeeds: string;
+      concerns: string[];
+    };
+    daytimeContact: {
+      name: string;
+      contactInfo: string;
+      address: string;
+      dismissalTime: string;
+    };
+    provider: {
+      name: string;
+      fileNumber: number;
       primaryPhoneNumber: number;
       secondaryPhoneNumber: number;
-      additionalContactNotes: string;
+      email: string;
       address: string;
+      additionalContactNotes: string;
       relationshipToChild: string;
-      individualConsiderations: string;
-    },
-  ];
+    }[];
+  }[];
+  caregivers: {
+    name: string;
+    dateOfBirth: string;
+    primaryPhoneNumber: number;
+    secondaryPhoneNumber: number;
+    additionalContactNotes: string;
+    address: string;
+    relationshipToChild: string;
+    individualConsiderations: string;
+  }[];
   programDetails: {
     transportRequirements: string;
     schedulingRequirements: string;
@@ -67,14 +61,12 @@ export type Case = {
     shortTermGoals: string[];
     longTermGoals: string[];
     familialConcerns: string[];
-    permittedIndividuals: [
-      {
-        name: string;
-        phoneNumber: number;
-        relationshipToChildren: string;
-        additionalNotes: string;
-      },
-    ];
+    permittedIndividuals: {
+      name: string;
+      phoneNumber: number;
+      relationshipToChildren: string;
+      additionalNotes: string;
+    }[];
   };
 };
 

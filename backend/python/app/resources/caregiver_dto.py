@@ -40,31 +40,22 @@ class CreateCaregiverDTO(CaregiverDTO):
             error_list.append("date_of_birth must be a string")
 
         if self.individual_considerations is not None:
-            if type(self.individual_considerations) is str:
-                if len(self.individual_considerations) == 0:
-                    error_list.append("individual_considerations must not be empty")
-            else:
+            if not (type(self.individual_considerations) is str):
                 error_list.append("individual_considerations must be a string")
 
-        if type(self.primary_phone_number) is str:
-            if len(self.primary_phone_number) == 0:
-                error_list.append("primary_phone_number must not be empty")
-        else:
+        if not (type(self.primary_phone_number) is str):
             error_list.append("primary_phone_number must be a string")
 
         if self.secondary_phone_number is not None:
-            if type(self.secondary_phone_number) is str:
-                if len(self.secondary_phone_number) == 0:
-                    error_list.append("secondary_phone_number must not be empty")
-            else:
+            if not (type(self.secondary_phone_number) is str):
                 error_list.append("secondary_phone_number must be a string")
 
-        if type(self.email) is str:
+        if self.email and type(self.email) is str:
             if not re.match(
                 r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", self.email
             ):
                 error_list.append("email must be a valid email address")
-        else:
+        if self.email and type(self.email) is not str:
             error_list.append("email must be a string")
 
         if type(self.address) is str:
@@ -80,10 +71,7 @@ class CreateCaregiverDTO(CaregiverDTO):
             error_list.append("relationship_to_child must be a string")
 
         if self.additional_contact_notes is not None:
-            if type(self.additional_contact_notes) is str:
-                if len(self.additional_contact_notes) == 0:
-                    error_list.append("additional_contact_notes must not be empty")
-            else:
+            if not (type(self.additional_contact_notes) is str):
                 error_list.append("additional_contact_notes must be a string")
 
         if type(self.intake_id) is not int:

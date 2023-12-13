@@ -8,7 +8,7 @@ import PermanentDeleteModal from "./PermanentDeleteModal";
 
 export type CaseCardProps = {
   caseId: number;
-  caseLead: string;
+  referringWorker: string;
   date: string;
   familyName: string;
   caseTag: CaseStatus;
@@ -31,7 +31,7 @@ const colorChange = (value: string) => {
 
 const CaseCard = ({
   caseId,
-  caseLead,
+  referringWorker,
   date,
   familyName,
   caseTag,
@@ -57,7 +57,10 @@ const CaseCard = ({
   // TODO refactor to display proper case data
   const onCardClick = (status: string) => {
     if (status === "ACTIVE") {
-      history.push(`/caseoverview`);
+      history.push({
+        pathname: `/caseoverview/${caseId}`,
+        state: { referringWorker },
+      });
     } else {
       onOpenStatusModal();
     }
@@ -70,7 +73,7 @@ const CaseCard = ({
         _hover={{ boxShadow: "md", borderWidth: "2px" }}
         paddingRight="30px"
         paddingLeft="30px"
-        width="297px"
+        width="250px"
         height="289px"
         borderWidth="1px"
         borderRadius="lg"
@@ -93,7 +96,7 @@ const CaseCard = ({
           marginBottom="10px"
         >
           <Text textStyle="body-medium" marginBottom="15px">
-            {caseLead}
+            {referringWorker}
           </Text>
           <Text textStyle="body-medium" marginBottom="15px">
             {date}

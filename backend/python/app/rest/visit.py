@@ -3,18 +3,63 @@ from flask import Blueprint, current_app, jsonify, request
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
-
-attendance_sheet_service = AttendanceSheetService(current_app.logger)
-
+from ..services.implementations.attendance_record_service import AttendanceRecordService
+from ..resources.attendance_sheet_dto import CreateAttendanceSheetDTO
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
-from ..services.implementations.attendance_record_service import AttendanceRecordService
+
+attendance_sheet_service = AttendanceSheetService(current_app.logger)
 
 attendance_record_service = AttendanceRecordService(current_app.logger)
 
 blueprint = Blueprint("visit", __name__, url_prefix="/visit")
 
+
+# create a visit in db
+@blueprint.route("/", methods=["POST"], strict_slashes=False)
+# @require_authorization_by_role({"Admin", "User"})
+@validate_request("VisitDTO")
+def create_visit():
+    try:
+        attendance_sheet = {
+            "intake_id": request.json["intake_id"],
+            "children": request.json["childInformation"]["children"],
+            "family_name": request.json["childInformation"]["familyName"],
+            "csw": request.json["childInformation"]["childServiceWorker"],
+            "cpw": request.json["childInformation"]["childProtectionWorker"],
+            "fcc": request.json["childInformation"]["fosterCareCoordinator"],
+        }
+        attendance_sheet = CreateAttendanceSheetDTO(**attendance_sheet)
+
+        attendance_record = {
+            #"id": request.json["user_id"],
+            "attendance_sheet_id": 1,
+            "attendance": "PRESENT",  # update
+            "attending_family": "MOM", # update
+            "date": request.json["visitTimestamp"]["visitDate"],
+            "supervision": request.json["visitTimestamp"]["visitSupervision"],
+            "start_time": request.json["visitTimestamp"]["startTime"],
+            "end_time": request.json["visitTimestamp"]["endTime"],
+            "location": request.json["visitTimestamp"]["location"],
+            "comments": request.json["notes"],
+            "child_family_support_worker_id": request.json["childAndFamilySupportWorker"],
+            "user": request.json["user_id"]
+        }
+        attendance_record = CreateAttendanceRecordsDTO(**attendance_record)
+
+        # new_attendance_sheet = attendance_sheet_service.create_attendance_sheet(
+        #     attendance_sheet
+        # )
+        new_attendance_record = attendance_record_service.create_attendance_record(
+            attendance_record
+        )
+        #new_visit = [attendance_sheet, attendance_record]
+        new_visit = attendance_record
+
+        return jsonify(new_visit.__dict__), 201
+    except Exception as error:
+        return jsonify(error), 400
 
 # get all visits
 @blueprint.route("/", methods=["GET"], strict_slashes=False)
@@ -53,6 +98,7 @@ def get_visits():
 
             visit = {
                 "user_id": record.id,
+                "intake_id": sheet.intake_id,
                 "childInformation": childInformation_obj,
                 "visitTimestamp": {
                     "visitDate": record.date,

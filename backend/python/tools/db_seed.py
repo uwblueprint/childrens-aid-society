@@ -72,14 +72,14 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', 1),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', 1),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', 1),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', 1),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "intake_id"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
 
     # Child
     values = [
@@ -119,6 +119,21 @@ def insert_test_data():
     for value in values:
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
+    # Attendance Sheet
+    values = [(1, 1, 'Smith', 'a', 'b', 'c'), (2, 2, 'Wang', 'a', 'b', 'c')]
+
+    for value in values:
+        insert_values(db, "attendance_sheets", ("id", "intake_id", "family_name", "cpw", "csw", "fcc"), value)
+
+    # Attendance Record
+    values = [(2, 2, 'FULL', 'a', 'b', 'c', 'd', 'PRESENT', 'DAD', 1, 2, 3, 'yeet')]
+
+    for value in values:
+        insert_values(db, "attendance_records", ("id", "attendance_sheet_id", "supervision", "date", "start_time", "end_time",
+        "location", "attendance", "attending_family", "staff_transport_time_min", "driver_transport_time_min", "foster_parent_transport_time_min",
+        "comments"), value)
+
+
 # fmt: on
 
 # fmt: off
@@ -133,6 +148,8 @@ def clear_rows():
     db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE attendance_sheets RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE attendance_records RESTART IDENTITY CASCADE")
 
 # fmt: on
 

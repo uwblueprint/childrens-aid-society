@@ -84,7 +84,7 @@ class AttendanceSheetService(IAttendanceSheetService):
 
     def delete_attendance_sheet(self, id):
         try:
-            attendance_sheet = AttendanceSheets.query.get(id)
+            attendance_sheet = AttendanceSheets.query.filter_by(id=id).first()
             if not attendance_sheet:
                 raise Exception("Attendance sheet with id {} not found".format(id))
             db.session.delete(attendance_sheet)
@@ -92,6 +92,7 @@ class AttendanceSheetService(IAttendanceSheetService):
         except Exception as error:
             db.session.rollback()
             self.logger.error(str(error))
+            raise error
 
     def update_attendance_sheet(self, attendance_id: int, updated_data):
         try:

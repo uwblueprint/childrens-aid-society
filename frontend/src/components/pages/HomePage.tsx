@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,14 +13,21 @@ import { FilePlus, Search } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import FilteredSection from "../dashboard/FilteredSection";
 import { CaseCardProps } from "../dashboard/CaseCard";
-import IntakeApiClient from "../../APIClients/IntakeAPIClient";
-import CasesContext from "../../contexts/CasesContext";
 import { Case } from "../../types/CasesContextTypes";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
-const SecondaryHeader = (): React.ReactElement => {
+const SecondaryHeader = ({
+  searchValue,
+  setSearchValue,
+  handleSearch,
+}: {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: () => void;
+}): React.ReactElement => {
   const history = useHistory();
 
   const { setStep } = useStepValueContext();
@@ -30,6 +37,24 @@ const SecondaryHeader = (): React.ReactElement => {
     history.push("/intake");
   }
 
+  // const {
+  //   onOpen: onOpenPermanentDelete,
+  //   isOpen: isOpenPermanentDelete,
+  //   onClose: onClosePermanentDelete,
+  // } = useDisclosure();
+
+  // const {
+  //   onOpen: onOpenStatusModal,
+  //   isOpen: isOpenStatusModal,
+  //   onClose: onCloseStatusModal,
+  // } = useDisclosure();
+
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <Box alignSelf="stretch" flexDirection="column">
       <Text textStyle="header-large">Intake Cases</Text>
@@ -38,6 +63,9 @@ const SecondaryHeader = (): React.ReactElement => {
           <CustomInput
             placeholder="Search By Family Name"
             icon={<Icon as={Search} />}
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+            onKeyPress={handleEnter}
           />
         </Box>
         <Spacer />
@@ -57,10 +85,28 @@ const SecondaryHeader = (): React.ReactElement => {
 };
 
 const Home = (): React.ReactElement => {
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState<CaseCardProps[]>([]);
+  const [enterClicked, setEnterClicked] = useState(false);
+  const handleSearch = () => {
+    setEnterClicked(true);
+    if (searchValue.trim() !== "") {
+      IntakeAPIClient.search(searchValue).then((data) => {
+        const caseCards: CaseCardProps[] = data.map((caseData: Case) => ({
+          caseId: Number(caseData.case_id),
+          referringWorker: caseData.caseReferral.referringWorkerName,
+          date: caseData.caseReferral.referralDate,
+          caseTag: caseData.intakeStatus,
+          familyName: caseData.caseReferral.familyName,
+        }));
+        setSearchResults(caseCards);
+      });
+    }
+  };
+
   // TODO: remove console log and use context instead of state
-  const casesFromContext = useContext(CasesContext);
+  // const casesFromContext = useContext(CasesContext);
   // eslint-disable-next-line
-  console.log(casesFromContext);
 
   const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
     active: [],
@@ -87,14 +133,14 @@ const Home = (): React.ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const activeCases = await IntakeApiClient.get(CaseStatus.ACTIVE, 1, 20);
-      const submittedCases = await IntakeApiClient.get(
+      const activeCases = await IntakeAPIClient.get(CaseStatus.ACTIVE, 1, 20);
+      const submittedCases = await IntakeAPIClient.get(
         CaseStatus.SUBMITTED,
         1,
         20,
       );
-      const pendingCases = await IntakeApiClient.get(CaseStatus.PENDING, 1, 20);
-      const archivedCases = await IntakeApiClient.get(
+      const pendingCases = await IntakeAPIClient.get(CaseStatus.PENDING, 1, 20);
+      const archivedCases = await IntakeAPIClient.get(
         CaseStatus.ARCHIVED,
         1,
         20,
@@ -126,8 +172,26 @@ const Home = (): React.ReactElement => {
         alignSelf="center"
       >
         <VStack spacing={12} align="stretch" alignSelf="center">
-          <SecondaryHeader />
-
+          <SecondaryHeader
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            handleSearch={handleSearch}
+          />
+          {enterClicked && (
+            <>
+              {searchResults.length > 0 ? (
+                <FilteredSection
+                  status="Search Results"
+                  cases={searchResults}
+                  showViewAll={false}
+                />
+              ) : (
+                <h3 style={{ marginTop: "20px" }}>
+                  Sorry, we could not find that for you.
+                </h3>
+              )}
+            </>
+          )}
           <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
           <FilteredSection
             status={CaseStatus.SUBMITTED}

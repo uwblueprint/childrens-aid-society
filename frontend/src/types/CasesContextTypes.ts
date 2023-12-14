@@ -4,6 +4,7 @@ export type Case = {
   user_id: string | number;
   case_id: string | number;
   intakeStatus: CaseStatus;
+  intakeMeetingNotes: string;
   caseReferral: {
     referringWorkerName: string;
     referringWorkerContact: string;

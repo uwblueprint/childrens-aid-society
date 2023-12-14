@@ -327,6 +327,22 @@ def create_intake():
 
     children = request.json["children"]
     for child in children:
+        # children
+        child_obj = {
+            "intake_id": new_intake.id,
+            "name": child["child_info"]["name"],
+            "date_of_birth": child["child_info"]["date_of_birth"],
+            "cpin_number": child["child_info"]["cpin_file_number"],
+            "service_worker": child["child_info"]["service_worker"],
+            "special_needs": child["child_info"]["special_needs"],
+        }
+        try:
+            child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
+            undos.append((child_service, "delete_child", child_response.id))
+        except Exception as error:
+            run_undos()
+            return jsonify(error), 400
+
         # daytime contact
         daytime_contact = child["daytime_contact"]
         daytime_contact = {
@@ -334,7 +350,7 @@ def create_intake():
             "address": daytime_contact["address"],
             "contact_information": daytime_contact["contact_info"],
             "dismissal_time": daytime_contact["dismissal_time"],
-            "child_id": child["id"],
+            "child_id": child_response.id,
         }
         try:
             daytime_contact_response = (
@@ -349,23 +365,6 @@ def create_intake():
                     daytime_contact_response.id,
                 )
             )
-        except Exception as error:
-            run_undos()
-            return jsonify(error), 400
-
-        # children
-        child_obj = {
-            "intake_id": new_intake.id,
-            "name": child["child_info"]["name"],
-            "date_of_birth": child["child_info"]["date_of_birth"],
-            "cpin_number": child["child_info"]["cpin_file_number"],
-            "service_worker": child["child_info"]["service_worker"],
-            "daytime_contact_id": daytime_contact_response.id,
-            "special_needs": child["child_info"]["special_needs"],
-        }
-        try:
-            child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
-            undos.append((child_service, "delete_child", child_response.id))
         except Exception as error:
             run_undos()
             return jsonify(error), 400

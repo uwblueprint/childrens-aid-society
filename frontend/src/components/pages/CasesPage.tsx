@@ -39,7 +39,7 @@ const Cases = (): React.ReactElement | null => {
           typeof intake.case_id === "number"
             ? intake.case_id
             : parseInt(intake.case_id, 10),
-        caseLead: intake.caseReferral.referringWorkerName,
+        referringWorker: intake.caseReferral.referringWorkerName,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
         caseTag: intake.intakeStatus,

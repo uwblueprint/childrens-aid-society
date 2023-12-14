@@ -2,8 +2,7 @@ class ChildDTO:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
         self.intake_id = kwargs.get("intake_id")
-        self.first_name = kwargs.get("first_name")
-        self.last_name = kwargs.get("last_name")
+        self.name = kwargs.get("name")
         self.date_of_birth = kwargs.get("date_of_birth")
         self.cpin_number = kwargs.get("cpin_number")
         self.service_worker = kwargs.get("service_worker")
@@ -17,16 +16,10 @@ class CreateChildDTO(ChildDTO):
 
     def validate(self):
         error_list = []
-        if not self.first_name or not type(self.first_name) == str:
-            error_list.append("The first name supplied is invalid")
-        if not self.last_name or not type(self.last_name) == str:
-            error_list.append("The last name supplied is invalid")
-        if not self.service_worker or not type(self.service_worker) == str:
-            error_list.append("The service_worker supplied is invalid")
+        if not self.name or not type(self.name) == str:
+            error_list.append("The name supplied is invalid")
         if not self.daytime_contact_id or not type(self.daytime_contact_id) == int:
             error_list.append("The daytime_contact_id supplied is invalid")
-        if not self.special_needs or not type(self.special_needs) == str:
-            error_list.append("The special_needs supplied is invalid")
 
         # optional args
         if self.intake_id and not type(self.intake_id) == int:
@@ -36,5 +29,9 @@ class CreateChildDTO(ChildDTO):
                 error_list.append("The date_of_birth supplied is invalid")
         if self.cpin_number and not type(self.cpin_number) == str:
             error_list.append("The cpin_number supplied is invalid")
+        if self.service_worker and not type(self.service_worker) == str:
+            error_list.append("The service_worker supplied is invalid")
+        if self.special_needs and not type(self.special_needs) == str:
+            error_list.append("The special_needs supplied is invalid")
 
         return error_list

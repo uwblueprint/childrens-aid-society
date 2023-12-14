@@ -2,15 +2,13 @@ from flask import Blueprint, current_app, jsonify, request
 
 from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
-from ..services.implementations.attendance_sheet_service import AttendanceSheetService
-
-attendance_sheet_service = AttendanceSheetService(current_app.logger)
-
 from ..resources.attendance_records_dto import CreateAttendanceRecordsDTO
 from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
+from ..services.implementations.attendance_sheet_service import AttendanceSheetService
 
+attendance_sheet_service = AttendanceSheetService(current_app.logger)
 attendance_record_service = AttendanceRecordService(current_app.logger)
 
 blueprint = Blueprint("visit", __name__, url_prefix="/visit")
@@ -55,16 +53,16 @@ def get_visits():
                 "user_id": record.id,
                 "childInformation": childInformation_obj,
                 "visitTimestamp": {
-                    "visitDate": record.date,
-                    "visitDay": "",
-                    "visitSupervision": record.supervision,
+                    "visitDate": record.visit_date,
+                    "visitDay": record.visit_day,
+                    "visitSupervision": record.visit_supervision,
                     "startTime": record.start_time,
                     "endTime": record.end_time,
                     "location": record.location,
                 },
                 "attendance": {"visitingMembers": []},
                 "transportation": [],
-                "notes": record.comments,
+                "notes": record.notes,
                 "childAndFamilySupportWorker": record.child_family_support_worker_id,
             }
             visits.append(visit)
@@ -88,45 +86,41 @@ def create_attendance_record():
         return jsonify(str(error)), 400
 
 
-@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
-def delete_attendance_record():
-    """
-    Delete attendance record by record_id specified through a query parameter
-    """
-    record_id = int(request.args.get("record_id"))
-
-    if record_id:
-        if type(record_id) is not int:
-            return (
-                jsonify({"error": "record_id query parameter must be an int"}),
-                400,
-            )
-        else:
-            try:
-                attendance_record_service.delete_attendance_record(record_id)
-                return "attendance record deleted", 200
-            except Exception as e:
-                error_message = getattr(e, "message", None)
-                return (
-                    jsonify({"error": (error_message if error_message else str(e))}),
-                    500,
-                )
-
-    return (
-        jsonify({"error": "Must supply record_id as query parameter."}),
-        400,
-    )
-
-
-@blueprint.route("/", methods=["PUT"], strict_slashes=False)
-def update_attendance_record():
-    record_id = int(request.args.get("record_id"))
+@blueprint.route("/<int:id>", methods=["PUT"], strict_slashes=False)
+def update_visit(id):
     try:
         updated_data = request.json
-        updated_record = attendance_record_service.update_attendance_record(
-            record_id, updated_data
-        )
-        return jsonify(updated_record.__dict__), 200
 
+        # Update record
+        update_record = attendance_record_service.update_attendance_record(
+            id, updated_data
+        )
+
+        # Update sheet
+        update_sheet = attendance_sheet_service.update_attendance_sheet(
+            id, updated_data
+        )
+
+        # The response for both
+        response_data = {
+            "update_record": update_record.__dict__,
+            "update_sheet": update_sheet.__dict__,
+        }
+        return jsonify(response_data), 200
     except Exception as error:
         return jsonify(str(error)), 400
+
+
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_visit():
+    args = request.args
+    id = int(args.get("id"))
+    if id:
+        try:
+            attendance_record_service.delete_attendance_record(id)
+            attendance_sheet_service.delete_attendance_sheet(id)
+            return f"Attendance sheet and record with id: {id} has been deleted", 200
+        except Exception as error:
+            return jsonify({"error": str(error)}), 500
+    else:
+        return jsonify({"error": "Must supply id as a query parameter."}), 400

@@ -13,20 +13,22 @@ from app.services.implementations.attendance_record_service import (
 )
 
 DEFAULT_ATTENDANCE_RECORDS = {
-    "id": 2,
+    "id": 1,
     "attendance_sheet_id": 1,
-    "supervision": "FULL",
-    "date": "Wednesday",
+    "visit_date": "2023-01-01",
+    "visit_day": "Wednesday",
+    "visit_supervision": "FULL",
     "start_time": "1:00",
     "end_time": "22:10",
     "location": "Waterloo",
-    "attendance": "PRESENT",
-    "attending_family": "DAD",
     "child_family_support_worker_id": None,
-    "comments": None,
+    "notes": None,
     "driver_transport_time_min": None,
     "foster_parent_transport_time_min": None,
     "staff_transport_time_min": None,
+    "transportation": [],
+    "visiting_members": [],
+    "user": None,
 }
 
 
@@ -65,7 +67,15 @@ def empty_database():
 
 
 def assert_returned_cadences(records, expected):
-    assert records[0] == expected
+    assert {
+        k: v
+        for k, v in records[0].items()
+        if k not in ("visiting_members", "transportation")
+    } == {
+        k: v
+        for k, v in expected.items()
+        if k not in ("visiting_members", "transportation")
+    }
 
 
 def test_get_all_cadences(visit_attendance_records_service):

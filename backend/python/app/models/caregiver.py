@@ -2,9 +2,17 @@ from . import db
 from .base_mixin import BaseMixin
 
 relationship_to_child_enum = db.Enum(
-    "FOSTER_CAREGIVER",
-    "KINSHIP_CAREGIVER",
-    "BIOLOGICAL_FAMILY",
+    "ADOPTIVE_PARENT",
+    "BIOLOGICAL_PARENT",
+    "STEP-PARENT",
+    "MATERNAL_GRANDPARENT",
+    "PATERNAL_GRANDPARENT",
+    "SIBLING",
+    "HALF_SIBLING",
+    "STEP_SIBLING",
+    "UNCLE/AUNT",
+    "OTHER_RELATIVE",
+    "OTHER",
     name="caregivers_relationship_to_child",
 )
 
@@ -18,7 +26,7 @@ class Caregiver(db.Model, BaseMixin):
     individual_considerations = db.Column(db.String, nullable=True)
     primary_phone_number = db.Column(db.String, nullable=False)
     secondary_phone_number = db.Column(db.String, nullable=True)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=False)
     relationship_to_child = db.Column(relationship_to_child_enum, nullable=False)
     additional_contact_notes = db.Column(db.String, nullable=True)

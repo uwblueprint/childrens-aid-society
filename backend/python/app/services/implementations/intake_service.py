@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy import inspect
 
 from ...models import db
@@ -92,4 +94,17 @@ class IntakeService(IIntakeService):
             return IntakeDTO(**intake.to_dict())
         except Exception as error:
             db.session.rollback()
+            raise error
+
+    def search_intake_family_name(self, family_name: str):
+        try:
+            if not family_name:
+                raise Exception("Empty Family Name passed to search_intake function")
+            if not isinstance(family_name, str):
+                raise Exception("Family name passed is not of str type")
+            intakes = Intake.query.filter_by(family_name=family_name).all()
+            intakes_dto = [IntakeDTO(**intake.to_dict()) for intake in intakes]
+            return intakes_dto
+        except Exception as error:
+            self.logger.error(str(error))
             raise error

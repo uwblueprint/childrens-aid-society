@@ -7,9 +7,9 @@ class OtherPermittedIndividual(db.Model, BaseMixin):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
-    phone_number = db.Column(db.String, nullable=False)
+    phone_number = db.Column(db.String, nullable=True)
     relationship_to_child = db.Column(db.String, nullable=False)
-    notes = db.Column(db.String, nullable=False)
+    notes = db.Column(db.String, nullable=True)
     intake_id = db.Column(
         db.Integer, db.ForeignKey("intakes.id", ondelete="CASCADE"), nullable=False
     )

@@ -13,4 +13,3 @@ class DaytimeContact(db.Model, BaseMixin):
     contact_information = db.Column(db.String, nullable=False)
     dismissal_time = db.Column(db.String, nullable=True)
     child_id = db.Column(db.Integer, db.ForeignKey("children.id"), nullable=True)
-    intake = db.relationship("Intake", back_populates="daytime_contacts")

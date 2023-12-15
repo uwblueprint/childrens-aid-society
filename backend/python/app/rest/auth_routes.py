@@ -127,7 +127,7 @@ def refresh():
 
 
 @blueprint.route("/logout/<string:user_id>", methods=["POST"], strict_slashes=False)
-# @require_authorization_by_user_id("user_id")
+@require_authorization_by_user_id("user_id")
 def logout(user_id):
     """
     Revokes all of the specified user's refresh tokens

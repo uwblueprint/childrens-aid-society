@@ -91,7 +91,7 @@ const NewCaregiverModal = ({
     "Paternal Grandparent": CaregiverRelationship.PATERNAL_GRANDPARENT,
     "Step-Sibling": CaregiverRelationship.STEP_SIBLING,
     "Half-Sibling": CaregiverRelationship.HALF_SIBLING,
-    "Uncle or Aunt": CaregiverRelationship.UNCLE_AUNT,
+    "Uncle/Aunt": CaregiverRelationship.UNCLE_AUNT,
     "Other Relative": CaregiverRelationship.OTHER_RELATIVE,
   };
 
@@ -234,7 +234,7 @@ const NewCaregiverModal = ({
                     "Sibling",
                     "Half-Sibling",
                     "Step-Sibling",
-                    "Uncle or Aunt",
+                    "Uncle/Aunt",
                     "Other Relative",
                     "Other",
                   ]}

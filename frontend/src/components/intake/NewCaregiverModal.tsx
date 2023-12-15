@@ -136,7 +136,10 @@ const NewCaregiverModal = ({
                   type="string"
                   placeholder="YYYY-MM-DD"
                   defaultValue={
-                    caregiver ? formattedDate(caregiver.dateOfBirth) : ""
+                    caregiver
+                      ? caregiver.dateOfBirth &&
+                        formattedDate(caregiver.dateOfBirth)
+                      : ""
                   }
                   icon={<Icon as={Calendar} />}
                   onChange={(event) => {

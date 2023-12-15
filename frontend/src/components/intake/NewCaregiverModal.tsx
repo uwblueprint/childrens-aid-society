@@ -91,7 +91,7 @@ const NewCaregiverModal = ({
     "Paternal Grandparent": CaregiverRelationship.PATERNAL_GRANDPARENT,
     "Step-Sibling": CaregiverRelationship.STEP_SIBLING,
     "Half-Sibling": CaregiverRelationship.HALF_SIBLING,
-    "Uncle/Aunt": CaregiverRelationship.UNCLE_AUNT,
+    "Uncle or Aunt": CaregiverRelationship.UNCLE_AUNT,
     "Other Relative": CaregiverRelationship.OTHER_RELATIVE,
   };
 
@@ -136,7 +136,10 @@ const NewCaregiverModal = ({
                   type="string"
                   placeholder="YYYY-MM-DD"
                   defaultValue={
-                    caregiver ? formattedDate(caregiver.dateOfBirth) : ""
+                    caregiver
+                      ? caregiver.dateOfBirth &&
+                        formattedDate(caregiver.dateOfBirth)
+                      : ""
                   }
                   icon={<Icon as={Calendar} />}
                   onChange={(event) => {
@@ -231,7 +234,7 @@ const NewCaregiverModal = ({
                     "Sibling",
                     "Half-Sibling",
                     "Step-Sibling",
-                    "Uncle/Aunt",
+                    "Uncle or Aunt",
                     "Other Relative",
                     "Other",
                   ]}

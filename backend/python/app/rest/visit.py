@@ -7,9 +7,13 @@ from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
+from ..services.implementations.transport_method_service import (
+    TransportationMethodService,
+)
 
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 attendance_record_service = AttendanceRecordService(current_app.logger)
+transport_method_service = TransportationMethodService(current_app.logger)
 
 blueprint = Blueprint("visit", __name__, url_prefix="/visit")
 
@@ -31,18 +35,20 @@ def create_visit():
         attendance_sheet = CreateAttendanceSheetDTO(**attendance_sheet)
 
         attendance_record = {
-            #"id": request.json["user_id"],
+            # "id": request.json["user_id"],
             "attendance_sheet_id": 1,
             "attendance": "PRESENT",  # update
-            "attending_family": "MOM", # update
+            "attending_family": "MOM",  # update
             "date": request.json["visitTimestamp"]["visitDate"],
             "supervision": request.json["visitTimestamp"]["visitSupervision"],
             "start_time": request.json["visitTimestamp"]["startTime"],
             "end_time": request.json["visitTimestamp"]["endTime"],
             "location": request.json["visitTimestamp"]["location"],
             "comments": request.json["notes"],
-            "child_family_support_worker_id": request.json["childAndFamilySupportWorker"],
-            "user": request.json["user_id"]
+            "child_family_support_worker_id": request.json[
+                "childAndFamilySupportWorker"
+            ],
+            "user": request.json["user_id"],
         }
         attendance_record = CreateAttendanceRecordsDTO(**attendance_record)
 
@@ -52,12 +58,13 @@ def create_visit():
         new_attendance_record = attendance_record_service.create_attendance_record(
             attendance_record
         )
-        #new_visit = [attendance_sheet, attendance_record]
+        # new_visit = [attendance_sheet, attendance_record]
         new_visit = attendance_record
 
         return jsonify(new_visit.__dict__), 201
     except Exception as error:
         return jsonify(error), 400
+
 
 # get all visits
 @blueprint.route("/", methods=["GET"], strict_slashes=False)

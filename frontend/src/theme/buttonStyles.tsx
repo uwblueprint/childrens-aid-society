@@ -78,6 +78,16 @@ const Button: ComponentStyleConfig = {
           "0px 0px 16px rgba(255, 0, 0, 0.1), 0px 0px 16px rgba(102, 0, 0, 0.2)",
       },
     },
+    secondaryDelete: {
+      background: "red.50",
+      border: "1px solid #93000A",
+      borderRadius: "8px",
+      color: "red.600",
+      _disabled: {
+        opacity: "0.5",
+        pointerEvents: "none",
+      },
+    },
     caseoverview: {
       background: "blue.100",
       border: "1px solid #00287D",
@@ -89,10 +99,6 @@ const Button: ComponentStyleConfig = {
       _active: {
         background: "#DCE1FF",
         boxShadow: "box-shadow: inset 0px 0px 32px rgba(0, 40, 125, 0.2)",
-      },
-      _disabled: {
-        opacity: "0.5",
-        pointerEvents: "none",
       },
     },
   },

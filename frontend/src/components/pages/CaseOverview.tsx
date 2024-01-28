@@ -75,7 +75,7 @@ const CaseOverviewBody = (): React.ReactElement => {
   };
 
   const goToVisitation = () => {
-    history.push(`/visits/${caseNumber}`)
+    history.push(`/visit/${caseNumber}`)
   }
 
   const goToHomepage = () => {

@@ -74,6 +74,10 @@ const CaseOverviewBody = (): React.ReactElement => {
     history.push("/intake");
   };
 
+  const goToVisitation = () => {
+    history.push(`/visits/${caseNumber}`)
+  }
+
   const goToHomepage = () => {
     history.push("/");
   };
@@ -384,6 +388,7 @@ const CaseOverviewBody = (): React.ReactElement => {
               right="4"
               borderColor={colors.blue[300]}
               backgroundColor={colors.blue[100]}
+              onClick={goToVisitation}
             >
               <div style={{ paddingRight: "10px" }}>
                 <UserPlus width="13px" />

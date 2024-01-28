@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useParams} from 'react-router-dom'
 import {
   Box,
   Button,
@@ -20,8 +21,8 @@ import OptionalLabel from "../intake/OptionalLabel";
 import VisitFormFooter from "../visit/VisitFormFooter";
 
 const Visit = (): React.ReactElement => {
-  // url is /visit/caseId/visitId, commented for now to avoid lint
-  // const params = useParams();
+  const { caseId } = useParams<{ caseId: string}>();
+  const caseNumber: number = parseInt(caseId, 10);
 
   const DEFAULT_CHILD_DETAILS = {
     familyName: "",

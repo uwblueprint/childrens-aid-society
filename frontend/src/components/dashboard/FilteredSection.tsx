@@ -75,6 +75,7 @@ const FilteredSection = ({
                         date={caseData.date}
                         familyName={caseData.familyName}
                         caseTag={caseData.caseTag}
+                        intakeMeetingNotes={caseData.intakeMeetingNotes}
                       />
                     ))}
                   </Flex>
@@ -89,6 +90,7 @@ const FilteredSection = ({
                       date={caseData.date}
                       familyName={caseData.familyName}
                       caseTag={caseData.caseTag}
+                      intakeMeetingNotes={caseData.intakeMeetingNotes}
                     />
                   ))}
           </Flex>

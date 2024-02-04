@@ -1,18 +1,18 @@
-import React from "react";
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
   HStack,
-  Input,
   Icon,
+  Input,
 } from "@chakra-ui/react";
-import { ChevronDown, Download, FilePlus } from "react-feather";
 import { Field, Form, FormikProvider, useFormik } from "formik";
+import React from "react";
+import { ChevronDown, Download, FilePlus } from "react-feather";
+import CustomInput from "../common/CustomInput";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
-import CustomInput from "../common/CustomInput";
 import OptionalLabel from "./OptionalLabel";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
@@ -140,6 +140,7 @@ const CourtInformationForm = ({
             />
           </Box>
           {/* TODO: store the uploaded file and save in backend */}
+          {/* This is where it needs to be done in the frontend */}
           <Input
             display="none"
             type="file"

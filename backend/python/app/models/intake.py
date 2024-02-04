@@ -53,7 +53,8 @@ class Intake(db.Model, BaseMixin):
     cpin_number = db.Column(db.String, nullable=False)
     cpin_file_type = db.Column(cpin_file_type_enum, nullable=False)
     court_status = db.Column(court_status_enum, nullable=False)
-    court_order_file = db.Column(db.String, nullable=False)
+    court_order_file_id = db.Column(db.Integer, db.ForeignKey("pdf_file.id"), nullable=False, default=1)
+    # court_order_file_id = db.Column(db.String, nullable=False)
     first_nation_heritage = db.Column(first_nation_heritage_enum, nullable=True)
     first_nation_band = db.Column(db.String, nullable=True)
     transportation_requirements = db.Column(db.String, nullable=False)
@@ -68,6 +69,7 @@ class Intake(db.Model, BaseMixin):
     concerns = db.relationship("FamilialConcern", secondary=intakes_concerns)
     goals = db.relationship("Goal", secondary=intakes_goals)
     user = db.relationship("User", foreign_keys=[user_id])
+    court_order_file = db.relationship("PdfFile", foreign_keys=[court_order_file_id])
     concerns = db.relationship(
         "FamilialConcern", secondary=intakes_concerns, backref="intakes"
     )

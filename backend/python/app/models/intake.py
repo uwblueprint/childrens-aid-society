@@ -4,6 +4,7 @@ from . import db
 from .base_mixin import BaseMixin
 from .intakes_concerns import intakes_concerns
 from .intakes_goals import intakes_goals
+from .intake_pdf import PdfFile
 
 intake_status_enum = db.Enum(
     "SUBMITTED",
@@ -53,7 +54,7 @@ class Intake(db.Model, BaseMixin):
     cpin_number = db.Column(db.String, nullable=False)
     cpin_file_type = db.Column(cpin_file_type_enum, nullable=False)
     court_status = db.Column(court_status_enum, nullable=False)
-    court_order_file = db.Column(db.String, nullable=False)
+    court_order_file = db.relationship("PdfFile", backref="intake", cascade="all, delete")
     first_nation_heritage = db.Column(first_nation_heritage_enum, nullable=True)
     first_nation_band = db.Column(db.String, nullable=True)
     transportation_requirements = db.Column(db.String, nullable=False)

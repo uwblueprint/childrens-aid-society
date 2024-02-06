@@ -7,6 +7,7 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { PhoneInput } from 'react-international-phone';
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";

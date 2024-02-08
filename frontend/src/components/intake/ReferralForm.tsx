@@ -7,7 +7,6 @@ import {
   Select,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { PhoneInput } from 'react-international-phone';
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { User, Phone, File, Users, Calendar } from "react-feather";
 import CustomInput from "../common/CustomInput";
@@ -73,6 +72,16 @@ const ReferralForm = ({
       phoneNumber: "",
     });
   };
+
+  function validateDate(value: string) {
+    let error;
+    if (!value) {
+      error = 'Required';
+    } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+      error = 'Invalid email address';
+    }
+    return error;
+  }
 
   return (
     <>
@@ -169,7 +178,11 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
+                validate={validateDate}
               />
+              {formik.errors.referralDate && formik.touched.referralDate && (
+                <div style={{ color: 'red' }}>{formik.errors.referralDate}</div>
+              )}
             </Box>
           </FormControl>
         </Form>

@@ -58,6 +58,9 @@ const NewCaregiverModal = ({
   const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
     false,
   );
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
+    null
+  );
 
   const handleClose = () => {
     setCaregiverName(caregiver ? caregiver.caregiverName : "");
@@ -106,6 +109,16 @@ const NewCaregiverModal = ({
     return newDate;
   };
 
+  function validateDate(value: string) {
+    if (!value) {
+      setDateOfBirthError('Required');
+    } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+      setDateOfBirthError('Invalid Date');
+    } else {
+      setDateOfBirthError(null);
+    }
+  }
+
   return (
     <Box>
       <ModalComponent
@@ -145,8 +158,12 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setDateOfBirth(event.target.value);
                     setDateOfBirthChanged(true);
+                    validateDate(event.target.value);
                   }}
                 />
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="primaryPhoneNumber">

@@ -33,6 +33,16 @@ const ChildInformationForm = ({
     setChildDetails(values);
   };
 
+function validateDate(value: string) {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+    error = 'Invalid Date';
+  }
+  return error;
+}
+
   return (
     <>
       <Formik
@@ -40,6 +50,7 @@ const ChildInformationForm = ({
         initialValues={childDetails}
         onSubmit={onSubmit}
       >
+      {({ errors, touched }) => (
         <Form style={{ padding: "2rem 12rem" }}>
           <FormControl style={{ padding: "30px" }}>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -75,7 +86,11 @@ const ChildInformationForm = ({
                       dateOfBirth: e.target.value,
                     })
                   }
+                  validate={validateDate}
                 />
+                {errors.dateOfBirth && touched.dateOfBirth && (
+                  <div style={{ color: 'red' }}>{errors.dateOfBirth}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">
@@ -153,6 +168,7 @@ const ChildInformationForm = ({
             </Box>
           </FormControl>
         </Form>
+        )}
       </Formik>
     </>
   );

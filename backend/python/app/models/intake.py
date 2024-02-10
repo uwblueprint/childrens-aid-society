@@ -1,5 +1,3 @@
-import sqlalchemy.dialects.postgresql as pg
-
 from . import db
 from .base_mixin import BaseMixin
 from .intakes_concerns import intakes_concerns
@@ -67,7 +65,6 @@ class Intake(db.Model, BaseMixin):
     )
     denial_reason = db.Column(db.String, nullable=True)
     concerns = db.relationship("FamilialConcern", secondary=intakes_concerns)
-    goals = db.relationship("Goal", secondary=intakes_goals)
     user = db.relationship("User", foreign_keys=[user_id])
     court_order_file = db.relationship("PdfFile", foreign_keys=[court_order_file_id])
     concerns = db.relationship(

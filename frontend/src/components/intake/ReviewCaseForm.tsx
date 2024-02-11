@@ -1,15 +1,15 @@
-import React from "react";
 import { Button, HStack, Icon, Stack, Text } from "@chakra-ui/react";
+import React from "react";
 import { Edit2 } from "react-feather";
-import IndividualDetails from "./IndividualDetails";
-import ReferralForm, { ReferralDetails } from "./ReferralForm";
-import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
-import ProgramForm, { ProgramDetails } from "./ProgramForm";
-import IntakeSteps from "./intakeSteps";
-import IntakeFooter from "./IntakeFormFooter";
-import { Children } from "./child-information/AddChildPage";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
+import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
+import IndividualDetails from "./IndividualDetails";
+import IntakeFooter from "./IntakeFormFooter";
 import { PermittedIndividuals } from "./PermittedIndividualsModal";
+import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import ReferralForm, { ReferralDetails } from "./ReferralForm";
+import { Children } from "./child-information/AddChildPage";
+import IntakeSteps from "./intakeSteps";
 
 type ReviewFormProps = {
   referralDetails: ReferralDetails;

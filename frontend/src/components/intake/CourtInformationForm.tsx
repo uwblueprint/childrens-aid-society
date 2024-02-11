@@ -55,6 +55,7 @@ const CourtInformationForm = ({
     event: React.ChangeEvent<HTMLInputElement>,
     setFieldValue: (field: string, value: File) => void,
   ) => {
+    console.log('handling file change')
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
       return;

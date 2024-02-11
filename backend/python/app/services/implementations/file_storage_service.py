@@ -35,6 +35,7 @@ class FileStorageService(IFileStorageService):
         blob = self.bucket.blob(file_name)
         try:
             blob.upload_from_file(file, content_type=content_type)
+            return 1 # fake id
         except Exception as e:
             reason = getattr(e, "message", None)
             self.logger.error(

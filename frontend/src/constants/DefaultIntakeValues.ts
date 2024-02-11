@@ -16,7 +16,7 @@ export const DEFAULT_COURT_DETAILS: CourtDetails = {
   currentCourtStatus: "",
   firstNationHeritage: "",
   firstNationBand: "",
-  orderReferral: null,
+  orderReferral: null, // type is file!
 };
 
 export const DEFAULT_PROGRAM_DETAILS: ProgramDetails = {

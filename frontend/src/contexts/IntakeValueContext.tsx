@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ReferralDetails } from "../components/intake/ReferralForm";
 import { CourtDetails } from "../components/intake/CourtInformationForm";
 import { ProgramDetails } from "../components/intake/ProgramForm";
+import { ReferralDetails } from "../components/intake/ReferralForm";
 import {
   DEFAULT_COURT_DETAILS,
   DEFAULT_PROGRAM_DETAILS,
@@ -52,6 +52,7 @@ export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>(
     DEFAULT_REFFERAL_DETAILS,
   );
+  // set court details is defined here 
   const [courtDetails, setCourtDetails] = useState<CourtDetails>(
     DEFAULT_COURT_DETAILS,
   );

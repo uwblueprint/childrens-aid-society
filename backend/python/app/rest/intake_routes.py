@@ -11,6 +11,7 @@ from ..resources.goal_dto import CreateGoalDTO
 from ..resources.intake_dto import CreateIntakeDTO
 from ..resources.other_permitted_individual_dto import \
     CreateOtherPermittedIndividualDTO
+from ..resources.pdf_file_dto import CreatePdfFileDTO
 from ..resources.provider_dto import CreateProviderDTO
 from ..services.implementations.caregiver_service import CaregiverService
 from ..services.implementations.child_behavior_service import \
@@ -20,12 +21,14 @@ from ..services.implementations.daytime_contact_service import \
     DaytimeContactService
 from ..services.implementations.familial_concern_service import \
     FamilialConcernService
+from ..services.implementations.file_storage_service import FileStorageService
 from ..services.implementations.goal_service import GoalService
 from ..services.implementations.intake_service import IntakeService
 from ..services.implementations.other_permitted_individual_service import \
     OtherPermittedIndividualService
 from ..services.implementations.provider_service import ProviderService
 
+file_storage_service = FileStorageService(current_app.logger)
 intake_service = IntakeService(current_app.logger)
 caregiver_service = CaregiverService(current_app.logger)
 permittedIndividual_service = OtherPermittedIndividualService(current_app.logger)
@@ -144,7 +147,7 @@ def get_all_intakes():
                 "courtInformation": {
                     "courtStatus": intake.court_status,
                     # backend to frontend mapping here 
-                    "orderReferral": intake.court_order_file_id, # maybe this should be the name
+                    "orderReferral": intake.court_order_file, # maybe this should be the name
                     # "orderReferral": intake.court_order_file,
                     "firstNationHeritage": intake.first_nation_heritage,
                     "firstNationBand": intake.first_nation_band,
@@ -186,6 +189,26 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
+    # This is where the intake will be created ! -> upload the pdf file here? and then store the 
+    # Upload file -> id 
+    # court_order_file: id 
+    print("file", request.json["court_information"]["order_referral"])
+    
+    pdf_file = {
+        "file_name": request.json["court_information"]["order_referral"],
+        "file_data": request.json["court_information"]["order_referral"],
+    }
+    try:
+        # validate_request("CreateIntakeDTO")
+        pdf_file = CreatePdfFileDTO(**intake)
+        new_file = file_storage_service.create_file(pdf_file) # make sure that this inserts into the db
+        print('new file', new_file)
+        undos.append((file_storage_service, "delete_file", new_file.id))
+    except Exception as error:
+        print("invalid")
+        run_undos()
+        return jsonify(str(error)), 400
+
     # intake
     intake = {
         "user_id": request.json["user_id"],
@@ -199,7 +222,9 @@ def create_intake():
         "cpin_number": request.json["case_referral"]["cpin_file_number"],
         "cpin_file_type": request.json["case_referral"]["cpin_file_type"],
         "court_status": request.json["court_information"]["court_status"],
-        "court_order_file": request.json["court_information"]["order_referral"],
+        # Set id 
+        "court_order_file_id": new_file.id,
+        # "court_order_file": request.json["court_information"]["order_referral"],
         "first_nation_heritage": request.json["court_information"][
             "first_nation_heritage"
         ],

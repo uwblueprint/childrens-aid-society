@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -33,14 +33,18 @@ const ChildInformationForm = ({
     setChildDetails(values);
   };
 
+const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
+  null
+);
+
 function validateDate(value: string) {
-  let error;
   if (!value) {
-    error = 'Required';
-  } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-    error = 'Invalid Date';
+    setDateOfBirthError('Required');
+  } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+    setDateOfBirthError('Invalid Date');
+  } else {
+    setDateOfBirthError(null);
   }
-  return error;
 }
 
   return (
@@ -88,8 +92,8 @@ function validateDate(value: string) {
                   }
                   validate={validateDate}
                 />
-                {errors.dateOfBirth && touched.dateOfBirth && (
-                  <div style={{ color: 'red' }}>{errors.dateOfBirth}</div>
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
                 )}
               </Box>
               <Box>

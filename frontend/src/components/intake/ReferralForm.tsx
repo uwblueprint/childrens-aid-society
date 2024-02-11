@@ -180,7 +180,7 @@ const ReferralForm = ({
                 icon={<Icon as={Calendar} />}
                 validate={validateDate}
               />
-              {formik.errors.referralDate && formik.touched.referralDate && (
+              {formik.errors.referralDate && (
                 <div style={{ color: 'red' }}>{formik.errors.referralDate}</div>
               )}
             </Box>

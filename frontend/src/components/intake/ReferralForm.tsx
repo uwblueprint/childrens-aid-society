@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -73,6 +73,21 @@ const ReferralForm = ({
     });
   };
 
+  const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(
+    null
+  );
+
+  function validatePhone(value: string) {
+    let error;
+    if (!value) {
+      setreferringWorkerContactError('Required');
+    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+      setreferringWorkerContactError('Invalid phone number');
+    } else {
+      setreferringWorkerContactError(null);
+    }
+  }
+
   return (
     <>
       {!hideStepper && (
@@ -120,7 +135,11 @@ const ReferralForm = ({
                   type="string"
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
+                  validate={validatePhone}
                 />
+                {referringWorkerContactError && (
+                  <div style={{ color: 'red' }}>{referringWorkerContactError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>

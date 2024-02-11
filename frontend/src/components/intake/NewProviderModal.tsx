@@ -48,6 +48,12 @@ const NewProviderModal = ({
   const [contactNotesChanged, setContactNotesChanged] = useState(false);
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
+  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
+    null
+  );
+  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<string | null>(
+    null
+  );
 
   const handleClose = () => {
     setProviderName("");
@@ -69,6 +75,26 @@ const NewProviderModal = ({
     setRelationshipChanged(false);
     onClose();
   };
+
+  function validatePrimaryPhoneNo(value: string) {
+    if (!value) {
+      setPrimaryPhoneNoError('Required');
+    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+      setPrimaryPhoneNoError('Invalid phone number');
+    } else {
+      setPrimaryPhoneNoError(null);
+    }
+  }
+
+  function validateSecondaryPhoneNo(value: string) {
+    if (!value) {
+      setSecondaryPhoneNoError('Required');
+    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+      setSecondaryPhoneNoError('Invalid phone number');
+    } else {
+      setSecondaryPhoneNoError(null);
+    }
+  }
 
   return (
     <Box>
@@ -123,8 +149,12 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setPrimaryPhoneNo(event.target.value);
                     setPrimaryPhoneNoChanged(true);
+                    validatePrimaryPhoneNo(event.target.value);
                   }}
                 />
+                {primaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{primaryPhoneNoError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="secondaryPhoneNumber">
@@ -140,8 +170,12 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setSecondaryPhoneNo(event.target.value);
                     setSecondaryPhoneNoChanged(true);
+                    validateSecondaryPhoneNo(event.target.value);
                   }}
                 />
+                {secondaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{secondaryPhoneNoError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="email">

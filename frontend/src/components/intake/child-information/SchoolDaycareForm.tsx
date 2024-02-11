@@ -5,7 +5,7 @@ import {
   Icon,
   SimpleGrid,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
 import CustomInput from "../../common/CustomInput";
@@ -31,12 +31,28 @@ const SchoolDaycareForm = ({
     setSchoolDetails(values);
   };
 
+const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(
+  null
+);
+
+function validatePhone(value: string) {
+  let error;
+  if (!value) {
+    setschoolPhoneNoError('Required');
+  } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    setschoolPhoneNoError('Invalid phone number');
+  } else {
+    setschoolPhoneNoError(null);
+  }
+}
+
   return (
     <Formik
       enableReinitialize
       initialValues={schoolDetails}
       onSubmit={onSubmit}
     >
+      {({ errors, touched }) => (
       <Form style={{ padding: "2rem 12rem" }}>
         <FormControl style={{ padding: "30px" }}>
           <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -74,7 +90,11 @@ const SchoolDaycareForm = ({
                     schoolPhoneNo: e.target.value,
                   })
                 }
+                validate={validatePhone}
               />
+              {schoolPhoneNoError && (
+                  <div style={{ color: 'red' }}>{errors.schoolPhoneNo}</div>
+              )}
             </Box>
           </SimpleGrid>
           <Box paddingTop="10px">
@@ -115,6 +135,7 @@ const SchoolDaycareForm = ({
           </Box>
         </FormControl>
       </Form>
+      )}
     </Formik>
   );
 };

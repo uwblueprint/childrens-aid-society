@@ -31,16 +31,13 @@ const SchoolDaycareForm = ({
     setSchoolDetails(values);
   };
 
-const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(
-  null
-);
+const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(null);
 
 function validatePhone(value: string) {
-  let error;
   if (!value) {
-    setschoolPhoneNoError('Required');
+    setschoolPhoneNoError("Required");
   } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
-    setschoolPhoneNoError('Invalid phone number');
+    setschoolPhoneNoError("Invalid phone number");
   } else {
     setschoolPhoneNoError(null);
   }
@@ -93,7 +90,7 @@ function validatePhone(value: string) {
                 validate={validatePhone}
               />
               {schoolPhoneNoError && (
-                  <div style={{ color: 'red' }}>{errors.schoolPhoneNo}</div>
+                  <div style={{ color: "red" }}>{schoolPhoneNoError}</div>
               )}
             </Box>
           </SimpleGrid>

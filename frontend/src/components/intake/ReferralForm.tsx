@@ -73,16 +73,14 @@ const ReferralForm = ({
     });
   };
 
-  const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(
-    null
-  );
+  const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(null);
 
   function validatePhone(value: string) {
     let error;
     if (!value) {
-      setreferringWorkerContactError('Required');
+      setreferringWorkerContactError("Required");
     } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
-      setreferringWorkerContactError('Invalid phone number');
+      setreferringWorkerContactError("Invalid phone number");
     } else {
       setreferringWorkerContactError(null);
     }
@@ -138,7 +136,7 @@ const ReferralForm = ({
                   validate={validatePhone}
                 />
                 {referringWorkerContactError && (
-                  <div style={{ color: 'red' }}>{referringWorkerContactError}</div>
+                  <div style={{ color: "red" }}>{referringWorkerContactError}</div>
                 )}
               </Box>
               <Box>

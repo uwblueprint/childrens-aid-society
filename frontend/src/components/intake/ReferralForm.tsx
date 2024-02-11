@@ -76,7 +76,6 @@ const ReferralForm = ({
   const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(null);
 
   function validatePhone(value: string) {
-    let error;
     if (!value) {
       setreferringWorkerContactError("Required");
     } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {

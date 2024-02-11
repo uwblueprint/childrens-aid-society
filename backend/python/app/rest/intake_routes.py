@@ -181,6 +181,21 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
+    file = True
+    court_order_file_id = None
+    # im thinking file = request.json["court_information"]["order_referral"]
+    #call upload_intake_pdf with fake data
+    if file:
+        file_name = "test.pdf"
+        file_data = b"test data"
+        intake_id = 1
+        try:
+            court_order_file_id = intake_service.upload_intake_pdf(intake_id, file_name, file_data)
+            undos.append((intake_service, "delete_intake_pdf", file_name))
+        except Exception as error:
+            run_undos()
+            return jsonify(error), 400
+
     # intake
     intake = {
         "user_id": request.json["user_id"],

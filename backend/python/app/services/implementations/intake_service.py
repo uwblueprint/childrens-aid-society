@@ -4,6 +4,7 @@ from sqlalchemy import inspect
 
 from ...models import db
 from ...models.intake import Intake
+from ...models.intake_pdf import PdfFile
 from ...models.provider import Provider
 from ...resources.intake_dto import CreateIntakeDTO, IntakeDTO
 from ..interfaces.intake_service import IIntakeService
@@ -92,6 +93,30 @@ class IntakeService(IIntakeService):
                 intake.referring_worker_name = updated_data["referring_worker_name"]
             db.session.commit()
             return IntakeDTO(**intake.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
+
+    def upload_intake_pdf(self, intake_id: int, file_name: str, file_data: bytes):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to upload_intake_pdf function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+            if not file_name:
+                raise Exception("Empty file name passed to upload_intake_pdf function")
+            if not isinstance(file_name, str):
+                raise Exception("File name passed is not of str type")
+            if not file_data:
+                raise Exception("Empty file data passed to upload_intake_pdf function")
+            if not isinstance(file_data, bytes):
+                raise Exception("File data passed is not of bytes type")
+
+            new_pdf_file = PdfFile(file_name=file_name, file_data=file_data)
+            db.session.add(new_pdf_file)
+            db.session.commit()
+
+            return new_pdf_file.id
         except Exception as error:
             db.session.rollback()
             raise error

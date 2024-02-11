@@ -123,9 +123,7 @@ const NewCaregiverModal = ({
   }
 
   function validateSecondaryPhoneNo(value: string) {
-    if (!value) {
-      setSecondaryPhoneNoError('Required');
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
       setSecondaryPhoneNoError('Invalid phone number');
     } else {
       setSecondaryPhoneNoError(null);

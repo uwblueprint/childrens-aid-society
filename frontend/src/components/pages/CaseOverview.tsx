@@ -18,9 +18,11 @@ import intakeAPIClient from "../../APIClients/IntakeAPIClient";
 import NewCaregiverModal from "../intake/NewCaregiverModal";
 import CaregiverAPIClient from "../../APIClients/CaregiverAPIClient";
 import { Caregivers, CaregiverDetails } from "../../types/CaregiverDetailTypes";
+import { Cadences, CadenceDetails } from "../../types/CadenceDetailTypes";
 import CasePromptBox, {
   IndividualDetailsOverview,
 } from "../overview/CasePromptBox";
+import VisitCadenceAPIClient from "../../APIClients/VisitCadenceAPIClient";
 
 const CaseOverviewBody = (): React.ReactElement => {
   const history = useHistory();
@@ -36,13 +38,23 @@ const CaseOverviewBody = (): React.ReactElement => {
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  interface StateType {
+  interface CaregiverStateType {
     caregiversList: Caregivers;
     caregiversDetailsOverview: IndividualDetailsOverview[];
   }
-  const [data, setData] = useState<StateType>({
+
+  interface CadenceStateType {
+    cadencesList: Cadences;
+    cadencesDetailsOverview: IndividualDetailsOverview[];
+  }
+  const [caregiverData, setCaregiverData] = useState<CaregiverStateType>({
     caregiversList: [],
     caregiversDetailsOverview: [],
+  });
+
+  const [cadenceData, setCadenceData] = useState<CadenceStateType>({
+    cadencesList: [],
+    cadencesDetailsOverview: [],
   });
 
   const dummyCaregiver = {
@@ -102,11 +114,23 @@ const CaseOverviewBody = (): React.ReactElement => {
     return [];
   };
 
+  const mapCadencesToCadenceDetailsOverview = (
+    cadences: Cadences,
+  ): IndividualDetailsOverview[] => {
+    if (cadences.length > 0) {
+      return cadences.map((cadence) => ({
+        name: cadence.date,
+        id: cadence.id,
+      }));
+    }
+    return [];
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const caregivers = await CaregiverAPIClient.getById(caseNumber);
 
-      setData({
+      setCaregiverData({
         caregiversList: caregivers,
         caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview(
           caregivers,
@@ -117,18 +141,50 @@ const CaseOverviewBody = (): React.ReactElement => {
     fetchData();
   }, [caseNumber]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const cadences = await VisitCadenceAPIClient.getById(caseNumber);
+
+      setCadenceData({
+        cadencesList: cadences,
+        cadencesDetailsOverview: mapCadencesToCadenceDetailsOverview(cadences),
+      });
+    };
+
+    fetchData();
+  }, [caseNumber]);
+
+  const onClickNewCadence = (newCadence: CadenceDetails) => {
+    const list = cadenceData.cadencesList;
+    if (selectedIndex >= 0) {
+      list.splice(selectedIndex, 1, newCadence);
+      setCadenceData({
+        cadencesList: [...list],
+        cadencesDetailsOverview: mapCadencesToCadenceDetailsOverview([...list]),
+      });
+    } else {
+      setCadenceData({
+        cadencesList: [...list, newCadence],
+        cadencesDetailsOverview: mapCadencesToCadenceDetailsOverview([
+          ...list,
+          newCadence,
+        ]),
+      });
+    }
+  };
+
   const onClickNewCaregiver = (newCaregiver: CaregiverDetails) => {
-    const list = data.caregiversList;
+    const list = caregiverData.caregiversList;
     if (selectedIndex >= 0) {
       list.splice(selectedIndex, 1, newCaregiver);
-      setData({
+      setCaregiverData({
         caregiversList: [...list],
         caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
           ...list,
         ]),
       });
     } else {
-      setData({
+      setCaregiverData({
         caregiversList: [...list, newCaregiver],
         caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
           ...list,
@@ -139,10 +195,10 @@ const CaseOverviewBody = (): React.ReactElement => {
   };
 
   const deleteCaregiver = async (index: number, deleteId: number) => {
-    const caregiverList = [...data.caregiversList];
+    const caregiverList = [...caregiverData.caregiversList];
     caregiverList.splice(index, 1);
 
-    setData({
+    setCaregiverData({
       caregiversList: [...caregiverList],
       caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview([
         ...caregiverList,
@@ -256,7 +312,7 @@ const CaseOverviewBody = (): React.ReactElement => {
             buttonText="Add Visiting Family"
             buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
             onButtonClick={onOpenAddCaregiver}
-            individualDetails={data.caregiversDetailsOverview}
+            individualDetails={caregiverData.caregiversDetailsOverview}
             setSelectedIndex={setSelectedIndex}
             deleteIndividual={deleteCaregiver}
           />
@@ -308,44 +364,15 @@ const CaseOverviewBody = (): React.ReactElement => {
               Visit Cadence
             </Text>
           </Flex>
-          <Box
-            border="1px"
-            borderColor={colors.gray[100]}
-            borderRadius="md"
-            p="4"
-            mt="4"
-            h="250px"
-            position="relative"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-            maxWidth="550px"
-          >
-            <Text
-              style={{
-                color: colors.gray[700],
-                fontSize: "20px",
-                fontWeight: 500,
-              }}
-            >
-              There are no visit cadences under this case
-            </Text>
-
-            <Button
-              color={colors.blue[400]}
-              variant="outline"
-              position="absolute"
-              bottom="4"
-              right="4"
-              borderColor={colors.blue[300]}
-              backgroundColor={colors.blue[100]}
-              width="100px"
-              onClick={onOpenVisitCadenceModal}
-            >
-              Add
-            </Button>
-          </Box>
+          <CasePromptBox
+            descriptionText="There are no visit cadences under this case"
+            buttonText="Add Visit Cadence"
+            buttonIcon={<Icon as={UserPlus} w="16px" h="16px" />}
+            onButtonClick={onOpenVisitCadenceModal}
+            individualDetails={cadenceData.cadencesDetailsOverview}
+            setSelectedIndex={setSelectedIndex}
+            deleteIndividual={deleteCaregiver}
+          />
 
           <Flex pt="50">
             <Text style={{ fontSize: "23px", fontWeight: 600 }}>
@@ -410,7 +437,7 @@ const CaseOverviewBody = (): React.ReactElement => {
         onClose={onCloseNewCaregiverModal}
         caregiver={
           selectedIndex >= 0
-            ? data.caregiversList[selectedIndex]
+            ? caregiverData.caregiversList[selectedIndex]
             : dummyCaregiver
         }
       />

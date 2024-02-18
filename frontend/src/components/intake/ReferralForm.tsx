@@ -74,14 +74,18 @@ const ReferralForm = ({
   };
 
   const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(null);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   function validatePhone(value: string) {
     if (!value) {
       setreferringWorkerContactError("Required");
+      setButtonDisabled(true);
     } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
       setreferringWorkerContactError("Invalid phone number");
+      setButtonDisabled(true);
     } else {
       setreferringWorkerContactError(null);
+      setButtonDisabled(false);
     }
   }
 
@@ -197,6 +201,7 @@ const ReferralForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
+          isButtonDisabled={isButtonDisabled}
         />
       )}
     </>

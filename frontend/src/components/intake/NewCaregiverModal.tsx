@@ -60,6 +60,7 @@ const NewCaregiverModal = ({
   );
   const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(null);
   const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<string | null>(null);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleClose = () => {
     setCaregiverName(caregiver ? caregiver.caregiverName : "");
@@ -111,18 +112,23 @@ const NewCaregiverModal = ({
   function validatePrimaryPhoneNo(value: string) {
     if (!value) {
       setPrimaryPhoneNoError("Required");
+      setButtonDisabled(true);
     } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
       setPrimaryPhoneNoError("Invalid phone number");
+      setButtonDisabled(true);
     } else {
       setPrimaryPhoneNoError(null);
+      setButtonDisabled(false);
     }
   }
 
   function validateSecondaryPhoneNo(value: string) {
     if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
       setSecondaryPhoneNoError("Invalid phone number");
+      setButtonDisabled(true);
     } else {
       setSecondaryPhoneNoError(null);
+      setButtonDisabled(false);
     }
   }
 
@@ -396,7 +402,8 @@ const NewCaregiverModal = ({
               ? primaryPhoneNo
               : caregiver?.primaryPhoneNo) &&
             (addressChanged ? address : caregiver?.address) &&
-            (relationshipChanged ? relationship : caregiver?.relationship)
+            (relationshipChanged ? relationship : caregiver?.relationship) &&
+            (isButtonDisabled)
           )
         }
         secondaryTitle="Individual Details"

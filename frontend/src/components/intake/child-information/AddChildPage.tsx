@@ -60,7 +60,8 @@ const AddChild = ({
   const requiredInfomationMissing: boolean =
     !childDetails.childName ||
     !childDetails.cpinFileNumber ||
-    !childDetails.dateOfBirth;
+    !childDetails.dateOfBirth ||
+    !schoolDetails.schoolPhoneNo;
 
   // TODO: Check other required fields
 

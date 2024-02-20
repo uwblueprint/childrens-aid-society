@@ -112,6 +112,16 @@ const NewCaregiverModal = ({
     return newDate;
   };
 
+  function validateDate(value: string) {
+    if (!value) {
+      setDateOfBirthError('Required');
+    } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+      setDateOfBirthError('Invalid Date');
+    } else {
+      setDateOfBirthError(null);
+    }
+  }
+
   return (
     <Box>
       <ModalComponent

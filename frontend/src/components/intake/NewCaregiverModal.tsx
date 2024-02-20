@@ -122,6 +122,29 @@ const NewCaregiverModal = ({
     }
   }
 
+  function validatePrimaryPhoneNo(value: string) {
+    if (!value) {
+      setPrimaryPhoneNoError("Required");
+      setButtonDisabled(true);
+    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+      setPrimaryPhoneNoError("Invalid phone number");
+      setButtonDisabled(true);
+    } else {
+      setPrimaryPhoneNoError(null);
+      setButtonDisabled(false);
+    }
+  }
+
+  function validateSecondaryPhoneNo(value: string) {
+    if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+      setSecondaryPhoneNoError("Invalid phone number");
+      setButtonDisabled(true);
+    } else {
+      setSecondaryPhoneNoError(null);
+      setButtonDisabled(false);
+    }
+  }
+
   return (
     <Box>
       <ModalComponent

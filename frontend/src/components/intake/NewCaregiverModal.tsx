@@ -58,6 +58,9 @@ const NewCaregiverModal = ({
   const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
     false,
   );
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
+    null
+  );
   const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(null);
   const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<string | null>(null);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
@@ -109,29 +112,6 @@ const NewCaregiverModal = ({
     return newDate;
   };
 
-  function validatePrimaryPhoneNo(value: string) {
-    if (!value) {
-      setPrimaryPhoneNoError("Required");
-      setButtonDisabled(true);
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
-      setPrimaryPhoneNoError("Invalid phone number");
-      setButtonDisabled(true);
-    } else {
-      setPrimaryPhoneNoError(null);
-      setButtonDisabled(false);
-    }
-  }
-
-  function validateSecondaryPhoneNo(value: string) {
-    if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
-      setSecondaryPhoneNoError("Invalid phone number");
-      setButtonDisabled(true);
-    } else {
-      setSecondaryPhoneNoError(null);
-      setButtonDisabled(false);
-    }
-  }
-
   return (
     <Box>
       <ModalComponent
@@ -171,8 +151,12 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setDateOfBirth(event.target.value);
                     setDateOfBirthChanged(true);
+                    validateDate(event.target.value);
                   }}
                 />
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="primaryPhoneNumber">

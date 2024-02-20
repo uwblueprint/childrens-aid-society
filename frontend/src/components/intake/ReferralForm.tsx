@@ -89,6 +89,16 @@ const ReferralForm = ({
     }
   }
 
+  function validateDate(value: string) {
+    let error;
+    if (!value) {
+      error = 'Required';
+    } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+      error = 'Invalid Date';
+    }
+    return error;
+  }
+
   return (
     <>
       {!hideStepper && (
@@ -188,7 +198,11 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
+                validate={validateDate}
               />
+              {formik.errors.referralDate && (
+                <div style={{ color: 'red' }}>{formik.errors.referralDate}</div>
+              )}
             </Box>
           </FormControl>
         </Form>

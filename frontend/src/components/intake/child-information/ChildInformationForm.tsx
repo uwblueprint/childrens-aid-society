@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -33,6 +33,20 @@ const ChildInformationForm = ({
     setChildDetails(values);
   };
 
+const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
+  null
+);
+
+function validateDate(value: string) {
+  if (!value) {
+    setDateOfBirthError('Required');
+  } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+    setDateOfBirthError('Invalid Date');
+  } else {
+    setDateOfBirthError(null);
+  }
+}
+
   return (
     <>
       <Formik
@@ -40,6 +54,7 @@ const ChildInformationForm = ({
         initialValues={childDetails}
         onSubmit={onSubmit}
       >
+      {({ errors, touched }) => (
         <Form style={{ padding: "2rem 12rem" }}>
           <FormControl style={{ padding: "30px" }}>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -75,7 +90,11 @@ const ChildInformationForm = ({
                       dateOfBirth: e.target.value,
                     })
                   }
+                  validate={validateDate}
                 />
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">
@@ -153,6 +172,7 @@ const ChildInformationForm = ({
             </Box>
           </FormControl>
         </Form>
+        )}
       </Formik>
     </>
   );

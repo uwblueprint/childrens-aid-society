@@ -8,6 +8,7 @@ interface Intake {
   user_id: number;
   case_id: number;
   intake_status: string;
+  intake_meeting_notes: string;
   caseReferral: {
     referringWorker: string;
     referringWorkerContact: string;
@@ -65,6 +66,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
       user_id: intake.user_id.toString(),
       case_id: intake.case_id.toString(),
       intakeStatus: <CaseStatus>intake.intake_status,
+      intakeMeetingNotes: intake.intake_meeting_notes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
@@ -173,6 +175,7 @@ const get = async (
       user_id: intake.user_id.toString(),
       case_id: intake.case_id.toString(),
       intakeStatus: <CaseStatus>intake.intake_status,
+      intakeMeetingNotes: intake.intake_meeting_notes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,

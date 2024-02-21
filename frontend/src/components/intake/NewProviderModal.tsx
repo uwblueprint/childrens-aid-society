@@ -48,8 +48,12 @@ const NewProviderModal = ({
   const [contactNotesChanged, setContactNotesChanged] = useState(false);
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
-  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(null);
-  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<string | null>(null);
+  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
+    null
+  );
+  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<
+    string | null
+  >(null);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleClose = () => {

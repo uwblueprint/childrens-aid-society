@@ -49,7 +49,7 @@ const NewProviderModal = ({
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
   const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
-    null
+    null,
   );
   const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<
     string | null
@@ -81,7 +81,11 @@ const NewProviderModal = ({
     if (!value) {
       setPrimaryPhoneNoError("Required");
       setButtonDisabled(true);
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value
+      )
+    ) {
       setPrimaryPhoneNoError("Invalid phone number");
       setButtonDisabled(true);
     } else {
@@ -91,7 +95,11 @@ const NewProviderModal = ({
   }
 
   function validateSecondaryPhoneNo(value: string) {
-    if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value
+      )
+    ) {
       setSecondaryPhoneNoError("Invalid phone number");
       setButtonDisabled(true);
     } else {
@@ -291,7 +299,7 @@ const NewProviderModal = ({
               : provider?.primaryPhoneNo) &&
             (addressChanged ? address : provider?.address) &&
             (relationshipChanged ? relationship : provider?.relationship) &&
-            (isButtonDisabled)
+            isButtonDisabled
           )
         }
         secondaryTitle="Individual Details"

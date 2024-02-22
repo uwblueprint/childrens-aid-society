@@ -58,11 +58,13 @@ const NewCaregiverModal = ({
   const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
     false,
   );
-  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
-    null
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
+  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
+    null,
   );
-  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(null);
-  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<string | null>(null);
+  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<
+    string | null
+  >(null);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleClose = () => {
@@ -114,9 +116,9 @@ const NewCaregiverModal = ({
 
   function validateDate(value: string) {
     if (!value) {
-      setDateOfBirthError('Required');
+      setDateOfBirthError("Required");
     } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
-      setDateOfBirthError('Invalid Date');
+      setDateOfBirthError("Invalid Date");
     } else {
       setDateOfBirthError(null);
     }
@@ -126,7 +128,11 @@ const NewCaregiverModal = ({
     if (!value) {
       setPrimaryPhoneNoError("Required");
       setButtonDisabled(true);
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
       setPrimaryPhoneNoError("Invalid phone number");
       setButtonDisabled(true);
     } else {
@@ -136,7 +142,11 @@ const NewCaregiverModal = ({
   }
 
   function validateSecondaryPhoneNo(value: string) {
-    if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
       setSecondaryPhoneNoError("Invalid phone number");
       setButtonDisabled(true);
     } else {
@@ -177,7 +187,7 @@ const NewCaregiverModal = ({
                   defaultValue={
                     caregiver
                       ? caregiver.dateOfBirth &&
-                        formattedDate(caregiver.dateOfBirth)
+                      formattedDate(caregiver.dateOfBirth)
                       : ""
                   }
                   icon={<Icon as={Calendar} />}
@@ -420,7 +430,7 @@ const NewCaregiverModal = ({
               : caregiver?.primaryPhoneNo) &&
             (addressChanged ? address : caregiver?.address) &&
             (relationshipChanged ? relationship : caregiver?.relationship) &&
-            (isButtonDisabled)
+            isButtonDisabled
           )
         }
         secondaryTitle="Individual Details"

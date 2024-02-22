@@ -1,8 +1,8 @@
-import baseAPIClient from "./BaseAPIClient";
 import AUTHENTICATED_USER_KEY from "../constants/AuthConstants";
-import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
-import { Case } from "../types/CasesContextTypes";
 import CaseStatus from "../types/CaseStatus";
+import { Case } from "../types/CasesContextTypes";
+import { getLocalStorageObjProperty } from "../utils/LocalStorageUtils";
+import baseAPIClient from "./BaseAPIClient";
 
 interface Intake {
   user_id: number;
@@ -18,7 +18,8 @@ interface Intake {
   };
   courtInformation: {
     courtStatus: string;
-    orderReferral: string;
+    // **Come back here
+    orderReferral: FormData, // File, // changed from string 
     firstNationHeritage: string;
     firstNationBand: string;
   };
@@ -30,7 +31,7 @@ interface Intake {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-const post = async (formData: any): Promise<Case> => {
+const post = async (formData: any): Promise<Case> => { // post request here 
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -77,7 +78,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: 0,
+        orderReferral: intake.courtInformation.orderReferral, // changed from 0
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -185,7 +186,8 @@ const get = async (
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: 0,
+        orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        // orderReferral: base64String, // changed from 0
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },

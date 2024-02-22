@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { Form } from "@rjsf/bootstrap-4";
 import { decamelizeKeys } from "humps";
 import { JSONSchema7 } from "json-schema";
-import { Form } from "@rjsf/bootstrap-4";
+import React, { useState } from "react";
 import EntityAPIClient, {
   EntityRequest,
   EntityResponse,
@@ -79,6 +79,7 @@ const CreateForm = (): React.ReactElement => {
   };
 
   const onSubmit = async ({ formData }: { formData: EntityRequest }) => {
+    // using formdata here
     const multipartFormData = new FormData();
     multipartFormData.append("body", JSON.stringify(decamelizeKeys(formData)));
     if (fileField) {

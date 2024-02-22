@@ -55,7 +55,7 @@ def insert_test_data():
 
     # PDF Files 
     values = [
-        ("court_order_file.pdf", "bytea")
+        ("court_order_file.pdf", "dummy bytea data")
     ]
 
     for value in values: 

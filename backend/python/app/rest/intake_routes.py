@@ -147,7 +147,7 @@ def get_all_intakes():
                 "courtInformation": {
                     "courtStatus": intake.court_status,
                     # backend to frontend mapping here 
-                    "orderReferral": intake.court_order_file, # maybe this should be the name
+                    "orderReferral": intake.court_order_file, # worry about this later # maybe this should be the name
                     # "orderReferral": intake.court_order_file,
                     "firstNationHeritage": intake.first_nation_heritage,
                     "firstNationBand": intake.first_nation_band,
@@ -182,6 +182,7 @@ def get_all_intakes():
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"User", "Admin"})
 def create_intake():
+    print("please run")
     undos = []
 
     def run_undos():
@@ -192,14 +193,24 @@ def create_intake():
     # This is where the intake will be created ! -> upload the pdf file here? and then store the 
     # Upload file -> id 
     # court_order_file: id 
-    print("file", request.json["court_information"]["order_referral"])
+    # print('please file name', request.files['orderReferral'].filename);
+    # print('please file data', request.files['orderReferral'].read());
+    # print("please work", request.court_information.order_referral['file'].filename)
+    # next, try orderReferral
+    print('all parameters', request.json["court_information"])
+    print("file name", request.json["court_information"]["order_referral"]["file"].filename)
+    print("file data", request.json["court_information"]["order_referral"]["file"].read())
+    # print("file", (request.json["court_information"]["order_referral"] as FormData).get('file'))
     
     pdf_file = {
-        "file_name": request.json["court_information"]["order_referral"],
-        "file_data": request.json["court_information"]["order_referral"],
+        # "file_name": request.files['orderReferral'].filename,
+        # "file_data": request.files['orderReferral'].read(),
+        "file_name": request.json["court_information"]["order_referral"]["file"].filename,
+        "file_data": request.json["court_information"]["order_referral"]["file"].read(),
     }
+
     try:
-        # validate_request("CreateIntakeDTO")
+        # validate_request("CreatePdfFileDTO")
         pdf_file = CreatePdfFileDTO(**intake)
         new_file = file_storage_service.create_file(pdf_file) # make sure that this inserts into the db
         print('new file', new_file)

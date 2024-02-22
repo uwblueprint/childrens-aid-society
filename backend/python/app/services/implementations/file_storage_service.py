@@ -29,13 +29,13 @@ class FileStorageService(IFileStorageService):
         return url
 
     def create_file(self, file_name, file, content_type=None):
-        current_blob = self.bucket.get_blob(file_name)
-        if current_blob:
-            raise Exception("File name {name} already exists".format(name=file_name))
-        blob = self.bucket.blob(file_name)
+        # current_blob = self.bucket.get_blob(file_name)
+        # if current_blob:
+        #     raise Exception("File name {name} already exists".format(name=file_name))
+        # blob = self.bucket.blob(file_name)
         try:
-            blob.upload_from_file(file, content_type=content_type)
-            return 1 # fake id
+            # blob.upload_from_file(file, content_type=content_type)
+            return {'id': 1} # fake id
         except Exception as e:
             reason = getattr(e, "message", None)
             self.logger.error(

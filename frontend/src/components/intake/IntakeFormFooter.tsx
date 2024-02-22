@@ -1,18 +1,18 @@
 /* eslint-disable import/no-cycle */
+import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import React from "react";
 import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import { Caregivers } from "../../types/CaregiverDetailTypes";
+import CaseStatus from "../../types/CaseStatus";
+import { CourtDetails } from "./CourtInformationForm";
+import { PermittedIndividuals } from "./PermittedIndividualsModal";
+import { ProgramDetails } from "./ProgramForm";
+import { ReferralDetails } from "./ReferralForm";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
-import { ReferralDetails } from "./ReferralForm";
-import { CourtDetails } from "./CourtInformationForm";
-import { ProgramDetails } from "./ProgramForm";
 import { Children } from "./child-information/AddChildPage";
-import CaseStatus from "../../types/CaseStatus";
-import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
-import { PermittedIndividuals } from "./PermittedIndividualsModal";
-import { Caregivers } from "../../types/CaregiverDetailTypes";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -82,6 +82,19 @@ const IntakeFooter = ({
     }
   };
 
+  // const appendFormData = (formData: FormData, data: any, parentKey: string) => {
+  //   for (let key in data) {
+  //       if (data.hasOwnProperty(key)) {
+  //           let nestedKey = parentKey ? `${parentKey}[${key}]` : key;
+  //           if (typeof data[key] === 'object' && !Array.isArray(data[key])) {
+  //               appendFormData(formData, data[key], nestedKey);
+  //           } else {
+  //               formData.append(nestedKey, data[key]);
+  //           }
+  //       }
+  //   }
+  // }
+
   const submitForm = async () => {
     if (
       referralDetails &&
@@ -91,6 +104,7 @@ const IntakeFooter = ({
       programDetails &&
       permittedIndividuals
     ) {
+      console.log("hi there", courtDetails.orderReferral?.get('file'));
       const intakeData = {
         userId: 1,
         intakeStatus: CaseStatus.ACTIVE,
@@ -106,7 +120,9 @@ const IntakeFooter = ({
           courtStatus: courtDetails.currentCourtStatus
             .toUpperCase()
             .replace(/ /g, "_"), // for enum
-          orderReferral: "file binary",
+          // orderReferral: "dummy file binary",
+          orderReferral: courtDetails.orderReferral,
+          // orderReferral: courtDetails.orderReferral?.get('file'),
           firstNationHeritage:
             courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
             "FIRST_NATION_REGISTERED",
@@ -179,7 +195,14 @@ const IntakeFooter = ({
           }),
         },
       };
+
+      // **Come back here
+      // const intakeFormData = new FormData(); 
+      // appendFormData(intakeFormData, intakeData, '');
+
+      // post request is called here
       await IntakeAPIClient.post(intakeData);
+      // await IntakeAPIClient.post(intakeFormData);
       onNextStep();
     } else {
       onNextStep();

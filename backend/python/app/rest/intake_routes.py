@@ -215,37 +215,30 @@ def create_intake():
         print('new file', new_file)
         undos.append((file_storage_service, "delete_file", new_file.id))
     except Exception as error:
-        print("invalid")
+        print("invalid pdf file")
+        # TODO: reaching an error here
         run_undos()
         return jsonify(str(error)), 400
 
     # intake
     intake = {
-        "user_id": request.json["user_id"],
+        "user_id": request.form["user_id"],
         "intake_status": "SUBMITTED",
-        "referring_worker_name": request.json["case_referral"]["referring_worker_name"],
-        "referring_worker_contact": request.json["case_referral"][
-            "referring_worker_contact"
-        ],
-        "referral_date": request.json["case_referral"]["referral_date"],
-        "family_name": request.json["case_referral"]["family_name"],
-        "cpin_number": request.json["case_referral"]["cpin_file_number"],
-        "cpin_file_type": request.json["case_referral"]["cpin_file_type"],
-        "court_status": request.json["court_information"]["court_status"],
+        "referring_worker_name": request.form["case_referral[referring_worker_name]"],
+        "referring_worker_contact": request.form["case_referral[referring_worker_contact]"],
+        "referral_date": request.form["case_referral[referral_date]"],
+        "family_name": request.form["case_referral[family_name]"],
+        "cpin_number": request.form["case_referral[cpin_file_number]"],
+        "cpin_file_type": request.form["case_referral[cpin_file_type]"],
+        "court_status": request.form["court_information[court_status]"],
         # Set id 
         "court_order_file_id": new_file.id,
         # "court_order_file": request.json["court_information"]["order_referral"],
-        "first_nation_heritage": request.json["court_information"][
-            "first_nation_heritage"
-        ],
-        "first_nation_band": request.json["court_information"]["first_nation_band"],
-        "transportation_requirements": request.json["program_details"][
-            "transport_requirements"
-        ],
-        "scheduling_requirements": request.json["program_details"][
-            "scheduling_requirements"
-        ],
-        "suggested_start_date": request.json["program_details"]["suggested_start_date"],
+        "first_nation_heritage": request.form["court_information[first_nation_heritage]"],
+        "first_nation_band": request.form["court_information[first_nation_band]"],
+        "transportation_requirements": request.form["program_details[transport_requirements]"],
+        "scheduling_requirements": request.form["program_details[scheduling_requirements]"],
+        "suggested_start_date": request.form["program_details[suggested_start_date]"],
         "date_accepted": None,
         "access_location": None,
         "lead_access_worker_id": None,
@@ -258,12 +251,13 @@ def create_intake():
         new_intake = intake_service.create_intake(intake)
         undos.append((intake_service, "delete_intake", new_intake.id))
     except Exception as error:
-        print("invalid")
+        print("invalid intake")
         run_undos()
         return jsonify(str(error)), 400
 
     # caregivers
-    caregivers = request.json["caregivers"]
+    # TODO: investigate out how pivot from request.json to request.form impacts caregivers, permitted individuals, etc. 
+    caregivers = request.form["caregivers"]
     for caregiver in caregivers:
         # create caregiver using caregiver_routes
         caregiver = {
@@ -287,7 +281,8 @@ def create_intake():
             return jsonify(error), 400
 
     # other permitted individuals
-    permitted_individuals = request.json["program_details"]["permitted_individuals"]
+    permitted_individuals = request.form["program_details[permitted_individuals]"]
+    # permitted_individuals = request.form["program_details"]["permitted_individuals"]
     for permitted_individual in permitted_individuals:
         permitted_individual = {
             "name": permitted_individual["name"],
@@ -314,7 +309,8 @@ def create_intake():
             return jsonify(error), 400
 
     # familial concerns
-    familial_concerns = request.json["program_details"]["familial_concerns"]
+    familial_concerns = request.form["program_details[familial_concerns]"]
+    # familial_concerns = request.form["program_details"]["familial_concerns"]
     for familial_concern in familial_concerns:
         familial_concern = {
             "concern": familial_concern,
@@ -338,7 +334,8 @@ def create_intake():
     # goals
 
     # short term goals
-    short_term_goals = request.json["program_details"]["short_term_goals"]
+    short_term_goals = request.form["program_details[short_term_goals]"]
+    # short_term_goals = request.form["program_details"]["short_term_goals"]
     for short_term_goal in short_term_goals:
         new_short_term_goal = {
             "type": "SHORT_TERM",
@@ -352,7 +349,8 @@ def create_intake():
             return jsonify(error), 400
 
     # long term goals
-    long_term_goals = request.json["program_details"]["long_term_goals"]
+    long_term_goals = request.form["program_details[long_term_goals]"]
+    # long_term_goals = request.form["program_details"]["long_term_goals"]
     for long_term_goal in long_term_goals:
         new_long_term_goal = {
             "type": "LONG_TERM",
@@ -365,7 +363,7 @@ def create_intake():
             run_undos()
             return jsonify(error), 400
 
-    children = request.json["children"]
+    children = request.form["children"]
     for child in children:
         # daytime contact
         daytime_contact = child["daytime_contact"]

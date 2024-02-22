@@ -29,28 +29,26 @@ type ChildFormProps = {
 const ChildInformationForm = ({
   childDetails,
   setChildDetails,
-  setChildInfoDateError
+  setChildInfoDateError,
 }: ChildFormProps): React.ReactElement => {
   const onSubmit = (values: ChildDetails) => {
     setChildDetails(values);
   };
 
-const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
-  null
-);
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
 
-function validateDate(value: string) {
-  if (!value) {
-    setDateOfBirthError('Required');
-    setChildInfoDateError(true);
-  } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
-    setDateOfBirthError('Invalid Date');
-    setChildInfoDateError(true);
-  } else {
-    setDateOfBirthError(null);
-    setChildInfoDateError(false);
+  function validateDate(value: string) {
+    if (!value) {
+      setDateOfBirthError("Required");
+      setChildInfoDateError(true);
+    } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+      setDateOfBirthError("Invalid Date");
+      setChildInfoDateError(true);
+    } else {
+      setDateOfBirthError(null);
+      setChildInfoDateError(false);
+    }
   }
-}
 
   return (
     <>
@@ -59,7 +57,6 @@ function validateDate(value: string) {
         initialValues={childDetails}
         onSubmit={onSubmit}
       >
-      {({ errors, touched }) => (
         <Form style={{ padding: "2rem 12rem" }}>
           <FormControl style={{ padding: "30px" }}>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">
@@ -177,7 +174,6 @@ function validateDate(value: string) {
             </Box>
           </FormControl>
         </Form>
-        )}
       </Formik>
     </>
   );

@@ -53,7 +53,7 @@ const CourtInformationForm = ({
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: File) => void,
+    setFieldValue: (field: string, value: File | null) => void,
   ) => {
     console.log('handling file change')
     const fileObj = event.target.files && event.target.files[0];
@@ -61,6 +61,12 @@ const CourtInformationForm = ({
       return;
     }
     setFieldValue("orderReferral", fileObj);
+
+    // Pass updated court details to parent component
+    setCourtDetails({
+      ...courtDetails,
+      orderReferral: fileObj,
+    });
   };
   const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
@@ -85,6 +91,8 @@ const CourtInformationForm = ({
     });
     // TODO: reset uploaded object
   };
+
+  let pdfUrl; // Declare a variable to store the URL globally
 
   const downloadFile = () => {
     if (!formik.values.orderReferral || !formik.values.orderReferral.name) {

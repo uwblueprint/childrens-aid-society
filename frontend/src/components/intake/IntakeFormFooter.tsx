@@ -35,6 +35,24 @@ export type IntakeFooterProps = {
   caregivers?: Caregivers;
   permittedIndividuals?: PermittedIndividuals;
 };
+// Helper function to read file as Base64 string
+const readFileAsBase64 = (file: File | null): Promise<string> => {
+  if (!file) {
+    return Promise.resolve("");
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target) {
+        resolve(event.target.result as string);
+      }
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+    reader.readAsDataURL(file);
+  });
+};
 
 const IntakeFooter = ({
   nextButtonRef,
@@ -91,6 +109,10 @@ const IntakeFooter = ({
       programDetails &&
       permittedIndividuals
     ) {
+      console.log("form thing")
+      console.log(courtDetails.orderReferral)
+      const base64String = await readFileAsBase64(courtDetails.orderReferral);
+
       const intakeData = {
         userId: 1,
         intakeStatus: CaseStatus.ACTIVE,
@@ -106,7 +128,8 @@ const IntakeFooter = ({
           courtStatus: courtDetails.currentCourtStatus
             .toUpperCase()
             .replace(/ /g, "_"), // for enum
-          orderReferral: "file binary",
+          orderReferral: base64String, //file name
+          // orderFile: courtDetails.orderReferral, //file object or formdata
           firstNationHeritage:
             courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
             "FIRST_NATION_REGISTERED",

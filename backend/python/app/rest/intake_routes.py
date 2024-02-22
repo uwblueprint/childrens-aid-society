@@ -193,7 +193,9 @@ def create_intake():
     # Upload file -> id 
     # court_order_file: id 
     print("file", request.json["court_information"]["order_referral"])
-    
+    #file {}
+    print("file", request.json["court_information"])
+    #  file {'court_status': 'INTERIM_CARE', 'order_referral': {}, 'first_nation_heritage': 'FIRST_NATION_REGISTERED', 'first_nation_band': ''}
     pdf_file = {
         "file_name": request.json["court_information"]["order_referral"],
         "file_data": request.json["court_information"]["order_referral"],

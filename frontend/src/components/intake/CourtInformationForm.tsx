@@ -24,7 +24,7 @@ export type CourtDetails = {
   firstNationHeritage: string;
   firstNationBand: string;
   // **Come back here
-  orderReferral: FormData | null; // File | null;
+  orderReferral: File | null; // FormData | null; 
 };
 
 type CourtInformationFormProps = {
@@ -54,21 +54,26 @@ const CourtInformationForm = ({
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: FormData) => void,
-    // setFieldValue: (field: string, value: File) => void,
+    // setFieldValue: (field: string, value: FormData) => void,
+    setFieldValue: (field: string, value: File) => void,
   ) => {
     console.log('handling file change');
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
       return;
     }
-    const formData = new FormData();
-    formData.append('file', fileObj);
-    // console.log("this", this);
-    console.log('file to upload', fileObj);
-    console.log('formData to upload', formData.get('file'));
-    // what needs to change here? 
-    setFieldValue("orderReferral", formData);
+    setFieldValue("orderReferral", fileObj);
+
+    
+    // const formData = new FormData();
+    // formData.append('file', fileObj);
+    // // console.log("this", this);
+    // console.log('file to upload', fileObj);
+    // console.log('formData to upload', formData.get('file'));
+    // // what needs to change here? 
+    // setFieldValue("orderReferral", formData);
+
+
     // setCourtDetails({
     //   ...courtDetails,
     //   orderReferral: fileObj,
@@ -181,7 +186,8 @@ const CourtInformationForm = ({
                 name="documentDisplay"
                 placeholder="No document attached"
                 // value={formik.values.orderReferral?.get('orderReferral')?.name}
-                value={(formik.values.orderReferral?.get('file') as File)?.name ?? ''}
+                // value={(formik.values.orderReferral?.get('file') as File)?.name ?? ''}
+                value={formik.values.orderReferral?.name}
                 onClick={handleClick}
                 marginRight="10px"
                 style={{ cursor: "pointer" }}

@@ -82,18 +82,23 @@ const IntakeFooter = ({
     }
   };
 
-  // const appendFormData = (formData: FormData, data: any, parentKey: string) => {
-  //   for (let key in data) {
-  //       if (data.hasOwnProperty(key)) {
-  //           let nestedKey = parentKey ? `${parentKey}[${key}]` : key;
-  //           if (typeof data[key] === 'object' && !Array.isArray(data[key])) {
-  //               appendFormData(formData, data[key], nestedKey);
-  //           } else {
-  //               formData.append(nestedKey, data[key]);
-  //           }
-  //       }
-  //   }
-  // }
+  const appendFormData = (formData: FormData, data: any, parentKey: string) => {
+    Object.keys(data).forEach(key => {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const nestedKey = parentKey ? `${parentKey}[${key}]` : key;
+        if (key === 'orderReferral') {
+          console.log("here!!", key, data[key], nestedKey)
+        }
+        if (typeof data[key] === 'object' && !Array.isArray(data[key]) && nestedKey !== 'courtInformation[orderReferral]') {
+          console.log('hi dont show me', data[key])
+          appendFormData(formData, data[key], nestedKey);
+        } else {
+          console.log('hi show me', data[key])
+          formData.append(nestedKey, data[key]);
+        }
+      }
+  });
+  }
 
   const submitForm = async () => {
     if (
@@ -104,7 +109,7 @@ const IntakeFooter = ({
       programDetails &&
       permittedIndividuals
     ) {
-      console.log("hi there", courtDetails.orderReferral?.get('file'));
+      console.log("hi there", courtDetails.orderReferral);
       const intakeData = {
         userId: 1,
         intakeStatus: CaseStatus.ACTIVE,
@@ -122,7 +127,6 @@ const IntakeFooter = ({
             .replace(/ /g, "_"), // for enum
           // orderReferral: "dummy file binary",
           orderReferral: courtDetails.orderReferral,
-          // orderReferral: courtDetails.orderReferral?.get('file'),
           firstNationHeritage:
             courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
             "FIRST_NATION_REGISTERED",
@@ -197,12 +201,11 @@ const IntakeFooter = ({
       };
 
       // **Come back here
-      // const intakeFormData = new FormData(); 
-      // appendFormData(intakeFormData, intakeData, '');
+      const intakeFormData = new FormData(); 
+      appendFormData(intakeFormData, intakeData, '');
 
       // post request is called here
-      await IntakeAPIClient.post(intakeData);
-      // await IntakeAPIClient.post(intakeFormData);
+      await IntakeAPIClient.post(intakeFormData);
       onNextStep();
     } else {
       onNextStep();

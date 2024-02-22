@@ -18,8 +18,7 @@ interface Intake {
   };
   courtInformation: {
     courtStatus: string;
-    // **Come back here
-    orderReferral: FormData, // File, // changed from string 
+    orderReferral: File; // FormData, // File, // changed from string 
     firstNationHeritage: string;
     firstNationBand: string;
   };

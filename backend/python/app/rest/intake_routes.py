@@ -197,16 +197,28 @@ def create_intake():
     # print('please file data', request.files['orderReferral'].read());
     # print("please work", request.court_information.order_referral['file'].filename)
     # next, try orderReferral
-    print('all parameters', request.json["court_information"])
-    print("file name", request.json["court_information"]["order_referral"]["file"].filename)
-    print("file data", request.json["court_information"]["order_referral"]["file"].read())
+    print('all files', request.files)
+    print('all form', request.form)
+
+    # TODO: convert all parameters to retrieve from form instead of json!!
+    # all files ImmutableMultiDict([('courtInformation[orderReferral]', <FileStorage: 'Jayden_Resume_1.pdf' ('application/pdf')>)])
+    # all form ImmutableMultiDict([('userId', '1'), ('intakeStatus', 'ACTIVE'), ('caseReferral[referringWorkerName]', 'DWAEFSF'), ('caseReferral[referringWorkerContact]', '222-222-2222'), ('caseReferral[cpinFileNumber]', '2'), ('caseReferral[cpinFileType]', 'INVESTIGATION'), ('caseReferral[familyName]', 'was'), ('caseReferral[referralDate]', '01/01/2023'), ('courtInformation[courtStatus]', 'INTERIM_CARE'), ('courtInformation[firstNationHeritage]', 'FIRST_NATION_REGISTERED'), ('courtInformation[firstNationBand]', ''), ('children', ''), ('caregivers', ''), ('programDetails[transportRequirements]', 'Kin provider will transport'), ('programDetails[schedulingRequirements]', 'Weekly and time'), ('programDetails[suggestedStartDate]', '01/01/2023'), ('programDetails[shortTermGoals]', 'Caregiver(s) refrain from physical discipline'), ('programDetails[longTermGoals]', 'Caregiver(s) appropriately encourages child(ren) to demonstrate age appropriate social skills'), ('programDetails[familialConcerns]', ''), ('programDetails[permittedIndividuals]', '')])    print('all parameters', request.form[0]["courtInformation"])
+
+    file = request.files["courtInformation[orderReferral]"]
+    # file = request.files[0]["court_information[order_referral]"]
+    print("file name", file.filename)
+    print("file data", file.read())
+    # print("file name", request.json["court_information"]["order_referral"]["file"].filename)
+    # print("file data", request.json["court_information"]["order_referral"]["file"].read())
     # print("file", (request.json["court_information"]["order_referral"] as FormData).get('file'))
     
     pdf_file = {
         # "file_name": request.files['orderReferral'].filename,
         # "file_data": request.files['orderReferral'].read(),
-        "file_name": request.json["court_information"]["order_referral"]["file"].filename,
-        "file_data": request.json["court_information"]["order_referral"]["file"].read(),
+        # "file_name": request.json["court_information"]["order_referral"]["file"].filename,
+        # "file_data": request.json["court_information"]["order_referral"]["file"].read(),
+        "file_name": file.filename,
+        "file_data": file.read(),
     }
 
     try:

@@ -83,7 +83,7 @@ const NewProviderModal = ({
       setButtonDisabled(true);
     } else if (
       !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
-        value
+        value,
       )
     ) {
       setPrimaryPhoneNoError("Invalid phone number");
@@ -97,7 +97,7 @@ const NewProviderModal = ({
   function validateSecondaryPhoneNo(value: string) {
     if (
       !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
-        value
+        value,
       )
     ) {
       setSecondaryPhoneNoError("Invalid phone number");

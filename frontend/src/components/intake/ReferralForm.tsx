@@ -73,13 +73,22 @@ const ReferralForm = ({
     });
   };
 
-  const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(null);
-  const [refferalDateError, setRefferalDateError] = useState<string | null>(null);
+  const [
+    referringWorkerContactError,
+    setreferringWorkerContactError,
+  ] = useState<string | null>(null);
+  const [refferalDateError, setRefferalDateError] = useState<string | null>(
+    null,
+  );
 
   function validatePhone(value: string) {
     if (!value) {
       setreferringWorkerContactError("Required");
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
       setreferringWorkerContactError("Invalid phone number");
     } else {
       setreferringWorkerContactError(null);
@@ -88,9 +97,11 @@ const ReferralForm = ({
 
   function validateDate(value: string) {
     if (!value) {
-      setRefferalDateError('Required');
-    } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-      setRefferalDateError('Invalid Date');
+      setRefferalDateError("Required");
+    } else if (
+      !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)
+    ) {
+      setRefferalDateError("Invalid Date");
     } else {
       setRefferalDateError(null);
     }
@@ -146,7 +157,9 @@ const ReferralForm = ({
                   validate={validatePhone}
                 />
                 {referringWorkerContactError && (
-                  <div style={{ color: "red" }}>{referringWorkerContactError}</div>
+                  <div style={{ color: "red" }}>
+                    {referringWorkerContactError}
+                  </div>
                 )}
               </Box>
               <Box>
@@ -198,7 +211,7 @@ const ReferralForm = ({
                 validate={validateDate}
               />
               {refferalDateError && (
-                <div style={{ color: 'red' }}>{refferalDateError}</div>
+                <div style={{ color: "red" }}>{refferalDateError}</div>
               )}
             </Box>
           </FormControl>
@@ -212,7 +225,9 @@ const ReferralForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
-          isButtonDisabled={((referringWorkerContactError != null) || (refferalDateError != null))}
+          isButtonDisabled={
+            referringWorkerContactError != null || refferalDateError != null
+          }
         />
       )}
     </>

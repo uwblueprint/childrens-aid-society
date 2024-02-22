@@ -23,11 +23,13 @@ export type ChildDetails = {
 type ChildFormProps = {
   childDetails: ChildDetails;
   setChildDetails: React.Dispatch<React.SetStateAction<ChildDetails>>;
+  setChildInfoDateError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ChildInformationForm = ({
   childDetails,
   setChildDetails,
+  setChildInfoDateError
 }: ChildFormProps): React.ReactElement => {
   const onSubmit = (values: ChildDetails) => {
     setChildDetails(values);
@@ -40,10 +42,13 @@ const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
 function validateDate(value: string) {
   if (!value) {
     setDateOfBirthError('Required');
+    setChildInfoDateError(true);
   } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
     setDateOfBirthError('Invalid Date');
+    setChildInfoDateError(true);
   } else {
     setDateOfBirthError(null);
+    setChildInfoDateError(false);
   }
 }
 

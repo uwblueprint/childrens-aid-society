@@ -39,7 +39,7 @@ const SchoolDaycareForm = ({
     if (!value) {
       setschoolPhoneNoError("Required");
     } else if (
-          !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
         value,
       )
     ) {

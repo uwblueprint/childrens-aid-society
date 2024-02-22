@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import {
   FormControl,
   Text,
@@ -100,14 +100,18 @@ const ProgramForm = ({
     });
   }
 
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(
+    null
+  );
+
   function validateDate(value: string) {
-    let error;
     if (!value) {
-      error = 'Required';
+      setDateOfBirthError('Required');
     } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-      error = 'Invalid Date';
+      setDateOfBirthError('Invalid Date');
+    } else {
+      setDateOfBirthError(null);
     }
-    return error;
   }
 
   return (
@@ -268,6 +272,7 @@ const ProgramForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
+          isButtonDisabled={(dateOfBirthError != null)}
         />
       )}
     </>

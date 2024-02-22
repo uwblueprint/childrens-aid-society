@@ -74,29 +74,26 @@ const ReferralForm = ({
   };
 
   const [referringWorkerContactError, setreferringWorkerContactError] = useState<string | null>(null);
-  const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [refferalDateError, setRefferalDateError] = useState<string | null>(null);
 
   function validatePhone(value: string) {
     if (!value) {
       setreferringWorkerContactError("Required");
-      setButtonDisabled(true);
     } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
       setreferringWorkerContactError("Invalid phone number");
-      setButtonDisabled(true);
     } else {
       setreferringWorkerContactError(null);
-      setButtonDisabled(false);
     }
   }
 
   function validateDate(value: string) {
-    let error;
     if (!value) {
-      error = 'Required';
+      setRefferalDateError('Required');
     } else if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-      error = 'Invalid Date';
+      setRefferalDateError('Invalid Date');
+    } else {
+      setRefferalDateError(null);
     }
-    return error;
   }
 
   return (
@@ -200,8 +197,8 @@ const ReferralForm = ({
                 icon={<Icon as={Calendar} />}
                 validate={validateDate}
               />
-              {formik.errors.referralDate && (
-                <div style={{ color: 'red' }}>{formik.errors.referralDate}</div>
+              {refferalDateError && (
+                <div style={{ color: 'red' }}>{refferalDateError}</div>
               )}
             </Box>
           </FormControl>
@@ -215,7 +212,7 @@ const ReferralForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
-          isButtonDisabled={isButtonDisabled}
+          isButtonDisabled={((referringWorkerContactError != null) || (refferalDateError != null))}
         />
       )}
     </>

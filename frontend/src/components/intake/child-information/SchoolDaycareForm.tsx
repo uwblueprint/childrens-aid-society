@@ -31,12 +31,17 @@ const SchoolDaycareForm = ({
     setSchoolDetails(values);
   };
 
-  const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(null);
+  const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(
+    null
+  );
 
   function validatePhone(value: string) {
     if (!value) {
       setschoolPhoneNoError("Required");
-    } else if (!/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(value)) {
+    } else if (
+        !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+          value
+        )) {
       setschoolPhoneNoError("Invalid phone number");
     } else {
       setschoolPhoneNoError(null);
@@ -49,7 +54,7 @@ const SchoolDaycareForm = ({
       initialValues={schoolDetails}
       onSubmit={onSubmit}
     >
-      {({ errors, touched }) => (
+      {({}) => (
         <Form style={{ padding: "2rem 12rem" }}>
           <FormControl style={{ padding: "30px" }}>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="0.75rem">

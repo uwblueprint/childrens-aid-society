@@ -32,16 +32,17 @@ const SchoolDaycareForm = ({
   };
 
   const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(
-    null
+    null,
   );
 
   function validatePhone(value: string) {
     if (!value) {
       setschoolPhoneNoError("Required");
     } else if (
-        !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
-          value
-        )) {
+          !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
       setschoolPhoneNoError("Invalid phone number");
     } else {
       setschoolPhoneNoError(null);

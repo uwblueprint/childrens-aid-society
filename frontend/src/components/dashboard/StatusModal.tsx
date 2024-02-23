@@ -31,6 +31,8 @@ export type StatusModalProps = {
   goToIntake: () => void;
   referringWorkerName: string;
   intakeNotes: string;
+  referralDate: string;
+  familyName: string;
 };
 
 const StatusModal = ({
@@ -43,6 +45,8 @@ const StatusModal = ({
   goToIntake,
   referringWorkerName,
   intakeNotes,
+  referralDate,
+  familyName,
 }: StatusModalProps): React.ReactElement => {
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState(referringWorkerName);
@@ -124,8 +128,8 @@ const StatusModal = ({
                 Case Submission
               </Text>
               {/* TODO: Need to be changed for dynamic values */}
-              <Text>Date: XXX</Text>
-              <Text>Family Name: XXX</Text>
+              <Text>Date: {referralDate}</Text>
+              <Text>Family Name: {familyName}</Text>
               <Flex justify="flex-end" align="flex-end">
                 <Button
                   variant="tertiary"

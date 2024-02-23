@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -11,15 +11,15 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
-import CaseCard, { CaseCardProps } from "./CaseCard";
+import CaseCard from "./CaseCard";
+import CasesContext from "../../contexts/CasesContext";
+import { CasesContextType } from "../../types/CasesContextTypes";
 
 const FilteredSection = ({
   status,
-  cases,
   showViewAll = true,
 }: {
   status: string;
-  cases: CaseCardProps[];
   showViewAll?: boolean;
 }): React.ReactElement => {
   const history = useHistory();
@@ -27,10 +27,12 @@ const FilteredSection = ({
     history.push(`/cases/${status.toLowerCase()}`);
   };
 
+  const cases = useContext(CasesContext);
+
   const groupedCases = cases.reduce(
     (acc, _, index) =>
       index % 4 === 0 ? [...acc, cases.slice(index, index + 4)] : acc,
-    [] as CaseCardProps[][],
+    [] as CasesContextType[],
   );
 
   return (
@@ -69,12 +71,18 @@ const FilteredSection = ({
                   <Flex key={rowIndex} marginBottom="20px">
                     {row.map((caseData) => (
                       <CaseCard
-                        key={caseData.caseId}
-                        caseId={caseData.caseId}
-                        referringWorker={caseData.referringWorker}
-                        date={caseData.date}
-                        familyName={caseData.familyName}
-                        caseTag={caseData.caseTag}
+                        key={caseData.case_id}
+                        caseId={
+                          typeof caseData.case_id === "string"
+                            ? parseInt(caseData.case_id, 10)
+                            : caseData.case_id
+                        }
+                        referringWorker={
+                          caseData.caseReferral.referringWorkerName
+                        }
+                        date={caseData.caseReferral.referralDate}
+                        familyName={caseData.caseReferral.familyName}
+                        caseTag={caseData.intakeStatus}
                         intakeMeetingNotes={caseData.intakeMeetingNotes}
                       />
                     ))}
@@ -84,12 +92,18 @@ const FilteredSection = ({
                   .slice(0, 4)
                   .map((caseData) => (
                     <CaseCard
-                      key={caseData.caseId}
-                      caseId={caseData.caseId}
-                      referringWorker={caseData.referringWorker}
-                      date={caseData.date}
-                      familyName={caseData.familyName}
-                      caseTag={caseData.caseTag}
+                      key={caseData.case_id}
+                      caseId={
+                        typeof caseData.case_id === "string"
+                          ? parseInt(caseData.case_id, 10)
+                          : caseData.case_id
+                      }
+                      referringWorker={
+                        caseData.caseReferral.referringWorkerName
+                      }
+                      date={caseData.caseReferral.referralDate}
+                      familyName={caseData.caseReferral.familyName}
+                      caseTag={caseData.intakeStatus}
                       intakeMeetingNotes={caseData.intakeMeetingNotes}
                     />
                   ))}

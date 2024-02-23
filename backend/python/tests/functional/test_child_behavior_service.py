@@ -41,13 +41,13 @@ DUMMY_DAYTIME_CONTACT_DATA = {
     "address": "123 Main St",
     "contact_information": "8790832",
     "dismissal_time": "4:00PM",
+    "child_id": 1,
 }
 
 DUMMY_CHILD = {
     "id": 1,
     "name": "Jane Doe",
     "service_worker": "Test Worker",
-    "daytime_contact_id": 1,
     "special_needs": "None",
 }
 
@@ -84,12 +84,12 @@ def seed_database():
     db.session.add(dummy_intake)
     db.session.commit()
 
-    dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
-    db.session.add(dummy_daytime_contact)
-    db.session.commit()
-
     dummy_child = Child(**DUMMY_CHILD)
     db.session.add(dummy_child)
+    db.session.commit()
+
+    dummy_daytime_contact = DaytimeContact(**DUMMY_DAYTIME_CONTACT_DATA)
+    db.session.add(dummy_daytime_contact)
     db.session.commit()
 
     for behavior in DUMMY_CHILD_BEHAVIOR:

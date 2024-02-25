@@ -12,7 +12,6 @@ class IntakeDTO:
         self.court_status = kwargs.get("court_status")
         # this is the file 
         self.court_order_file_id = kwargs.get("court_order_file_id")
-        # self.court_order_file_id = kwargs.get("court_order_file")
         self.first_nation_heritage = kwargs.get("first_nation_heritage")
         self.first_nation_band = kwargs.get("first_nation_band")
         self.transportation_requirements = kwargs.get("transportation_requirements")

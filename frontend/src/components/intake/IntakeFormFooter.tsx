@@ -86,9 +86,6 @@ const IntakeFooter = ({
     Object.keys(data).forEach(key => {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         const nestedKey = parentKey ? `${parentKey}[${key}]` : key;
-        if (key === 'orderReferral') {
-          console.log("here!!", key, data[key], nestedKey)
-        }
         if (typeof data[key] === 'object' && !Array.isArray(data[key]) && nestedKey !== 'courtInformation[orderReferral]') {
           console.log('hi dont show me', data[key])
           appendFormData(formData, data[key], nestedKey);

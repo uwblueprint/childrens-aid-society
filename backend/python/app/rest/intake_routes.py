@@ -219,6 +219,7 @@ def create_intake():
         run_undos()
         return jsonify(str(error)), 400
 
+    print('user id from intake routes', request.form["userId"]);
     # intake
     intake = {
         "user_id": int(request.form["userId"]),
@@ -516,7 +517,7 @@ def search_intake():
                     },
                     "courtInformation": {
                         "courtStatus": intake.court_status,
-                        "orderReferral": intake.court_order_file_id,
+                        "orderReferral": intake.court_order_file_id, # make this the name or something later? or make a separate request to download it/get the name
                         "firstNationHeritage": intake.first_nation_heritage,
                         "firstNationBand": intake.first_nation_band,
                     },

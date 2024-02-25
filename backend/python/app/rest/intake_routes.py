@@ -202,18 +202,17 @@ def create_intake():
     file = request.files["courtInformation[orderReferral]"]
     # print("file name", file.filename)
     # print("file data", file.read())
-    
+       
     pdf_file = {
         "file_name": file.filename,
-        "file_data": file.read(),
+        "file_data": bytes(file.read()),
     }
 
     try:
         # validate_request("CreatePdfFileDTO")
-        pdf_file = CreatePdfFileDTO(**intake)
+        pdf_file = CreatePdfFileDTO(**pdf_file)
         new_file = file_storage_service.create_file(pdf_file) # make sure that this inserts into the db
-        print('new file', new_file)
-        undos.append((file_storage_service, "delete_file", new_file.id))
+        undos.append((file_storage_service, "delete_file", pdf_file))
     except Exception as error:
         print("invalid pdf file")
         # TODO: reaching an error here
@@ -222,23 +221,23 @@ def create_intake():
 
     # intake
     intake = {
-        "user_id": request.form["user_id"],
+        "user_id": request.form["userId"],
         "intake_status": "SUBMITTED",
-        "referring_worker_name": request.form["case_referral[referring_worker_name]"],
-        "referring_worker_contact": request.form["case_referral[referring_worker_contact]"],
-        "referral_date": request.form["case_referral[referral_date]"],
-        "family_name": request.form["case_referral[family_name]"],
-        "cpin_number": request.form["case_referral[cpin_file_number]"],
-        "cpin_file_type": request.form["case_referral[cpin_file_type]"],
-        "court_status": request.form["court_information[court_status]"],
+        "referring_worker_name": request.form["caseReferral[referringWorkerName]"],
+        "referring_worker_contact": request.form["caseReferral[referringWorkerContact]"],
+        "referral_date": request.form["caseReferral[referralDate]"],
+        "family_name": request.form["caseReferral[familyName]"],
+        "cpin_number": request.form["caseReferral[cpinFileNumber]"],
+        "cpin_file_type": request.form["caseReferral[cpinFileType]"],
+        "court_status": request.form["courtInformation[courtStatus]"],
         # Set id 
         "court_order_file_id": new_file.id,
         # "court_order_file": request.json["court_information"]["order_referral"],
-        "first_nation_heritage": request.form["court_information[first_nation_heritage]"],
-        "first_nation_band": request.form["court_information[first_nation_band]"],
-        "transportation_requirements": request.form["program_details[transport_requirements]"],
-        "scheduling_requirements": request.form["program_details[scheduling_requirements]"],
-        "suggested_start_date": request.form["program_details[suggested_start_date]"],
+        "first_nation_heritage": request.form["courtInformation[firstNationHeritage]"],
+        "first_nation_band": request.form["courtInformation[firstNationBand]"],
+        "transportation_requirements": request.form["programDetails[transportRequirements]"],
+        "scheduling_requirements": request.form["programDetails[schedulingRequirements]"],
+        "suggested_start_date": request.form["programDetails[suggestedStartDate]"],
         "date_accepted": None,
         "access_location": None,
         "lead_access_worker_id": None,

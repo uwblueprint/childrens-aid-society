@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
-from firebase_admin import storage
-
+from ...models import db
+from ...models.pdf_file import PdfFile
+from ...resources.pdf_file_dto import CreatePdfFileDTO, PdfFileDTO
 from ..interfaces.file_storage_service import IFileStorageService
 
 
@@ -18,7 +19,6 @@ class FileStorageService(IFileStorageService):
         :type logger: logger
         """
         self.logger = logger
-        self.bucket = storage.bucket()
 
     def get_file(self, file_name, expiration_time=timedelta(minutes=60)):
         blob = self.bucket.get_blob(file_name)
@@ -28,22 +28,32 @@ class FileStorageService(IFileStorageService):
         url = blob.generate_signed_url(expiration)
         return url
 
-    def create_file(self, file_name, file, content_type=None):
+    def create_file(self, file: CreatePdfFileDTO):
         # current_blob = self.bucket.get_blob(file_name)
         # if current_blob:
         #     raise Exception("File name {name} already exists".format(name=file_name))
         # blob = self.bucket.blob(file_name)
         try:
-            # blob.upload_from_file(file, content_type=content_type)
-            return {'id': 1} # fake id
-        except Exception as e:
-            reason = getattr(e, "message", None)
-            self.logger.error(
-                "Failed to create file {name}. Reason = {reason}".format(
-                    name=file_name, reason=(reason if reason else str(e))
+            if not file:
+                raise Exception(
+                    "Empty file DTO/None passed to create_file function"
                 )
-            )
-            raise e
+            if not isinstance(file, CreatePdfFileDTO):
+                raise Exception("File passed is not of CreatePdfFileDTO type")
+            # error_list = file.validate() # not implemented?
+            # if error_list:
+            #     raise Exception(error_list)
+            # blob.upload_from_file(file, content_type=content_type)
+            print("here in file service: ", file)
+            new_file_entry = PdfFile(**file.__dict__)
+            # replace with new id(no - just create in db here. use ointake_routes)
+            print('new file entry', new_file_entry)
+            db.session.add(new_file_entry)
+            db.session.commit()
+            return PdfFileDTO(**new_file_entry.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
 
     def update_file(self, file_name, file, content_type=None):
         current_blob = self.bucket.get_blob(file_name)

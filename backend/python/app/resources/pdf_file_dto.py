@@ -13,7 +13,7 @@ class CreatePdfFileDTO(PdfFileDTO):
 
         if not self.file_name or not isinstance(self.file_name, str):
             error_list.append("file_name is invalid")
-        if not self.file_data or not isinstance(self.file_data, str):
+        if not self.file_data or not isinstance(self.file_data, bytes):
             error_list.append("file_name is invalid")
             
         return error_list

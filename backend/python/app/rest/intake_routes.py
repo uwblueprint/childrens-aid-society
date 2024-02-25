@@ -147,7 +147,7 @@ def get_all_intakes():
                 "courtInformation": {
                     "courtStatus": intake.court_status,
                     # backend to frontend mapping here 
-                    "orderReferral": intake.court_order_file, # worry about this later # maybe this should be the name
+                    "orderReferral": intake.court_order_file_id, # worry about this later # maybe this should be the name
                     # "orderReferral": intake.court_order_file,
                     "firstNationHeritage": intake.first_nation_heritage,
                     "firstNationBand": intake.first_nation_band,
@@ -221,7 +221,7 @@ def create_intake():
 
     # intake
     intake = {
-        "user_id": request.form["userId"],
+        "user_id": int(request.form["userId"]),
         "intake_status": "SUBMITTED",
         "referring_worker_name": request.form["caseReferral[referringWorkerName]"],
         "referring_worker_contact": request.form["caseReferral[referringWorkerContact]"],
@@ -232,7 +232,6 @@ def create_intake():
         "court_status": request.form["courtInformation[courtStatus]"],
         # Set id 
         "court_order_file_id": new_file.id,
-        # "court_order_file": request.json["court_information"]["order_referral"],
         "first_nation_heritage": request.form["courtInformation[firstNationHeritage]"],
         "first_nation_band": request.form["courtInformation[firstNationBand]"],
         "transportation_requirements": request.form["programDetails[transportRequirements]"],
@@ -261,14 +260,14 @@ def create_intake():
         # create caregiver using caregiver_routes
         caregiver = {
             "name": caregiver["name"],
-            "date_of_birth": caregiver["date_of_birth"],
-            "individual_considerations": caregiver["individual_considerations"],
-            "primary_phone_number": caregiver["primary_phone_number"],
-            "secondary_phone_number": caregiver["secondary_phone_number"],
+            "date_of_birth": caregiver["dateOfBirth"],
+            "individual_considerations": caregiver["individualConsiderations"],
+            "primary_phone_number": caregiver["primaryPhoneNumber"],
+            "secondary_phone_number": caregiver["secondaryPhoneNumber"],
             "email": caregiver.get("email", ""),
             "address": caregiver["address"],
-            "relationship_to_child": caregiver["relationship_to_child"],
-            "additional_contact_notes": caregiver["additional_contact_notes"],
+            "relationship_to_child": caregiver["relationshipToChild"],
+            "additional_contact_notes": caregiver["additionalContactNotes"],
             "intake_id": new_intake.id,
         }
         caregiver = CreateCaregiverDTO(**caregiver)
@@ -280,14 +279,14 @@ def create_intake():
             return jsonify(error), 400
 
     # other permitted individuals
-    permitted_individuals = request.form["program_details[permitted_individuals]"]
+    permitted_individuals = request.form["programDetails[permittedIndividuals]"]
     # permitted_individuals = request.form["program_details"]["permitted_individuals"]
     for permitted_individual in permitted_individuals:
         permitted_individual = {
             "name": permitted_individual["name"],
-            "phone_number": permitted_individual["phone_number"],
-            "relationship_to_child": permitted_individual["relationship_to_children"],
-            "notes": permitted_individual["additional_notes"],
+            "phone_number": permitted_individual["phoneNumber"],
+            "relationship_to_child": permitted_individual["relationshipToChildren"],
+            "notes": permitted_individual["additionalNotes"],
             "intake_id": new_intake.id,
         }
         try:
@@ -308,7 +307,7 @@ def create_intake():
             return jsonify(error), 400
 
     # familial concerns
-    familial_concerns = request.form["program_details[familial_concerns]"]
+    familial_concerns = request.form["programDetails[familialConcerns]"]
     # familial_concerns = request.form["program_details"]["familial_concerns"]
     for familial_concern in familial_concerns:
         familial_concern = {
@@ -333,7 +332,7 @@ def create_intake():
     # goals
 
     # short term goals
-    short_term_goals = request.form["program_details[short_term_goals]"]
+    short_term_goals = request.form["programDetails[shortTermGoals]"]
     # short_term_goals = request.form["program_details"]["short_term_goals"]
     for short_term_goal in short_term_goals:
         new_short_term_goal = {
@@ -348,7 +347,7 @@ def create_intake():
             return jsonify(error), 400
 
     # long term goals
-    long_term_goals = request.form["program_details[long_term_goals]"]
+    long_term_goals = request.form["programDetails[longTermGoals]"]
     # long_term_goals = request.form["program_details"]["long_term_goals"]
     for long_term_goal in long_term_goals:
         new_long_term_goal = {
@@ -365,12 +364,12 @@ def create_intake():
     children = request.form["children"]
     for child in children:
         # daytime contact
-        daytime_contact = child["daytime_contact"]
+        daytime_contact = child["daytimeContact"]
         daytime_contact = {
             "name": daytime_contact["name"],
             "address": daytime_contact["address"],
-            "contact_information": daytime_contact["contact_info"],
-            "dismissal_time": daytime_contact["dismissal_time"],
+            "contact_information": daytime_contact["contactInfo"],
+            "dismissal_time": daytime_contact["dismissalTime"],
         }
         try:
             daytime_contact_response = (
@@ -392,12 +391,12 @@ def create_intake():
         # children
         child_obj = {
             "intake_id": new_intake.id,
-            "name": child["child_info"]["name"],
-            "date_of_birth": child["child_info"]["date_of_birth"],
-            "cpin_number": child["child_info"]["cpin_file_number"],
-            "service_worker": child["child_info"]["service_worker"],
+            "name": child["childInfo"]["name"],
+            "date_of_birth": child["childInfo"]["dateOfBirth"],
+            "cpin_number": child["childInfo"]["cpinFileNumber"],
+            "service_worker": child["childInfo"]["serviceWorker"],
             "daytime_contact_id": daytime_contact_response.id,
-            "special_needs": child["child_info"]["special_needs"],
+            "special_needs": child["childInfo"]["specialNeeds"],
         }
         try:
             child_response = child_service.add_new_child(CreateChildDTO(**child_obj))
@@ -411,13 +410,13 @@ def create_intake():
         for provider in providers:
             provider_obj = {
                 "name": provider["name"],
-                "file_number": provider["file_number"],
-                "primary_phone_number": provider["primary_phone_number"],
-                "secondary_phone_number": provider["secondary_phone_number"],
+                "file_number": provider["fileNumber"],
+                "primary_phone_number": provider["primaryPhoneNumber"],
+                "secondary_phone_number": provider["secondaryPhoneNumber"],
                 "email": provider["email"],
                 "address": provider["address"],
-                "relationship_to_child": provider["relationship_to_child"],
-                "additional_contact_notes": provider["additional_contact_notes"],
+                "relationship_to_child": provider["relationshipToChild"],
+                "additional_contact_notes": provider["additionalContactNotes"],
                 "child_id": child_response.id,
             }
             try:
@@ -432,7 +431,7 @@ def create_intake():
                 return jsonify(error), 400
 
         # concerns
-        concerns = child["child_info"]["concerns"]
+        concerns = child["childInfo"]["concerns"]
         for concern in concerns:
             child_behavior = {
                 "behavior": concern,
@@ -517,7 +516,7 @@ def search_intake():
                     },
                     "courtInformation": {
                         "courtStatus": intake.court_status,
-                        "orderReferral": intake.court_order_file,
+                        "orderReferral": intake.court_order_file_id,
                         "firstNationHeritage": intake.first_nation_heritage,
                         "firstNationBand": intake.first_nation_band,
                     },

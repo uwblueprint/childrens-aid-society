@@ -11,7 +11,7 @@ class IntakeDTO:
         self.cpin_file_type = kwargs.get("cpin_file_type")
         self.court_status = kwargs.get("court_status")
         # this is the file 
-        self.court_order_file = kwargs.get("court_order_file")
+        self.court_order_file_id = kwargs.get("court_order_file_id")
         # self.court_order_file_id = kwargs.get("court_order_file")
         self.first_nation_heritage = kwargs.get("first_nation_heritage")
         self.first_nation_band = kwargs.get("first_nation_band")
@@ -53,9 +53,8 @@ class CreateIntakeDTO(IntakeDTO):
             error_list.append("cpin_file_type is invalid")
         if not self.court_status or not isinstance(self.court_status, str):
             error_list.append("court_status is invalid")
-        if not self.court_order_file or not isinstance(self.court_order_file, str):
-            # error_list.append("court_order_file_id is invalid")
-            error_list.append("court_order_file is invalid")
+        if not self.court_order_file_id or not isinstance(self.court_order_file_id, int):
+            error_list.append("court_order_file_id is invalid")
         if not self.transportation_requirements or not isinstance(
             self.transportation_requirements, str
         ):

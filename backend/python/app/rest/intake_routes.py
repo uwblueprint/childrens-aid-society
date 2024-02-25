@@ -333,8 +333,7 @@ def create_intake():
     # goals
 
     # short term goals
-    short_term_goals = request.form["programDetails[shortTermGoals]"]
-    # short_term_goals = request.form["program_details"]["short_term_goals"]
+    short_term_goals = request.form['programDetails[shortTermGoals]'].split(',')
     for short_term_goal in short_term_goals:
         new_short_term_goal = {
             "type": "SHORT_TERM",
@@ -348,8 +347,7 @@ def create_intake():
             return jsonify(error), 400
 
     # long term goals
-    long_term_goals = request.form["programDetails[longTermGoals]"]
-    # long_term_goals = request.form["program_details"]["long_term_goals"]
+    long_term_goals = request.form["programDetails[longTermGoals]"].split(',')
     for long_term_goal in long_term_goals:
         new_long_term_goal = {
             "type": "LONG_TERM",

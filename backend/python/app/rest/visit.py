@@ -76,15 +76,14 @@ def get_visits():
 # create a attendance record
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
 # @require_authorization_by_role({"Admin"})
-# @validate_request("CreateAttendanceRecordsDTO")
+@validate_request("CreateAttendanceRecordsDTO")
 def create_attendance_record():
-    print(request.get_json())
-    # try:
-    #     record = CreateAttendanceRecordsDTO(**request.get_json())
-    #     new_record = attendance_record_service.create_attendance_record(record)
-    #     return jsonify(new_record.__dict__), 201
-    # except Exception as error:
-    #     return jsonify(str(error)), 400
+    try:
+        record = CreateAttendanceRecordsDTO(**request.get_json())
+        new_record = attendance_record_service.create_attendance_record(record)
+        return jsonify(new_record.__dict__), 201
+    except Exception as error:
+        return jsonify(str(error)), 400
 
 
 @blueprint.route("/<int:id>", methods=["PUT"], strict_slashes=False)

@@ -18,6 +18,7 @@ import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type CourtDetails = {
   currentCourtStatus: string;
@@ -27,8 +28,6 @@ export type CourtDetails = {
 };
 
 type CourtInformationFormProps = {
-  courtDetails: CourtDetails;
-  setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -37,14 +36,13 @@ type CourtInformationFormProps = {
 };
 
 const CourtInformationForm = ({
-  courtDetails,
-  setCourtDetails,
   setStep,
   nextStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
+  const { courtDetails, setCourtDetails } = useStepValueContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef && inputRef.current) {
@@ -238,5 +236,4 @@ const CourtInformationForm = ({
     </>
   );
 };
-
 export default CourtInformationForm;

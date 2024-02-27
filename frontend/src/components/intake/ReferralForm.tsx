@@ -14,20 +14,18 @@ import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
   cpinFileType: string;
   familyName: string;
-  phoneNumber: string;
   referralDate: string;
   referringWorker: string;
   referringWorkerContact: string;
 };
 
 type ReferralFormProps = {
-  referralDetails: ReferralDetails;
-  setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -36,14 +34,13 @@ type ReferralFormProps = {
 };
 
 const ReferralForm = ({
-  referralDetails,
-  setReferralDetails,
   nextStep,
   setStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: ReferralFormProps): React.ReactElement => {
+  const { referralDetails, setReferralDetails } = useStepValueContext();
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
     nextStep();
@@ -69,7 +66,6 @@ const ReferralForm = ({
       referralDate: "",
       cpinFileNumber: "",
       cpinFileType: "",
-      phoneNumber: "",
     });
   };
 

@@ -72,17 +72,13 @@ const FilteredSection = ({
                     {row.map((caseData) => (
                       <CaseCard
                         key={caseData.case_id}
+                        caseDetails={caseData}
                         caseId={
                           typeof caseData.case_id === "string"
                             ? parseInt(caseData.case_id, 10)
                             : caseData.case_id
                         }
-                        referringWorker={
-                          caseData.caseReferral.referringWorkerName
-                        }
-                        date={caseData.caseReferral.referralDate}
-                        familyName={caseData.caseReferral.familyName}
-                        caseTag={caseData.intakeStatus}
+                        caseTag={status}
                         intakeMeetingNotes={caseData.intakeMeetingNotes}
                       />
                     ))}
@@ -93,17 +89,13 @@ const FilteredSection = ({
                   .map((caseData) => (
                     <CaseCard
                       key={caseData.case_id}
+                      caseDetails={caseData}
                       caseId={
                         typeof caseData.case_id === "string"
                           ? parseInt(caseData.case_id, 10)
                           : caseData.case_id
                       }
-                      referringWorker={
-                        caseData.caseReferral.referringWorkerName
-                      }
-                      date={caseData.caseReferral.referralDate}
-                      familyName={caseData.caseReferral.familyName}
-                      caseTag={caseData.intakeStatus}
+                      caseTag={status}
                       intakeMeetingNotes={caseData.intakeMeetingNotes}
                     />
                   ))}

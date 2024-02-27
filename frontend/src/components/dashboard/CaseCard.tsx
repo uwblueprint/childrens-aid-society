@@ -2,17 +2,15 @@ import React from "react";
 import { Box, Text, Tag, Icon, useDisclosure } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { ArrowUpRight } from "react-feather";
-import CaseStatus from "../../types/CaseStatus";
-import StatusModal from "./StatusModal";
 import PermanentDeleteModal from "./PermanentDeleteModal";
+import StatusModal from "./StatusModal";
+import { Case } from "../../types/CasesContextTypes";
 
 export type CaseCardProps = {
   caseId: number;
-  referringWorker: string;
+  caseDetails: Case;
   intakeMeetingNotes: string;
-  date: string;
-  familyName: string;
-  caseTag: CaseStatus;
+  caseTag: string;
 };
 
 const colorChange = (value: string) => {
@@ -32,12 +30,12 @@ const colorChange = (value: string) => {
 
 const CaseCard = ({
   caseId,
-  referringWorker,
-  intakeMeetingNotes,
-  date,
-  familyName,
+  caseDetails,
   caseTag,
+  intakeMeetingNotes,
 }: CaseCardProps): React.ReactElement => {
+  const history = useHistory();
+
   const {
     onOpen: onOpenStatusModal,
     isOpen: isOpenStatusModal,
@@ -50,10 +48,10 @@ const CaseCard = ({
     onClose: onClosePermanentDelete,
   } = useDisclosure();
 
-  const history = useHistory();
-
   const goToIntake = () => {
-    history.push("/intake");
+    history.push({
+      pathname: "/intake",
+    });
   };
 
   // TODO refactor to display proper case data
@@ -61,7 +59,7 @@ const CaseCard = ({
     if (status === "ACTIVE") {
       history.push({
         pathname: `/caseoverview/${caseId}`,
-        state: { referringWorker },
+        state: `${caseDetails.caseReferral.referringWorker}`,
       });
     } else {
       onOpenStatusModal();
@@ -102,13 +100,13 @@ const CaseCard = ({
           marginBottom="10px"
         >
           <Text textStyle="body-medium" marginBottom="15px">
-            {referringWorker}
+            {caseDetails.caseReferral.referringWorker}
           </Text>
           <Text textStyle="body-medium" marginBottom="15px">
-            {date}
+            {caseDetails.caseReferral.referralDate}
           </Text>
           <Text textStyle="body-medium" marginBottom="25px">
-            {familyName}
+            {caseDetails.caseReferral.familyName}
           </Text>
         </Box>
         <Box display="flex" justifyContent="end">
@@ -136,9 +134,7 @@ const CaseCard = ({
       <StatusModal
         caseId={caseId}
         status={caseTag}
-        referringWorkerName={referringWorker}
-        referralDate={date}
-        familyName={familyName}
+        caseDetails={caseDetails}
         intakeNotes={intakeMeetingNotes}
         isOpen={isOpenStatusModal}
         onClick={onClickStatusUpdate}

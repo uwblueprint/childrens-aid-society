@@ -40,11 +40,8 @@ const Intake = (): React.ReactElement => {
 
   const { step, setStep } = useStepValueContext();
   const { isReviewOnly, setIsReviewOnly } = useStepValueContext();
-  const [reviewHeader, setReviewHeader] = useState(false);
-  const { referralDetails, setReferralDetails } = useStepValueContext();
-  const { courtDetails, setCourtDetails } = useStepValueContext();
-  const { programDetails, setProgramDetails } = useStepValueContext();
 
+  const [reviewHeader, setReviewHeader] = useState(false);
   const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
   const [permittedIndividuals, setPermittedIndividuals] =
@@ -65,23 +62,9 @@ const Intake = (): React.ReactElement => {
     switch (step) {
       default:
       case IntakeSteps.CASE_REFERRAL:
-        return (
-          <ReferralForm
-            referralDetails={referralDetails}
-            setReferralDetails={setReferralDetails}
-            nextStep={nextStep}
-            setStep={setStep}
-          />
-        );
+        return <ReferralForm nextStep={nextStep} setStep={setStep} />;
       case IntakeSteps.COURT_INFORMATION:
-        return (
-          <CourtInformationForm
-            courtDetails={courtDetails}
-            setCourtDetails={setCourtDetails}
-            nextStep={nextStep}
-            setStep={setStep}
-          />
-        );
+        return <CourtInformationForm nextStep={nextStep} setStep={setStep} />;
       case IntakeSteps.INDIVIDUAL_DETAILS:
         return (
           <IndividualDetailsEntry
@@ -98,12 +81,7 @@ const Intake = (): React.ReactElement => {
       case IntakeSteps.PROGRAM_DETAILS:
         return (
           <>
-            <ProgramForm
-              programDetails={programDetails}
-              setProgramDetails={setProgramDetails}
-              nextStep={nextStep}
-              setStep={setStep}
-            />
+            <ProgramForm nextStep={nextStep} setStep={setStep} />
             <PermittedIndividualsForm
               permittedIndividuals={permittedIndividuals}
               setPermittedIndividuals={setPermittedIndividuals}
@@ -114,12 +92,6 @@ const Intake = (): React.ReactElement => {
         return (
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
             <ReviewForm
-              referralDetails={referralDetails}
-              setReferralDetails={setReferralDetails}
-              courtDetails={courtDetails}
-              setCourtDetails={setCourtDetails}
-              programDetails={programDetails}
-              setProgramDetails={setProgramDetails}
               nextStep={nextStep}
               setStep={setStep}
               setReviewHeader={setReviewHeader}
@@ -146,9 +118,6 @@ const Intake = (): React.ReactElement => {
               isStepComplete={() => true}
               registrationLoading={false}
               nextStepCallBack={() => {}}
-              referralDetails={referralDetails}
-              courtDetails={courtDetails}
-              programDetails={programDetails}
               childrens={children}
               caregivers={caregivers}
               permittedIndividuals={permittedIndividuals}

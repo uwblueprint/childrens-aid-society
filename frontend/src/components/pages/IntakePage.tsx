@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -9,25 +8,26 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { ArrowLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 import Logo from "../../assets/logo.png";
-import CourtInformationForm from "../intake/CourtInformationForm";
-import ReferralForm from "../intake/ReferralForm";
-import IntakeHeader from "../intake/IntakeHeader";
-import ProgramForm from "../intake/ProgramForm";
-import ReviewForm from "../intake/ReviewCaseForm";
-import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
-import IntakeSteps from "../intake/intakeSteps";
-import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
+import CourtInformationForm from "../intake/CourtInformationForm";
+import IndividualDetailsEntry from "../intake/IndividualDetailsEntry";
+import IntakeHeader from "../intake/IntakeHeader";
 import PermittedIndividualsForm from "../intake/PermittedIndividualsForm";
+import { PermittedIndividuals } from "../intake/PermittedIndividualsModal";
+import ProgramForm from "../intake/ProgramForm";
+import ReferralForm from "../intake/ReferralForm";
+import ReviewForm from "../intake/ReviewCaseForm";
 import UnsavedProgressModal from "../intake/UnsavedProgressModal";
 import AddChild, { Children } from "../intake/child-information/AddChildPage";
+import IntakeSteps from "../intake/intakeSteps";
 // eslint-disable-next-line import/no-named-as-default
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import IntakeFooter from "../intake/IntakeFormFooter";
 import { Providers } from "../intake/NewProviderModal";
-import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 const Intake = (): React.ReactElement => {
   // TODO: remove useHistory once dashboard is implemented
@@ -40,11 +40,11 @@ const Intake = (): React.ReactElement => {
 
   const { step, setStep } = useStepValueContext();
   const { isReviewOnly, setIsReviewOnly } = useStepValueContext();
-  const [reviewHeader, setReviewHeader] = useState(false);
   const { referralDetails, setReferralDetails } = useStepValueContext();
   const { courtDetails, setCourtDetails } = useStepValueContext();
   const { programDetails, setProgramDetails } = useStepValueContext();
 
+  const [reviewHeader, setReviewHeader] = useState(false);
   const [children, setChildren] = useState<Children>([]);
   const [caregivers, setCaregivers] = useState<Caregivers>([]);
   const [
@@ -115,6 +115,7 @@ const Intake = (): React.ReactElement => {
       case IntakeSteps.REVIEW_CASE_DETAILS:
         return (
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
+            {/* This is the source of the review */}
             <ReviewForm
               referralDetails={referralDetails}
               setReferralDetails={setReferralDetails}

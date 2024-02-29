@@ -26,6 +26,15 @@ class IntakeService(IIntakeService):
             self.logger.error(str(error))
             raise error
 
+    def get_intake_by_id(self, intake_id):
+        try:
+            intake = Intake.query.filter_by(id=intake_id).first()
+            intakes_dto = IntakeDTO(**intake.to_dict()) 
+            return intakes_dto
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
+
     def create_intake(self, intake: CreateIntakeDTO):
         try:
             if not intake:
@@ -40,7 +49,6 @@ class IntakeService(IIntakeService):
                 raise Exception(error_list)
             print("here in intake service: ", intake)
             new_intake_entry = Intake(**intake.__dict__)
-            # replace with new id(no - just create in db here. use ointake_routes)
             print('new intake entry', new_intake_entry)
             db.session.add(new_intake_entry)
             db.session.commit()

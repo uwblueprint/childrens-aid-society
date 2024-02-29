@@ -261,6 +261,113 @@ const get = async (
   }
 };
 
+const getById = async (
+  intake_id: number
+): Promise<Case> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+
+  const url = `/intake/${intake_id}`;
+
+  try {
+    const { data } = await baseAPIClient.get<Intake>(url, {
+      headers: { Authorization: bearerToken },
+      // params: {
+      //   intake_id: intake_id
+      // },
+    });
+
+    const intake = data;
+    const mappedData: Case = ({
+      user_id: intake.user_id.toString(),
+      case_id: intake.case_id.toString(),
+      intakeStatus: <CaseStatus>intake.intake_status,
+      caseReferral: {
+        referringWorkerName: intake.caseReferral.referringWorker,
+        referringWorkerContact: intake.caseReferral.referringWorkerContact,
+        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 10),
+        cpinFileType: intake.caseReferral.cpinFileType,
+        familyName: intake.caseReferral.familyName,
+        referralDate: new Date(
+          intake.caseReferral.referralDate,
+        ).toLocaleDateString("en-GB"),
+      },
+      courtInformation: {
+        courtStatus: intake.courtInformation.courtStatus,
+        orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        orderReferralName: intake.courtInformation.orderReferralName || '',
+        orderReferralId: intake.courtInformation.orderReferralId || 0,
+        firstNationHeritage: intake.courtInformation.firstNationHeritage,
+        firstNationBand: intake.courtInformation.firstNationBand,
+      },
+      children: [
+        {
+          childInfo: {
+            name: "",
+            dateOfBirth: "",
+            cpinFileNumber: 0,
+            serviceWorker: "",
+            specialNeeds: "",
+            concerns: [],
+          },
+          daytimeContact: {
+            name: "",
+            contactInfo: "",
+            address: "",
+            dismissalTime: "",
+          },
+          provider: [
+            {
+              name: "",
+              fileNumber: 0,
+              primaryPhoneNumber: 0,
+              secondaryPhoneNumber: 0,
+              email: "",
+              address: "",
+              additionalContactNotes: "",
+              relationshipToChild: "",
+            },
+          ],
+        },
+      ],
+      caregivers: [
+        {
+          name: "",
+          dateOfBirth: "",
+          primaryPhoneNumber: 0,
+          secondaryPhoneNumber: 0,
+          additionalContactNotes: "",
+          address: "",
+          relationshipToChild: "",
+          individualConsiderations: "",
+        },
+      ],
+      programDetails: {
+        transportRequirements: intake.programDetails.transportationRequirements,
+        schedulingRequirements: intake.programDetails.schedulingRequirements,
+        suggestedStartDate: intake.programDetails.suggestedStartDate,
+        shortTermGoals: [],
+        longTermGoals: [],
+        familialConcerns: [],
+        permittedIndividuals: [
+          {
+            name: "",
+            phoneNumber: 0,
+            relationshipToChildren: "",
+            additionalNotes: "",
+          },
+        ],
+      },
+    });
+
+    return mappedData;
+  } catch (error) {
+    return error;
+  }
+};
+
 const put = async ({
   changedData,
   intakeID,
@@ -317,4 +424,4 @@ const downloadFile = async (fileId: number): Promise<Case> => {
   }
 };
 
-export default { post, get, put, deleteIntake, search, downloadFile  };
+export default { post, get, getById, put, deleteIntake, search, downloadFile  };

@@ -8,10 +8,11 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
@@ -59,45 +60,69 @@ const StatusModal = ({
     setProgramDetails,
   } = useStepValueContext();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const intake = await IntakeAPIClient.getById(caseId || 0);
+      const reviewCaseDetailsStep = 4;
+      // TODO: Map this properly by changing type?
+      setStep(reviewCaseDetailsStep);
+      setReferralDetails({
+        ...intake.caseReferral, 
+        phoneNumber: intake.caseReferral.referringWorkerContact.toString(), 
+        referringWorker: intake.caseReferral.referringWorkerName,
+        cpinFileNumber: intake.caseReferral.cpinFileNumber.toString()
+      });
+      setCourtDetails({
+        ...intake.courtInformation, 
+        currentCourtStatus: intake.courtInformation.courtStatus
+      });
+      setProgramDetails({
+        ...intake.programDetails, 
+        transportationRequirements: intake.programDetails.transportRequirements
+      });
+    };
+
+    fetchData();
+  }, []);
+
   // TEMPORARY MOCK VALUES TO TEST REVIEW BUTTON
-  // GRRR THE FETCH ISNT DONE PROPERLY >:(
-  const mockReferralDetails = {
-    referringWorker: "Referring Worker",
-    referringWorkerContact: "unused",
-    familyName: "Family Name",
-    referralDate: "Tue, 01 Jan 2019 00:00:00 GMT",
-    cpinFileNumber: "1234321",
-    cpinFileType: "INVESTIGATION",
-    phoneNumber: "6475551234",
-  };
-  // ALL THESE VALUES ARE JUST MOCKS! D:
-  const mockCourtDetails = {
-    currentCourtStatus: "INTERIM_CARE",
-    firstNationHeritage: "FIRST_NATION_REGISTERED",
-    firstNationBand: "first nation band",
-    orderReferral: null,
-    orderReferralId: 1,
-    orderReferralName: "court_order_file.pdf",
-  };
-  const mockProgramDetails = {
-    transportationRequirements: "transport requirements",
-    schedulingRequirements: "scheduling requirements",
-    suggestedStartDate: "Tue, 01 Jan 2019 00:00:00 GMT",
-    shortTermGoals: ["goal1", "goal2"],
-    longTermGoals: ["goal1", "goal2"],
-    familialConcerns: ["concern1", "concern2"],
-  };
+  // const mockReferralDetails = {
+  //   referringWorker: "Referring Worker",
+  //   referringWorkerContact: "unused",
+  //   familyName: "Family Name",
+  //   referralDate: "Tue, 01 Jan 2019 00:00:00 GMT",
+  //   cpinFileNumber: "1234321",
+  //   cpinFileType: "INVESTIGATION",
+  //   phoneNumber: "6475551234",
+  // };
+  // const mockCourtDetails = {
+  //   currentCourtStatus: "INTERIM_CARE",
+  //   firstNationHeritage: "FIRST_NATION_REGISTERED",
+  //   firstNationBand: "first nation band",
+  //   orderReferral: null,
+  //   orderReferralId: 1,
+  //   orderReferralName: "court_order_file.pdf",
+  // };
+  // const mockProgramDetails = {
+  //   transportationRequirements: "transport requirements",
+  //   schedulingRequirements: "scheduling requirements",
+  //   suggestedStartDate: "Tue, 01 Jan 2019 00:00:00 GMT",
+  //   shortTermGoals: ["goal1", "goal2"],
+  //   longTermGoals: ["goal1", "goal2"],
+  //   familialConcerns: ["concern1", "concern2"],
+  // };
 
   function sendToReview() {
-    const reviewCaseDetailsStep = 4;
+    // const reviewCaseDetailsStep = 4;
 
-    setStep(reviewCaseDetailsStep);
-    setReferralDetails(mockReferralDetails);
-    setCourtDetails(mockCourtDetails);
-    setProgramDetails(mockProgramDetails);
+    // setStep(reviewCaseDetailsStep);
+    // setReferralDetails(mockReferralDetails);
+    // setCourtDetails(mockCourtDetails);
+    // setProgramDetails(mockProgramDetails);
     setIsReviewOnly(true);
     goToIntake();
   }
+
   return (
     <Box>
       <ModalComponent
@@ -121,6 +146,7 @@ const StatusModal = ({
                 Case Submission
               </Text>
               {/* TODO: Need to be changed for dynamic values */}
+              {/* TODO: Come back here!! */}
               <Text>Lead: XXX</Text>
               <Text>Date: XXX</Text>
               <Text>Family Name: XXX</Text>

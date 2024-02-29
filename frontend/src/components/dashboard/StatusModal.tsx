@@ -28,7 +28,6 @@ export type StatusModalProps = {
   goToIntake: () => void;
 };
 
-// we need to pass proper data into here...
 const StatusModal = ({
   caseId,
   status,
@@ -41,6 +40,8 @@ const StatusModal = ({
   const [selectedOption, setSelectedOption] = useState(status);
   const [workerName, setWorkerName] = useState("");
   const [meetingNotes, setMeetingNotes] = useState("");
+  const [date, setDate] = useState("");
+  const [familyName, setFamilyName] = useState("");
 
   const handleClearPage = () => {
     setWorkerName("");
@@ -64,6 +65,9 @@ const StatusModal = ({
     const fetchData = async () => {
       const intake = await IntakeAPIClient.getById(caseId || 0);
       const reviewCaseDetailsStep = 4;
+      setWorkerName(intake.caseReferral.referringWorkerName);
+      setDate(intake.caseReferral.referralDate);
+      setFamilyName(intake.caseReferral.familyName);
       // TODO: Map this properly by changing type?
       setStep(reviewCaseDetailsStep);
       setReferralDetails({
@@ -145,11 +149,10 @@ const StatusModal = ({
               <Text fontWeight="semibold" fontSize="2xl" mb="6px">
                 Case Submission
               </Text>
-              {/* TODO: Need to be changed for dynamic values */}
-              {/* TODO: Come back here!! */}
-              <Text>Lead: XXX</Text>
-              <Text>Date: XXX</Text>
-              <Text>Family Name: XXX</Text>
+              {/* TODO: make sure that the lead should be the worker's name */}
+              <Text>Lead: {workerName}</Text>
+              <Text>Date: {date}</Text>
+              <Text>Family Name: {familyName}</Text>
               <Flex justify="flex-end" align="flex-end">
                 <Button
                   variant="tertiary"

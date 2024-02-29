@@ -18,7 +18,9 @@ interface Intake {
   };
   courtInformation: {
     courtStatus: string;
-    orderReferral: File; // FormData, // File, // changed from string 
+    orderReferral: File | null; 
+    orderReferralId: number | null;
+    orderReferralName: string | null;
     firstNationHeritage: string;
     firstNationBand: string;
   };
@@ -30,7 +32,7 @@ interface Intake {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-const post = async (formData: any): Promise<Case> => { // post request here 
+const post = async (formData: any): Promise<Case> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -78,6 +80,8 @@ const search = async (searchParam: string): Promise<Case[]> => {
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
         orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        orderReferralId: intake.courtInformation.orderReferralId, // do we need this? 
+        orderReferralName: intake.courtInformation.orderReferralName, // do we need this? 
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -186,7 +190,8 @@ const get = async (
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
         orderReferral: intake.courtInformation.orderReferral, // changed from 0
-        // orderReferral: base64String, // changed from 0
+        orderReferralName: intake.courtInformation.orderReferralName || '',
+        orderReferralId: intake.courtInformation.orderReferralId || 0,
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -295,4 +300,21 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     return error;
   }
 };
-export default { post, get, put, deleteIntake, search };
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+const downloadFile = async (fileId: number): Promise<Case> => {
+  const bearerToken = `Bearer ${getLocalStorageObjProperty(
+    AUTHENTICATED_USER_KEY,
+    "access_token",
+  )}`;
+  try {
+    const { data } = await baseAPIClient.get(`/intake/download/${fileId}`, {
+      headers: { Authorization: bearerToken },
+    });
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export default { post, get, put, deleteIntake, search, downloadFile  };

@@ -1,5 +1,5 @@
 import requests
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request, send_file
 
 # from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
@@ -132,6 +132,10 @@ def get_all_intakes():
                 }
                 new_opis.append(new_opi)
 
+            order_referral_file = file_storage_service.get_file(intake.court_order_file_id);
+            print("order referral file", order_referral_file)
+            print("order referral file name", order_referral_file.file_name)
+            
             intake_new = {
                 "user_id": intake.user_id,
                 "case_id": intake.id,
@@ -146,9 +150,9 @@ def get_all_intakes():
                 },
                 "courtInformation": {
                     "courtStatus": intake.court_status,
-                    # backend to frontend mapping here 
-                    "orderReferral": intake.court_order_file_id, # worry about this later # maybe this should be the name
-                    # "orderReferral": intake.court_order_file,
+                    "orderReferral": None, 
+                    "orderReferralId": intake.court_order_file_id, 
+                    "orderReferralName": order_referral_file.file_name, 
                     "firstNationHeritage": intake.first_nation_heritage,
                     "firstNationBand": intake.first_nation_band,
                 },
@@ -189,9 +193,6 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
-    # This is where the intake will be created ! -> upload the pdf file here? and then store the 
-    # Upload file -> id 
-    # court_order_file: id 
     print('all files', request.files)
     print('all form', request.form)
 
@@ -219,7 +220,6 @@ def create_intake():
         run_undos()
         return jsonify(str(error)), 400
 
-    print('user id from intake routes', request.form["userId"]);
     # intake
     intake = {
         "user_id": int(request.form["userId"]),
@@ -231,7 +231,6 @@ def create_intake():
         "cpin_number": request.form["caseReferral[cpinFileNumber]"],
         "cpin_file_type": request.form["caseReferral[cpinFileType]"],
         "court_status": request.form["courtInformation[courtStatus]"],
-        # Set id 
         "court_order_file_id": new_file.id,
         "first_nation_heritage": request.form["courtInformation[firstNationHeritage]"],
         "first_nation_band": request.form["courtInformation[firstNationBand]"],
@@ -246,6 +245,7 @@ def create_intake():
 
     try:
         validate_request("CreateIntakeDTO")
+        # Copy this syntax!
         intake = CreateIntakeDTO(**intake)
         new_intake = intake_service.create_intake(intake)
         undos.append((intake_service, "delete_intake", new_intake.id))
@@ -281,7 +281,6 @@ def create_intake():
 
     # other permitted individuals
     permitted_individuals = request.form["programDetails[permittedIndividuals]"]
-    # permitted_individuals = request.form["program_details"]["permitted_individuals"]
     for permitted_individual in permitted_individuals:
         permitted_individual = {
             "name": permitted_individual["name"],
@@ -309,7 +308,6 @@ def create_intake():
 
     # familial concerns
     familial_concerns = request.form["programDetails[familialConcerns]"]
-    # familial_concerns = request.form["program_details"]["familial_concerns"]
     for familial_concern in familial_concerns:
         familial_concern = {
             "concern": familial_concern,
@@ -481,6 +479,19 @@ def delete_intake():
     )
 
 
+@blueprint.route("/<int:file_id>", methods=["GET"], strict_slashes=False)
+def download(file_id):
+    try:
+        file_name, file_data = file_storage_service.get_file(file_id)
+        return send_file(
+            file_data,
+            as_attachment=True,
+            attachment_filename=file_name
+        ), 200
+        # return jsonify(updated_intake.__dict__), 200
+    except Exception as error:
+        return jsonify(str(error)), 400
+
 @blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
 def update_intake_route(intake_id):
     try:
@@ -515,7 +526,7 @@ def search_intake():
                     },
                     "courtInformation": {
                         "courtStatus": intake.court_status,
-                        "orderReferral": intake.court_order_file_id, # make this the name or something later? or make a separate request to download it/get the name
+                        "orderReferral": intake.court_order_file_id, # TODO: make this the name or something later? or make a separate request to download it/get the name
                         "firstNationHeritage": intake.first_nation_heritage,
                         "firstNationBand": intake.first_nation_band,
                     },

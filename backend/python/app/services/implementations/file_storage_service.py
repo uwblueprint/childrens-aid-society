@@ -20,19 +20,31 @@ class FileStorageService(IFileStorageService):
         """
         self.logger = logger
 
-    def get_file(self, file_name, expiration_time=timedelta(minutes=60)):
-        blob = self.bucket.get_blob(file_name)
-        if not blob:
-            return None
-        expiration = datetime.now() + expiration_time
-        url = blob.generate_signed_url(expiration)
-        return url
+    def get_file(self, file_id):
+        try: 
+            file = PdfFile.query.filter_by(id=file_id).first()
+            print(file)
+            # file_dto = PdfFileDTO(**file)
+            # print(file_dto)
+            # return file_dto
+            # file_dto = PdfFileDTO(**file.to_dict())
+            # pdf_file = {
+            #     "file_name": file_dto.file_name,
+            #     "file_data": binary_file.write(file_data), # bytes(file_dto.read()), 
+            # }
+            # return file
+        
+            if file:
+                file_dto = PdfFileDTO(id = file.id, file_name = file.file_name, file_data = file.file_data)
+                print("file_dto here", file_dto)
+                return file_dto
+            else:
+                return None
 
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error
     def create_file(self, file: CreatePdfFileDTO):
-        # current_blob = self.bucket.get_blob(file_name)
-        # if current_blob:
-        #     raise Exception("File name {name} already exists".format(name=file_name))
-        # blob = self.bucket.blob(file_name)
         try:
             if not file:
                 raise Exception(
@@ -40,13 +52,8 @@ class FileStorageService(IFileStorageService):
                 )
             if not isinstance(file, CreatePdfFileDTO):
                 raise Exception("File passed is not of CreatePdfFileDTO type")
-            # error_list = file.validate() # not implemented?
-            # if error_list:
-            #     raise Exception(error_list)
-            # blob.upload_from_file(file, content_type=content_type)
             print("here in file service: ", file)
             new_file_entry = PdfFile(**file.__dict__)
-            # replace with new id(no - just create in db here. use ointake_routes)
             print('new file entry', new_file_entry)
             db.session.add(new_file_entry)
             db.session.commit()

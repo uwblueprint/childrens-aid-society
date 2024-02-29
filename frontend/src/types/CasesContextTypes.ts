@@ -14,8 +14,9 @@ export type Case = {
   };
   courtInformation: {
     courtStatus: string;
-    // **Come back here
-    orderReferral: File; // FormData; // File; // number; // File; // number;
+    orderReferral: File | null; 
+    orderReferralId: number | null; 
+    orderReferralName: string | null; 
     firstNationHeritage: string;
     firstNationBand: string;
   };

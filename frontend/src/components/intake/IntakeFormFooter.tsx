@@ -94,7 +94,7 @@ const IntakeFooter = ({
           formData.append(nestedKey, data[key]);
         }
       }
-  });
+    });
   }
 
   const submitForm = async () => {
@@ -106,7 +106,6 @@ const IntakeFooter = ({
       programDetails &&
       permittedIndividuals
     ) {
-      console.log("hi there", courtDetails.orderReferral);
       const intakeData = {
         userId: 1,
         intakeStatus: CaseStatus.ACTIVE,
@@ -197,7 +196,6 @@ const IntakeFooter = ({
         },
       };
 
-      // **Come back here
       const intakeFormData = new FormData(); 
       appendFormData(intakeFormData, intakeData, '');
 

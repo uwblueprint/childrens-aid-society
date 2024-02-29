@@ -1,21 +1,21 @@
-import React, { useState } from "react";
 import {
   Box,
-  Flex,
-  Text,
   Button,
-  FormLabel,
-  SimpleGrid,
+  Flex,
   FormControl,
+  FormLabel,
   Icon,
+  SimpleGrid,
+  Text,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { ChevronDown } from "react-feather";
 import ModalComponent from "../common/ModalComponent";
 
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 import { StatusSelectField } from "./StatusSelectField";
-import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type StatusModalProps = {
   caseId?: number;
@@ -27,6 +27,7 @@ export type StatusModalProps = {
   goToIntake: () => void;
 };
 
+// we need to pass proper data into here...
 const StatusModal = ({
   caseId,
   status,
@@ -59,6 +60,7 @@ const StatusModal = ({
   } = useStepValueContext();
 
   // TEMPORARY MOCK VALUES TO TEST REVIEW BUTTON
+  // GRRR THE FETCH ISNT DONE PROPERLY >:(
   const mockReferralDetails = {
     referringWorker: "Referring Worker",
     referringWorkerContact: "unused",
@@ -68,11 +70,14 @@ const StatusModal = ({
     cpinFileType: "INVESTIGATION",
     phoneNumber: "6475551234",
   };
+  // ALL THESE VALUES ARE JUST MOCKS! D:
   const mockCourtDetails = {
     currentCourtStatus: "INTERIM_CARE",
     firstNationHeritage: "FIRST_NATION_REGISTERED",
     firstNationBand: "first nation band",
     orderReferral: null,
+    orderReferralId: 1,
+    orderReferralName: "court_order_file.pdf",
   };
   const mockProgramDetails = {
     transportationRequirements: "transport requirements",

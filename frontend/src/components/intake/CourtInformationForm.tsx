@@ -10,6 +10,7 @@ import {
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { ChevronDown, Download, FilePlus } from "react-feather";
+import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import CustomInput from "../common/CustomInput";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
@@ -23,8 +24,9 @@ export type CourtDetails = {
   currentCourtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
-  // **Come back here
-  orderReferral: File | null; // FormData | null; 
+  orderReferral: File | null; 
+  orderReferralId: number | null; 
+  orderReferralName: string | null; 
 };
 
 type CourtInformationFormProps = {
@@ -54,30 +56,13 @@ const CourtInformationForm = ({
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    // setFieldValue: (field: string, value: FormData) => void,
     setFieldValue: (field: string, value: File) => void,
   ) => {
-    console.log('handling file change');
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
       return;
     }
     setFieldValue("orderReferral", fileObj);
-
-    
-    // const formData = new FormData();
-    // formData.append('file', fileObj);
-    // // console.log("this", this);
-    // console.log('file to upload', fileObj);
-    // console.log('formData to upload', formData.get('file'));
-    // // what needs to change here? 
-    // setFieldValue("orderReferral", formData);
-
-
-    // setCourtDetails({
-    //   ...courtDetails,
-    //   orderReferral: fileObj,
-    // });
   };
   const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
@@ -99,24 +84,21 @@ const CourtInformationForm = ({
       firstNationHeritage: "",
       firstNationBand: "",
       orderReferral: null,
+      orderReferralId: null,
+      orderReferralName: "",
     });
-    // TODO: reset uploaded object
   };
 
-  const downloadFile = () => {
-    // if (!formik.values.orderReferral || !formik.values.orderReferral.get('file') || !(formik.values.orderReferral.get('file') as File).name) {
-    //   return;
-    // }
-
-    // const blob = new Blob([formik.values.orderReferral.get('file')], {
-    //   type: "application/pdf",
-    // });
-    // const url = URL.createObjectURL(blob);
-    // const link = document.createElement("a");
-    // link.download = formik.values.orderReferral.get('orderReferral').name;
-    // link.href = url;
-    // link.click();
-    // URL.revokeObjectURL(url);
+  const downloadFile = async () => {
+    const fileId = courtDetails.orderReferralId; 
+    console.log("all details", courtDetails)
+    // console.log('file id', courtDetails.orderReferralId);
+    // console.log('file name', courtDetails.orderReferralName);
+    if (!fileId) {
+      return;
+    }
+    // TODO: Fix this download! 404 error 
+    await IntakeAPIClient.downloadFile(fileId);
   };
 
   return (
@@ -158,7 +140,6 @@ const CourtInformationForm = ({
             />
           </Box>
           {/* TODO: store the uploaded file and save in backend */}
-          {/* This is where it needs to be done in the frontend */}
           <Input
             display="none"
             type="file"
@@ -173,7 +154,7 @@ const CourtInformationForm = ({
           <FormControl padding="16px 0">
             <FormLabel
               pt="15px"
-              htmlFor="documentDisplay"
+              htmlFor="orderReferralName"
               style={{ cursor: "pointer" }}
             >
               ORDER REFERRAL
@@ -182,12 +163,10 @@ const CourtInformationForm = ({
               <Field
                 as={CustomInput}
                 isReadOnly
-                id="documentDisplay"
-                name="documentDisplay"
+                id="orderReferralName"
+                name="orderReferralName"
                 placeholder="No document attached"
-                // value={formik.values.orderReferral?.get('orderReferral')?.name}
-                // value={(formik.values.orderReferral?.get('file') as File)?.name ?? ''}
-                value={formik.values.orderReferral?.name}
+                value={formik.values.orderReferral?.name ?? courtDetails.orderReferralName}
                 onClick={handleClick}
                 marginRight="10px"
                 style={{ cursor: "pointer" }}

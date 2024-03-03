@@ -188,9 +188,9 @@ const ProgramForm = ({
                   icon={<Icon as={Calendar} />}
                   validate={validateDate}
                 />
-                {formik.errors.suggestedStartDate && (
+                {dateOfBirthError && (
                   <div style={{ color: "red" }}>
-                    {formik.errors.suggestedStartDate}
+                    {dateOfBirthError}
                   </div>
                 )}
               </Box>

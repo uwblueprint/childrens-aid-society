@@ -189,9 +189,7 @@ const ProgramForm = ({
                   validate={validateDate}
                 />
                 {dateOfBirthError && (
-                  <div style={{ color: "red" }}>
-                    {dateOfBirthError}
-                  </div>
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
                 )}
               </Box>
             </SimpleGrid>

@@ -89,9 +89,12 @@ const IntakeFooter = ({
         if (typeof data[key] === 'object' && !Array.isArray(data[key]) && nestedKey !== 'courtInformation[orderReferral]') {
           console.log('hi dont show me', data[key])
           appendFormData(formData, data[key], nestedKey);
-        } else {
+        } else if (nestedKey === 'courtInformation[orderReferral]'){
           console.log('hi show me', data[key])
           formData.append(nestedKey, data[key]);
+        }
+        else {
+          formData.append(nestedKey, JSON.stringify(data[key]));
         }
       }
     });

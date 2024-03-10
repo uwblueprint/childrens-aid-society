@@ -1,3 +1,5 @@
+import json
+
 import requests
 from flask import Blueprint, current_app, jsonify, request, send_file
 
@@ -346,19 +348,20 @@ def create_intake():
     intake = {
         "user_id": int(request.form["userId"]),
         "intake_status": "SUBMITTED",
-        "referring_worker_name": request.form["caseReferral[referringWorkerName]"],
-        "referring_worker_contact": request.form["caseReferral[referringWorkerContact]"],
-        "referral_date": request.form["caseReferral[referralDate]"],
-        "family_name": request.form["caseReferral[familyName]"],
-        "cpin_number": request.form["caseReferral[cpinFileNumber]"],
-        "cpin_file_type": request.form["caseReferral[cpinFileType]"],
-        "court_status": request.form["courtInformation[courtStatus]"],
+        "referring_worker_name": json.loads(request.form["caseReferral[referringWorkerName]"]),
+        "referring_worker_contact": json.loads(request.form["caseReferral[referringWorkerContact]"]),
+        "referral_date": json.loads(request.form["caseReferral[referralDate]"]),
+        "family_name": json.loads(request.form["caseReferral[familyName]"]),
+        "cpin_number": json.loads(request.form["caseReferral[cpinFileNumber]"]),
+        "cpin_file_type": json.loads(request.form["caseReferral[cpinFileType]"]),
+        "court_status": json.loads(request.form["courtInformation[courtStatus]"]),
+        # Set id 
         "court_order_file_id": new_file.id,
-        "first_nation_heritage": request.form["courtInformation[firstNationHeritage]"],
-        "first_nation_band": request.form["courtInformation[firstNationBand]"],
-        "transportation_requirements": request.form["programDetails[transportRequirements]"],
-        "scheduling_requirements": request.form["programDetails[schedulingRequirements]"],
-        "suggested_start_date": request.form["programDetails[suggestedStartDate]"],
+        "first_nation_heritage": json.loads(request.form["courtInformation[firstNationHeritage]"]),
+        "first_nation_band": json.loads(request.form["courtInformation[firstNationBand]"]),
+        "transportation_requirements": json.loads(request.form["programDetails[transportRequirements]"]),
+        "scheduling_requirements": json.loads(request.form["programDetails[schedulingRequirements]"]),
+        "suggested_start_date": json.loads(request.form["programDetails[suggestedStartDate]"]),
         "date_accepted": None,
         "access_location": None,
         "lead_access_worker_id": None,
@@ -378,8 +381,9 @@ def create_intake():
 
     # caregivers
     # TODO: investigate out how pivot from request.json to request.form impacts caregivers, permitted individuals, etc. 
-    caregivers = request.form["caregivers"]
+    caregivers = json.loads(request.form["caregivers"])
     for caregiver in caregivers:
+        print(caregiver)
         # create caregiver using caregiver_routes
         caregiver = {
             "name": caregiver["name"],
@@ -402,7 +406,7 @@ def create_intake():
             return jsonify(error), 400
 
     # other permitted individuals
-    permitted_individuals = request.form["programDetails[permittedIndividuals]"]
+    permitted_individuals = json.loads(request.form["programDetails[permittedIndividuals]"])
     for permitted_individual in permitted_individuals:
         permitted_individual = {
             "name": permitted_individual["name"],
@@ -429,7 +433,7 @@ def create_intake():
             return jsonify(error), 400
 
     # familial concerns
-    familial_concerns = request.form["programDetails[familialConcerns]"]
+    familial_concerns = request.form["programDetails[familialConcerns]"].split(',')
     for familial_concern in familial_concerns:
         familial_concern = {
             "concern": familial_concern,
@@ -479,9 +483,11 @@ def create_intake():
         except Exception as error:
             run_undos()
             return jsonify(error), 400
-
-    children = request.form["children"]
-    for child in children:
+    children_data = json.loads(request.form['children'])
+    #children_data looks like
+    #children [{'childInfo': {'name': 'asdas', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1231', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}, {'childInfo': {'name': 'aszdg', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}]
+    for child in children_data:
+        print('child', child)
         # daytime contact
         daytime_contact = child["daytimeContact"]
         daytime_contact = {

@@ -92,13 +92,13 @@ const CourtInformationForm = ({
   const downloadFile = async () => {
     const fileId = courtDetails.orderReferralId; 
     console.log("all details", courtDetails)
-    // console.log('file id', courtDetails.orderReferralId);
-    // console.log('file name', courtDetails.orderReferralName);
     if (!fileId) {
       return;
     }
     // TODO: Fix this download! 404 error 
-    await IntakeAPIClient.downloadFile(fileId);
+    // await IntakeAPIClient.downloadFile(fileId);
+    const file = await IntakeAPIClient.downloadFile(fileId);
+    console.log('file done', file);
   };
 
   return (

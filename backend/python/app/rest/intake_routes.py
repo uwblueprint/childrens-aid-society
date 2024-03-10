@@ -600,16 +600,25 @@ def delete_intake():
         400,
     )
 
-
-@blueprint.route("/<int:file_id>", methods=["GET"], strict_slashes=False)
-def download(file_id):
+@blueprint.route("/download/<int:file_id>", methods=["GET"], strict_slashes=False)
+def download_file(file_id):
+    print('starting download in backend')
     try:
-        file_name, file_data = file_storage_service.get_file(file_id)
-        return send_file(
+        file = file_storage_service.get_file(file_id)
+        print('returned here from file storage service', file)
+        file_name, file_data = file.file_name, file.file_data
+        print('returned here file stuffs', file_name, file_data)
+        file = send_file(
             file_data,
             as_attachment=True,
             attachment_filename=file_name
-        ), 200
+        )
+        return file, 200
+        # return send_file(
+        #     file_data,
+        #     as_attachment=True,
+        #     attachment_filename=file_name
+        # ), 200
         # return jsonify(updated_intake.__dict__), 200
     except Exception as error:
         return jsonify(str(error)), 400

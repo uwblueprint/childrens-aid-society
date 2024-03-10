@@ -2,12 +2,12 @@ import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ArrowLeft } from "react-feather";
 import { useHistory, useParams } from "react-router-dom";
-import IntakeHeader from "../intake/IntakeHeader";
-import CaseStatus from "../../types/CaseStatus";
-import { CaseCardProps } from "../dashboard/CaseCard";
-import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
-import { Case } from "../../types/CasesContextTypes";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import CaseStatus from "../../types/CaseStatus";
+import { Case } from "../../types/CasesContextTypes";
+import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
+import { CaseCardProps } from "../dashboard/CaseCard";
+import IntakeHeader from "../intake/IntakeHeader";
 
 const Cases = (): React.ReactElement | null => {
   const { status } = useParams<{ status: string }>();
@@ -48,6 +48,7 @@ const Cases = (): React.ReactElement | null => {
     return [];
   };
 
+  // this is where the stuff is getting fetched 
   useEffect(() => {
     const fetchData = async () => {
       const moreCases = mapIntakeResponsesToCaseCards(

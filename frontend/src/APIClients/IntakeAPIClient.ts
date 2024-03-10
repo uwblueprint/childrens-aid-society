@@ -418,6 +418,7 @@ const downloadFile = async (fileId: number): Promise<Case> => {
     const { data } = await baseAPIClient.get(`/intake/download/${fileId}`, {
       headers: { Authorization: bearerToken },
     });
+    console.log('returned data from intakeapiclients', data);
     return data;
   } catch (error) {
     return error;

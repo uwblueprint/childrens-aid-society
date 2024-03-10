@@ -21,6 +21,7 @@ class FileStorageService(IFileStorageService):
         self.logger = logger
 
     def get_file(self, file_id):
+        print('get file in file storage service')
         try: 
             file = PdfFile.query.filter_by(id=file_id).first()
             print(file)
@@ -44,6 +45,7 @@ class FileStorageService(IFileStorageService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
+        
     def create_file(self, file: CreatePdfFileDTO):
         try:
             if not file:

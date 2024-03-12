@@ -4,10 +4,10 @@ import { ArrowLeft } from "react-feather";
 import { useHistory, useParams } from "react-router-dom";
 import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
-import { CaseCardProps } from "../dashboard/CaseCard";
 import FilteredCaseDisplay from "../common/FilteredCaseDisplay";
-import { Case } from "../../types/CasesContextTypes";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import CasesContext from "../../contexts/CasesContext";
+import { CasesContextType } from "../../types/CasesContextTypes";
 
 const Cases = (): React.ReactElement | null => {
   const { status } = useParams<{ status: string }>();
@@ -28,37 +28,21 @@ const Cases = (): React.ReactElement | null => {
 
   const enumStatus = statusToCaseStatus[status];
 
-  const [cases, setCases] = useState<CaseCardProps[]>([]);
+  const [contextCases, setContextCases] = useState<CasesContextType>([]);
   const [capacity, setCapacity] = useState(false);
   const [page, setPage] = useState(1);
 
-  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
-    if (intakes.length > 0) {
-      return intakes.map((intake) => ({
-        caseId:
-          typeof intake.case_id === "number"
-            ? intake.case_id
-            : parseInt(intake.case_id, 10),
-        referringWorker: intake.caseReferral.referringWorkerName,
-        intakeMeetingNotes: intake.intakeMeetingNotes,
-        date: intake.caseReferral.referralDate,
-        familyName: intake.caseReferral.familyName,
-        caseTag: intake.intakeStatus,
-      }));
-    }
-    return [];
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      const moreCases = mapIntakeResponsesToCaseCards(
-        await IntakeAPIClient.get(enumStatus, page, 8),
-      );
+      const moreCases = await IntakeAPIClient.get(enumStatus, page, 8);
 
       if (moreCases.length === 0) {
         setCapacity(true);
       } else {
-        setCases((prevData) => [...prevData, ...moreCases]);
+        setContextCases((prevData: CasesContextType) => [
+          ...prevData,
+          ...moreCases,
+        ]);
       }
     };
 
@@ -116,11 +100,12 @@ const Cases = (): React.ReactElement | null => {
           {formattedStatus} Cases
         </Text>
         <Box pt="60px" marginLeft="-10%" alignSelf="flex-start">
-          <FilteredCaseDisplay
-            cases={cases}
-            numberOfRows={2 + (page - 1) * 2}
-            status={status}
-          />
+          <CasesContext.Provider value={contextCases}>
+            <FilteredCaseDisplay
+              numberOfRows={2 + (page - 1) * 2}
+              status={status}
+            />
+          </CasesContext.Provider>
         </Box>
         {!capacity && <LoadMoreButton />}
       </Box>

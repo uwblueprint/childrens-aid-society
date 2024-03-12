@@ -90,6 +90,28 @@ class IntakeService(IIntakeService):
                 intake.intake_meeting_notes = updated_data["intake_meeting_notes"]
             if "referring_worker_name" in updated_data:
                 intake.referring_worker_name = updated_data["referring_worker_name"]
+            if "referring_worker_contact" in updated_data:
+                intake.referring_worker_contact = updated_data[
+                    "referring_worker_contact"
+                ]
+            if "cpin_number" in updated_data:
+                intake.cpin_number = updated_data["cpin_number"]
+            if "cpin_file_type" in updated_data:
+                intake.cpin_file_type = updated_data["cpin_file_type"]
+            if "court_status" in updated_data:
+                intake.court_status = updated_data["court_status"]
+            if "court_order_file" in updated_data:
+                intake.court_order_file = updated_data["court_order_file"]
+            if "first_nation_heritage" in updated_data:
+                intake.first_nation_heritage = updated_data["first_nation_heritage"]
+            if "first_nation_band" in updated_data:
+                intake.first_nation_band = updated_data["first_nation_band"]
+            if "transportation_requirements" in updated_data:
+                intake.transportation_requirements = updated_data[
+                    "transportation_requirements"
+                ]
+            if "scheduling_requirements" in updated_data:
+                intake.scheduling_requirements = updated_data["scheduling_requirements"]
             db.session.commit()
             return IntakeDTO(**intake.to_dict())
         except Exception as error:

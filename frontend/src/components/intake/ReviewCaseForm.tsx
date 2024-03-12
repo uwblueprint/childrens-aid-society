@@ -2,9 +2,9 @@ import React from "react";
 import { Button, HStack, Icon, Stack, Text } from "@chakra-ui/react";
 import { Edit2 } from "react-feather";
 import IndividualDetails from "./IndividualDetails";
-import ReferralForm, { ReferralDetails } from "./ReferralForm";
-import CourtInformationForm, { CourtDetails } from "./CourtInformationForm";
-import ProgramForm, { ProgramDetails } from "./ProgramForm";
+import ReferralForm from "./ReferralForm";
+import CourtInformationForm from "./CourtInformationForm";
+import ProgramForm from "./ProgramForm";
 import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 import { Children } from "./child-information/AddChildPage";
@@ -12,12 +12,6 @@ import { Caregivers } from "../../types/CaregiverDetailTypes";
 import { PermittedIndividuals } from "./PermittedIndividualsModal";
 
 type ReviewFormProps = {
-  referralDetails: ReferralDetails;
-  setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
-  courtDetails: CourtDetails;
-  setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
-  programDetails: ProgramDetails;
-  setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setReviewHeader: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,12 +23,6 @@ type ReviewFormProps = {
 };
 
 const ReviewForm = ({
-  referralDetails,
-  setReferralDetails,
-  courtDetails,
-  setCourtDetails,
-  programDetails,
-  setProgramDetails,
   nextStep,
   setStep,
   setReviewHeader,
@@ -75,8 +63,6 @@ const ReviewForm = ({
           {editSectionButton(IntakeSteps.CASE_REFERRAL)};
         </HStack>
         <ReferralForm
-          referralDetails={referralDetails}
-          setReferralDetails={setReferralDetails}
           nextStep={nextStep}
           setStep={setStep}
           readOnly
@@ -93,8 +79,6 @@ const ReviewForm = ({
           {editSectionButton(IntakeSteps.COURT_INFORMATION)};
         </HStack>
         <CourtInformationForm
-          courtDetails={courtDetails}
-          setCourtDetails={setCourtDetails}
           nextStep={nextStep}
           setStep={setStep}
           readOnly
@@ -124,8 +108,6 @@ const ReviewForm = ({
           {editSectionButton(IntakeSteps.PROGRAM_DETAILS)};
         </HStack>
         <ProgramForm
-          programDetails={programDetails}
-          setProgramDetails={setProgramDetails}
           nextStep={nextStep}
           setStep={setStep}
           readOnly
@@ -139,9 +121,6 @@ const ReviewForm = ({
         isStepComplete={() => true} // TODO: validate form
         registrationLoading={false}
         nextStepCallBack={onNextStep}
-        referralDetails={referralDetails}
-        courtDetails={courtDetails}
-        programDetails={programDetails}
         childrens={childrens}
         caregivers={caregivers}
         permittedIndividuals={permittedIndividuals}

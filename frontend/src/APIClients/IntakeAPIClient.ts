@@ -68,9 +68,9 @@ const search = async (searchParam: string): Promise<Case[]> => {
       intakeStatus: <CaseStatus>intake.intake_status,
       intakeMeetingNotes: intake.intake_meeting_notes,
       caseReferral: {
-        referringWorkerName: intake.caseReferral.referringWorker,
+        referringWorker: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
-        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 10),
+        cpinFileNumber: intake.caseReferral.cpinFileNumber,
         cpinFileType: intake.caseReferral.cpinFileType,
         familyName: intake.caseReferral.familyName,
         referralDate: new Date(
@@ -78,8 +78,8 @@ const search = async (searchParam: string): Promise<Case[]> => {
         ).toLocaleDateString("en-GB"),
       },
       courtInformation: {
-        courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: 0,
+        currentCourtStatus: intake.courtInformation.courtStatus,
+        orderReferral: null,
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -126,7 +126,8 @@ const search = async (searchParam: string): Promise<Case[]> => {
         },
       ],
       programDetails: {
-        transportRequirements: intake.programDetails.transportationRequirements,
+        transportationRequirements:
+          intake.programDetails.transportationRequirements,
         schedulingRequirements: intake.programDetails.schedulingRequirements,
         suggestedStartDate: intake.programDetails.suggestedStartDate,
         shortTermGoals: [],
@@ -134,9 +135,9 @@ const search = async (searchParam: string): Promise<Case[]> => {
         familialConcerns: [],
         permittedIndividuals: [
           {
-            name: "",
-            phoneNumber: 0,
-            relationshipToChildren: "",
+            providerName: "",
+            phoneNo: "",
+            relationshipToChild: "",
             additionalNotes: "",
           },
         ],
@@ -177,9 +178,9 @@ const get = async (
       intakeStatus: <CaseStatus>intake.intake_status,
       intakeMeetingNotes: intake.intake_meeting_notes,
       caseReferral: {
-        referringWorkerName: intake.caseReferral.referringWorker,
+        referringWorker: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
-        cpinFileNumber: parseInt(intake.caseReferral.cpinFileNumber, 10),
+        cpinFileNumber: intake.caseReferral.cpinFileNumber,
         cpinFileType: intake.caseReferral.cpinFileType,
         familyName: intake.caseReferral.familyName,
         referralDate: new Date(
@@ -187,8 +188,8 @@ const get = async (
         ).toLocaleDateString("en-GB"),
       },
       courtInformation: {
-        courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: 0,
+        currentCourtStatus: intake.courtInformation.courtStatus,
+        orderReferral: null,
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -235,7 +236,8 @@ const get = async (
         },
       ],
       programDetails: {
-        transportRequirements: intake.programDetails.transportationRequirements,
+        transportationRequirements:
+          intake.programDetails.transportationRequirements,
         schedulingRequirements: intake.programDetails.schedulingRequirements,
         suggestedStartDate: intake.programDetails.suggestedStartDate,
         shortTermGoals: [],
@@ -243,9 +245,9 @@ const get = async (
         familialConcerns: [],
         permittedIndividuals: [
           {
-            name: "",
-            phoneNumber: 0,
-            relationshipToChildren: "",
+            providerName: "",
+            phoneNo: "",
+            relationshipToChild: "",
             additionalNotes: "",
           },
         ],

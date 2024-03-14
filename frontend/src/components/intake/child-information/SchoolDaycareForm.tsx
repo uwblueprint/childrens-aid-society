@@ -21,11 +21,13 @@ export type SchoolDetails = {
 type SchoolDaycareFormProps = {
   schoolDetails: SchoolDetails;
   setSchoolDetails: React.Dispatch<React.SetStateAction<SchoolDetails>>;
+  setChildInfoSchoolPhoneNoError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SchoolDaycareForm = ({
   schoolDetails,
   setSchoolDetails,
+  setChildInfoSchoolPhoneNoError,
 }: SchoolDaycareFormProps): React.ReactElement => {
   const onSubmit = (values: SchoolDetails) => {
     setSchoolDetails(values);
@@ -38,14 +40,17 @@ const SchoolDaycareForm = ({
   function validatePhone(value: string) {
     if (!value) {
       setschoolPhoneNoError("Required");
+      setChildInfoSchoolPhoneNoError(true)
     } else if (
       !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
         value,
       )
     ) {
       setschoolPhoneNoError("Invalid phone number");
+      setChildInfoSchoolPhoneNoError(true)
     } else {
       setschoolPhoneNoError(null);
+      setChildInfoSchoolPhoneNoError(false)
     }
   }
 

@@ -57,13 +57,15 @@ const AddChild = ({
   });
   const [providers, setProviders] = useState<Providers>([]);
   const [childInfoDateError, setChildInfoDateError] = useState<boolean>(false);
+  const [childInfoSchoolPhoneNoError, setChildInfoSchoolPhoneNoError] = useState<boolean>(false);
 
   const requiredInfomationMissing: boolean =
     !childDetails.childName ||
     !childDetails.cpinFileNumber ||
     !childDetails.dateOfBirth ||
     !schoolDetails.schoolPhoneNo ||
-    childInfoDateError;
+    childInfoDateError ||
+    childInfoSchoolPhoneNoError;
 
   // TODO: Check other required fields
 
@@ -107,6 +109,7 @@ const AddChild = ({
           <SchoolDaycareForm
             schoolDetails={schoolDetails}
             setSchoolDetails={setSchoolDetails}
+            setChildInfoSchoolPhoneNoError={setChildInfoSchoolPhoneNoError}
           />
         );
       case AddChildSteps.CHILD_PROVIDER_FORM:

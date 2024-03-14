@@ -77,34 +77,24 @@ const NewProviderModal = ({
     onClose();
   };
 
-  function validatePrimaryPhoneNo(value: string) {
-    if (!value) {
-      setPrimaryPhoneNoError("Required");
-      setButtonDisabled(true);
-    } else if (
-      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
-        value,
-      )
-    ) {
-      setPrimaryPhoneNoError("Invalid phone number");
-      setButtonDisabled(true);
+  function validatePhoneNo(value: string, isSecondaryPhoneNo: boolean) {
+    if(/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+      value
+    ) || (value === "" && isSecondaryPhoneNo)){
+      if(isSecondaryPhoneNo){
+        setSecondaryPhoneNoError(null);
+      } else {
+        setPrimaryPhoneNoError(null);
+      }
+      setButtonDisabled(false); 
     } else {
-      setPrimaryPhoneNoError(null);
-      setButtonDisabled(false);
-    }
-  }
-
-  function validateSecondaryPhoneNo(value: string) {
-    if (
-      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
-        value,
-      )
-    ) {
-      setSecondaryPhoneNoError("Invalid phone number");
-      setButtonDisabled(true);
-    } else {
-      setSecondaryPhoneNoError(null);
-      setButtonDisabled(false);
+      if(isSecondaryPhoneNo){
+        setSecondaryPhoneNoError("Invalid phone number");
+      } else {
+        const primaryErrorMessageTemp = value === "" ? "Required" : "Invalid phone number";
+        setPrimaryPhoneNoError(primaryErrorMessageTemp)
+      }
+      setButtonDisabled(true); 
     }
   }
 
@@ -161,7 +151,7 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setPrimaryPhoneNo(event.target.value);
                     setPrimaryPhoneNoChanged(true);
-                    validatePrimaryPhoneNo(event.target.value);
+                    validatePhoneNo(event.target.value, false);
                   }}
                 />
                 {primaryPhoneNoError && (
@@ -182,7 +172,7 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setSecondaryPhoneNo(event.target.value);
                     setSecondaryPhoneNoChanged(true);
-                    validateSecondaryPhoneNo(event.target.value);
+                    validatePhoneNo(event.target.value, true);
                   }}
                 />
                 {secondaryPhoneNoError && (
@@ -299,7 +289,7 @@ const NewProviderModal = ({
               : provider?.primaryPhoneNo) &&
             (addressChanged ? address : provider?.address) &&
             (relationshipChanged ? relationship : provider?.relationship) &&
-            isButtonDisabled
+            !isButtonDisabled
           )
         }
         secondaryTitle="Individual Details"

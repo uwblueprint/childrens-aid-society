@@ -48,6 +48,13 @@ const NewProviderModal = ({
   const [contactNotesChanged, setContactNotesChanged] = useState(false);
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
+  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
+    null,
+  );
+  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<
+    string | null
+  >(null);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleClose = () => {
     setProviderName("");
@@ -69,6 +76,31 @@ const NewProviderModal = ({
     setRelationshipChanged(false);
     onClose();
   };
+
+  function validatePhoneNo(value: string, isSecondaryPhoneNo: boolean) {
+    if (
+      /^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      ) ||
+      (value === "" && isSecondaryPhoneNo)
+    ) {
+      if (isSecondaryPhoneNo) {
+        setSecondaryPhoneNoError(null);
+      } else {
+        setPrimaryPhoneNoError(null);
+      }
+      setButtonDisabled(false);
+    } else {
+      if (isSecondaryPhoneNo) {
+        setSecondaryPhoneNoError("Invalid phone number");
+      } else {
+        const primaryErrorMessageTemp =
+          value === "" ? "Required" : "Invalid phone number";
+        setPrimaryPhoneNoError(primaryErrorMessageTemp);
+      }
+      setButtonDisabled(true);
+    }
+  }
 
   return (
     <Box>
@@ -123,8 +155,12 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setPrimaryPhoneNo(event.target.value);
                     setPrimaryPhoneNoChanged(true);
+                    validatePhoneNo(event.target.value, false);
                   }}
                 />
+                {primaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{primaryPhoneNoError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="secondaryPhoneNumber">
@@ -140,8 +176,12 @@ const NewProviderModal = ({
                   onChange={(event) => {
                     setSecondaryPhoneNo(event.target.value);
                     setSecondaryPhoneNoChanged(true);
+                    validatePhoneNo(event.target.value, true);
                   }}
                 />
+                {secondaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{secondaryPhoneNoError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="email">
@@ -252,7 +292,8 @@ const NewProviderModal = ({
               ? primaryPhoneNo
               : provider?.primaryPhoneNo) &&
             (addressChanged ? address : provider?.address) &&
-            (relationshipChanged ? relationship : provider?.relationship)
+            (relationshipChanged ? relationship : provider?.relationship) &&
+            !isButtonDisabled
           )
         }
         secondaryTitle="Individual Details"

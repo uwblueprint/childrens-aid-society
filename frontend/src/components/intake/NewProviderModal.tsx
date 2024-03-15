@@ -89,13 +89,14 @@ const NewProviderModal = ({
       } else {
         setPrimaryPhoneNoError(null);
       }
-      setButtonDisabled(false); 
+      setButtonDisabled(false);
     } else {
       if (isSecondaryPhoneNo) {
         setSecondaryPhoneNoError("Invalid phone number");
       } else {
-        const primaryErrorMessageTemp = value === "" ? "Required" : "Invalid phone number";
-        setPrimaryPhoneNoError(primaryErrorMessageTemp)
+        const primaryErrorMessageTemp =
+          value === "" ? "Required" : "Invalid phone number";
+        setPrimaryPhoneNoError(primaryErrorMessageTemp);
       }
       setButtonDisabled(true);
     }

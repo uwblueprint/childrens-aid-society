@@ -57,7 +57,10 @@ const AddChild = ({
   });
   const [providers, setProviders] = useState<Providers>([]);
   const [childInfoDateError, setChildInfoDateError] = useState<boolean>(false);
-  const [childInfoSchoolPhoneNoError, setChildInfoSchoolPhoneNoError] = useState<boolean>(false);
+  const [
+    childInfoSchoolPhoneNoError,
+    setChildInfoSchoolPhoneNoError,
+  ] = useState<boolean>(false);
 
   const requiredInfomationMissing: boolean =
     !childDetails.childName ||

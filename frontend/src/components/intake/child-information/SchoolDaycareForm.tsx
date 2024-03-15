@@ -40,17 +40,17 @@ const SchoolDaycareForm = ({
   function validatePhone(value: string) {
     if (!value) {
       setschoolPhoneNoError("Required");
-      setChildInfoSchoolPhoneNoError(true)
+      setChildInfoSchoolPhoneNoError(true);
     } else if (
       !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
         value,
       )
     ) {
       setschoolPhoneNoError("Invalid phone number");
-      setChildInfoSchoolPhoneNoError(true)
+      setChildInfoSchoolPhoneNoError(true);
     } else {
       setschoolPhoneNoError(null);
-      setChildInfoSchoolPhoneNoError(false)
+      setChildInfoSchoolPhoneNoError(false);
     }
   }
 

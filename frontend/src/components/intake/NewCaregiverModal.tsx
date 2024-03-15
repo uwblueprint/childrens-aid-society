@@ -125,23 +125,23 @@ const NewCaregiverModal = ({
   }
 
   function validatePhoneNo(value: string, isSecondaryPhoneNo: boolean) {
-    if(/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+    if (/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
       value
-    ) || (value === "" && isSecondaryPhoneNo)){
-      if(isSecondaryPhoneNo){
+    ) || (value === "" && isSecondaryPhoneNo)) {
+      if (isSecondaryPhoneNo) {
         setSecondaryPhoneNoError(null);
       } else {
         setPrimaryPhoneNoError(null);
       }
-      setButtonDisabled(false); 
+      setButtonDisabled(false);
     } else {
-      if(isSecondaryPhoneNo){
+      if (isSecondaryPhoneNo) {
         setSecondaryPhoneNoError("Invalid phone number");
       } else {
         const primaryErrorMessageTemp = value === "" ? "Required" : "Invalid phone number";
         setPrimaryPhoneNoError(primaryErrorMessageTemp)
       }
-      setButtonDisabled(true); 
+      setButtonDisabled(true);
     }
   }
 
@@ -177,7 +177,7 @@ const NewCaregiverModal = ({
                   defaultValue={
                     caregiver
                       ? caregiver.dateOfBirth &&
-                        formattedDate(caregiver.dateOfBirth)
+                      formattedDate(caregiver.dateOfBirth)
                       : ""
                   }
                   icon={<Icon as={Calendar} />}

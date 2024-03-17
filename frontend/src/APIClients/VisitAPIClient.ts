@@ -42,10 +42,13 @@ const post = async (formData: any): Promise<Case> => {
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
+  console.log(bearerToken);
   try {
     const { data } = await baseAPIClient.post("/visits", formData, {
       headers: { Authorization: bearerToken },
     });
+
+    console.log(data);
     return data;
   } catch (error) {
     return error;
@@ -65,7 +68,7 @@ const put = async ({
   )}`;
   try {
     const { data } = await baseAPIClient.put(
-      `/visit/${intakeID}`,
+      `/visits/${intakeID}`,
       changedData,
       {
         headers: { Authorization: bearerToken },

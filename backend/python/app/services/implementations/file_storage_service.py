@@ -24,7 +24,7 @@ class FileStorageService(IFileStorageService):
         print('get file in file storage service')
         try: 
             file = PdfFile.query.filter_by(id=file_id).first()
-            print(file)
+            print('file here', file)
             # file_dto = PdfFileDTO(**file)
             # print(file_dto)
             # return file_dto

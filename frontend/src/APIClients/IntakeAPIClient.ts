@@ -409,17 +409,68 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-const downloadFile = async (fileId: number): Promise<Case> => {
+const downloadFile = async (fileId: number): Promise<any> => {
+// const downloadFile = async (fileId: number): Promise<Response> => {
+// const downloadFile = async (fileId: number, fileName: string): Promise<any> => {
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
   try {
-    const { data } = await baseAPIClient.get(`/intake/download/${fileId}`, {
+    // Attempt 1
+    // const { data } = await baseAPIClient.get(`/intake/download/${fileId}`, {
+    //   headers: { Authorization: bearerToken },
+    // });
+    // console.log('returned data from intakeapiclients', data);
+    // return data;
+    // Attempt 2: Can't use blobs 
+    // const response = await baseAPIClient.get(`/intake/download/${fileId}`, {
+    //   headers: { Authorization: bearerToken },
+    // });
+    // console.log('returned data from intakeapiclients', response);
+    // const blob = response.blob();
+    // console.log('blob');
+    // // const blobURL = window.URL.createObjectURL(blob);
+    // return blob;
+    // Attempt 3
+    const response = await baseAPIClient.get(`/intake/download/${fileId}`, {
       headers: { Authorization: bearerToken },
     });
-    console.log('returned data from intakeapiclients', data);
-    return data;
+    console.log('returned data from intakeapiclients', response);
+    console.log('our data', response.data);
+
+    // const contentDisposition = response.headers['content-disposition'];
+    // console.log('content-disposition', contentDisposition);
+    // let filename = 'downloaded_file';
+    // if (contentDisposition) {
+    //     const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+    //     const matches = filenameRegex.exec(contentDisposition);
+    //     if (matches != null && matches[1]) {
+    //         filename = matches[1].replace(/['"]/g, '');
+    //     }
+    // }
+    // return response; 
+
+    const url = window.URL.createObjectURL(response.data);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'filename.ext'; // Set desired file name
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    return url;
+
+    // const contentDisposition = response.headers['content-disposition'];
+    // const filename = contentDisposition.split('filename=')[1].trim();
+
+    // // Create a Blob object from the file data
+    // const blob = new Blob([response.data], { type: response.headers['content-type'] });
+
+    // // const blob = response.blob();
+    // console.log('blob');
+    // // const blobURL = window.URL.createObjectURL(blob);
+    // return {blob, filename};
   } catch (error) {
     return error;
   }

@@ -91,14 +91,31 @@ const CourtInformationForm = ({
 
   const downloadFile = async () => {
     const fileId = courtDetails.orderReferralId; 
-    console.log("all details", courtDetails)
+    // const fileName = courtDetails.orderReferralName || ''; 
+    console.log("all details", courtDetails);
     if (!fileId) {
       return;
     }
-    // TODO: Fix this download! 404 error 
-    // await IntakeAPIClient.downloadFile(fileId);
-    const file = await IntakeAPIClient.downloadFile(fileId);
-    console.log('file done', file);
+    try {
+      // await IntakeAPIClient.downloadFile(fileId);
+      // const file = await IntakeAPIClient.downloadFile(fileId);
+      const response = await IntakeAPIClient.downloadFile(fileId);
+      // const response = await IntakeAPIClient.downloadFile(fileId, fileName);
+      console.log("response", response);
+      // const blobURL = window.URL.createObjectURL(blob);
+      const contentDisposition = response.headers.get('content-disposition');
+      const filename = contentDisposition?.split('filename=')[1].trim();
+      console.log('filename', filename);
+      // Create a Blob object from the file data
+      // const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      // // const blob = response.blob();
+      // console.log('blob', blob);
+      // const blobURL = window.URL.createObjectURL(blob);
+      // console.log('file done', file);
+      // return {blob, filename};
+    } catch (e) {
+      console.log('bad code');
+    }
   };
 
   return (

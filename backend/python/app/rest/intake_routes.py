@@ -613,13 +613,21 @@ def download_file(file_id):
         file = file_storage_service.get_file(file_id)
         print('returned here from file storage service', file)
         file_name, file_data = file.file_name, file.file_data
-        print('returned here file stuffs', file_name, file_data)
+        print('returned here file stuffs', file_name, file_data[:20])
         file = send_file(
             file_data,
             as_attachment=True,
-            attachment_filename=file_name
+            attachment_filename=file_name,
+            mimetype='application/octet-stream'
         )
-        return file, 200
+        print('file in the backend', file);
+        print('file data', file.data);
+        # file = send_file(
+        #     file_data,
+        #     as_attachment=True,
+        #     attachment_filename=file_name
+        # )
+        return file.data, 200
         # return send_file(
         #     file_data,
         #     as_attachment=True,

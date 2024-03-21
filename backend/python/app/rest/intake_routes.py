@@ -1,7 +1,9 @@
 import json
+from io import BytesIO
 
 import requests
-from flask import Blueprint, current_app, jsonify, request, send_file
+from flask import (Blueprint, current_app, jsonify, make_response, request,
+                   send_file)
 
 # from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
@@ -606,7 +608,7 @@ def delete_intake():
         400,
     )
 
-@blueprint.route("/download/<int:file_id>", methods=["GET"], strict_slashes=False)
+@blueprint.route("/download/<int:file_id>", methods=["GET", "OPTIONS"], strict_slashes=False)
 def download_file(file_id):
     print('starting download in backend')
     try:
@@ -614,20 +616,35 @@ def download_file(file_id):
         print('returned here from file storage service', file)
         file_name, file_data = file.file_name, file.file_data
         print('returned here file stuffs', file_name, file_data[:20])
-        file = send_file(
-            file_data,
-            as_attachment=True,
-            attachment_filename=file_name,
-            mimetype='application/octet-stream'
-        )
-        print('file in the backend', file);
-        print('file data', file.data);
+        # file = send_file(
+        #     file_data,
+        #     as_attachment=True,
+        #     attachment_filename=file_name,
+        #     # mimetype='application/octet-stream'
+        # )
+        # print('file in the backend', file);
+        # print('file data', file.data);
         # file = send_file(
         #     file_data,
         #     as_attachment=True,
         #     attachment_filename=file_name
         # )
-        return file.data, 200
+        
+        # file_bytes = b'Your file content here'
+        # # Assuming 'file_name' is the name of your file
+        # file_name = 'file.txt'
+        # Create a BytesIO object
+        file_obj = BytesIO(file_data)
+        # Set the file pointer to the beginning of the BytesIO object
+        file_obj.seek(0)
+        # Create a Flask response with the BytesIO object
+        response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
+        # Set the content type
+        response.headers['Content-Type'] = 'application/octet-stream'
+        return response
+
+        # return file.data, 200
+    
         # return send_file(
         #     file_data,
         #     as_attachment=True,

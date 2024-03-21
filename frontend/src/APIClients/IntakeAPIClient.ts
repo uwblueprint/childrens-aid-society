@@ -438,6 +438,7 @@ const downloadFile = async (fileId: number): Promise<any> => {
     });
     console.log('returned data from intakeapiclients', response);
     console.log('our data', response.data);
+    console.log('our data', typeof response.data);
 
     // const contentDisposition = response.headers['content-disposition'];
     // console.log('content-disposition', contentDisposition);
@@ -451,13 +452,16 @@ const downloadFile = async (fileId: number): Promise<any> => {
     // }
     // return response; 
 
-    const url = window.URL.createObjectURL(response.data);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'filename.ext'; // Set desired file name
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
+    const blob = new Blob([response.data, {type: "application/pdf"}]);
+    const url = window.URL.createObjectURL(blob);
+    // const url = window.URL.createObjectURL(response.data);
+    
+    // const a = document.createElement('a');
+    // a.href = url;
+    // a.download = 'filename.ext'; // Set desired file name
+    // document.body.appendChild(a);
+    // a.click();
+    // window.URL.revokeObjectURL(url);
 
     return url;
 

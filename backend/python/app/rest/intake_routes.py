@@ -470,7 +470,9 @@ def delete_intake():
             return jsonify({"error": "intake_id query parameter must be an int"}), 400
         else:
             try:
+                pdf_file_id = intake_service.get_intake_by_id(intake_id).court_order_file_id
                 intake_service.delete_intake(intake_id)
+                file_storage_service.delete_file(pdf_file_id)
                 return "intake deleted", 200
             except Exception as e:
                 error_message = getattr(e, "message", None)

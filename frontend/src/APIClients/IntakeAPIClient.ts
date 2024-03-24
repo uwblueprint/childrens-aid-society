@@ -36,6 +36,7 @@ const post = async (formData: any): Promise<Case> => {
     AUTHENTICATED_USER_KEY,
     "access_token",
   )}`;
+  console.log(bearerToken);
   try {
     const { data } = await baseAPIClient.post("/intake", formData, {
       headers: { Authorization: bearerToken },

@@ -5,10 +5,10 @@ import { Case } from "../types/CasesContextTypes";
 import CaseStatus from "../types/CaseStatus";
 
 interface Intake {
-  user_id: number;
-  case_id: number;
-  intake_status: string;
-  intake_meeting_notes: string;
+  userId: number;
+  caseId: number;
+  intakeStatus: string;
+  intakeMeetingNotes: string;
   caseReferral: {
     referringWorker: string;
     referringWorkerContact: string;
@@ -63,10 +63,10 @@ const search = async (searchParam: string): Promise<Case[]> => {
     });
 
     const mappedDataCase: Case[] = data.map((intake) => ({
-      user_id: intake.user_id.toString(),
-      case_id: intake.case_id.toString(),
-      intakeStatus: <CaseStatus>intake.intake_status,
-      intakeMeetingNotes: intake.intake_meeting_notes,
+      user_id: intake.userId.toString(),
+      case_id: intake.caseId.toString(),
+      intakeStatus: <CaseStatus>intake.intakeStatus,
+      intakeMeetingNotes: intake.intakeMeetingNotes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
@@ -171,11 +171,11 @@ const get = async (
       },
     });
 
-    const mappedData: Case[] = data.map((intake) => ({
-      user_id: intake.user_id.toString(),
-      case_id: intake.case_id.toString(),
-      intakeStatus: <CaseStatus>intake.intake_status,
-      intakeMeetingNotes: intake.intake_meeting_notes,
+    const mappedData = data.map((intake) => ({
+      user_id: intake.userId.toString(),
+      case_id: intake.caseId.toString(),
+      intakeStatus: <CaseStatus>intake.intakeStatus,
+      intakeMeetingNotes: intake.intakeMeetingNotes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,

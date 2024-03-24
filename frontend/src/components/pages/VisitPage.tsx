@@ -75,10 +75,8 @@ const Visit = (): React.ReactElement => {
     DEFAULT_ATTENDANCE_DETAILS,
   );
 
-  const [
-    transportationEntries,
-    setTransportationEntries,
-  ] = useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
+  const [transportationEntries, setTransportationEntries] =
+    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
 
   const scrollToHeader = (headerId: string) => {
     const headerElement = document.getElementById(headerId);

@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState } from "react";
 
@@ -85,6 +86,8 @@ export const VisitCadenceSelectField = ({
   val,
   dropdownWidth,
   width,
+  name,
+  icon,
 }: VisitCadenceSelectProps): React.ReactElement => {
   const [isFocused, setFocus] = useState(false);
   return (

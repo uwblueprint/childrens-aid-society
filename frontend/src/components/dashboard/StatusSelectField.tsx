@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState } from "react";
 
@@ -107,6 +108,8 @@ export const StatusSelectField = ({
   iconRight,
   readOnly = false,
   setSelected,
+  name,
+  icon,
 }: StatusSelectProps): React.ReactElement => {
   const [isFocused, setFocus] = useState(false);
   const colorMap = new Map([

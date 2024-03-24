@@ -25,10 +25,8 @@ const PermittedIndividualsForm = ({
   permittedIndividuals,
   setPermittedIndividuals,
 }: PermittedIndividualsProps): React.ReactElement => {
-  const [
-    permittedIndividualsDeleted,
-    setPermittedIndividualsDeleted,
-  ] = useState(0);
+  const [permittedIndividualsDeleted, setPermittedIndividualsDeleted] =
+    useState(0);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const {
@@ -54,8 +52,8 @@ const PermittedIndividualsForm = ({
     setPermittedIndividuals(permittedIndividuals);
   };
 
-  const permittedIndividualsOverview: PermittedIndividualsDetails[] = permittedIndividuals.map(
-    (permittedIndividual) => {
+  const permittedIndividualsOverview: PermittedIndividualsDetails[] =
+    permittedIndividuals.map((permittedIndividual) => {
       const individualDetail: PermittedIndividualsDetails = {
         providerName: permittedIndividual.providerName,
         phoneNo: permittedIndividual.phoneNo,
@@ -63,8 +61,7 @@ const PermittedIndividualsForm = ({
         additionalNotes: permittedIndividual.additionalNotes,
       };
       return individualDetail;
-    },
-  );
+    });
 
   const emptyPermittedIndividual: PermittedIndividualsDetails = {
     providerName: "",

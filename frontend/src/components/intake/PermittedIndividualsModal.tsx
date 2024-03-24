@@ -34,9 +34,8 @@ const PermittedIndividualsModal = ({
 
   const [providerNameChanged, setProviderNameChanged] = useState(false);
   const [phoneNoChanged, setPhoneNoChanged] = useState(false);
-  const [relationshipToChildChanged, setRelationshipToChildChanged] = useState(
-    false,
-  );
+  const [relationshipToChildChanged, setRelationshipToChildChanged] =
+    useState(false);
   const [additionalNotesChanged, setAdditionalNotesChanged] = useState(false);
 
   const handleClose = () => {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { useState } from "react";
 import {
   Box,
@@ -30,6 +32,10 @@ const VisitCadenceModal = ({
   onClose,
   onClick,
   childName,
+  caseNumber,
+  status,
+  onDeleteClick,
+  goToIntake,
 }: VisitCadenceModalProps): React.ReactElement => {
   const [visitingFamilyMember, setVisitingFamilyMember] = useState("");
   const [notes, setNotes] = useState("");

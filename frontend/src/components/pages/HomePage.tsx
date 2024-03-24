@@ -32,10 +32,10 @@ const SecondaryHeader = ({
 
   const { setStep } = useStepValueContext();
 
-  function goToIntake() {
+  const goToIntake = () => {
     setStep(0);
     history.push("/intake");
-  }
+  };
 
   // const {
   //   onOpen: onOpenPermanentDelete,

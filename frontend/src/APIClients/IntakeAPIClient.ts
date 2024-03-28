@@ -412,6 +412,15 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
 const downloadFile = async (fileId: number): Promise<any> => {
 // const downloadFile = async (fileId: number): Promise<Response> => {
 // const downloadFile = async (fileId: number, fileName: string): Promise<any> => {
+
+  const binaryStringToBytes = (binaryString: string): Uint8Array => {
+    const bytes = new Uint8Array(binaryString.length / 2);
+    for (let i = 0; i < binaryString.length; i += 2) {
+        bytes[i / 2] = parseInt(binaryString.substr(i, 2), 16);
+    }
+    return bytes;
+  }
+
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -438,7 +447,7 @@ const downloadFile = async (fileId: number): Promise<any> => {
     });
     console.log('returned data from intakeapiclients', response);
     console.log('our data', response.data);
-    console.log('our data', typeof response.data);
+    console.log('our data', typeof response.data, response.data.length);
 
     // const contentDisposition = response.headers['content-disposition'];
     // console.log('content-disposition', contentDisposition);
@@ -451,8 +460,13 @@ const downloadFile = async (fileId: number): Promise<any> => {
     //     }
     // }
     // return response; 
+    // const blob = new Blob([response.data, {type: "application/pdf"}]); // Used this before - downloaded but file was corrupt
+    // const byteArray = new Uint8Array(response.data.split(',').map(Number));
 
-    const blob = new Blob([response.data, {type: "application/pdf"}]);
+    const bytes = binaryStringToBytes(response.data);
+    console.log('byte array', bytes);
+
+    const blob = new Blob([bytes]);
     const url = window.URL.createObjectURL(blob);
     // const url = window.URL.createObjectURL(response.data);
     

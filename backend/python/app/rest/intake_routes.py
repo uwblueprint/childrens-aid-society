@@ -328,12 +328,14 @@ def create_intake():
 
     file = request.files["courtInformation[orderReferral]"]
     # print("file name", file.filename)
-    # print("file data", file.read())
+    # print("file data in intake_routes", len(file.read()), sys.getsizeof(file.read()), str(file.read())[:100])
        
     pdf_file = {
         "file_name": file.filename,
         "file_data": bytes(file.read()),
     }
+
+    print('after converting to bytes', len(pdf_file['file_data']), pdf_file['file_data'][:200])
 
     try:
         # validate_request("CreatePdfFileDTO")
@@ -615,7 +617,7 @@ def download_file(file_id):
         file = file_storage_service.get_file(file_id)
         print('returned here from file storage service', file)
         file_name, file_data = file.file_name, file.file_data
-        print('returned here file stuffs', file_name, file_data[:20])
+        print('returned here file stuffs', file_name, len(file_data), file_data[:20])
         # file = send_file(
         #     file_data,
         #     as_attachment=True,
@@ -633,8 +635,13 @@ def download_file(file_id):
         # file_bytes = b'Your file content here'
         # # Assuming 'file_name' is the name of your file
         # file_name = 'file.txt'
-        # Create a BytesIO object
-        file_obj = BytesIO(file_data)
+
+        # Create a BytesIO object (this works)
+        # file_obj = BytesIO(file_data)
+
+        file_obj = BytesIO()
+        file_obj.write(file_data)
+
         # Set the file pointer to the beginning of the BytesIO object
         file_obj.seek(0)
         # Create a Flask response with the BytesIO object

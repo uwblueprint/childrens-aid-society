@@ -95,7 +95,7 @@ const StatusModal = ({
     familialConcerns: ["concern1", "concern2"],
   };
 
-  function sendToReview() {
+  const sendToReview = () => {
     const reviewCaseDetailsStep = 4;
 
     setStep(reviewCaseDetailsStep);
@@ -104,7 +104,7 @@ const StatusModal = ({
     setProgramDetails(mockProgramDetails);
     setIsReviewOnly(true);
     goToIntake();
-  }
+  };
   return (
     <Box>
       <ModalComponent

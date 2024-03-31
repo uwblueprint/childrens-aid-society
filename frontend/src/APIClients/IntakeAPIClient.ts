@@ -42,7 +42,7 @@ const post = async (formData: any): Promise<Case> => {
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't make new intake");
   }
 };
 
@@ -62,7 +62,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
     });
 
-    const mappedDataCase: Case[] = data.map((intake) => ({
+    const mappedDataCase: Case[] = data.map((intake: Intake) => ({
       user_id: intake.userId.toString(),
       case_id: intake.caseId.toString(),
       intakeStatus: <CaseStatus>intake.intakeStatus,
@@ -145,7 +145,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
 
     return mappedDataCase;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get intake serach results");
   }
 };
 
@@ -171,7 +171,7 @@ const get = async (
       },
     });
 
-    const mappedData = data.map((intake) => ({
+    const mappedData = data.map((intake: Intake) => ({
       user_id: intake.userId.toString(),
       case_id: intake.caseId.toString(),
       intakeStatus: <CaseStatus>intake.intakeStatus,
@@ -254,7 +254,7 @@ const get = async (
 
     return mappedData;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get intakes");
   }
 };
 
@@ -279,7 +279,7 @@ const put = async ({
     );
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't update intake");
   }
 };
 
@@ -294,7 +294,7 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     });
     return response.data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't delete intake");
   }
 };
 export default { post, get, put, deleteIntake, search };

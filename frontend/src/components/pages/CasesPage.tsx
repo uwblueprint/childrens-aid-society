@@ -40,7 +40,6 @@ const Cases = (): React.ReactElement | null => {
             ? intake.case_id
             : parseInt(intake.case_id, 10),
         referringWorker: intake.caseReferral.referringWorkerName,
-        intakeMeetingNotes: intake.intakeMeetingNotes,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
         caseTag: intake.intakeStatus,

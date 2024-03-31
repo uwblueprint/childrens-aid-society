@@ -16,21 +16,15 @@ import CustomInput from "../common/CustomInput";
 import OptionalLabel from "../intake/OptionalLabel";
 import { StatusSelectField } from "./StatusSelectField";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
-import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 
 export type StatusModalProps = {
-  caseId: number;
+  caseId?: number;
   status: string;
   isOpen: boolean;
-  onClick: (updatedData: {
-    changedData: Record<string, string>;
-    intakeID: number;
-  }) => void;
+  onClick: () => void;
   onClose: () => void;
   onDeleteClick: () => void;
   goToIntake: () => void;
-  referringWorkerName: string;
-  intakeNotes: string;
 };
 
 const StatusModal = ({
@@ -41,12 +35,10 @@ const StatusModal = ({
   onClick,
   onDeleteClick,
   goToIntake,
-  referringWorkerName,
-  intakeNotes,
 }: StatusModalProps): React.ReactElement => {
   const [selectedOption, setSelectedOption] = useState(status);
-  const [workerName, setWorkerName] = useState(referringWorkerName);
-  const [meetingNotes, setMeetingNotes] = useState(intakeNotes);
+  const [workerName, setWorkerName] = useState("");
+  const [meetingNotes, setMeetingNotes] = useState("");
 
   const handleClearPage = () => {
     setWorkerName("");
@@ -124,6 +116,7 @@ const StatusModal = ({
                 Case Submission
               </Text>
               {/* TODO: Need to be changed for dynamic values */}
+              <Text>Lead: XXX</Text>
               <Text>Date: XXX</Text>
               <Text>Family Name: XXX</Text>
               <Flex justify="flex-end" align="flex-end">
@@ -170,7 +163,7 @@ const StatusModal = ({
                   placeholder={
                     selectedOption === "ACTIVE" ? "Enter worker name" : ""
                   }
-                  value={selectedOption === "ACTIVE" ? workerName : ""}
+                  value={workerName}
                   onChange={(event) => {
                     setWorkerName(event.target.value);
                   }}
@@ -197,35 +190,9 @@ const StatusModal = ({
             </Box>
           </Box>
         }
-        onClick={async () => {
-          const updatedData: {
-            changedData: Record<string, string>;
-            intakeID: number;
-          } = {
-            changedData: {
-              intake_status: selectedOption,
-              referring_worker_name: workerName,
-              intake_meeting_notes: meetingNotes,
-            },
-            intakeID: caseId,
-          };
-          const updatedFrontend: {
-            changedData: Record<string, string>;
-            intakeID: number;
-          } = {
-            changedData: {
-              intakeStatus: selectedOption,
-              referringWorkerName: workerName,
-              intakeMeetingNote: meetingNotes,
-            },
-            intakeID: caseId,
-          };
-          await IntakeAPIClient.put(updatedData);
-          onClick(updatedFrontend);
-          onClose();
-        }}
         disabled={selectedOption === ""}
         primaryButtonTitle="Save"
+        onClick={onClick}
         isOpen={isOpen}
         onClose={onClose}
         unsavedProgressModal={false}

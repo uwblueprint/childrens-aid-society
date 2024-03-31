@@ -419,11 +419,12 @@ def create_intake():
     return jsonify(new_intake.__dict__), 201
 
 
-@blueprint.route("/<int:intake_id>", methods=["DELETE"], strict_slashes=False)
-def delete_intake(intake_id):
+@blueprint.route("/", methods=["DELETE"], strict_slashes=False)
+def delete_intake():
     """
     Delete intake by intake_id specified through a query parameter
     """
+    intake_id = int(request.args.get("intake_id"))
 
     if intake_id:
         if type(intake_id) is not int:

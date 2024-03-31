@@ -98,7 +98,6 @@ const Home = (): React.ReactElement => {
           date: caseData.caseReferral.referralDate,
           caseTag: caseData.intakeStatus,
           familyName: caseData.caseReferral.familyName,
-          intakeMeetingNotes: caseData.intakeMeetingNotes,
         }));
         setSearchResults(caseCards);
       });
@@ -124,7 +123,6 @@ const Home = (): React.ReactElement => {
             ? intake.case_id
             : parseInt(intake.case_id, 10),
         referringWorker: intake.caseReferral.referringWorkerName,
-        intakeMeetingNotes: intake.intakeMeetingNotes,
         date: intake.caseReferral.referralDate,
         familyName: intake.caseReferral.familyName,
         caseTag: intake.intakeStatus,

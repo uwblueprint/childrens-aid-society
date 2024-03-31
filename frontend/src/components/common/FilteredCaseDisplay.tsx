@@ -43,7 +43,6 @@ const FilteredCaseDisplay = ({
               key={caseData.caseId}
               caseId={caseData.caseId}
               referringWorker={caseData.referringWorker}
-              intakeMeetingNotes={caseData.intakeMeetingNotes}
               date={caseData.date}
               familyName={caseData.familyName}
               caseTag={caseData.caseTag}

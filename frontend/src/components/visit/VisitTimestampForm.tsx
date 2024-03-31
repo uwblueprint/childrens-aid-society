@@ -92,9 +92,9 @@ const VisitTimestampForm = ({
                 placeholder="Select option"
                 onChange={captureValue}
               >
-                <option value="visit1">Visit 1</option>
-                <option value="visit2">Visit 2</option>
-                <option value="visit3">Visit 3</option>
+                <option value="Full">Full</option>
+                <option value="Partial">Partial</option>
+                <option value="Unsupervised">Unsupervised</option>
               </Select>
             </Box>
           </SimpleGrid>

@@ -82,7 +82,7 @@ const AttendanceForm = ({
                         readOnly={readOnly}
                         onChange={captureValue}
                       >
-                        <option value="attendance1">attendance 1</option>
+                        <option value="Other Visitor">Other Visitor</option>
                       </Select>
                     </Box>
                     <Box>
@@ -141,15 +141,12 @@ const AttendanceForm = ({
                       <Select
                         name={`entries[${index}].visitAttendance`}
                         id="visitAttendance"
-                        // options={["Cancelled", "Occurred"]}
                         placeholder="Select an option..."
-                        // iconRight={<Icon as={ChevronDown} />}
                         disabled={readOnly}
                         onChange={captureValue}
                       >
-                        <option value="full">Full</option>
-                        <option value="partial">Partial</option>
-                        <option value="unsupervised">Unsupervised</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Occurred">Occurred</option>
                       </Select>
                     </Box>
                     <Box>

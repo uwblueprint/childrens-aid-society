@@ -651,8 +651,8 @@ def download_file(file_id):
         # Create a Flask response with the BytesIO object
         response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
         # Set the content type
-        response.headers['Access-Control-Allow-Origin'] = '*' # 'application/octet-stream'
-        # response.headers['Content-Type'] = '*' # 'application/octet-stream'
+        # response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Content-Type'] = '*' # 'application/octet-stream'
         return response
 
         # return file.data, 200

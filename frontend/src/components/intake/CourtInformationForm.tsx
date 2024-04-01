@@ -98,28 +98,27 @@ const CourtInformationForm = ({
     }
     try {
 
-      window.location.href = 'http://localhost:5000/intake/download/9';
-
+      // window.location.href = 'http://localhost:5000/intake/download/9';
 
       const url = await IntakeAPIClient.downloadFile(fileId);
-      // const iframe = document.createElement('iframe');
-      // iframe.setAttribute('src', url);
-      // iframe.setAttribute('width', '100%');
-      // iframe.setAttribute('height', '600');
-      // // Append iframe to container
-      // const pdfContainer = document.getElementById('pdfContainer');
-      // pdfContainer?.appendChild(iframe);
+      // // const iframe = document.createElement('iframe');
+      // // iframe.setAttribute('src', url);
+      // // iframe.setAttribute('width', '100%');
+      // // iframe.setAttribute('height', '600');
+      // // // Append iframe to container
+      // // const pdfContainer = document.getElementById('pdfContainer');
+      // // pdfContainer?.appendChild(iframe);
 
-      const newTab = window.open(url, '_blank');
-      if (newTab) newTab.document.title = fileName;
+      // const newTab = window.open(url, '_blank');
+      // if (newTab) newTab.document.title = fileName;
 
       // prevsolution 
-      // const a = document.createElement('a');
-      // a.href = url;
-      // a.download = fileName;
-      // document.body.appendChild(a);
-      // a.click();
-      // window.URL.revokeObjectURL(url);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
       
     } catch (e) {
       console.log('bad code');

@@ -411,13 +411,13 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const downloadFile = async (fileId: number): Promise<any> => {
 
-  const binaryStringToBytes = (binaryString: string): Uint8Array => {
-    const bytes = new Uint8Array(binaryString.length / 2);
-    for (let i = 0; i < binaryString.length; i += 2) {
-        bytes[i / 2] = parseInt(binaryString.substr(i, 2), 16);
-    }
-    return bytes;
-  }
+  // const binaryStringToBytes = (binaryString: string): Uint8Array => {
+  //   const bytes = new Uint8Array(binaryString.length / 2);
+  //   for (let i = 0; i < binaryString.length; i += 2) {
+  //       bytes[i / 2] = parseInt(binaryString.substr(i, 2), 16);
+  //   }
+  //   return bytes;
+  // }
 
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,

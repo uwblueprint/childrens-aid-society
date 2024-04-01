@@ -92,38 +92,35 @@ const CourtInformationForm = ({
   const downloadFile = async () => {
     const fileId = courtDetails.orderReferralId; 
     const fileName = courtDetails.orderReferralName || 'file.pdf'; 
-    // const fileName = courtDetails.orderReferralName || ''; 
     console.log("all details", courtDetails);
     if (!fileId) {
       return;
     }
     try {
-      // await IntakeAPIClient.downloadFile(fileId);
-      // const file = await IntakeAPIClient.downloadFile(fileId);
-      // const response = await IntakeAPIClient.downloadFile(fileId);
-      const url = await IntakeAPIClient.downloadFile(fileId);
 
+      window.location.href = 'http://localhost:5000/intake/download/9';
+
+
+      const url = await IntakeAPIClient.downloadFile(fileId);
+      // const iframe = document.createElement('iframe');
+      // iframe.setAttribute('src', url);
+      // iframe.setAttribute('width', '100%');
+      // iframe.setAttribute('height', '600');
+      // // Append iframe to container
+      // const pdfContainer = document.getElementById('pdfContainer');
+      // pdfContainer?.appendChild(iframe);
+
+      const newTab = window.open(url, '_blank');
+      if (newTab) newTab.document.title = fileName;
+
+      // prevsolution 
+      // const a = document.createElement('a');
+      // a.href = url;
+      // a.download = fileName;
+      // document.body.appendChild(a);
+      // a.click();
+      // window.URL.revokeObjectURL(url);
       
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName; // Set desired file name
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      
-      // const response = await IntakeAPIClient.downloadFile(fileId, fileName);
-      // console.log("response", response);
-      // // const blobURL = window.URL.createObjectURL(blob);
-      // const contentDisposition = response.headers.get('content-disposition');
-      // const filename = contentDisposition?.split('filename=')[1].trim();
-      // console.log('filename', filename);
-      // Create a Blob object from the file data
-      // const blob = new Blob([response.data], { type: response.headers['content-type'] });
-      // // const blob = response.blob();
-      // console.log('blob', blob);
-      // const blobURL = window.URL.createObjectURL(blob);
-      // console.log('file done', file);
-      // return {blob, filename};
     } catch (e) {
       console.log('bad code');
     }
@@ -188,6 +185,7 @@ const CourtInformationForm = ({
               ORDER REFERRAL
             </FormLabel>
             <HStack>
+              {/* <div id="pdfContainer"/> */}
               <Field
                 as={CustomInput}
                 isReadOnly

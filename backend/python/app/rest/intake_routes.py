@@ -644,10 +644,15 @@ def download_file(file_id):
 
         # Set the file pointer to the beginning of the BytesIO object
         file_obj.seek(0)
+
+        # with open('retrieved_pdf.pdf', 'wb') as f:
+        #     f.write(file_data)
+
         # Create a Flask response with the BytesIO object
         response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
         # Set the content type
-        response.headers['Content-Type'] = 'application/octet-stream'
+        response.headers['Access-Control-Allow-Origin'] = '*' # 'application/octet-stream'
+        # response.headers['Content-Type'] = '*' # 'application/octet-stream'
         return response
 
         # return file.data, 200

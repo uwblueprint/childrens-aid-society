@@ -410,8 +410,6 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const downloadFile = async (fileId: number): Promise<any> => {
-// const downloadFile = async (fileId: number): Promise<Response> => {
-// const downloadFile = async (fileId: number, fileName: string): Promise<any> => {
 
   const binaryStringToBytes = (binaryString: string): Uint8Array => {
     const bytes = new Uint8Array(binaryString.length / 2);
@@ -447,6 +445,7 @@ const downloadFile = async (fileId: number): Promise<any> => {
     });
     console.log('returned data from intakeapiclients', response);
     console.log('our data', response.data);
+    // try to only get the file_data instead of the file_name as well? -> send it differently. direct download or base64 encoding 
     console.log('our data', typeof response.data, response.data.length);
 
     // const contentDisposition = response.headers['content-disposition'];
@@ -463,13 +462,15 @@ const downloadFile = async (fileId: number): Promise<any> => {
     // const blob = new Blob([response.data, {type: "application/pdf"}]); // Used this before - downloaded but file was corrupt
     // const byteArray = new Uint8Array(response.data.split(',').map(Number));
 
-    const bytes = binaryStringToBytes(response.data);
-    console.log('byte array', bytes);
+    // This works! (before but garbage data)
+    // const bytes = binaryStringToBytes(response.data);
+    // console.log('byte array', bytes);
+    // const blob = new Blob([bytes]);
 
-    const blob = new Blob([bytes]);
+    const blob = new Blob([response.data], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     // const url = window.URL.createObjectURL(response.data);
-    
+
     // const a = document.createElement('a');
     // a.href = url;
     // a.download = 'filename.ext'; // Set desired file name
@@ -478,17 +479,6 @@ const downloadFile = async (fileId: number): Promise<any> => {
     // window.URL.revokeObjectURL(url);
 
     return url;
-
-    // const contentDisposition = response.headers['content-disposition'];
-    // const filename = contentDisposition.split('filename=')[1].trim();
-
-    // // Create a Blob object from the file data
-    // const blob = new Blob([response.data], { type: response.headers['content-type'] });
-
-    // // const blob = response.blob();
-    // console.log('blob');
-    // // const blobURL = window.URL.createObjectURL(blob);
-    // return {blob, filename};
   } catch (error) {
     return error;
   }

@@ -63,10 +63,8 @@ const IntakeFooter = ({
     onClose: onCloseSubmitCase,
   } = useDisclosure();
 
-  const {
-    isOpen: isOpenSubmitError,
-    onClose: onCloseSubmitError,
-  } = useDisclosure();
+  const { isOpen: isOpenSubmitError, onClose: onCloseSubmitError } =
+    useDisclosure();
 
   const onNextStep = () => {
     if (isStepComplete()) {

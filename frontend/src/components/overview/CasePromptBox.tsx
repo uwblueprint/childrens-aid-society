@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { ReactElement } from "react";
 import { Button, Divider, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import { ArrowRight, Trash } from "react-feather";
@@ -26,6 +28,8 @@ const PromptBox = ({
   buttonText,
   buttonIcon,
   onButtonClick,
+  secondaryButtonText,
+  secondaryButtonIcon,
   secondaryOnButtonClick,
   individualDetails,
   setSelectedIndex,

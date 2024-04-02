@@ -58,6 +58,8 @@ const NewCaregiverModal = ({
   const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
     false,
   );
+  const [indivConsiderationsChanged, setIndivConsiderationsChanged] =
+    useState(false);
   const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
   const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
     null,

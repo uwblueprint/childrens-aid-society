@@ -89,7 +89,7 @@ const ProgramForm = ({
     setProgramDetails(formik.values);
   };
 
-  function onClear() {
+  const onClear = () => {
     formik.setValues({
       transportationRequirements: "",
       schedulingRequirements: "",
@@ -98,7 +98,7 @@ const ProgramForm = ({
       longTermGoals: [],
       familialConcerns: [],
     });
-  }
+  };
 
   const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
 

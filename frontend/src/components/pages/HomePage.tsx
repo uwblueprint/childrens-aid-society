@@ -15,9 +15,9 @@ import IntakeHeader from "../intake/IntakeHeader";
 import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import FilteredSection from "../dashboard/FilteredSection";
-import { CaseCardProps } from "../dashboard/CaseCard";
-import { Case } from "../../types/CasesContextTypes";
+import { CasesContextType } from "../../types/CasesContextTypes";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
+import CasesContext from "../../contexts/CasesContext";
 
 const SecondaryHeader = ({
   searchValue,
@@ -32,10 +32,10 @@ const SecondaryHeader = ({
 
   const { setStep } = useStepValueContext();
 
-  function goToIntake() {
+  const goToIntake = () => {
     setStep(0);
     history.push("/intake");
-  }
+  };
 
   // const {
   //   onOpen: onOpenPermanentDelete,
@@ -85,74 +85,62 @@ const SecondaryHeader = ({
 };
 
 const Home = (): React.ReactElement => {
+  const [contextCases, setContextCases] = useState<{
+    [key: string]: CasesContextType;
+  }>({
+    active: [],
+    submitted: [],
+    pending: [],
+    archived: [],
+    searched: [],
+  });
+
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState<CaseCardProps[]>([]);
   const [enterClicked, setEnterClicked] = useState(false);
   const handleSearch = () => {
     setEnterClicked(true);
     if (searchValue.trim() !== "") {
       IntakeAPIClient.search(searchValue).then((data) => {
-        const caseCards: CaseCardProps[] = data.map((caseData: Case) => ({
-          caseId: Number(caseData.case_id),
-          referringWorker: caseData.caseReferral.referringWorkerName,
-          date: caseData.caseReferral.referralDate,
-          caseTag: caseData.intakeStatus,
-          familyName: caseData.caseReferral.familyName,
-          intakeMeetingNotes: caseData.intakeMeetingNotes,
-        }));
-        setSearchResults(caseCards);
+        setContextCases({
+          active: contextCases.active,
+          submitted: contextCases.submitted,
+          pending: contextCases.pending,
+          archived: contextCases.archived,
+          searched: data,
+        });
       });
     }
   };
 
-  // TODO: remove console log and use context instead of state
-  // const casesFromContext = useContext(CasesContext);
-  // eslint-disable-next-line
-
-  const [cases, setCases] = useState<{ [key: string]: CaseCardProps[] }>({
-    active: [],
-    submitted: [],
-    pending: [],
-    archived: [],
-  });
-
-  const mapIntakeResponsesToCaseCards = (intakes: Case[]): CaseCardProps[] => {
-    if (intakes.length > 0) {
-      return intakes.map((intake) => ({
-        caseId:
-          typeof intake.case_id === "number"
-            ? intake.case_id
-            : parseInt(intake.case_id, 10),
-        referringWorker: intake.caseReferral.referringWorkerName,
-        intakeMeetingNotes: intake.intakeMeetingNotes,
-        date: intake.caseReferral.referralDate,
-        familyName: intake.caseReferral.familyName,
-        caseTag: intake.intakeStatus,
-      }));
-    }
-    return [];
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      const activeCases = await IntakeAPIClient.get(CaseStatus.ACTIVE, 1, 20);
-      const submittedCases = await IntakeAPIClient.get(
+      const activeContextCases = await IntakeAPIClient.get(
+        CaseStatus.ACTIVE,
+        1,
+        20,
+      );
+      const submittedContextCases = await IntakeAPIClient.get(
         CaseStatus.SUBMITTED,
         1,
         20,
       );
-      const pendingCases = await IntakeAPIClient.get(CaseStatus.PENDING, 1, 20);
-      const archivedCases = await IntakeAPIClient.get(
+      const pendingContextCases = await IntakeAPIClient.get(
+        CaseStatus.PENDING,
+        1,
+        20,
+      );
+      const archivedContextCases = await IntakeAPIClient.get(
         CaseStatus.ARCHIVED,
         1,
         20,
       );
 
-      setCases({
-        active: mapIntakeResponsesToCaseCards(activeCases),
-        submitted: mapIntakeResponsesToCaseCards(submittedCases),
-        pending: mapIntakeResponsesToCaseCards(pendingCases),
-        archived: mapIntakeResponsesToCaseCards(archivedCases),
+      setContextCases({
+        active: activeContextCases,
+        submitted: submittedContextCases,
+        pending: pendingContextCases,
+        archived: archivedContextCases,
+        searched: [],
       });
     };
 
@@ -181,12 +169,13 @@ const Home = (): React.ReactElement => {
           />
           {enterClicked && (
             <>
-              {searchResults.length > 0 ? (
-                <FilteredSection
-                  status="Search Results"
-                  cases={searchResults}
-                  showViewAll={false}
-                />
+              {contextCases.searched.length > 0 ? (
+                <CasesContext.Provider value={contextCases.searched}>
+                  <FilteredSection
+                    status="Search Results"
+                    showViewAll={false}
+                  />
+                </CasesContext.Provider>
               ) : (
                 <h3 style={{ marginTop: "20px" }}>
                   Sorry, we could not find that for you.
@@ -194,16 +183,18 @@ const Home = (): React.ReactElement => {
               )}
             </>
           )}
-          <FilteredSection status={CaseStatus.ACTIVE} cases={cases.active} />
-          <FilteredSection
-            status={CaseStatus.SUBMITTED}
-            cases={cases.submitted}
-          />
-          <FilteredSection status={CaseStatus.PENDING} cases={cases.pending} />
-          <FilteredSection
-            status={CaseStatus.ARCHIVED}
-            cases={cases.archived}
-          />
+          <CasesContext.Provider value={contextCases.active}>
+            <FilteredSection status={CaseStatus.ACTIVE} />
+          </CasesContext.Provider>
+          <CasesContext.Provider value={contextCases.submitted}>
+            <FilteredSection status={CaseStatus.SUBMITTED} />
+          </CasesContext.Provider>
+          <CasesContext.Provider value={contextCases.pending}>
+            <FilteredSection status={CaseStatus.PENDING} />
+          </CasesContext.Provider>
+          <CasesContext.Provider value={contextCases.archived}>
+            <FilteredSection status={CaseStatus.ARCHIVED} />
+          </CasesContext.Provider>
         </VStack>
       </Box>
     </Box>

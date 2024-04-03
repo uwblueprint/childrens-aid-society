@@ -186,7 +186,7 @@ const ProgramForm = ({
                   type="string"
                   placeholder="DD/MM/YYYY"
                   icon={<Icon as={Calendar} />}
-                  validate={validateDate}
+                  validate={(value: string) => validateDate(value)}
                 />
                 {dateOfBirthError && (
                   <div style={{ color: "red" }}>{dateOfBirthError}</div>

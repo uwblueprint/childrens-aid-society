@@ -92,7 +92,7 @@ const ChildInformationForm = ({
                       dateOfBirth: e.target.value,
                     })
                   }
-                  validate={validateDate}
+                  validate={(value: string) => validateDate(value)}
                 />
                 {dateOfBirthError && (
                   <div style={{ color: "red" }}>{dateOfBirthError}</div>

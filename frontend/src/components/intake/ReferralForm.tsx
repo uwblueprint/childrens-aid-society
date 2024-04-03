@@ -73,10 +73,8 @@ const ReferralForm = ({
     });
   };
 
-  const [
-    referringWorkerContactError,
-    setreferringWorkerContactError,
-  ] = useState<string | null>(null);
+  const [referringWorkerContactError, setreferringWorkerContactError] =
+    useState<string | null>(null);
   const [refferalDateError, setRefferalDateError] = useState<string | null>(
     null,
   );
@@ -154,7 +152,7 @@ const ReferralForm = ({
                   type="string"
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
-                  validate={validatePhone}
+                  validate={(value: string) => validatePhone(value)}
                 />
                 {referringWorkerContactError && (
                   <div style={{ color: "red" }}>
@@ -208,7 +206,7 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
-                validate={validateDate}
+                validate={(value: string) => validateDate(value)}
               />
               {refferalDateError && (
                 <div style={{ color: "red" }}>{refferalDateError}</div>

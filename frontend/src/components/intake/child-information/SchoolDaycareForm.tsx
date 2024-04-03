@@ -97,7 +97,7 @@ const SchoolDaycareForm = ({
                     schoolPhoneNo: e.target.value,
                   })
                 }
-                validate={validatePhone}
+                validate={(value: string) => validatePhone(value)}
               />
               {schoolPhoneNoError && (
                 <div style={{ color: "red" }}>{schoolPhoneNoError}</div>

@@ -9,6 +9,7 @@ import PermanentDeleteModal from "./PermanentDeleteModal";
 export type CaseCardProps = {
   caseId: number;
   referringWorker: string;
+  intakeMeetingNotes: string;
   date: string;
   familyName: string;
   caseTag: CaseStatus;
@@ -32,6 +33,7 @@ const colorChange = (value: string) => {
 const CaseCard = ({
   caseId,
   referringWorker,
+  intakeMeetingNotes,
   date,
   familyName,
   caseTag,
@@ -64,6 +66,10 @@ const CaseCard = ({
     } else {
       onOpenStatusModal();
     }
+  };
+
+  const onClickStatusUpdate = () => {
+    window.location.reload();
   };
 
   return (
@@ -120,9 +126,9 @@ const CaseCard = ({
       <PermanentDeleteModal
         isOpen={isOpenPermanentDelete}
         onClick={() => {
-          // TODO: add deletion logic
           onClosePermanentDelete();
           onCloseStatusModal();
+          onClickStatusUpdate();
         }}
         onClose={onClosePermanentDelete}
         intakeId={caseId}
@@ -130,8 +136,12 @@ const CaseCard = ({
       <StatusModal
         caseId={caseId}
         status={caseTag}
+        referringWorkerName={referringWorker}
+        referralDate={date}
+        familyName={familyName}
+        intakeNotes={intakeMeetingNotes}
         isOpen={isOpenStatusModal}
-        onClick={() => {}}
+        onClick={onClickStatusUpdate}
         onClose={onCloseStatusModal}
         onDeleteClick={onOpenPermanentDelete}
         goToIntake={goToIntake}

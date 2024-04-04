@@ -5,9 +5,10 @@ import { Case } from "../types/CasesContextTypes";
 import CaseStatus from "../types/CaseStatus";
 
 interface Intake {
-  user_id: number;
-  case_id: number;
-  intake_status: string;
+  userId: number;
+  caseId: number;
+  intakeStatus: string;
+  intakeMeetingNotes: string;
   caseReferral: {
     referringWorker: string;
     referringWorkerContact: string;
@@ -41,7 +42,7 @@ const post = async (formData: any): Promise<Case> => {
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't make new intake");
   }
 };
 
@@ -61,10 +62,11 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
     });
 
-    const mappedDataCase: Case[] = data.map((intake) => ({
-      user_id: intake.user_id.toString(),
-      case_id: intake.case_id.toString(),
-      intakeStatus: <CaseStatus>intake.intake_status,
+    const mappedDataCase: Case[] = data.map((intake: Intake) => ({
+      user_id: intake.userId.toString(),
+      case_id: intake.caseId.toString(),
+      intakeStatus: <CaseStatus>intake.intakeStatus,
+      intakeMeetingNotes: intake.intakeMeetingNotes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
@@ -143,7 +145,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
 
     return mappedDataCase;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get intake serach results");
   }
 };
 
@@ -169,10 +171,11 @@ const get = async (
       },
     });
 
-    const mappedData: Case[] = data.map((intake) => ({
-      user_id: intake.user_id.toString(),
-      case_id: intake.case_id.toString(),
-      intakeStatus: <CaseStatus>intake.intake_status,
+    const mappedData = data.map((intake: Intake) => ({
+      user_id: intake.userId.toString(),
+      case_id: intake.caseId.toString(),
+      intakeStatus: <CaseStatus>intake.intakeStatus,
+      intakeMeetingNotes: intake.intakeMeetingNotes,
       caseReferral: {
         referringWorkerName: intake.caseReferral.referringWorker,
         referringWorkerContact: intake.caseReferral.referringWorkerContact,
@@ -251,7 +254,7 @@ const get = async (
 
     return mappedData;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get intakes");
   }
 };
 
@@ -276,7 +279,7 @@ const put = async ({
     );
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't update intake");
   }
 };
 
@@ -291,7 +294,7 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
     });
     return response.data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't delete intake");
   }
 };
 export default { post, get, put, deleteIntake, search };

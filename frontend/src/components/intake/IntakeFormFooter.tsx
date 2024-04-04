@@ -34,6 +34,7 @@ export type IntakeFooterProps = {
   childrens?: Children;
   caregivers?: Caregivers;
   permittedIndividuals?: PermittedIndividuals;
+  isButtonDisabled?: boolean;
 };
 
 const IntakeFooter = ({
@@ -50,6 +51,7 @@ const IntakeFooter = ({
   childrens,
   caregivers,
   permittedIndividuals,
+  isButtonDisabled,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
   // TODO: remove useHistory once dashboard is implemented
@@ -61,10 +63,8 @@ const IntakeFooter = ({
     onClose: onCloseSubmitCase,
   } = useDisclosure();
 
-  const {
-    isOpen: isOpenSubmitError,
-    onClose: onCloseSubmitError,
-  } = useDisclosure();
+  const { isOpen: isOpenSubmitError, onClose: onCloseSubmitError } =
+    useDisclosure();
 
   const onNextStep = () => {
     if (isStepComplete()) {
@@ -235,6 +235,7 @@ const IntakeFooter = ({
             onNextStep();
           }
         }}
+        disabled={isButtonDisabled}
       >
         <Box pr="5px">{nextButtonText}</Box>
         <ArrowRight />

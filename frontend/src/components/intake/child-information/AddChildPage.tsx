@@ -56,11 +56,17 @@ const AddChild = ({
     dismissalTime: "",
   });
   const [providers, setProviders] = useState<Providers>([]);
+  const [childInfoDateError, setChildInfoDateError] = useState<boolean>(false);
+  const [childInfoSchoolPhoneNoError, setChildInfoSchoolPhoneNoError] =
+    useState<boolean>(false);
 
   const requiredInfomationMissing: boolean =
     !childDetails.childName ||
     !childDetails.cpinFileNumber ||
-    !childDetails.dateOfBirth;
+    !childDetails.dateOfBirth ||
+    !schoolDetails.schoolPhoneNo ||
+    childInfoDateError ||
+    childInfoSchoolPhoneNoError;
 
   // TODO: Check other required fields
 
@@ -96,6 +102,7 @@ const AddChild = ({
           <ChildInformationForm
             childDetails={childDetails}
             setChildDetails={setChildDetails}
+            setChildInfoDateError={setChildInfoDateError}
           />
         );
       case AddChildSteps.SCHOOL_DAYCARE_FORM:
@@ -103,6 +110,7 @@ const AddChild = ({
           <SchoolDaycareForm
             schoolDetails={schoolDetails}
             setSchoolDetails={setSchoolDetails}
+            setChildInfoSchoolPhoneNoError={setChildInfoSchoolPhoneNoError}
           />
         );
       case AddChildSteps.CHILD_PROVIDER_FORM:

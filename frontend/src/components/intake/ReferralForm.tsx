@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   FormControl,
@@ -73,6 +73,38 @@ const ReferralForm = ({
     });
   };
 
+  const [referringWorkerContactError, setreferringWorkerContactError] =
+    useState<string | null>(null);
+  const [refferalDateError, setRefferalDateError] = useState<string | null>(
+    null,
+  );
+
+  function validatePhone(value: string) {
+    if (!value) {
+      setreferringWorkerContactError("Required");
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
+      setreferringWorkerContactError("Invalid phone number");
+    } else {
+      setreferringWorkerContactError(null);
+    }
+  }
+
+  function validateDate(value: string) {
+    if (!value) {
+      setRefferalDateError("Required");
+    } else if (
+      !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)
+    ) {
+      setRefferalDateError("Invalid Date");
+    } else {
+      setRefferalDateError(null);
+    }
+  }
+
   return (
     <>
       {!hideStepper && (
@@ -120,7 +152,13 @@ const ReferralForm = ({
                   type="string"
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
+                  validate={(value: string) => validatePhone(value)}
                 />
+                {referringWorkerContactError && (
+                  <div style={{ color: "red" }}>
+                    {referringWorkerContactError}
+                  </div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
@@ -168,7 +206,11 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
+                validate={(value: string) => validateDate(value)}
               />
+              {refferalDateError && (
+                <div style={{ color: "red" }}>{refferalDateError}</div>
+              )}
             </Box>
           </FormControl>
         </Form>
@@ -181,6 +223,9 @@ const ReferralForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
+          isButtonDisabled={
+            referringWorkerContactError != null || refferalDateError != null
+          }
         />
       )}
     </>

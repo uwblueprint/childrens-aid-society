@@ -96,8 +96,6 @@ const CourtInformationForm = ({
       return;
     }
     try {
-      // window.location.href = 'http://localhost:5000/intake/download/9';
-
       const url = await IntakeAPIClient.downloadFile(fileId);
       const a = document.createElement('a');
       a.href = url;
@@ -148,7 +146,6 @@ const CourtInformationForm = ({
               readOnly={readOnly}
             />
           </Box>
-          {/* TODO: store the uploaded file and save in backend */}
           <Input
             display="none"
             type="file"
@@ -169,7 +166,6 @@ const CourtInformationForm = ({
               ORDER REFERRAL
             </FormLabel>
             <HStack>
-              {/* <div id="pdfContainer"/> */}
               <Field
                 as={CustomInput}
                 isReadOnly

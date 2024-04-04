@@ -92,7 +92,6 @@ const ReviewForm = ({
           </Text>
           {editSectionButton(IntakeSteps.COURT_INFORMATION)};
         </HStack>
-        {/* This is where the readonly section is coming from - has the edit button */}
         <CourtInformationForm
           courtDetails={courtDetails}
           setCourtDetails={setCourtDetails}

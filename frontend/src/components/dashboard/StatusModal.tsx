@@ -68,7 +68,6 @@ const StatusModal = ({
       setWorkerName(intake.caseReferral.referringWorkerName);
       setDate(intake.caseReferral.referralDate);
       setFamilyName(intake.caseReferral.familyName);
-      // TODO: Map this properly by changing type?
       setStep(reviewCaseDetailsStep);
       setReferralDetails({
         ...intake.caseReferral, 
@@ -149,7 +148,6 @@ const StatusModal = ({
               <Text fontWeight="semibold" fontSize="2xl" mb="6px">
                 Case Submission
               </Text>
-              {/* TODO: make sure that the lead should be the worker's name */}
               <Text>Lead: {workerName}</Text>
               <Text>Date: {date}</Text>
               <Text>Family Name: {familyName}</Text>

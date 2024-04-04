@@ -115,7 +115,6 @@ const Intake = (): React.ReactElement => {
       case IntakeSteps.REVIEW_CASE_DETAILS:
         return (
           <Box style={{ textAlign: "center", padding: "30px 0px 40px 0px" }}>
-            {/* This is the source of the review */}
             <ReviewForm
               referralDetails={referralDetails}
               setReferralDetails={setReferralDetails}

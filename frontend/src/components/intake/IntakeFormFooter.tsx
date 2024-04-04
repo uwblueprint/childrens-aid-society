@@ -123,8 +123,7 @@ const IntakeFooter = ({
         courtInformation: {
           courtStatus: courtDetails.currentCourtStatus
             .toUpperCase()
-            .replace(/ /g, "_"), // for enum
-          // orderReferral: "dummy file binary",
+            .replace(/ /g, "_"), 
           orderReferral: courtDetails.orderReferral,
           firstNationHeritage:
             courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
@@ -201,8 +200,6 @@ const IntakeFooter = ({
 
       const intakeFormData = new FormData(); 
       appendFormData(intakeFormData, intakeData, '');
-
-      // post request is called here
       await IntakeAPIClient.post(intakeFormData);
       onNextStep();
     } else {

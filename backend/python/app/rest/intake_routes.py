@@ -1,10 +1,8 @@
 import base64
 import json
-from io import BytesIO
 
 import requests
-from flask import (Blueprint, current_app, jsonify, make_response, request,
-                   send_file)
+from flask import Blueprint, current_app, jsonify, request
 
 # from ..middlewares.auth import require_authorization_by_role
 from ..middlewares.validate import validate_request
@@ -320,23 +318,11 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
-    print('all files', request.files)
-    print('all form', request.form)
-
-    # TODO: convert all parameters to retrieve from form instead of json!!
-    # all files ImmutableMultiDict([('courtInformation[orderReferral]', <FileStorage: 'Jayden_Resume_1.pdf' ('application/pdf')>)])
-    # all form ImmutableMultiDict([('userId', '1'), ('intakeStatus', 'ACTIVE'), ('caseReferral[referringWorkerName]', 'DWAEFSF'), ('caseReferral[referringWorkerContact]', '222-222-2222'), ('caseReferral[cpinFileNumber]', '2'), ('caseReferral[cpinFileType]', 'INVESTIGATION'), ('caseReferral[familyName]', 'was'), ('caseReferral[referralDate]', '01/01/2023'), ('courtInformation[courtStatus]', 'INTERIM_CARE'), ('courtInformation[firstNationHeritage]', 'FIRST_NATION_REGISTERED'), ('courtInformation[firstNationBand]', ''), ('children', ''), ('caregivers', ''), ('programDetails[transportRequirements]', 'Kin provider will transport'), ('programDetails[schedulingRequirements]', 'Weekly and time'), ('programDetails[suggestedStartDate]', '01/01/2023'), ('programDetails[shortTermGoals]', 'Caregiver(s) refrain from physical discipline'), ('programDetails[longTermGoals]', 'Caregiver(s) appropriately encourages child(ren) to demonstrate age appropriate social skills'), ('programDetails[familialConcerns]', ''), ('programDetails[permittedIndividuals]', '')])    print('all parameters', request.form[0]["courtInformation"])
-
     file = request.files["courtInformation[orderReferral]"]
-    # print("file name", file.filename)
-    # print("file data in intake_routes", len(file.read()), sys.getsizeof(file.read()), str(file.read())[:100])
-       
     pdf_file = {
         "file_name": file.filename,
         "file_data": bytes(file.read()),
     }
-
-    print('after converting to bytes', len(pdf_file['file_data']), pdf_file['file_data'][:200])
 
     try:
         # validate_request("CreatePdfFileDTO")
@@ -345,7 +331,6 @@ def create_intake():
         undos.append((file_storage_service, "delete_file", pdf_file))
     except Exception as error:
         print("invalid pdf file")
-        # TODO: reaching an error here
         run_undos()
         return jsonify(str(error)), 400
 
@@ -360,7 +345,6 @@ def create_intake():
         "cpin_number": json.loads(request.form["caseReferral[cpinFileNumber]"]),
         "cpin_file_type": json.loads(request.form["caseReferral[cpinFileType]"]),
         "court_status": json.loads(request.form["courtInformation[courtStatus]"]),
-        # Set id 
         "court_order_file_id": new_file.id,
         "first_nation_heritage": json.loads(request.form["courtInformation[firstNationHeritage]"]),
         "first_nation_band": json.loads(request.form["courtInformation[firstNationBand]"]),
@@ -375,7 +359,6 @@ def create_intake():
 
     try:
         validate_request("CreateIntakeDTO")
-        # Copy this syntax!
         intake = CreateIntakeDTO(**intake)
         new_intake = intake_service.create_intake(intake)
         undos.append((intake_service, "delete_intake", new_intake.id))
@@ -385,10 +368,8 @@ def create_intake():
         return jsonify(str(error)), 400
 
     # caregivers
-    # TODO: investigate out how pivot from request.json to request.form impacts caregivers, permitted individuals, etc. 
     caregivers = json.loads(request.form["caregivers"])
     for caregiver in caregivers:
-        print(caregiver)
         # create caregiver using caregiver_routes
         caregiver = {
             "name": caregiver["name"],
@@ -489,8 +470,6 @@ def create_intake():
             run_undos()
             return jsonify(error), 400
     children_data = json.loads(request.form['children'])
-    #children_data looks like
-    #children [{'childInfo': {'name': 'asdas', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1231', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}, {'childInfo': {'name': 'aszdg', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}]
     for child in children_data:
         print('child', child)
         # daytime contact
@@ -613,27 +592,10 @@ def delete_intake():
 
 @blueprint.route("/download/<int:file_id>", methods=["GET", "OPTIONS"], strict_slashes=False)
 def download_file(file_id):
-    print('starting download in backend')
     try:
         file = file_storage_service.get_file(file_id)
         file_name, file_data = file.file_name, file.file_data
-        print('returned here file stuffs', file_name, len(file_data), file_data[:20])
-
-        # file_obj = BytesIO()
-        # file_obj.write(file_data)
-        # file_obj.seek(0)
-
-        # with open('retrieved_pdf.pdf', 'wb') as f:
-        #     f.write(file_data)
-
-        # response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
-        # # response.headers['Access-Control-Allow-Origin'] = '*'
-        # response.headers['Content-Type'] = '*' # 'application/octet-stream'
-        # return response
-
         pdfBase64 = base64.b64encode(file_data).decode('utf-8')
-        print('pdfBase64', len(pdfBase64), pdfBase64[:20])
-        print('binary data', len(file_data), file_data[:20])
         return jsonify({'pdfBase64': pdfBase64}), 200
     except Exception as error:
         return jsonify(str(error)), 400

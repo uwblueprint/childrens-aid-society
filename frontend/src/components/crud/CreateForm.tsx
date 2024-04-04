@@ -79,7 +79,6 @@ const CreateForm = (): React.ReactElement => {
   };
 
   const onSubmit = async ({ formData }: { formData: EntityRequest }) => {
-    // using formdata here
     const multipartFormData = new FormData();
     multipartFormData.append("body", JSON.stringify(decamelizeKeys(formData)));
     if (fileField) {

@@ -24,17 +24,6 @@ class FileStorageService(IFileStorageService):
         print('get file in file storage service')
         try: 
             file = PdfFile.query.filter_by(id=file_id).first()
-            print('file here', file)
-            # file_dto = PdfFileDTO(**file)
-            # print(file_dto)
-            # return file_dto
-            # file_dto = PdfFileDTO(**file.to_dict())
-            # pdf_file = {
-            #     "file_name": file_dto.file_name,
-            #     "file_data": binary_file.write(file_data), # bytes(file_dto.read()), 
-            # }
-            # return file
-        
             if file:
                 file_dto = PdfFileDTO(id = file.id, file_name = file.file_name, file_data = file.file_data)
                 print("file_dto here", file_dto)

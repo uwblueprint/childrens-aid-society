@@ -48,7 +48,6 @@ const Cases = (): React.ReactElement | null => {
     return [];
   };
 
-  // this is where the stuff is getting fetched 
   useEffect(() => {
     const fetchData = async () => {
       const moreCases = mapIntakeResponsesToCaseCards(

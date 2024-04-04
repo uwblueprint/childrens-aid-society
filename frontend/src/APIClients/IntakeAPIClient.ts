@@ -79,9 +79,9 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: intake.courtInformation.orderReferral, // changed from 0
-        orderReferralId: intake.courtInformation.orderReferralId, // do we need this? 
-        orderReferralName: intake.courtInformation.orderReferralName, // do we need this? 
+        orderReferral: intake.courtInformation.orderReferral, 
+        orderReferralId: intake.courtInformation.orderReferralId, 
+        orderReferralName: intake.courtInformation.orderReferralName, 
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -189,7 +189,7 @@ const get = async (
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        orderReferral: intake.courtInformation.orderReferral,
         orderReferralName: intake.courtInformation.orderReferralName || '',
         orderReferralId: intake.courtInformation.orderReferralId || 0,
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
@@ -274,9 +274,6 @@ const getById = async (
   try {
     const { data } = await baseAPIClient.get<Intake>(url, {
       headers: { Authorization: bearerToken },
-      // params: {
-      //   intake_id: intake_id
-      // },
     });
 
     const intake = data;
@@ -296,7 +293,7 @@ const getById = async (
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        orderReferral: intake.courtInformation.orderReferral, 
         orderReferralName: intake.courtInformation.orderReferralName || '',
         orderReferralId: intake.courtInformation.orderReferralId || 0,
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
@@ -408,7 +405,6 @@ const deleteIntake = async (intakeId: number): Promise<void> => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const downloadFile = async (fileId: number): Promise<any> => {
 
   const bearerToken = `Bearer ${getLocalStorageObjProperty(

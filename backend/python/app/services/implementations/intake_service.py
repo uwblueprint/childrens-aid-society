@@ -45,7 +45,6 @@ class IntakeService(IIntakeService):
                 raise Exception("Intake passed is not of CreateIntakeDTO type")
             error_list = intake.validate()
             if error_list:
-                # print('hi', error_list)
                 raise Exception(error_list)
             print("here in intake service: ", intake)
             new_intake_entry = Intake(**intake.__dict__)

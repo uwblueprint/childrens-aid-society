@@ -1,3 +1,4 @@
+import base64
 import json
 from io import BytesIO
 
@@ -615,54 +616,25 @@ def download_file(file_id):
     print('starting download in backend')
     try:
         file = file_storage_service.get_file(file_id)
-        print('returned here from file storage service', file)
         file_name, file_data = file.file_name, file.file_data
         print('returned here file stuffs', file_name, len(file_data), file_data[:20])
-        # file = send_file(
-        #     file_data,
-        #     as_attachment=True,
-        #     attachment_filename=file_name,
-        #     # mimetype='application/octet-stream'
-        # )
-        # print('file in the backend', file);
-        # print('file data', file.data);
-        # file = send_file(
-        #     file_data,
-        #     as_attachment=True,
-        #     attachment_filename=file_name
-        # )
-        
-        # file_bytes = b'Your file content here'
-        # # Assuming 'file_name' is the name of your file
-        # file_name = 'file.txt'
 
-        # Create a BytesIO object (this works)
-        # file_obj = BytesIO(file_data)
-
-        file_obj = BytesIO()
-        file_obj.write(file_data)
-
-        # Set the file pointer to the beginning of the BytesIO object
-        file_obj.seek(0)
+        # file_obj = BytesIO()
+        # file_obj.write(file_data)
+        # file_obj.seek(0)
 
         # with open('retrieved_pdf.pdf', 'wb') as f:
         #     f.write(file_data)
 
-        # Create a Flask response with the BytesIO object
-        response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
-        # Set the content type
-        # response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Content-Type'] = '*' # 'application/octet-stream'
-        return response
+        # response = make_response(send_file(file_obj, as_attachment=True, attachment_filename=file_name))
+        # # response.headers['Access-Control-Allow-Origin'] = '*'
+        # response.headers['Content-Type'] = '*' # 'application/octet-stream'
+        # return response
 
-        # return file.data, 200
-    
-        # return send_file(
-        #     file_data,
-        #     as_attachment=True,
-        #     attachment_filename=file_name
-        # ), 200
-        # return jsonify(updated_intake.__dict__), 200
+        pdfBase64 = base64.b64encode(file_data).decode('utf-8')
+        print('pdfBase64', len(pdfBase64), pdfBase64[:20])
+        print('binary data', len(file_data), file_data[:20])
+        return jsonify({'pdfBase64': pdfBase64}), 200
     except Exception as error:
         return jsonify(str(error)), 400
 

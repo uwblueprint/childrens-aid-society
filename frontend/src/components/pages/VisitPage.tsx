@@ -24,6 +24,18 @@ const Visit = (): React.ReactElement => {
   const { caseId } = useParams<{ caseId: string}>();
   const caseNumber: number = parseInt(caseId, 10);
 
+  const [visitNotes, setVisitNotes] = useState('');
+
+  const handleNotesChange = (note: string) => {
+    let updatedEntries = [...transportationEntries.entries];
+  
+    if (updatedEntries.length > 0) {
+      updatedEntries[0] = { ...updatedEntries[0], notes: note };
+    }
+
+    setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
+  };
+
   const DEFAULT_CHILD_DETAILS = {
     familyName: "",
     children: [],
@@ -66,6 +78,7 @@ const Visit = (): React.ReactElement => {
         gaurdian: "",
         name: "",
         duration: "",
+        notes: "",
       },
     ],
   };
@@ -228,6 +241,8 @@ const Visit = (): React.ReactElement => {
                 placeholder="Note any additional information in regards to this visit."
                 height="10rem"
                 paddingBottom="7rem"
+                value={visitNotes}
+                onChange={handleNotesChange} 
               />
             </Box>
             <Text textStyle="header-medium" id="childFamilySupportWorker">

@@ -20,9 +20,16 @@ def create_visit():
         "user_id": data.get("user_i_d"),
         "childInformation": data.get("child_details"),
         "visitTimestamp": data.get("visit_details", {}).get("visit_date"),
+        "location": data.get("visit_details", {}).get("location"),
+        "visit_day": data.get("visit_details", {}).get("visit_day"),
+        "visit_supervision": data.get("visit_details", {})
+        .get("visit_supervision")
+        .upper(),
+        "start_time": data.get("visit_details", {}).get("start_time"),
+        "end_time": data.get("visit_details", {}).get("end_time"),
         "attendance": data.get("attendance_entries"),
         "transportation": data.get("transportation_entries"),
-        "notes": "placeholder for notes",  # TODO: data.get("notes"),
+        "notes": data.get("transportation_entries").get("entries")[0].get("notes"),
         "childAndFamilySupportWorker": data.get("child_details", {}).get(
             "child_service_worker"
         ),

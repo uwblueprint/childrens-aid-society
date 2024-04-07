@@ -33,6 +33,7 @@ interface Visit {
         gaurdian: string;
         name: string;
         duration: string;
+        notes: string;
     }[];
 }
 

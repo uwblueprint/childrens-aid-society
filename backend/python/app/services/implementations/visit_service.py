@@ -11,7 +11,6 @@ class VisitService(IVisitService):
         self.logger = logger
 
     def create_visit(self, visit: VisitDTO):
-        print(visit.__dict__, "visit")
         try:
             attendance_sheet = AttendanceSheets(
                 family_name=visit.childInformation["family_name"],
@@ -25,11 +24,11 @@ class VisitService(IVisitService):
             attendance_record = AttendanceRecords(
                 attendance_sheet_id=attendance_sheet.id,
                 visit_date=visit.visitTimestamp,
-                visit_day="visit_day_placeholder",
-                visit_supervision="PARTIAL",
-                start_time="start_time_placeholder",
-                end_time="end_time_placeholder",
-                location=visit.notes,
+                visit_day=visit.visit_day,
+                visit_supervision=visit.visit_supervision,
+                start_time=visit.start_time,
+                end_time=visit.end_time,
+                location=visit.location,
                 notes=visit.notes,
             )
             db.session.add(attendance_record)

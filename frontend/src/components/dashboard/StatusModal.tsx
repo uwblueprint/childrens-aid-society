@@ -17,10 +17,12 @@ import OptionalLabel from "../intake/OptionalLabel";
 import { StatusSelectField } from "./StatusSelectField";
 import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import { Case } from "../../types/CasesContextTypes";
 
 export type StatusModalProps = {
   caseId: number;
   status: string;
+  caseDetails: Case;
   isOpen: boolean;
   onClick: (updatedData: {
     changedData: Record<string, string>;
@@ -29,27 +31,34 @@ export type StatusModalProps = {
   onClose: () => void;
   onDeleteClick: () => void;
   goToIntake: () => void;
-  referringWorkerName: string;
   intakeNotes: string;
-  referralDate: string;
-  familyName: string;
 };
 
 const StatusModal = ({
   caseId,
   status,
+  caseDetails,
   isOpen,
   onClose,
   onClick,
   onDeleteClick,
   goToIntake,
-  referringWorkerName,
   intakeNotes,
-  referralDate,
-  familyName,
 }: StatusModalProps): React.ReactElement => {
+  const {
+    setStep,
+    setId,
+    setIsReviewOnly,
+    setReferralDetails,
+    setCourtDetails,
+    setProgramDetails,
+    setIntakeStatus,
+  } = useStepValueContext();
+
+  const [workerName, setWorkerName] = useState(
+    caseDetails.caseReferral.referringWorker,
+  );
   const [selectedOption, setSelectedOption] = useState(status);
-  const [workerName, setWorkerName] = useState(referringWorkerName);
   const [meetingNotes, setMeetingNotes] = useState(intakeNotes);
 
   const handleClearPage = () => {
@@ -62,49 +71,19 @@ const StatusModal = ({
     return shouldShowClearButton;
   };
 
-  const {
-    setStep,
-    setIsReviewOnly,
-    setReferralDetails,
-    setCourtDetails,
-    setProgramDetails,
-  } = useStepValueContext();
-
-  // TEMPORARY MOCK VALUES TO TEST REVIEW BUTTON
-  const mockReferralDetails = {
-    referringWorker: "Referring Worker",
-    referringWorkerContact: "unused",
-    familyName: "Family Name",
-    referralDate: "Tue, 01 Jan 2019 00:00:00 GMT",
-    cpinFileNumber: "1234321",
-    cpinFileType: "INVESTIGATION",
-    phoneNumber: "6475551234",
-  };
-  const mockCourtDetails = {
-    currentCourtStatus: "INTERIM_CARE",
-    firstNationHeritage: "FIRST_NATION_REGISTERED",
-    firstNationBand: "first nation band",
-    orderReferral: null,
-  };
-  const mockProgramDetails = {
-    transportationRequirements: "transport requirements",
-    schedulingRequirements: "scheduling requirements",
-    suggestedStartDate: "Tue, 01 Jan 2019 00:00:00 GMT",
-    shortTermGoals: ["goal1", "goal2"],
-    longTermGoals: ["goal1", "goal2"],
-    familialConcerns: ["concern1", "concern2"],
-  };
-
   const sendToReview = () => {
     const reviewCaseDetailsStep = 4;
 
     setStep(reviewCaseDetailsStep);
-    setReferralDetails(mockReferralDetails);
-    setCourtDetails(mockCourtDetails);
-    setProgramDetails(mockProgramDetails);
+    setId(typeof caseId === "string" ? caseId : caseId.toString());
+    setReferralDetails(caseDetails.caseReferral);
+    setCourtDetails(caseDetails.courtInformation);
+    setProgramDetails(caseDetails.programDetails);
     setIsReviewOnly(true);
+    setIntakeStatus(caseDetails.intakeStatus);
     goToIntake();
   };
+
   return (
     <Box>
       <ModalComponent
@@ -127,9 +106,8 @@ const StatusModal = ({
               <Text fontWeight="semibold" fontSize="2xl" mb="6px">
                 Case Submission
               </Text>
-              {/* TODO: Need to be changed for dynamic values */}
-              <Text>Date: {referralDate}</Text>
-              <Text>Family Name: {familyName}</Text>
+              <Text>Date: {caseDetails.caseReferral.referralDate}</Text>
+              <Text>Family Name: {caseDetails.caseReferral.familyName}</Text>
               <Flex justify="flex-end" align="flex-end">
                 <Button
                   variant="tertiary"
@@ -174,9 +152,21 @@ const StatusModal = ({
                   placeholder={
                     selectedOption === "ACTIVE" ? "Enter worker name" : ""
                   }
-                  value={selectedOption === "ACTIVE" ? workerName : ""}
+                  value={
+                    selectedOption === "ACTIVE"
+                      ? caseDetails.caseReferral.referringWorker
+                      : ""
+                  }
                   onChange={(event) => {
-                    setWorkerName(event.target.value);
+                    setReferralDetails({
+                      referringWorker: event.target.value,
+                      referralDate: caseDetails.caseReferral.referralDate,
+                      referringWorkerContact:
+                        caseDetails.caseReferral.referringWorkerContact,
+                      familyName: caseDetails.caseReferral.familyName,
+                      cpinFileNumber: caseDetails.caseReferral.cpinFileNumber,
+                      cpinFileType: caseDetails.caseReferral.cpinFileType,
+                    });
                   }}
                   isDisabled={!(selectedOption === "ACTIVE")}
                 />
@@ -208,7 +198,7 @@ const StatusModal = ({
           } = {
             changedData: {
               intake_status: selectedOption,
-              referring_worker_name: workerName,
+              referring_worker_name: caseDetails.caseReferral.referringWorker,
               intake_meeting_notes: meetingNotes,
             },
             intakeID: caseId,
@@ -219,7 +209,7 @@ const StatusModal = ({
           } = {
             changedData: {
               intakeStatus: selectedOption,
-              referringWorkerName: workerName,
+              referringWorkerName: caseDetails.caseReferral.referringWorker,
               intakeMeetingNote: meetingNotes,
             },
             intakeID: caseId,

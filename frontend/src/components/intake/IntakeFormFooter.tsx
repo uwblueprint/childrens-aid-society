@@ -5,14 +5,12 @@ import { useHistory } from "react-router-dom";
 import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
-import { ReferralDetails } from "./ReferralForm";
-import { CourtDetails } from "./CourtInformationForm";
-import { ProgramDetails } from "./ProgramForm";
 import { Children } from "./child-information/AddChildPage";
 import CaseStatus from "../../types/CaseStatus";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
 import { PermittedIndividuals } from "./PermittedIndividualsModal";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type CurrentStepLayout = {
   nextBtnTxt: string;
@@ -28,9 +26,6 @@ export type IntakeFooterProps = {
   nextStepCallBack: () => void;
   clearFields?: () => void;
   // fields for creating intake put request
-  referralDetails?: ReferralDetails;
-  courtDetails?: CourtDetails;
-  programDetails?: ProgramDetails;
   childrens?: Children;
   caregivers?: Caregivers;
   permittedIndividuals?: PermittedIndividuals;
@@ -45,9 +40,6 @@ const IntakeFooter = ({
   registrationLoading,
   nextStepCallBack,
   clearFields,
-  referralDetails,
-  courtDetails,
-  programDetails,
   childrens,
   caregivers,
   permittedIndividuals,
@@ -56,6 +48,9 @@ const IntakeFooter = ({
   const toast = useToast();
   // TODO: remove useHistory once dashboard is implemented
   const history = useHistory();
+
+  const { id, referralDetails, courtDetails, programDetails, intakeStatus } =
+    useStepValueContext();
 
   const {
     onOpen: onOpenSubmitCase,
@@ -83,7 +78,38 @@ const IntakeFooter = ({
   };
 
   const submitForm = async () => {
-    if (
+    if (id && childrens && caregivers && permittedIndividuals) {
+      const updatedData: {
+        changedData: Record<string, string>;
+        intakeID: number;
+      } = {
+        changedData: {
+          intake_status: CaseStatus[intakeStatus as keyof typeof CaseStatus],
+          intake_meeting_notes: "",
+          referring_worker_name: referralDetails.referringWorker,
+          referring_worker_contact: referralDetails.referringWorkerContact,
+          cpin_number: referralDetails.cpinFileNumber,
+          cpin_file_type: referralDetails.cpinFileType || "INVESTIGATION",
+          referral_date: referralDetails.referralDate,
+          court_status: courtDetails.courtStatus
+            .toUpperCase()
+            .replace(/ /g, "_"), // for enum
+          court_order_file: "file binary",
+          first_nation_heritage:
+            courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
+            "FIRST_NATION_REGISTERED",
+          first_nation_band: courtDetails.firstNationBand,
+
+          transportation_requirements:
+            programDetails.transportationRequirements,
+          scheduling_requirements: programDetails.schedulingRequirements,
+          suggested_start_date: programDetails.suggestedStartDate,
+        },
+        intakeID: parseInt(id, 10),
+      };
+      await IntakeAPIClient.put(updatedData);
+      onNextStep();
+    } else if (
       referralDetails &&
       courtDetails &&
       childrens &&
@@ -103,7 +129,7 @@ const IntakeFooter = ({
           referralDate: referralDetails.referralDate,
         },
         courtInformation: {
-          courtStatus: courtDetails.currentCourtStatus
+          courtStatus: courtDetails.courtStatus
             .toUpperCase()
             .replace(/ /g, "_"), // for enum
           orderReferral: "file binary",

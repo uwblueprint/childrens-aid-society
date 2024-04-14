@@ -24,6 +24,8 @@ import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
 import MultiTextInput from "../common/MultiTextInput";
+import { PermittedIndividualsDetails } from "./PermittedIndividualsModal";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -32,11 +34,10 @@ export type ProgramDetails = {
   shortTermGoals: string[];
   longTermGoals: string[];
   familialConcerns: string[];
+  permittedIndividuals: PermittedIndividualsDetails[];
 };
 
 type ProgramFormProps = {
-  programDetails: ProgramDetails;
-  setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -64,14 +65,13 @@ const longTermGoalsOptions = [
 ];
 
 const ProgramForm = ({
-  programDetails,
-  setProgramDetails,
   nextStep,
   setStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: ProgramFormProps): React.ReactElement => {
+  const { programDetails, setProgramDetails } = useStepValueContext();
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
     nextStep();
@@ -97,6 +97,14 @@ const ProgramForm = ({
       shortTermGoals: [],
       longTermGoals: [],
       familialConcerns: [],
+      permittedIndividuals: [
+        {
+          providerName: "",
+          phoneNo: "",
+          relationshipToChild: "",
+          additionalNotes: "",
+        },
+      ],
     });
   };
 

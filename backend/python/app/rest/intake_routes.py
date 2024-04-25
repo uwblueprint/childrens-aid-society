@@ -444,7 +444,9 @@ def delete_intake(intake_id):
             return jsonify({"error": "intake_id query parameter must be an int"}), 400
         else:
             try:
+                pdf_file_id = intake_service.get_intake_by_id(intake_id).court_order_file_id
                 intake_service.delete_intake(intake_id)
+                file_storage_service.delete_file(pdf_file_id)
                 return "intake deleted", 200
             except Exception as e:
                 error_message = getattr(e, "message", None)
@@ -458,11 +460,24 @@ def delete_intake(intake_id):
         400,
     )
 
-
 @blueprint.route("/<int:intake_id>", methods=["PUT"], strict_slashes=False)
 def update_intake_route(intake_id):
     try:
         updated_data = request.json
+        
+        # if request.files contains a file, then update the file
+        if "courtInformation[orderReferral]" in request.files:
+            file = request.files["courtInformation[orderReferral]"]
+            pdf_file = {
+                "file_name": file.filename,
+                "file_data": file.read(),
+            }
+            try:
+                pdf_file = CreatePdfFileDTO(**pdf_file)
+                file_storage_service.update_file(intake_id, pdf_file)
+            except Exception as error:
+                return jsonify(str(error)), 400
+
         updated_intake = intake_service.update_intake(intake_id, updated_data)
         return jsonify(updated_intake.__dict__), 200
 

@@ -129,3 +129,17 @@ class IntakeService(IIntakeService):
         except Exception as error:
             self.logger.error(str(error))
             raise error
+    
+    def get_intake_by_id(self, intake_id: int):
+        try:
+            if not intake_id:
+                raise Exception("Empty intake id passed to get_intake_by_id function")
+            if not isinstance(intake_id, int):
+                raise Exception("Intake id passed is not of int type")
+            intake = Intake.query.filter_by(id=intake_id).first()
+            if not intake:
+                raise Exception("Intake with id {} not found".format(intake_id))
+            return IntakeDTO(**intake.to_dict())
+        except Exception as error:
+            self.logger.error(str(error))
+            raise error

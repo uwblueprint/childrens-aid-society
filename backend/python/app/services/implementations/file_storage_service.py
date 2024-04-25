@@ -44,30 +44,42 @@ class FileStorageService(IFileStorageService):
             db.session.rollback()
             raise error
 
-    def update_file(self, file_name, file, content_type=None):
-        current_blob = self.bucket.get_blob(file_name)
-        if not current_blob:
-            raise Exception("File name {name} does not exist".format(name=file_name))
-        blob = self.bucket.blob(file_name)
+    def update_file(self, pdf_file_id: int, new_file: CreatePdfFileDTO):
         try:
-            blob.upload_from_file(file, content_type=content_type)
-        except Exception as e:
-            reason = getattr(e, "message", None)
-            self.logger.error(
-                "Failed to update file {name}. Reason = {reason}".format(
-                    name=file_name, reason=(reason if reason else str(e))
+            if not new_file:
+                raise Exception(
+                    "Empty file DTO/None passed to update_file function"
                 )
-            )
-            raise e
+            if not isinstance(new_file, CreatePdfFileDTO):
+                raise Exception("File passed is not of CreatePdfFileDTO type")
+            if not pdf_file_id:
+                raise Exception("Empty PDF file id passed to update_file function")
+            if not isinstance(pdf_file_id, int):
+                raise Exception("Intake id passed is not of int type")
+            # replace file at pdf_file_id with new_file
+            file = PdfFile.query.filter_by(id=pdf_file_id).first()
+            if not file:
+                raise Exception("File with id {} not found".format(pdf_file_id))
+            file.file_name = new_file.file_name
+            file.file_data = new_file.file_data
+            db.session.commit()
+            return PdfFileDTO(**file.to_dict())
+        except Exception as error:
+            db.session.rollback()
+            raise error
 
-    def delete_file(self, file_name):
+    def delete_file(self, pdf_file_id: int):
         try:
-            self.bucket.delete_blob(file_name)
-        except Exception as e:
-            reason = getattr(e, "message", None)
-            self.logger.error(
-                "Failed to delete file {name}. Reason = {reason}".format(
-                    name=file_name, reason=(reason if reason else str(e))
-                )
-            )
-            raise e
+            if not pdf_file_id:
+                    raise Exception("Empty PDF file id passed to delete_file function")
+            if not isinstance(pdf_file_id, int):
+                raise Exception("Intake id passed is not of int type")
+            
+            file = PdfFile.query.filter_by(id=pdf_file_id).first()
+            if not file:
+                raise Exception("File with id {} not found".format(pdf_file_id))
+            db.session.delete(file)
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            raise error

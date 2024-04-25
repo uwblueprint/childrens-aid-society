@@ -10,7 +10,6 @@ class IntakeDTO:
         self.cpin_number = kwargs.get("cpin_number")
         self.cpin_file_type = kwargs.get("cpin_file_type")
         self.court_status = kwargs.get("court_status")
-        # this is the file 
         self.court_order_file_id = kwargs.get("court_order_file_id")
         self.first_nation_heritage = kwargs.get("first_nation_heritage")
         self.first_nation_band = kwargs.get("first_nation_band")

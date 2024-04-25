@@ -36,12 +36,8 @@ class IntakeService(IIntakeService):
                 raise Exception("Intake passed is not of CreateIntakeDTO type")
             error_list = intake.validate()
             if error_list:
-                # print('hi', error_list)
                 raise Exception(error_list)
-            print("here in intake service: ", intake)
             new_intake_entry = Intake(**intake.__dict__)
-            # replace with new id(no - just create in db here. use ointake_routes)
-            print('new intake entry', new_intake_entry)
             db.session.add(new_intake_entry)
             db.session.commit()
 

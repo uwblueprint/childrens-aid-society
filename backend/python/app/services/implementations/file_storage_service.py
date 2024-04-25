@@ -29,10 +29,6 @@ class FileStorageService(IFileStorageService):
         return url
 
     def create_file(self, file: CreatePdfFileDTO):
-        # current_blob = self.bucket.get_blob(file_name)
-        # if current_blob:
-        #     raise Exception("File name {name} already exists".format(name=file_name))
-        # blob = self.bucket.blob(file_name)
         try:
             if not file:
                 raise Exception(
@@ -40,14 +36,7 @@ class FileStorageService(IFileStorageService):
                 )
             if not isinstance(file, CreatePdfFileDTO):
                 raise Exception("File passed is not of CreatePdfFileDTO type")
-            # error_list = file.validate() # not implemented?
-            # if error_list:
-            #     raise Exception(error_list)
-            # blob.upload_from_file(file, content_type=content_type)
-            print("here in file service: ", file)
             new_file_entry = PdfFile(**file.__dict__)
-            # replace with new id(no - just create in db here. use ointake_routes)
-            print('new file entry', new_file_entry)
             db.session.add(new_file_entry)
             db.session.commit()
             return PdfFileDTO(**new_file_entry.to_dict())

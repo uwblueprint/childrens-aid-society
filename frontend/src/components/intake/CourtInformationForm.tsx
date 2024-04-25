@@ -23,7 +23,6 @@ export type CourtDetails = {
   currentCourtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
-  // **Come back here
   orderReferral: File | null; // FormData | null; 
 };
 
@@ -54,7 +53,6 @@ const CourtInformationForm = ({
   };
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    // setFieldValue: (field: string, value: FormData) => void,
     setFieldValue: (field: string, value: File) => void,
   ) => {
     console.log('handling file change');
@@ -63,21 +61,6 @@ const CourtInformationForm = ({
       return;
     }
     setFieldValue("orderReferral", fileObj);
-
-    
-    // const formData = new FormData();
-    // formData.append('file', fileObj);
-    // // console.log("this", this);
-    // console.log('file to upload', fileObj);
-    // console.log('formData to upload', formData.get('file'));
-    // // what needs to change here? 
-    // setFieldValue("orderReferral", formData);
-
-
-    // setCourtDetails({
-    //   ...courtDetails,
-    //   orderReferral: fileObj,
-    // });
   };
   const onSubmit = (values: CourtDetails) => setCourtDetails(values);
 
@@ -104,19 +87,6 @@ const CourtInformationForm = ({
   };
 
   const downloadFile = () => {
-    // if (!formik.values.orderReferral || !formik.values.orderReferral.get('file') || !(formik.values.orderReferral.get('file') as File).name) {
-    //   return;
-    // }
-
-    // const blob = new Blob([formik.values.orderReferral.get('file')], {
-    //   type: "application/pdf",
-    // });
-    // const url = URL.createObjectURL(blob);
-    // const link = document.createElement("a");
-    // link.download = formik.values.orderReferral.get('orderReferral').name;
-    // link.href = url;
-    // link.click();
-    // URL.revokeObjectURL(url);
   };
 
   return (
@@ -185,8 +155,6 @@ const CourtInformationForm = ({
                 id="documentDisplay"
                 name="documentDisplay"
                 placeholder="No document attached"
-                // value={formik.values.orderReferral?.get('orderReferral')?.name}
-                // value={(formik.values.orderReferral?.get('file') as File)?.name ?? ''}
                 value={formik.values.orderReferral?.name}
                 onClick={handleClick}
                 marginRight="10px"

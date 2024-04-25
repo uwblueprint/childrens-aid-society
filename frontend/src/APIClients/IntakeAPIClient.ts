@@ -18,7 +18,7 @@ interface Intake {
   };
   courtInformation: {
     courtStatus: string;
-    orderReferral: File; // FormData, // File, // changed from string 
+    orderReferral: File; // FormData
     firstNationHeritage: string;
     firstNationBand: string;
   };
@@ -30,7 +30,7 @@ interface Intake {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-const post = async (formData: any): Promise<Case> => { // post request here 
+const post = async (formData: any): Promise<Case> => {  
   const bearerToken = `Bearer ${getLocalStorageObjProperty(
     AUTHENTICATED_USER_KEY,
     "access_token",
@@ -77,7 +77,7 @@ const search = async (searchParam: string): Promise<Case[]> => {
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: intake.courtInformation.orderReferral, // changed from 0
+        orderReferral: intake.courtInformation.orderReferral, 
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },
@@ -185,8 +185,7 @@ const get = async (
       },
       courtInformation: {
         courtStatus: intake.courtInformation.courtStatus,
-        orderReferral: intake.courtInformation.orderReferral, // changed from 0
-        // orderReferral: base64String, // changed from 0
+        orderReferral: intake.courtInformation.orderReferral, 
         firstNationHeritage: intake.courtInformation.firstNationHeritage,
         firstNationBand: intake.courtInformation.firstNationBand,
       },

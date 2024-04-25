@@ -146,9 +146,7 @@ def get_all_intakes():
                 },
                 "courtInformation": {
                     "courtStatus": intake.court_status,
-                    # backend to frontend mapping here 
-                    "orderReferral": intake.court_order_file_id, # worry about this later # maybe this should be the name
-                    # "orderReferral": intake.court_order_file,
+                    "orderReferral": intake.court_order_file_id, 
                     "firstNationHeritage": intake.first_nation_heritage,
                     "firstNationBand": intake.first_nation_band,
                 },
@@ -189,19 +187,7 @@ def create_intake():
             service, fn, arg = undo
             service.__dict__[fn](arg)
 
-    # This is where the intake will be created ! -> upload the pdf file here? and then store the 
-    # Upload file -> id 
-    # court_order_file: id 
-    print('all files', request.files)
-    print('all form', request.form)
-
-    # TODO: convert all parameters to retrieve from form instead of json!!
-    # all files ImmutableMultiDict([('courtInformation[orderReferral]', <FileStorage: 'Jayden_Resume_1.pdf' ('application/pdf')>)])
-    # all form ImmutableMultiDict([('userId', '1'), ('intakeStatus', 'ACTIVE'), ('caseReferral[referringWorkerName]', 'DWAEFSF'), ('caseReferral[referringWorkerContact]', '222-222-2222'), ('caseReferral[cpinFileNumber]', '2'), ('caseReferral[cpinFileType]', 'INVESTIGATION'), ('caseReferral[familyName]', 'was'), ('caseReferral[referralDate]', '01/01/2023'), ('courtInformation[courtStatus]', 'INTERIM_CARE'), ('courtInformation[firstNationHeritage]', 'FIRST_NATION_REGISTERED'), ('courtInformation[firstNationBand]', ''), ('children', ''), ('caregivers', ''), ('programDetails[transportRequirements]', 'Kin provider will transport'), ('programDetails[schedulingRequirements]', 'Weekly and time'), ('programDetails[suggestedStartDate]', '01/01/2023'), ('programDetails[shortTermGoals]', 'Caregiver(s) refrain from physical discipline'), ('programDetails[longTermGoals]', 'Caregiver(s) appropriately encourages child(ren) to demonstrate age appropriate social skills'), ('programDetails[familialConcerns]', ''), ('programDetails[permittedIndividuals]', '')])    print('all parameters', request.form[0]["courtInformation"])
-
     file = request.files["courtInformation[orderReferral]"]
-    # print("file name", file.filename)
-    # print("file data", file.read())
        
     pdf_file = {
         "file_name": file.filename,
@@ -209,19 +195,16 @@ def create_intake():
     }
 
     try:
-        # validate_request("CreatePdfFileDTO")
         pdf_file = CreatePdfFileDTO(**pdf_file)
-        new_file = file_storage_service.create_file(pdf_file) # make sure that this inserts into the db
+        new_file = file_storage_service.create_file(pdf_file) 
         undos.append((file_storage_service, "delete_file", pdf_file))
     except Exception as error:
         print("invalid pdf file")
-        # TODO: reaching an error here
         run_undos()
         return jsonify(str(error)), 400
 
     print('user id from intake routes', request.form["userId"])
 
-    # intake
     intake = {
         "user_id": int(request.form["userId"]),
         "intake_status": "SUBMITTED",
@@ -232,7 +215,6 @@ def create_intake():
         "cpin_number": json.loads(request.form["caseReferral[cpinFileNumber]"]),
         "cpin_file_type": json.loads(request.form["caseReferral[cpinFileType]"]),
         "court_status": json.loads(request.form["courtInformation[courtStatus]"]),
-        # Set id 
         "court_order_file_id": new_file.id,
         "first_nation_heritage": json.loads(request.form["courtInformation[firstNationHeritage]"]),
         "first_nation_band": json.loads(request.form["courtInformation[firstNationBand]"]),
@@ -256,11 +238,8 @@ def create_intake():
         return jsonify(str(error)), 400
 
     # caregivers
-    # TODO: investigate out how pivot from request.json to request.form impacts caregivers, permitted individuals, etc. 
     caregivers = json.loads(request.form["caregivers"])
     for caregiver in caregivers:
-        print(caregiver)
-        # create caregiver using caregiver_routes
         caregiver = {
             "name": caregiver["name"],
             "date_of_birth": caregiver["dateOfBirth"],
@@ -283,7 +262,6 @@ def create_intake():
 
     # other permitted individuals
     permitted_individuals = json.loads(request.form["programDetails[permittedIndividuals]"])
-    # permitted_individuals = request.form["program_details"]["permitted_individuals"]
     for permitted_individual in permitted_individuals:
         permitted_individual = {
             "name": permitted_individual["name"],
@@ -311,7 +289,6 @@ def create_intake():
 
     # familial concerns
     familial_concerns = request.form["programDetails[familialConcerns]"].split(',')
-    # familial_concerns = request.form["program_details"]["familial_concerns"]
     for familial_concern in familial_concerns:
         familial_concern = {
             "concern": familial_concern,
@@ -362,8 +339,6 @@ def create_intake():
             run_undos()
             return jsonify(error), 400
     children_data = json.loads(request.form['children'])
-    #children_data looks like
-    #children [{'childInfo': {'name': 'asdas', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1231', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}, {'childInfo': {'name': 'aszdg', 'dateOfBirth': '2020-12-12', 'cpinFileNumber': '1', 'serviceWorker': '', 'specialNeeds': '', 'concerns': []}, 'daytimeContact': {'name': '', 'contactInfo': '', 'address': '', 'dismissalTime': ''}, 'provider': []}]
     for child in children_data:
         print('child', child)
         # daytime contact

@@ -1,15 +1,13 @@
-/* eslint-disable import/no-cycle */
 import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
+/* eslint-disable import/no-cycle */
 import React from "react";
 import { ArrowRight } from "react-feather";
 import { useHistory } from "react-router-dom";
 import IntakeAPIClient from "../../APIClients/IntakeAPIClient";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
 import CaseStatus from "../../types/CaseStatus";
-import { CourtDetails } from "./CourtInformationForm";
 import { PermittedIndividuals } from "./PermittedIndividualsModal";
-import { ProgramDetails } from "./ProgramForm";
-import { ReferralDetails } from "./ReferralForm";
 import SubmitCaseModal from "./SubmitCaseModal";
 import SubmitErrorModal from "./SubmitErrorModal";
 import { Children } from "./child-information/AddChildPage";
@@ -28,12 +26,10 @@ export type IntakeFooterProps = {
   nextStepCallBack: () => void;
   clearFields?: () => void;
   // fields for creating intake put request
-  referralDetails?: ReferralDetails;
-  courtDetails?: CourtDetails;
-  programDetails?: ProgramDetails;
   childrens?: Children;
   caregivers?: Caregivers;
   permittedIndividuals?: PermittedIndividuals;
+  isButtonDisabled?: boolean;
 };
 
 const IntakeFooter = ({
@@ -44,16 +40,17 @@ const IntakeFooter = ({
   registrationLoading,
   nextStepCallBack,
   clearFields,
-  referralDetails,
-  courtDetails,
-  programDetails,
   childrens,
   caregivers,
   permittedIndividuals,
+  isButtonDisabled,
 }: IntakeFooterProps): React.ReactElement => {
   const toast = useToast();
   // TODO: remove useHistory once dashboard is implemented
   const history = useHistory();
+
+  const { id, referralDetails, courtDetails, programDetails, intakeStatus } =
+    useStepValueContext();
 
   const {
     onOpen: onOpenSubmitCase,
@@ -61,10 +58,8 @@ const IntakeFooter = ({
     onClose: onCloseSubmitCase,
   } = useDisclosure();
 
-  const {
-    isOpen: isOpenSubmitError,
-    onClose: onCloseSubmitError,
-  } = useDisclosure();
+  const { isOpen: isOpenSubmitError, onClose: onCloseSubmitError } =
+    useDisclosure();
 
   const onNextStep = () => {
     if (isStepComplete()) {
@@ -101,7 +96,38 @@ const IntakeFooter = ({
   }
 
   const submitForm = async () => {
-    if (
+    if (id && childrens && caregivers && permittedIndividuals) {
+      const updatedData: {
+        changedData: Record<string, string>;
+        intakeID: number;
+      } = {
+        changedData: {
+          intake_status: CaseStatus[intakeStatus as keyof typeof CaseStatus],
+          intake_meeting_notes: "",
+          referring_worker_name: referralDetails.referringWorker,
+          referring_worker_contact: referralDetails.referringWorkerContact,
+          cpin_number: referralDetails.cpinFileNumber,
+          cpin_file_type: referralDetails.cpinFileType || "INVESTIGATION",
+          referral_date: referralDetails.referralDate,
+          court_status: courtDetails.courtStatus
+            .toUpperCase()
+            .replace(/ /g, "_"), // for enum
+          court_order_file: "file binary",
+          first_nation_heritage:
+            courtDetails.firstNationHeritage.toUpperCase().replace(/ /g, "_") || // for enum
+            "FIRST_NATION_REGISTERED",
+          first_nation_band: courtDetails.firstNationBand,
+
+          transportation_requirements:
+            programDetails.transportationRequirements,
+          scheduling_requirements: programDetails.schedulingRequirements,
+          suggested_start_date: programDetails.suggestedStartDate,
+        },
+        intakeID: parseInt(id, 10),
+      };
+      await IntakeAPIClient.put(updatedData);
+      onNextStep();
+    } else if (
       referralDetails &&
       courtDetails &&
       childrens &&
@@ -122,7 +148,7 @@ const IntakeFooter = ({
           referralDate: referralDetails.referralDate,
         },
         courtInformation: {
-          courtStatus: courtDetails.currentCourtStatus
+          courtStatus: courtDetails.courtStatus
             .toUpperCase()
             .replace(/ /g, "_"), // for enum
           orderReferral: courtDetails.orderReferral,
@@ -259,6 +285,7 @@ const IntakeFooter = ({
             onNextStep();
           }
         }}
+        disabled={isButtonDisabled}
       >
         <Box pr="5px">{nextButtonText}</Box>
         <ArrowRight />

@@ -10,6 +10,7 @@ import {
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import React from "react";
 import { ChevronDown, Download, FilePlus } from "react-feather";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 import CustomInput from "../common/CustomInput";
 import { AutocompleteField } from "./Autocomplete";
 import { CustomSelectField } from "./CustomSelectField";
@@ -20,15 +21,13 @@ import IntakeSteps from "./intakeSteps";
 import IntakeFooter from "./IntakeFormFooter";
 
 export type CourtDetails = {
-  currentCourtStatus: string;
+  courtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
   orderReferral: File | null; // FormData | null; 
 };
 
 type CourtInformationFormProps = {
-  courtDetails: CourtDetails;
-  setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -37,14 +36,13 @@ type CourtInformationFormProps = {
 };
 
 const CourtInformationForm = ({
-  courtDetails,
-  setCourtDetails,
   setStep,
   nextStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
+  const { courtDetails, setCourtDetails } = useStepValueContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef && inputRef.current) {
@@ -78,7 +76,7 @@ const CourtInformationForm = ({
 
   const onClear = () => {
     formik.setValues({
-      currentCourtStatus: "",
+      courtStatus: "",
       firstNationHeritage: "",
       firstNationBand: "",
       orderReferral: null,
@@ -109,12 +107,12 @@ const CourtInformationForm = ({
       <FormikProvider value={formik}>
         <Form>
           <Box style={{ paddingBottom: "16px" }}>
-            <FormLabel pt="15px" htmlFor="currentCourtStatus">
+            <FormLabel pt="15px" htmlFor="courtStatus">
               COURT STATUS
             </FormLabel>
             <AutocompleteField
-              id="currentCourtStatus"
-              name="currentCourtStatus"
+              id="courtStatus"
+              name="courtStatus"
               placeholder="Enter or select a court status"
               hints={[
                 "Interim care",
@@ -227,5 +225,4 @@ const CourtInformationForm = ({
     </>
   );
 };
-
 export default CourtInformationForm;

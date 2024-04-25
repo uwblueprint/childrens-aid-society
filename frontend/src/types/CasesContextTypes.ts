@@ -4,18 +4,18 @@ export type Case = {
   user_id: string | number;
   case_id: string | number;
   intakeStatus: CaseStatus;
+  intakeMeetingNotes: string;
   caseReferral: {
-    referringWorkerName: string;
+    referringWorker: string;
     referringWorkerContact: string;
-    cpinFileNumber: number;
+    cpinFileNumber: string;
     cpinFileType: string;
     familyName: string;
     referralDate: string;
   };
   courtInformation: {
     courtStatus: string;
-    // **Come back here
-    orderReferral: File; // FormData; // File; // number; // File; // number;
+    orderReferral: File; 
     firstNationHeritage: string;
     firstNationBand: string;
   };
@@ -56,17 +56,17 @@ export type Case = {
     individualConsiderations: string;
   }[];
   programDetails: {
-    transportRequirements: string;
+    transportationRequirements: string;
     schedulingRequirements: string;
     suggestedStartDate: string;
     shortTermGoals: string[];
     longTermGoals: string[];
     familialConcerns: string[];
     permittedIndividuals: {
-      name: string;
-      phoneNumber: number;
-      relationshipToChildren: string;
-      additionalNotes: string;
+      providerName: string;
+      phoneNo?: string;
+      relationshipToChild: string;
+      additionalNotes?: string;
     }[];
   };
 };

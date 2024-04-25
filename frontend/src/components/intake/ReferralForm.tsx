@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   FormControl,
@@ -8,26 +7,26 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Field, Form, FormikProvider, useFormik } from "formik";
-import { User, Phone, File, Users, Calendar } from "react-feather";
+import React, { useState } from "react";
+import { Calendar, File, Phone, User, Users } from "react-feather";
 import CustomInput from "../common/CustomInput";
 import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
+// eslint-disable-next-line import/no-cycle
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type ReferralDetails = {
   cpinFileNumber: string;
   cpinFileType: string;
   familyName: string;
-  phoneNumber: string;
   referralDate: string;
   referringWorker: string;
   referringWorkerContact: string;
 };
 
 type ReferralFormProps = {
-  referralDetails: ReferralDetails;
-  setReferralDetails: React.Dispatch<React.SetStateAction<ReferralDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -36,14 +35,13 @@ type ReferralFormProps = {
 };
 
 const ReferralForm = ({
-  referralDetails,
-  setReferralDetails,
   nextStep,
   setStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: ReferralFormProps): React.ReactElement => {
+  const { referralDetails, setReferralDetails } = useStepValueContext();
   const onSubmit = (values: ReferralDetails) => {
     setReferralDetails(values);
     nextStep();
@@ -69,9 +67,40 @@ const ReferralForm = ({
       referralDate: "",
       cpinFileNumber: "",
       cpinFileType: "",
-      phoneNumber: "",
     });
   };
+
+  const [referringWorkerContactError, setreferringWorkerContactError] =
+    useState<string | null>(null);
+  const [refferalDateError, setRefferalDateError] = useState<string | null>(
+    null,
+  );
+
+  function validatePhone(value: string) {
+    if (!value) {
+      setreferringWorkerContactError("Required");
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
+      setreferringWorkerContactError("Invalid phone number");
+    } else {
+      setreferringWorkerContactError(null);
+    }
+  }
+
+  function validateDate(value: string) {
+    if (!value) {
+      setRefferalDateError("Required");
+    } else if (
+      !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)
+    ) {
+      setRefferalDateError("Invalid Date");
+    } else {
+      setRefferalDateError(null);
+    }
+  }
 
   return (
     <>
@@ -120,7 +149,13 @@ const ReferralForm = ({
                   type="string"
                   placeholder="(e.g. 555-555-5555, ext. 123)"
                   icon={<Icon as={Phone} />}
+                  validate={(value: string) => validatePhone(value)}
                 />
+                {referringWorkerContactError && (
+                  <div style={{ color: "red" }}>
+                    {referringWorkerContactError}
+                  </div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="cpinFileNumber">CPIN FILE NUMBER</FormLabel>
@@ -168,7 +203,11 @@ const ReferralForm = ({
                 type="string"
                 placeholder="DD/MM/YYYY"
                 icon={<Icon as={Calendar} />}
+                validate={(value: string) => validateDate(value)}
               />
+              {refferalDateError && (
+                <div style={{ color: "red" }}>{refferalDateError}</div>
+              )}
             </Box>
           </FormControl>
         </Form>
@@ -181,6 +220,9 @@ const ReferralForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
+          isButtonDisabled={
+            referringWorkerContactError != null || refferalDateError != null
+          }
         />
       )}
     </>

@@ -55,9 +55,16 @@ const NewCaregiverModal = ({
   const [contactNotesChanged, setContactNotesChanged] = useState(false);
   const [addressChanged, setAddressChanged] = useState(false);
   const [relationshipChanged, setRelationshipChanged] = useState(false);
-  const [indivConsiderationsChanged, setIndivConsiderationsChanged] = useState(
-    false,
+  const [indivConsiderationsChanged, setIndivConsiderationsChanged] =
+    useState(false);
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
+  const [primaryPhoneNoError, setPrimaryPhoneNoError] = useState<string | null>(
+    null,
   );
+  const [secondaryPhoneNoError, setSecondaryPhoneNoError] = useState<
+    string | null
+  >(null);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const handleClose = () => {
     setCaregiverName(caregiver ? caregiver.caregiverName : "");
@@ -106,6 +113,41 @@ const NewCaregiverModal = ({
     return newDate;
   };
 
+  function validateDate(value: string) {
+    if (!value) {
+      setDateOfBirthError("Required");
+    } else if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[01])$/.test(value)) {
+      setDateOfBirthError("Invalid Date");
+    } else {
+      setDateOfBirthError(null);
+    }
+  }
+
+  function validatePhoneNo(value: string, isSecondaryPhoneNo: boolean) {
+    if (
+      /^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      ) ||
+      (value === "" && isSecondaryPhoneNo)
+    ) {
+      if (isSecondaryPhoneNo) {
+        setSecondaryPhoneNoError(null);
+      } else {
+        setPrimaryPhoneNoError(null);
+      }
+      setButtonDisabled(false);
+    } else {
+      if (isSecondaryPhoneNo) {
+        setSecondaryPhoneNoError("Invalid phone number");
+      } else {
+        const primaryErrorMessageTemp =
+          value === "" ? "Required" : "Invalid phone number";
+        setPrimaryPhoneNoError(primaryErrorMessageTemp);
+      }
+      setButtonDisabled(true);
+    }
+  }
+
   return (
     <Box>
       <ModalComponent
@@ -145,8 +187,12 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setDateOfBirth(event.target.value);
                     setDateOfBirthChanged(true);
+                    validateDate(event.target.value);
                   }}
                 />
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="primaryPhoneNumber">
@@ -162,8 +208,12 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setPrimaryPhoneNo(event.target.value);
                     setPrimaryPhoneNoChanged(true);
+                    validatePhoneNo(event.target.value, false);
                   }}
                 />
+                {primaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{primaryPhoneNoError}</div>
+                )}
               </Box>
               <Box>
                 <FormLabel htmlFor="secondaryPhoneNumber">
@@ -179,8 +229,12 @@ const NewCaregiverModal = ({
                   onChange={(event) => {
                     setSecondaryPhoneNo(event.target.value);
                     setSecondaryPhoneNoChanged(true);
+                    validatePhoneNo(event.target.value, true);
                   }}
                 />
+                {secondaryPhoneNoError && (
+                  <div style={{ color: "red" }}>{secondaryPhoneNoError}</div>
+                )}
               </Box>
             </SimpleGrid>
             <Box marginTop="0.75rem">
@@ -368,7 +422,8 @@ const NewCaregiverModal = ({
               ? primaryPhoneNo
               : caregiver?.primaryPhoneNo) &&
             (addressChanged ? address : caregiver?.address) &&
-            (relationshipChanged ? relationship : caregiver?.relationship)
+            (relationshipChanged ? relationship : caregiver?.relationship) &&
+            isButtonDisabled
           )
         }
         secondaryTitle="Individual Details"

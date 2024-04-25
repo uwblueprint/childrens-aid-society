@@ -115,7 +115,6 @@ export const IntakeValueProvider: React.FC<IntakeValueProviderProps> = ({
   const [referralDetails, setReferralDetails] = useState<ReferralDetails>(
     DEFAULT_REFFERAL_DETAILS,
   );
-  // set court details is defined here 
   const [courtDetails, setCourtDetails] = useState<CourtDetails>(
     DEFAULT_COURT_DETAILS,
   );

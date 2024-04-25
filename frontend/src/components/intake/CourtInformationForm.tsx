@@ -24,7 +24,7 @@ export type CourtDetails = {
   courtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
-  orderReferral: File | null; // FormData | null; 
+  orderReferral: File | null; 
 };
 
 type CourtInformationFormProps = {
@@ -53,7 +53,6 @@ const CourtInformationForm = ({
     event: React.ChangeEvent<HTMLInputElement>,
     setFieldValue: (field: string, value: File) => void,
   ) => {
-    console.log('handling file change');
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
       return;
@@ -126,7 +125,6 @@ const CourtInformationForm = ({
             />
           </Box>
           {/* TODO: store the uploaded file and save in backend */}
-          {/* This is where it needs to be done in the frontend */}
           <Input
             display="none"
             type="file"

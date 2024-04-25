@@ -225,7 +225,6 @@ const IntakeFooter = ({
         },
       };
 
-      // **Come back here
       const intakeFormData = new FormData(); 
       appendFormData(intakeFormData, intakeData, '');
 

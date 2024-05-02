@@ -18,6 +18,7 @@ export type TransportationDetails = {
   gaurdian: string;
   name: string;
   duration: string;
+  notes: string;
 };
 
 export type TransportationEntries = {

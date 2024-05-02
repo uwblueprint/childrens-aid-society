@@ -24,13 +24,28 @@ const Visit = (): React.ReactElement => {
   const { caseId } = useParams<{ caseId: string}>();
   const caseNumber: number = parseInt(caseId, 10);
 
-  const [visitNotes, setVisitNotes] = useState('');
+    // Visting Member
 
-  const handleNotesChange = (note: string) => {
-    let updatedEntries = [...transportationEntries.entries];
+    const DEDAULT_TRANSPORTATION_DETAILS = {
+      entries: [
+        {
+          gaurdian: "",
+          name: "",
+          duration: "",
+          notes: "",
+        },
+      ],
+    };
+
+  const [visitNotes, setVisitNotes] = useState('');
+  const [transportationEntries, setTransportationEntries] =
+    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
+
+  const handleNotesChange = () => {
+    const updatedEntries = [...transportationEntries.entries];
   
     if (updatedEntries.length > 0) {
-      updatedEntries[0] = { ...updatedEntries[0], notes: note };
+      updatedEntries[0] = { ...updatedEntries[0], notes: visitNotes };
     }
 
     setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
@@ -70,19 +85,6 @@ const Visit = (): React.ReactElement => {
     ],
   };
 
-  // Visting Member
-
-  const DEDAULT_TRANSPORTATION_DETAILS = {
-    entries: [
-      {
-        gaurdian: "",
-        name: "",
-        duration: "",
-        notes: "",
-      },
-    ],
-  };
-
   // Transportation
   const [childDetails, setChildDetails] = useState<ChildDetails>(
     DEFAULT_CHILD_DETAILS,
@@ -95,9 +97,6 @@ const Visit = (): React.ReactElement => {
   const [attendanceEntries, setAttendanceEntries] = useState<AttendanceEntries>(
     DEFAULT_ATTENDANCE_DETAILS,
   );
-
-  const [transportationEntries, setTransportationEntries] =
-    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
 
   const scrollToHeader = (headerId: string) => {
     const headerElement = document.getElementById(headerId);

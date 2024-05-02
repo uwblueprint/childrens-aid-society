@@ -30,9 +30,8 @@ const CaseOverviewBody = (): React.ReactElement => {
   const { state } = useLocation<{ referringWorker: string }>();
   const { referringWorker } = state;
 
-  const [referringWorkerName, setReferringWorkerName] = useState(
-    referringWorker,
-  );
+  const [referringWorkerName, setReferringWorkerName] =
+    useState(referringWorker);
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -112,9 +111,8 @@ const CaseOverviewBody = (): React.ReactElement => {
 
       setData({
         caregiversList: caregivers,
-        caregiversDetailsOverview: mapCaregiversToCaregiverDetailsOverview(
-          caregivers,
-        ),
+        caregiversDetailsOverview:
+          mapCaregiversToCaregiverDetailsOverview(caregivers),
       });
     };
 

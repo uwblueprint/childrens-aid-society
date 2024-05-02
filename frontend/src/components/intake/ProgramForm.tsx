@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   Text,
@@ -24,6 +24,8 @@ import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
 import MultiTextInput from "../common/MultiTextInput";
+import { PermittedIndividualsDetails } from "./PermittedIndividualsModal";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type ProgramDetails = {
   transportationRequirements: string;
@@ -32,11 +34,10 @@ export type ProgramDetails = {
   shortTermGoals: string[];
   longTermGoals: string[];
   familialConcerns: string[];
+  permittedIndividuals: PermittedIndividualsDetails[];
 };
 
 type ProgramFormProps = {
-  programDetails: ProgramDetails;
-  setProgramDetails: React.Dispatch<React.SetStateAction<ProgramDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -64,14 +65,13 @@ const longTermGoalsOptions = [
 ];
 
 const ProgramForm = ({
-  programDetails,
-  setProgramDetails,
   nextStep,
   setStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: ProgramFormProps): React.ReactElement => {
+  const { programDetails, setProgramDetails } = useStepValueContext();
   const onSubmit = (values: ProgramDetails) => {
     setProgramDetails(values);
     nextStep();
@@ -89,7 +89,7 @@ const ProgramForm = ({
     setProgramDetails(formik.values);
   };
 
-  function onClear() {
+  const onClear = () => {
     formik.setValues({
       transportationRequirements: "",
       schedulingRequirements: "",
@@ -97,7 +97,29 @@ const ProgramForm = ({
       shortTermGoals: [],
       longTermGoals: [],
       familialConcerns: [],
+      permittedIndividuals: [
+        {
+          providerName: "",
+          phoneNo: "",
+          relationshipToChild: "",
+          additionalNotes: "",
+        },
+      ],
     });
+  };
+
+  const [dateOfBirthError, setDateOfBirthError] = useState<string | null>(null);
+
+  function validateDate(value: string) {
+    if (!value) {
+      setDateOfBirthError("Required");
+    } else if (
+      !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value)
+    ) {
+      setDateOfBirthError("Invalid Date");
+    } else {
+      setDateOfBirthError(null);
+    }
   }
 
   return (
@@ -172,7 +194,11 @@ const ProgramForm = ({
                   type="string"
                   placeholder="DD/MM/YYYY"
                   icon={<Icon as={Calendar} />}
+                  validate={(value: string) => validateDate(value)}
                 />
+                {dateOfBirthError && (
+                  <div style={{ color: "red" }}>{dateOfBirthError}</div>
+                )}
               </Box>
             </SimpleGrid>
             <Text textAlign="left" paddingTop="35px" textStyle="title-medium">
@@ -254,6 +280,7 @@ const ProgramForm = ({
           registrationLoading={false}
           nextStepCallBack={onNextStep}
           clearFields={onClear}
+          isButtonDisabled={dateOfBirthError != null}
         />
       )}
     </>

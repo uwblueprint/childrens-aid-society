@@ -21,6 +21,7 @@ const VisitFormFooter = (
     visitDetails,
     attendanceEntries,
     transportationEntries,
+    onCancel
   } : any 
 ): React.ReactElement => {
   const {
@@ -30,12 +31,6 @@ const VisitFormFooter = (
   } = useDisclosure();
 
   const handleSubmit = async () => {
-    console.log("Visit Log Completed");
-    console.log("Child Details: ", childDetails);
-    console.log("Visit Details: ", visitDetails);
-    console.log("Transportation Details: ", transportationEntries);
-    console.log("Attendance Details: ", attendanceEntries);
-
     const visitData = {
       // TODO: Re-assign userID and caseID.
       userID: 1,
@@ -66,9 +61,7 @@ const VisitFormFooter = (
       zIndex="2"
     >
       <Button
-        onClick={() => {
-          // TODO: Handle cancel form logic
-        }}
+        onClick={onCancel}
         variant="tertiary"
       >
         <Box>Cancel</Box>

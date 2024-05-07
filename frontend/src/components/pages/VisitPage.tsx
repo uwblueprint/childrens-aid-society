@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import {
   Box,
   Button,
@@ -22,7 +22,10 @@ import VisitFormFooter from "../visit/VisitFormFooter";
 
 const Visit = (): React.ReactElement => {
   const { caseId } = useParams<{ caseId: string}>();
+  const history = useHistory()
   const caseNumber: number = parseInt(caseId, 10);
+
+  const navigateToPrimary = () => history.goBack();
 
     // Visting Member
 
@@ -147,8 +150,8 @@ const Visit = (): React.ReactElement => {
               display="flex"
               gap="8px"
             >
-              <Button variant="ghost" width="fit-content">
-                <ArrowLeft /> Save and Exit
+              <Button variant="ghost" width="fit-content" onClick={navigateToPrimary}>
+                <ArrowLeft /> Exit
               </Button>
             </Box>
             <Button
@@ -283,6 +286,7 @@ const Visit = (): React.ReactElement => {
         visitDetails={visitDetails}
         attendanceEntries={attendanceEntries}
         transportationEntries={transportationEntries}
+        onCancel={navigateToPrimary}
       />
     </>
   );

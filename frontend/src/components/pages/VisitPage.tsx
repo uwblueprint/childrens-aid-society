@@ -45,18 +45,7 @@ const Visit = (): React.ReactElement => {
   const [transportationEntries, setTransportationEntries] =
     useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
 
-  const handleNotesChange = (event:any) => {
-    const currentVisitNotes = event.target.value
-    setVisitNotes(currentVisitNotes)
 
-    const updatedEntries = [...transportationEntries.entries];
-  
-    if (updatedEntries.length > 0) {
-      updatedEntries[0] = { ...updatedEntries[0], notes: currentVisitNotes };
-    }
-
-    setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
-  };
 
   const DEFAULT_CHILD_DETAILS = {
     familyName: "",
@@ -112,6 +101,23 @@ const Visit = (): React.ReactElement => {
       headerElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleNotesChange = (event:any) => {
+    const currentVisitNotes = event.target.value
+    setVisitNotes(currentVisitNotes)
+
+    const updatedEntries = [...transportationEntries.entries];
+  
+    if (updatedEntries.length > 0) {
+      updatedEntries[0] = { ...updatedEntries[0], notes: currentVisitNotes };
+    }
+
+    setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
+  };
+
+  const updateChildServiceWorker = (event:any) => {
+    setChildDetails({...childDetails, childServiceWorker: event.target.value})
+  }
 
   return (
     <>
@@ -260,26 +266,7 @@ const Visit = (): React.ReactElement => {
                 type="string"
                 placeholder="Enter name of child and family support worker"
                 icon={<Icon as={User} />}
-              />
-            </Box>
-            <Box>
-              <FormLabel htmlFor="">CHILD AND FAMILY SUPPORT WORKER</FormLabel>
-              <CustomInput
-                id="childFamilySupportWorker"
-                name="childFamilySupportWorker"
-                type="string"
-                placeholder="Enter name of child and family support worker"
-                icon={<Icon as={User} />}
-              />
-            </Box>
-            <Box>
-              <FormLabel htmlFor="">CHILD AND FAMILY SUPPORT WORKER</FormLabel>
-              <CustomInput
-                id="childFamilySupportWorker"
-                name="childFamilySupportWorker"
-                type="string"
-                placeholder="Enter name of child and family support worker"
-                icon={<Icon as={User} />}
+                onChange={updateChildServiceWorker}
               />
             </Box>
           </Box>

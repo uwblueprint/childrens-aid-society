@@ -40,15 +40,19 @@ const Visit = (): React.ReactElement => {
       ],
     };
 
+
   const [visitNotes, setVisitNotes] = useState('');
   const [transportationEntries, setTransportationEntries] =
     useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
 
-  const handleNotesChange = () => {
+  const handleNotesChange = (event:any) => {
+    const currentVisitNotes = event.target.value
+    setVisitNotes(currentVisitNotes)
+
     const updatedEntries = [...transportationEntries.entries];
   
     if (updatedEntries.length > 0) {
-      updatedEntries[0] = { ...updatedEntries[0], notes: visitNotes };
+      updatedEntries[0] = { ...updatedEntries[0], notes: currentVisitNotes };
     }
 
     setTransportationEntries({ ...transportationEntries, entries: updatedEntries });

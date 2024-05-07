@@ -25,15 +25,7 @@ class CreateVisitDTO(VisitDTO):
             error_list.append("user_id is invalid")
         if not self.childInformation:
             error_list.append("childInformation is invalid")
-        if not self.visitTimestamp:
-            error_list.append("visitTimestamp is invalid")
         if not self.attendance:
             error_list.append("attendance is invalid")
-        if not self.transportation:
-            error_list.append("transportation is invalid")
-        if not self.notes:
-            error_list.append("notes is invalid")
-        if not self.childAndFamilySupportWorker:
-            error_list.append("childAndFamilySupportWorker is invalid")
 
         return error_list

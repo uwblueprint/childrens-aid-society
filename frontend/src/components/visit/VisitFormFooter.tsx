@@ -1,8 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
 import SubmitVisitModal from "./SubmitVisitModal";
 import VisitAPIClient from "../../APIClients/VisitAPIClient";
+import { HOME_PAGE } from "../../constants/Routes";
 
 export type VisitFormFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
@@ -24,6 +26,7 @@ const VisitFormFooter = (
     onCancel
   } : any 
 ): React.ReactElement => {
+  const history = useHistory();
   const {
     onOpen: onOpenSubmitVisitModal,
     isOpen: isOpenSubmitVisitModal,
@@ -41,6 +44,7 @@ const VisitFormFooter = (
       transportationEntries,
     };
     await VisitAPIClient.post(visitData);
+    history.push(HOME_PAGE)
 
     
     onCloseSubmitVisitModal();

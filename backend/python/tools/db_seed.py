@@ -72,25 +72,25 @@ def insert_test_data():
 
     # Daytime Contact
     values = [
-        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm'),
-        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm'),
-        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm'),
-        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm'),
+        ('Garen Crownguard', 'Summoners Rift', 'contact info', '3:30pm', '1'),
+        ('Shieda Kayn', 'Summoners Rift', 'contact info', '4:00pm', '2'),
+        ('Sarah Fortune', 'Summoners Rift', 'contact info', '4:30pm', '3'),
+        ('Irelia Xan', 'Summoners Rift', 'contact info', '5:00pm', '4'),
     ]
 
     for value in values:
-        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time"), value)
+        insert_values(db, "daytime_contacts", ("name", "address", "contact_information", "dismissal_time", "child_id"), value)
 
     # Child
     values = [
-        (1, 'Anya Forger', '2018-01-01', '11111', 1, 1, 'Special needs'),
-        (1, 'Damian Desmond', '2018-03-27', '22222', 2, 2, 'Special needs'),
-        (2, 'Becky Blackbell', '2018-04-01', '33333', 3, 3, 'Special needs'),
-        (3, 'Ewen Egeburg', '2018-04-01', '44444', 4, 4, 'Special needs'),
+        (1, 'Anya Forger', '2018-01-01', '11111', 1,  'Special needs'),
+        (1, 'Damian Desmond', '2018-03-27', '22222', 2, 'Special needs'),
+        (2, 'Becky Blackbell', '2018-04-01', '33333', 3, 'Special needs'),
+        (3, 'Ewen Egeburg', '2018-04-01', '44444', 4, 'Special needs'),
     ]
 
     for value in values:
-        insert_values(db, "children", ("intake_id", "name", "date_of_birth", "cpin_number", "service_worker", "daytime_contact_id", "special_needs"), value)
+        insert_values(db, "children", ("intake_id", "name", "date_of_birth", "cpin_number", "service_worker", "special_needs"), value)
 
     # Caregivers
     values = [

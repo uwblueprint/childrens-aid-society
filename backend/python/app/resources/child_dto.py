@@ -6,7 +6,6 @@ class ChildDTO:
         self.date_of_birth = kwargs.get("date_of_birth")
         self.cpin_number = kwargs.get("cpin_number")
         self.service_worker = kwargs.get("service_worker")
-        self.daytime_contact_id = kwargs.get("daytime_contact_id")
         self.special_needs = kwargs.get("special_needs")
 
 
@@ -18,8 +17,6 @@ class CreateChildDTO(ChildDTO):
         error_list = []
         if not self.name or not type(self.name) == str:
             error_list.append("The name supplied is invalid")
-        if not self.daytime_contact_id or not type(self.daytime_contact_id) == int:
-            error_list.append("The daytime_contact_id supplied is invalid")
 
         # optional args
         if self.intake_id and not type(self.intake_id) == int:

@@ -5,6 +5,7 @@ class DaytimeContactDTO:
         self.address = kwargs.get("address")
         self.contact_information = kwargs.get("contact_information")
         self.dismissal_time = kwargs.get("dismissal_time")
+        self.child_id = kwargs.get("child_id")
 
 
 class CreateDaytimeContactDTO(DaytimeContactDTO):
@@ -19,6 +20,8 @@ class CreateDaytimeContactDTO(DaytimeContactDTO):
             error_list.append("The contact_information supplied is invalid")
         if not self.address or not type(self.address) == str:
             error_list.append("The address supplied is invalid")
+        if not self.child_id or not type(self.child_id) == int:
+            error_list.append("The child id supplied is invalid")
 
         # optional fields
         if self.dismissal_time and not type(self.dismissal_time) == str:

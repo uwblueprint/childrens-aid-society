@@ -11,6 +11,7 @@ DEFAULT_DAYTIME_CONTACT = {
     "address": "123 Main St",
     "contact_information": "1234567890",
     "dismissal_time": "12:00PM",
+    "child_id": 1,
 }
 
 

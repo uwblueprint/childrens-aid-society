@@ -18,6 +18,7 @@ import customTheme from "./theme";
 import { AuthenticatedUser } from "./types/AuthTypes";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import Intake from "./components/pages/IntakePage";
 import Visit from "./components/pages/VisitPage";
 import Home from "./components/pages/HomePage";
@@ -59,16 +60,31 @@ const App = (): React.ReactElement => {
                 <Switch>
                   <Route exact path={Routes.LOGIN_PAGE} component={Login} />
                   <Route exact path={Routes.SIGNUP_PAGE} component={Signup} />
-                  {/* TODO: Change these to private routes */}
-                  <Route exact path={Routes.HOME_PAGE} component={Home} />
-                  <Route exact path={Routes.INTAKE_PAGE} component={Intake} />
-                  <Route exact path={Routes.VISIT_PAGE} component={Visit} />
-                  <Route
+                  <PrivateRoute
+                    exact
+                    path={Routes.HOME_PAGE}
+                    component={Home}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.INTAKE_PAGE}
+                    component={Intake}
+                  />
+                  <PrivateRoute
+                    exact
+                    path={Routes.VISIT_PAGE}
+                    component={Visit}
+                  />
+                  <PrivateRoute
                     exact
                     path={Routes.CASEOVERVIEW_PAGE}
                     component={CaseOverview}
                   />
-                  <Route exact path={Routes.CASES_PAGE} component={Cases} />
+                  <PrivateRoute
+                    exact
+                    path={Routes.CASES_PAGE}
+                    component={Cases}
+                  />
                   <Route exact path="*" component={NotFound} />
                 </Switch>
               </IntakeValueProvider>

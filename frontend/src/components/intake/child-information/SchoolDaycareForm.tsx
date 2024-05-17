@@ -5,7 +5,7 @@ import {
   Icon,
   SimpleGrid,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Clock, Home, Navigation, Phone } from "react-feather";
 import CustomInput from "../../common/CustomInput";
@@ -21,15 +21,38 @@ export type SchoolDetails = {
 type SchoolDaycareFormProps = {
   schoolDetails: SchoolDetails;
   setSchoolDetails: React.Dispatch<React.SetStateAction<SchoolDetails>>;
+  setChildInfoSchoolPhoneNoError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SchoolDaycareForm = ({
   schoolDetails,
   setSchoolDetails,
+  setChildInfoSchoolPhoneNoError,
 }: SchoolDaycareFormProps): React.ReactElement => {
   const onSubmit = (values: SchoolDetails) => {
     setSchoolDetails(values);
   };
+
+  const [schoolPhoneNoError, setschoolPhoneNoError] = useState<string | null>(
+    null,
+  );
+
+  function validatePhone(value: string) {
+    if (!value) {
+      setschoolPhoneNoError("Required");
+      setChildInfoSchoolPhoneNoError(true);
+    } else if (
+      !/^(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4}[,]?)(\s?([E|e]xt[.]?)(\s?\d+))?/.test(
+        value,
+      )
+    ) {
+      setschoolPhoneNoError("Invalid phone number");
+      setChildInfoSchoolPhoneNoError(true);
+    } else {
+      setschoolPhoneNoError(null);
+      setChildInfoSchoolPhoneNoError(false);
+    }
+  }
 
   return (
     <Formik
@@ -74,7 +97,11 @@ const SchoolDaycareForm = ({
                     schoolPhoneNo: e.target.value,
                   })
                 }
+                validate={(value: string) => validatePhone(value)}
               />
+              {schoolPhoneNoError && (
+                <div style={{ color: "red" }}>{schoolPhoneNoError}</div>
+              )}
             </Box>
           </SimpleGrid>
           <Box paddingTop="10px">

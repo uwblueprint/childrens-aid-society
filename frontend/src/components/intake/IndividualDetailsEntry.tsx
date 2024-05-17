@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React from "react";
 import { VStack } from "@chakra-ui/react";
 import { Caregivers } from "../../types/CaregiverDetailTypes";
@@ -30,6 +32,7 @@ const IndividualDetailsEntry = ({
   setChildren,
   caregivers,
   setCaregivers,
+  selectedIndexChild,
   setSelectedIndexChild,
 }: IndividualDetailsEntryProp): React.ReactElement => {
   const onNextStep = () => {

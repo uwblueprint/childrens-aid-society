@@ -69,7 +69,7 @@ const post = async (
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't make new caregiver");
   }
 };
 
@@ -89,7 +89,7 @@ const getById = async (intake_id: number): Promise<Caregivers> => {
       },
     );
 
-    const mappedData: Caregivers = data.map((caregiver) => ({
+    const mappedData: Caregivers = data.map((caregiver: Caregiver) => ({
       intakeId: caregiver.intake_id,
       caregiverName: caregiver.name,
       dateOfBirth: caregiver.date_of_birth,
@@ -111,7 +111,7 @@ const getById = async (intake_id: number): Promise<Caregivers> => {
 
     return mappedData;
   } catch (error) {
-    return error;
+    throw new Error("Error: given id, can't get caregiver");
   }
 };
 
@@ -173,7 +173,7 @@ const put = async (
     );
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get caregivers");
   }
 };
 
@@ -191,7 +191,7 @@ const deleteCaregiver = async (caregiverId: number): Promise<void> => {
     );
     return response.data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't delete caregiver");
   }
 };
 

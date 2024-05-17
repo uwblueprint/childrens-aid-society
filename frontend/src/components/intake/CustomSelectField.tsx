@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-unused-prop-types */
 
 import React, { Dispatch, SetStateAction, useState } from "react";
 

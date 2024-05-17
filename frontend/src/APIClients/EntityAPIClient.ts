@@ -42,7 +42,7 @@ const create = async ({
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't make new entity");
   }
 };
 
@@ -57,7 +57,7 @@ const get = async (): Promise<EntityResponse[]> => {
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get entities");
   }
 };
 
@@ -73,7 +73,7 @@ const getFile = async (uuid: string): Promise<string> => {
 
     return data.fileUrl;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get requested file");
   }
 };
 
@@ -92,7 +92,7 @@ const getCSV = async (): Promise<string> => {
 
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't get csv file");
   }
 };
 
@@ -114,7 +114,7 @@ const update = async (
     });
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Error: can't udpate entity");
   }
 };
 

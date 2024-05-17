@@ -1,18 +1,20 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
-import React from "react";
-import CaseCard, { CaseCardProps } from "../dashboard/CaseCard";
+import React, { useContext } from "react";
+import CaseCard from "../dashboard/CaseCard";
+import { Case } from "../../types/CasesContextTypes";
+import CasesContext from "../../contexts/CasesContext";
 
 interface Props {
-  cases: CaseCardProps[];
   numberOfRows: number;
   status: string;
 }
 
 const FilteredCaseDisplay = ({
-  cases,
   numberOfRows,
   status,
 }: Props): React.ReactElement => {
+  const cases = useContext(CasesContext);
+
   if (cases.length <= 0) {
     return (
       <Center height="full">
@@ -37,15 +39,18 @@ const FilteredCaseDisplay = ({
         pb="24px"
         alignItems="flex-start"
       >
-        {casesDisplayed.map((caseData: CaseCardProps) => {
+        {casesDisplayed.map((caseData: Case) => {
           return (
             <CaseCard
-              key={caseData.caseId}
-              caseId={caseData.caseId}
-              referringWorker={caseData.referringWorker}
-              date={caseData.date}
-              familyName={caseData.familyName}
-              caseTag={caseData.caseTag}
+              key={caseData.case_id}
+              caseDetails={caseData}
+              caseId={
+                typeof caseData.case_id === "string"
+                  ? parseInt(caseData.case_id, 10)
+                  : caseData.case_id
+              }
+              caseTag={caseData.intakeStatus}
+              intakeMeetingNotes={caseData.intakeMeetingNotes}
             />
           );
         })}

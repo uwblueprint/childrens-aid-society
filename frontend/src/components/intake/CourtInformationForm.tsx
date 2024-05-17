@@ -18,17 +18,16 @@ import Stepper from "./Stepper";
 import IntakeSteps from "./intakeSteps";
 // eslint-disable-next-line import/no-cycle
 import IntakeFooter from "./IntakeFormFooter";
+import { useStepValueContext } from "../../contexts/IntakeValueContext";
 
 export type CourtDetails = {
-  currentCourtStatus: string;
+  courtStatus: string;
   firstNationHeritage: string;
   firstNationBand: string;
   orderReferral: File | null;
 };
 
 type CourtInformationFormProps = {
-  courtDetails: CourtDetails;
-  setCourtDetails: React.Dispatch<React.SetStateAction<CourtDetails>>;
   nextStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   readOnly?: boolean;
@@ -37,14 +36,13 @@ type CourtInformationFormProps = {
 };
 
 const CourtInformationForm = ({
-  courtDetails,
-  setCourtDetails,
   setStep,
   nextStep,
   readOnly = false,
   hideStepper,
   hideFooter,
 }: CourtInformationFormProps): React.ReactElement => {
+  const { courtDetails, setCourtDetails } = useStepValueContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (inputRef && inputRef.current) {
@@ -77,7 +75,7 @@ const CourtInformationForm = ({
 
   const onClear = () => {
     formik.setValues({
-      currentCourtStatus: "",
+      courtStatus: "",
       firstNationHeritage: "",
       firstNationBand: "",
       orderReferral: null,
@@ -121,12 +119,12 @@ const CourtInformationForm = ({
       <FormikProvider value={formik}>
         <Form>
           <Box style={{ paddingBottom: "16px" }}>
-            <FormLabel pt="15px" htmlFor="currentCourtStatus">
+            <FormLabel pt="15px" htmlFor="courtStatus">
               COURT STATUS
             </FormLabel>
             <AutocompleteField
-              id="currentCourtStatus"
-              name="currentCourtStatus"
+              id="courtStatus"
+              name="courtStatus"
               placeholder="Enter or select a court status"
               hints={[
                 "Interim care",
@@ -238,5 +236,4 @@ const CourtInformationForm = ({
     </>
   );
 };
-
 export default CourtInformationForm;

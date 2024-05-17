@@ -2,16 +2,15 @@ import React from "react";
 import { Box, Text, Tag, Icon, useDisclosure } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { ArrowUpRight } from "react-feather";
-import CaseStatus from "../../types/CaseStatus";
-import StatusModal from "./StatusModal";
 import PermanentDeleteModal from "./PermanentDeleteModal";
+import StatusModal from "./StatusModal";
+import { Case } from "../../types/CasesContextTypes";
 
 export type CaseCardProps = {
   caseId: number;
-  referringWorker: string;
-  date: string;
-  familyName: string;
-  caseTag: CaseStatus;
+  caseDetails: Case;
+  intakeMeetingNotes: string;
+  caseTag: string;
 };
 
 const colorChange = (value: string) => {
@@ -31,11 +30,12 @@ const colorChange = (value: string) => {
 
 const CaseCard = ({
   caseId,
-  referringWorker,
-  date,
-  familyName,
+  caseDetails,
   caseTag,
+  intakeMeetingNotes,
 }: CaseCardProps): React.ReactElement => {
+  const history = useHistory();
+
   const {
     onOpen: onOpenStatusModal,
     isOpen: isOpenStatusModal,
@@ -48,10 +48,10 @@ const CaseCard = ({
     onClose: onClosePermanentDelete,
   } = useDisclosure();
 
-  const history = useHistory();
-
   const goToIntake = () => {
-    history.push("/intake");
+    history.push({
+      pathname: "/intake",
+    });
   };
 
   // TODO refactor to display proper case data
@@ -59,11 +59,15 @@ const CaseCard = ({
     if (status === "ACTIVE") {
       history.push({
         pathname: `/caseoverview/${caseId}`,
-        state: { referringWorker },
+        state: `${caseDetails.caseReferral.referringWorker}`,
       });
     } else {
       onOpenStatusModal();
     }
+  };
+
+  const onClickStatusUpdate = () => {
+    window.location.reload();
   };
 
   return (
@@ -96,13 +100,13 @@ const CaseCard = ({
           marginBottom="10px"
         >
           <Text textStyle="body-medium" marginBottom="15px">
-            {referringWorker}
+            {caseDetails.caseReferral.referringWorker}
           </Text>
           <Text textStyle="body-medium" marginBottom="15px">
-            {date}
+            {caseDetails.caseReferral.referralDate}
           </Text>
           <Text textStyle="body-medium" marginBottom="25px">
-            {familyName}
+            {caseDetails.caseReferral.familyName}
           </Text>
         </Box>
         <Box display="flex" justifyContent="end">
@@ -120,9 +124,9 @@ const CaseCard = ({
       <PermanentDeleteModal
         isOpen={isOpenPermanentDelete}
         onClick={() => {
-          // TODO: add deletion logic
           onClosePermanentDelete();
           onCloseStatusModal();
+          onClickStatusUpdate();
         }}
         onClose={onClosePermanentDelete}
         intakeId={caseId}
@@ -130,8 +134,10 @@ const CaseCard = ({
       <StatusModal
         caseId={caseId}
         status={caseTag}
+        caseDetails={caseDetails}
+        intakeNotes={intakeMeetingNotes}
         isOpen={isOpenStatusModal}
-        onClick={() => {}}
+        onClick={onClickStatusUpdate}
         onClose={onCloseStatusModal}
         onDeleteClick={onOpenPermanentDelete}
         goToIntake={goToIntake}

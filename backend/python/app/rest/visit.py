@@ -160,7 +160,7 @@ def update_visit(id):
         }
         return jsonify(response_data), 200
     except Exception as error:
-        return jsonify(str(error)), 400
+        return jsonify("Bad Request: The server cannot process your request."), 400
 
 
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)

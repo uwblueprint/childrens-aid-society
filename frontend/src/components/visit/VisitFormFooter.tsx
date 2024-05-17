@@ -2,20 +2,54 @@ import React from "react";
 import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
 import SubmitVisitModal from "./SubmitVisitModal";
+import VisitAPIClient from "../../APIClients/VisitAPIClient";
 
 export type VisitFormFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
   showClearPageBtn?: boolean;
   nextStepCallBack: () => void;
   clearFields?: () => void;
+  childDetails: any;
+  visitDetails: any;
+  attendanceEntries: any;
+  transportationEntries: any;
 };
 
-const VisitFormFooter = (): React.ReactElement => {
+const VisitFormFooter = (
+  {
+    childDetails,
+    visitDetails,
+    attendanceEntries,
+    transportationEntries,
+  } : any 
+): React.ReactElement => {
   const {
     onOpen: onOpenSubmitVisitModal,
     isOpen: isOpenSubmitVisitModal,
     onClose: onCloseSubmitVisitModal,
   } = useDisclosure();
+
+  const handleSubmit = async () => {
+    console.log("Visit Log Completed");
+    console.log("Child Details: ", childDetails);
+    console.log("Visit Details: ", visitDetails);
+    console.log("Transportation Details: ", transportationEntries);
+    console.log("Attendance Details: ", attendanceEntries);
+
+    const visitData = {
+      // TODO: Re-assign userID and caseID.
+      userID: 1,
+      caseID: 1,
+      childDetails,
+      visitDetails,
+      attendanceEntries,
+      transportationEntries,
+    };
+    await VisitAPIClient.post(visitData);
+
+    
+    onCloseSubmitVisitModal();
+  }
 
   return (
     <Flex
@@ -46,7 +80,7 @@ const VisitFormFooter = (): React.ReactElement => {
         width={{ sm: "95vw", md: "45vw", lg: "auto" }}
         height="38px"
         variant="primary"
-        // TODO add isLoading={}
+        type="submit"
         onClick={onOpenSubmitVisitModal}
       >
         <Box pl="2" marginRight="10px">
@@ -57,7 +91,7 @@ const VisitFormFooter = (): React.ReactElement => {
       <SubmitVisitModal
         isOpen={isOpenSubmitVisitModal}
         onClose={onCloseSubmitVisitModal}
-        onClick={onOpenSubmitVisitModal}
+        onClick={handleSubmit}
       />
     </Flex>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useParams} from 'react-router-dom'
 import {
   Box,
   Button,
@@ -20,8 +21,8 @@ import OptionalLabel from "../intake/OptionalLabel";
 import VisitFormFooter from "../visit/VisitFormFooter";
 
 const Visit = (): React.ReactElement => {
-  // url is /visit/caseId/visitId, commented for now to avoid lint
-  // const params = useParams();
+  const { caseId } = useParams<{ caseId: string}>();
+  const caseNumber: number = parseInt(caseId, 10);
 
   const DEFAULT_CHILD_DETAILS = {
     familyName: "",
@@ -31,6 +32,8 @@ const Visit = (): React.ReactElement => {
     fosterCareCoordinator: "",
   };
 
+  // Attendance Sheet
+
   const DEFAULT_VISIT_DETAILS = {
     visitDate: "",
     visitDay: "",
@@ -39,6 +42,8 @@ const Visit = (): React.ReactElement => {
     endTime: "",
     location: "",
   };
+
+  // Attendance Records
 
   const DEFAULT_ATTENDANCE_DETAILS = {
     entries: [
@@ -53,6 +58,8 @@ const Visit = (): React.ReactElement => {
     ],
   };
 
+  // Visting Member
+
   const DEDAULT_TRANSPORTATION_DETAILS = {
     entries: [
       {
@@ -63,6 +70,7 @@ const Visit = (): React.ReactElement => {
     ],
   };
 
+  // Transportation
   const [childDetails, setChildDetails] = useState<ChildDetails>(
     DEFAULT_CHILD_DETAILS,
   );
@@ -128,7 +136,7 @@ const Visit = (): React.ReactElement => {
               gap="8px"
             >
               <Button variant="ghost" width="fit-content">
-                <ArrowLeft /> Save and Exit {/* TODO implement save and exit */}
+                <ArrowLeft /> Save and Exit
               </Button>
             </Box>
             <Button
@@ -256,7 +264,12 @@ const Visit = (): React.ReactElement => {
           </Box>
         </Box>
       </Box>
-      <VisitFormFooter />
+      <VisitFormFooter 
+        childDetails={childDetails}
+        visitDetails={visitDetails}
+        attendanceEntries={attendanceEntries}
+        transportationEntries={transportationEntries}
+      />
     </>
   );
 };

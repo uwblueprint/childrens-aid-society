@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Icon,
+  Select,
   Button,
   SimpleGrid,
   Divider,
@@ -47,6 +48,15 @@ const TransportationForm = ({
     },
   });
 
+  const captureValue = (e: React.ChangeEvent<any>) => {
+      const { name, value } = e.target;
+      formik.handleChange(e);
+      setTransportationEntries(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
+
   return (
     <FormikProvider value={formik}>
       <Form>
@@ -59,14 +69,20 @@ const TransportationForm = ({
                   <SimpleGrid columns={3} spacingX="30px" spacingY="10px">
                     <Box>
                       <FormLabel htmlFor="guardian">GUARDIAN</FormLabel>
-                      <CustomSelectField
-                        readOnly={readOnly}
+                      <Select
+                        disabled={readOnly}
+                        as={Select}
                         id="guardian"
                         options={["Full", "Partial", "Unsupervised"]}
                         name={`entries[${index}].guardian`}
                         placeholder="Select"
                         iconRight={<Icon as={ChevronDown} />}
-                      />
+                        onChange={captureValue}
+                      >
+                        <option value="transport1">transport 1</option>
+                        <option value="transport2">transport 2</option>
+                        <option value="transport3">transport 3</option>
+                      </Select>
                     </Box>
                     <Box>
                       {/* TODO: make ethis dropdown conditional on other visitor */}
@@ -79,6 +95,7 @@ const TransportationForm = ({
                         type="string"
                         placeholder="Enter name"
                         icon={<Icon as={User} />}
+                        onChange={captureValue}
                       />
                     </Box>
                     <Box>
@@ -92,6 +109,7 @@ const TransportationForm = ({
                         type="string"
                         placeholder="00:00 MINUTES"
                         icon={<Icon as={Clock} />}
+                        onChange={captureValue}
                       />
                     </Box>
                   </SimpleGrid>

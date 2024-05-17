@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "react-datepicker": "^6.0.0",
+    "react-international-phone": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.51"
+  }
+}

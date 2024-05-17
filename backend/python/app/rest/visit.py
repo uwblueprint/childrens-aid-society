@@ -63,7 +63,7 @@ def create_visit():
 
         return jsonify(new_visit.__dict__), 201
     except Exception as error:
-        return jsonify(error), 400
+        return jsonify("Bad Request: The server cannot process your request."), 400
 
 
 # get all visits
@@ -160,7 +160,7 @@ def update_visit(id):
         }
         return jsonify(response_data), 200
     except Exception as error:
-        return jsonify("Bad Request: The server cannot process your request."), 400
+        return jsonify(str(error)), 400
 
 
 @blueprint.route("/", methods=["DELETE"], strict_slashes=False)

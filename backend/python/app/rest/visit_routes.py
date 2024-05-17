@@ -2,9 +2,7 @@ import json
 
 from flask import Blueprint, current_app, jsonify, request
 
-from ..middlewares.auth import require_authorization_by_role
-from ..middlewares.validate import validate_request
-from ..resources.visit_dto import VisitDTO
+from ..resources.visit_dto import CreateVisitDTO
 from ..services.implementations.visit_service import VisitService
 
 # define instance of VisitService
@@ -15,7 +13,34 @@ blueprint = Blueprint("visits", __name__, url_prefix="/visits")
 
 
 @blueprint.route("/", methods=["POST"], strict_slashes=False)
-@require_authorization_by_role({"User", "Admin"})
-@validate_request("VisitDTO")
 def create_visit():
-    pass
+    data = request.json
+
+    visit_data = {
+        "user_id": data.get("user_i_d"),
+        "childInformation": data.get("child_details"),
+        "visitTimestamp": data.get("visit_details", {}).get("visit_date"),
+        "location": data.get("visit_details", {}).get("location"),
+        "visit_day": data.get("visit_details", {}).get("visit_day"),
+        "visit_supervision": data.get("visit_details", {})
+        .get("visit_supervision")
+        .upper(),
+        "start_time": data.get("visit_details", {}).get("start_time"),
+        "end_time": data.get("visit_details", {}).get("end_time"),
+        "attendance": data.get("attendance_entries"),
+        "transportation": data.get("transportation_entries"),
+        "notes": data.get("transportation_entries").get("entries")[0].get("notes"),
+        "childAndFamilySupportWorker": data.get("child_details", {}).get(
+            "child_service_worker"
+        ),
+    }
+    visit = CreateVisitDTO(**visit_data)
+    errors = visit.validate()
+    if errors:
+        return {"error": errors}, 400
+    else:
+        try:
+            visit_service.create_visit(visit)
+            return jsonify({"message": "Visit created successfully"}), 201
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500

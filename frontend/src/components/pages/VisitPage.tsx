@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useParams, useHistory} from 'react-router-dom'
 import {
   Box,
   Button,
@@ -20,8 +21,31 @@ import OptionalLabel from "../intake/OptionalLabel";
 import VisitFormFooter from "../visit/VisitFormFooter";
 
 const Visit = (): React.ReactElement => {
-  // url is /visit/caseId/visitId, commented for now to avoid lint
-  // const params = useParams();
+  const { caseId } = useParams<{ caseId: string}>();
+  const history = useHistory()
+  const caseNumber: number = parseInt(caseId, 10);
+
+  const navigateToPrimary = () => history.goBack();
+
+    // Visting Member
+
+    const DEDAULT_TRANSPORTATION_DETAILS = {
+      entries: [
+        {
+          gaurdian: "",
+          name: "",
+          duration: "",
+          notes: "",
+        },
+      ],
+    };
+
+
+  const [visitNotes, setVisitNotes] = useState('');
+  const [transportationEntries, setTransportationEntries] =
+    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
+
+
 
   const DEFAULT_CHILD_DETAILS = {
     familyName: "",
@@ -31,6 +55,8 @@ const Visit = (): React.ReactElement => {
     fosterCareCoordinator: "",
   };
 
+  // Attendance Sheet
+
   const DEFAULT_VISIT_DETAILS = {
     visitDate: "",
     visitDay: "",
@@ -39,6 +65,8 @@ const Visit = (): React.ReactElement => {
     endTime: "",
     location: "",
   };
+
+  // Attendance Records
 
   const DEFAULT_ATTENDANCE_DETAILS = {
     entries: [
@@ -53,16 +81,7 @@ const Visit = (): React.ReactElement => {
     ],
   };
 
-  const DEDAULT_TRANSPORTATION_DETAILS = {
-    entries: [
-      {
-        gaurdian: "",
-        name: "",
-        duration: "",
-      },
-    ],
-  };
-
+  // Transportation
   const [childDetails, setChildDetails] = useState<ChildDetails>(
     DEFAULT_CHILD_DETAILS,
   );
@@ -75,9 +94,6 @@ const Visit = (): React.ReactElement => {
     DEFAULT_ATTENDANCE_DETAILS,
   );
 
-  const [transportationEntries, setTransportationEntries] =
-    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
-
   const scrollToHeader = (headerId: string) => {
     const headerElement = document.getElementById(headerId);
 
@@ -85,6 +101,23 @@ const Visit = (): React.ReactElement => {
       headerElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleNotesChange = (event:any) => {
+    const currentVisitNotes = event.target.value
+    setVisitNotes(currentVisitNotes)
+
+    const updatedEntries = [...transportationEntries.entries];
+  
+    if (updatedEntries.length > 0) {
+      updatedEntries[0] = { ...updatedEntries[0], notes: currentVisitNotes };
+    }
+
+    setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
+  };
+
+  const updateChildServiceWorker = (event:any) => {
+    setChildDetails({...childDetails, childServiceWorker: event.target.value})
+  }
 
   return (
     <>
@@ -127,8 +160,8 @@ const Visit = (): React.ReactElement => {
               display="flex"
               gap="8px"
             >
-              <Button variant="ghost" width="fit-content">
-                <ArrowLeft /> Save and Exit {/* TODO implement save and exit */}
+              <Button variant="ghost" width="fit-content" onClick={navigateToPrimary}>
+                <ArrowLeft /> Exit
               </Button>
             </Box>
             <Button
@@ -218,6 +251,8 @@ const Visit = (): React.ReactElement => {
                 placeholder="Note any additional information in regards to this visit."
                 height="10rem"
                 paddingBottom="7rem"
+                value={visitNotes}
+                onChange={handleNotesChange} 
               />
             </Box>
             <Text textStyle="header-medium" id="childFamilySupportWorker">
@@ -231,32 +266,19 @@ const Visit = (): React.ReactElement => {
                 type="string"
                 placeholder="Enter name of child and family support worker"
                 icon={<Icon as={User} />}
-              />
-            </Box>
-            <Box>
-              <FormLabel htmlFor="">CHILD AND FAMILY SUPPORT WORKER</FormLabel>
-              <CustomInput
-                id="childFamilySupportWorker"
-                name="childFamilySupportWorker"
-                type="string"
-                placeholder="Enter name of child and family support worker"
-                icon={<Icon as={User} />}
-              />
-            </Box>
-            <Box>
-              <FormLabel htmlFor="">CHILD AND FAMILY SUPPORT WORKER</FormLabel>
-              <CustomInput
-                id="childFamilySupportWorker"
-                name="childFamilySupportWorker"
-                type="string"
-                placeholder="Enter name of child and family support worker"
-                icon={<Icon as={User} />}
+                onChange={updateChildServiceWorker}
               />
             </Box>
           </Box>
         </Box>
       </Box>
-      <VisitFormFooter />
+      <VisitFormFooter 
+        childDetails={childDetails}
+        visitDetails={visitDetails}
+        attendanceEntries={attendanceEntries}
+        transportationEntries={transportationEntries}
+        onCancel={navigateToPrimary}
+      />
     </>
   );
 };

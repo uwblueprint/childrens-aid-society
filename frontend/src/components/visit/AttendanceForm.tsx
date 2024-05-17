@@ -5,6 +5,7 @@ import {
   FormControl,
   FormLabel,
   Icon,
+  Select,
   SimpleGrid,
   Divider,
 } from "@chakra-ui/react";
@@ -48,6 +49,15 @@ const AttendanceForm = ({
     },
   });
 
+  const captureValue = (e: React.ChangeEvent<any>) => {
+      const { name, value } = e.target;
+      formik.handleChange(e);
+      setAttendanceEntries(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
+
   return (
     <FormikProvider value={formik}>
       <Form>
@@ -62,28 +72,36 @@ const AttendanceForm = ({
                       <FormLabel htmlFor="visitingMembers">
                         VISITING MEMBERS
                       </FormLabel>
-                      <CustomSelectField
+                      <Select
                         name={`entries[${index}].visitingMembers`}
+                        as={Select}
                         id="visitingMembers"
                         options={["Other Visitor"]}
                         placeholder="Select visiting family"
                         iconRight={<Icon as={ChevronDown} />}
                         readOnly={readOnly}
-                        onChange={formik.handleChange}
-                      />
+                        onChange={captureValue}
+                      >
+                        <option value="Other Visitor">Other Visitor</option>
+                      </Select>
                     </Box>
                     <Box>
                       <FormLabel htmlFor="visitorRelationship">
                         VISITOR RELATIONSHIP
                       </FormLabel>
-                      <CustomSelectField
-                        readOnly={readOnly}
+                      <Select
+                        disabled={readOnly}
                         id="visitorRelationship"
-                        options={["Full", "Partial", "Unsupervised"]}
+                        // options={["Full", "Partial", "Unsupervised"]}
                         name={`entries[${index}].visitorRelationship`}
-                        iconRight={<Icon as={ChevronDown} />}
+                        // iconRight={<Icon as={ChevronDown} />}
                         placeholder="Select relationship"
-                      />
+                        onChange={captureValue}
+                      >
+                        <option value="full">Full</option>
+                        <option value="partial">Partial</option>
+                        <option value="unsupervised">Unsupervised</option>
+                      </Select>
                     </Box>
                     <Box>
                       {/* TODO: make this dropdown conditional on other relationship */}
@@ -96,6 +114,7 @@ const AttendanceForm = ({
                         type="string"
                         placeholder="Other relative description"
                         icon={<Icon as={User} />}
+                        onChange={captureValue}
                       />
                     </Box>
                   </SimpleGrid>
@@ -111,6 +130,7 @@ const AttendanceForm = ({
                       type="string"
                       placeholder="Enter name for visiting family"
                       icon={<Icon as={User} />}
+                      onChange={captureValue}
                     />
                   </Box>
                   <SimpleGrid columns={2} spacingX="30px" spacingY="10px">
@@ -118,14 +138,16 @@ const AttendanceForm = ({
                       <FormLabel htmlFor="visitAttendance">
                         VISIT ATTENDANCE
                       </FormLabel>
-                      <CustomSelectField
+                      <Select
                         name={`entries[${index}].visitAttendance`}
                         id="visitAttendance"
-                        options={["Cancelled", "Occurred"]}
                         placeholder="Select an option..."
-                        iconRight={<Icon as={ChevronDown} />}
-                        readOnly={readOnly}
-                      />
+                        disabled={readOnly}
+                        onChange={captureValue}
+                      >
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Occurred">Occurred</option>
+                      </Select>
                     </Box>
                     <Box>
                       <FormLabel htmlFor="absenceReason">
@@ -138,6 +160,7 @@ const AttendanceForm = ({
                         name={`entries[${index}].absenceReason`}
                         type="string"
                         placeholder="Eg. Doctor's Appointment"
+                        onChange={captureValue}
                       />
                     </Box>
                   </SimpleGrid>

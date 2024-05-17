@@ -1,21 +1,54 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Box, Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { ArrowRight } from "react-feather";
 import SubmitVisitModal from "./SubmitVisitModal";
+import VisitAPIClient from "../../APIClients/VisitAPIClient";
+import { HOME_PAGE } from "../../constants/Routes";
 
 export type VisitFormFooterProps = {
   nextButtonRef?: React.RefObject<HTMLButtonElement>;
   showClearPageBtn?: boolean;
   nextStepCallBack: () => void;
   clearFields?: () => void;
+  childDetails: any;
+  visitDetails: any;
+  attendanceEntries: any;
+  transportationEntries: any;
 };
 
-const VisitFormFooter = (): React.ReactElement => {
+const VisitFormFooter = (
+  {
+    childDetails,
+    visitDetails,
+    attendanceEntries,
+    transportationEntries,
+    onCancel
+  } : any 
+): React.ReactElement => {
+  const history = useHistory();
   const {
     onOpen: onOpenSubmitVisitModal,
     isOpen: isOpenSubmitVisitModal,
     onClose: onCloseSubmitVisitModal,
   } = useDisclosure();
+
+  const handleSubmit = async () => {
+    const visitData = {
+      // TODO: Re-assign userID and caseID.
+      userID: 1,
+      caseID: 1,
+      childDetails,
+      visitDetails,
+      attendanceEntries,
+      transportationEntries,
+    };
+    await VisitAPIClient.post(visitData);
+    history.push(HOME_PAGE)
+
+    
+    onCloseSubmitVisitModal();
+  }
 
   return (
     <Flex
@@ -32,9 +65,7 @@ const VisitFormFooter = (): React.ReactElement => {
       zIndex="2"
     >
       <Button
-        onClick={() => {
-          // TODO: Handle cancel form logic
-        }}
+        onClick={onCancel}
         variant="tertiary"
       >
         <Box>Cancel</Box>
@@ -46,7 +77,7 @@ const VisitFormFooter = (): React.ReactElement => {
         width={{ sm: "95vw", md: "45vw", lg: "auto" }}
         height="38px"
         variant="primary"
-        // TODO add isLoading={}
+        type="submit"
         onClick={onOpenSubmitVisitModal}
       >
         <Box pl="2" marginRight="10px">
@@ -57,7 +88,7 @@ const VisitFormFooter = (): React.ReactElement => {
       <SubmitVisitModal
         isOpen={isOpenSubmitVisitModal}
         onClose={onCloseSubmitVisitModal}
-        onClick={onOpenSubmitVisitModal}
+        onClick={handleSubmit}
       />
     </Flex>
   );

@@ -121,7 +121,7 @@ def insert_test_data():
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
     # Attendance Sheets
-    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc')]
+    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc'), (2, 2, 'Wang', 'a', 'b', 'c')]
     for value in values:
         insert_values(db, "attendance_sheets", ("intake_id", "family_name", "csw", "cpw", "fcc"), value)
 
@@ -168,6 +168,8 @@ def clear_rows():
     db.engine.execute("TRUNCATE TABLE goals RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE intakes RESTART IDENTITY CASCADE")
     db.engine.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE attendance_sheets RESTART IDENTITY CASCADE")
+    db.engine.execute("TRUNCATE TABLE attendance_records RESTART IDENTITY CASCADE")
 
 # fmt: on
 

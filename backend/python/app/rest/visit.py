@@ -7,11 +7,63 @@ from ..resources.child_dto import ChildDTO
 from ..resources.visit_dto import VisitDTO
 from ..services.implementations.attendance_record_service import AttendanceRecordService
 from ..services.implementations.attendance_sheet_service import AttendanceSheetService
+from ..services.implementations.transport_method_service import (
+    TransportationMethodService,
+)
 
 attendance_sheet_service = AttendanceSheetService(current_app.logger)
 attendance_record_service = AttendanceRecordService(current_app.logger)
+transport_method_service = TransportationMethodService(current_app.logger)
 
 blueprint = Blueprint("visit", __name__, url_prefix="/visit")
+
+
+# create a visit in db
+@blueprint.route("/", methods=["POST"], strict_slashes=False)
+# @require_authorization_by_role({"Admin", "User"})
+@validate_request("VisitDTO")
+def create_visit():
+    try:
+        attendance_sheet = {
+            "intake_id": request.json["intake_id"],
+            "children": request.json["childInformation"]["children"],
+            "family_name": request.json["childInformation"]["familyName"],
+            "csw": request.json["childInformation"]["childServiceWorker"],
+            "cpw": request.json["childInformation"]["childProtectionWorker"],
+            "fcc": request.json["childInformation"]["fosterCareCoordinator"],
+        }
+        attendance_sheet = CreateAttendanceSheetDTO(**attendance_sheet)
+
+        attendance_record = {
+            # "id": request.json["user_id"],
+            "attendance_sheet_id": 1,
+            "attendance": "PRESENT",  # update
+            "attending_family": "MOM",  # update
+            "date": request.json["visitTimestamp"]["visitDate"],
+            "supervision": request.json["visitTimestamp"]["visitSupervision"],
+            "start_time": request.json["visitTimestamp"]["startTime"],
+            "end_time": request.json["visitTimestamp"]["endTime"],
+            "location": request.json["visitTimestamp"]["location"],
+            "comments": request.json["notes"],
+            "child_family_support_worker_id": request.json[
+                "childAndFamilySupportWorker"
+            ],
+            "user": request.json["user_id"],
+        }
+        attendance_record = CreateAttendanceRecordsDTO(**attendance_record)
+
+        # new_attendance_sheet = attendance_sheet_service.create_attendance_sheet(
+        #     attendance_sheet
+        # )
+        new_attendance_record = attendance_record_service.create_attendance_record(
+            attendance_record
+        )
+        # new_visit = [attendance_sheet, attendance_record]
+        new_visit = attendance_record
+
+        return jsonify(new_visit.__dict__), 201
+    except Exception as error:
+        return jsonify("Bad Request: The server cannot process your request."), 400
 
 
 # get all visits

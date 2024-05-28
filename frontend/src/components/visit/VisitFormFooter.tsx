@@ -19,10 +19,13 @@ export type VisitFormFooterProps = {
 
 const VisitFormFooter = (
   {
+    userId,
+    caseId,
     childDetails,
     visitDetails,
     attendanceEntries,
     transportationEntries,
+    visitNotes,
     onCancel
   } : any 
 ): React.ReactElement => {
@@ -36,15 +39,17 @@ const VisitFormFooter = (
   const handleSubmit = async () => {
     const visitData = {
       // TODO: Re-assign userID and caseID.
-      userID: 1,
-      caseID: 1,
+      userId,
+      caseId,
       childDetails,
       visitDetails,
       attendanceEntries,
       transportationEntries,
+      visitNotes
     };
+    console.log(visitData);
     await VisitAPIClient.post(visitData);
-    history.push(HOME_PAGE)
+    // history.push(HOME_PAGE)
 
     
     onCloseSubmitVisitModal();

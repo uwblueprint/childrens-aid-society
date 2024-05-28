@@ -29,13 +29,12 @@ const Visit = (): React.ReactElement => {
 
     // Visting Member
 
-    const DEDAULT_TRANSPORTATION_DETAILS = {
+    const DEFAULT_TRANSPORTATION_DETAILS = {
       entries: [
         {
-          gaurdian: "",
+          guardian: "",
           name: "",
-          duration: "",
-          notes: "",
+          duration: ""
         },
       ],
     };
@@ -43,7 +42,7 @@ const Visit = (): React.ReactElement => {
 
   const [visitNotes, setVisitNotes] = useState('');
   const [transportationEntries, setTransportationEntries] =
-    useState<TransportationEntries>(DEDAULT_TRANSPORTATION_DETAILS);
+    useState<TransportationEntries>(DEFAULT_TRANSPORTATION_DETAILS);
 
 
 
@@ -109,7 +108,7 @@ const Visit = (): React.ReactElement => {
     const updatedEntries = [...transportationEntries.entries];
   
     if (updatedEntries.length > 0) {
-      updatedEntries[0] = { ...updatedEntries[0], notes: currentVisitNotes };
+      updatedEntries[0] = { ...updatedEntries[0]};
     }
 
     setTransportationEntries({ ...transportationEntries, entries: updatedEntries });
@@ -272,11 +271,14 @@ const Visit = (): React.ReactElement => {
           </Box>
         </Box>
       </Box>
-      <VisitFormFooter 
+      <VisitFormFooter
+        userId={caseId}
+        caseId={caseId}
         childDetails={childDetails}
         visitDetails={visitDetails}
         attendanceEntries={attendanceEntries}
         transportationEntries={transportationEntries}
+        visitNotes={visitNotes}
         onCancel={navigateToPrimary}
       />
     </>

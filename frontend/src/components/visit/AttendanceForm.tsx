@@ -50,13 +50,36 @@ const AttendanceForm = ({
   });
 
   const captureValue = (e: React.ChangeEvent<any>) => {
-      const { name, value } = e.target;
-      formik.handleChange(e);
-      setAttendanceEntries(prevState => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
+    const { id, value } = e.target;
+    const { entryIndex } = e.target.dataset;
+    formik.handleChange(e);
+
+    const temp = attendanceEntries;
+    switch (id) {
+      case "visitingMembers":
+        temp.entries[entryIndex].visitingMembers = value;
+        break;
+      case "description":
+        temp.entries[entryIndex].description = value;
+        break;
+      case "visitorRelationship":
+        temp.entries[entryIndex].visitorRelationship = value;
+        break;
+      case "visitAttendance":
+        temp.entries[entryIndex].visitAttendance = value;
+        break;
+      case "visitingMemberName":
+        temp.entries[entryIndex].visitingMemberName = value;
+        break;
+      case "absenceReason":
+        temp.entries[entryIndex].absenceReason = value;
+        break;
+      default:
+        break;
+    }
+    setAttendanceEntries(temp);
+  };
+
 
   return (
     <FormikProvider value={formik}>
@@ -81,6 +104,7 @@ const AttendanceForm = ({
                         iconRight={<Icon as={ChevronDown} />}
                         readOnly={readOnly}
                         onChange={captureValue}
+                        data-entry-index={index}
                       >
                         <option value="Other Visitor">Other Visitor</option>
                       </Select>
@@ -97,6 +121,7 @@ const AttendanceForm = ({
                         // iconRight={<Icon as={ChevronDown} />}
                         placeholder="Select relationship"
                         onChange={captureValue}
+                        data-entry-index={index}
                       >
                         <option value="full">Full</option>
                         <option value="partial">Partial</option>
@@ -115,6 +140,7 @@ const AttendanceForm = ({
                         placeholder="Other relative description"
                         icon={<Icon as={User} />}
                         onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                   </SimpleGrid>
@@ -131,6 +157,7 @@ const AttendanceForm = ({
                       placeholder="Enter name for visiting family"
                       icon={<Icon as={User} />}
                       onChange={captureValue}
+                      data-entry-index={index}
                     />
                   </Box>
                   <SimpleGrid columns={2} spacingX="30px" spacingY="10px">
@@ -144,6 +171,7 @@ const AttendanceForm = ({
                         placeholder="Select an option..."
                         disabled={readOnly}
                         onChange={captureValue}
+                        data-entry-index={index}
                       >
                         <option value="Cancelled">Cancelled</option>
                         <option value="Occurred">Occurred</option>
@@ -161,6 +189,7 @@ const AttendanceForm = ({
                         type="string"
                         placeholder="Eg. Doctor's Appointment"
                         onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                   </SimpleGrid>
@@ -191,6 +220,16 @@ const AttendanceForm = ({
                       textStyle="button-small"
                       variant="secondary"
                       onClick={() => {
+                        const temp = attendanceEntries;
+                        temp.entries.push({
+                          visitingMembers: "",
+                          visitorRelationship: "",
+                          description: "",
+                          visitingMemberName: "",
+                          visitAttendance: "",
+                          absenceReason: "",
+                        });
+                        setAttendanceEntries(temp);
                         arrayHelpers.push({
                           visitingMembers: "",
                           visitorRelationship: "",

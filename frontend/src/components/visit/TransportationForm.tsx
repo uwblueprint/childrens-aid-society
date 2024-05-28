@@ -15,10 +15,9 @@ import CustomInput from "../common/CustomInput";
 import { CustomSelectField } from "../intake/CustomSelectField";
 
 export type TransportationDetails = {
-  gaurdian: string;
+  guardian: string;
   name: string;
   duration: string;
-  notes: string;
 };
 
 export type TransportationEntries = {
@@ -50,13 +49,27 @@ const TransportationForm = ({
   });
 
   const captureValue = (e: React.ChangeEvent<any>) => {
-      const { name, value } = e.target;
-      formik.handleChange(e);
-      setTransportationEntries(prevState => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
+    const { id, value } = e.target;
+    const { entryIndex } = e.target.dataset;
+    formik.handleChange(e);
+
+    const temp = transportationEntries;
+
+    switch (id) {
+      case "duration":
+        temp.entries[entryIndex].duration = value;
+        break;
+      case "guardian":
+        temp.entries[entryIndex].guardian = value;
+        break;
+      case "name":
+        temp.entries[entryIndex].name = value;
+        break;
+      default:
+        break;
+    }
+    setTransportationEntries(temp);
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -79,6 +92,7 @@ const TransportationForm = ({
                         placeholder="Select"
                         iconRight={<Icon as={ChevronDown} />}
                         onChange={captureValue}
+                        data-entry-index={index}
                       >
                         <option value="transport1">transport 1</option>
                         <option value="transport2">transport 2</option>
@@ -97,6 +111,7 @@ const TransportationForm = ({
                         placeholder="Enter name"
                         icon={<Icon as={User} />}
                         onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                     <Box>
@@ -111,6 +126,7 @@ const TransportationForm = ({
                         placeholder="00:00 MINUTES"
                         icon={<Icon as={Clock} />}
                         onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                   </SimpleGrid>
@@ -142,11 +158,18 @@ const TransportationForm = ({
                         textStyle="button-small"
                         variant="secondary"
                         onClick={() => {
+                          const temp = transportationEntries;
+                          temp.entries.push({
+                            guardian: "",
+                            name: "",
+                            duration: ""
+                          });
+                          setTransportationEntries(temp);
                           arrayHelpers.push({
                             guardian: "",
                             name: "",
-                            duration: "",
-                          });
+                            duration: ""
+                          })
                         }}
                       >
                         + Add transportation

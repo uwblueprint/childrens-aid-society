@@ -30,7 +30,7 @@ interface Visit {
         absenceReason: string;
     }[];
     transportationEntries: {
-        gaurdian: string;
+        guardian: string;
         name: string;
         duration: string;
         notes: string;

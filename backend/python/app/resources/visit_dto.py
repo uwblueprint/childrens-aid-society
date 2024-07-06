@@ -1,17 +1,12 @@
 class VisitDTO(object):
     def __init__(self, **kwargs):
         self.user_id = kwargs.get("user_id")
+        self.case_id = kwargs.get("case_id")
         self.childInformation = kwargs.get("childInformation")
-        self.visitTimestamp = kwargs.get("visitTimestamp")
-        self.visit_supervision = kwargs.get("visit_supervision")
-        self.location = kwargs.get("location")
-        self.visit_day = kwargs.get("visit_day")
-        self.start_time = kwargs.get("start_time")
-        self.end_time = kwargs.get("end_time")
+        self.visitDetails = kwargs.get("visitDetails")
         self.attendance = kwargs.get("attendance")
         self.transportation = kwargs.get("transportation")
-        self.notes = kwargs.get("notes")
-        self.childAndFamilySupportWorker = kwargs.get("childAndFamilySupportWorker")
+        self.notes = kwargs.get("visitNotes")
 
 
 class CreateVisitDTO(VisitDTO):

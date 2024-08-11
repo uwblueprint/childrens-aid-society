@@ -123,9 +123,21 @@ const AttendanceForm = ({
                         onChange={captureValue}
                         data-entry-index={index}
                       >
-                        <option value="full">Full</option>
-                        <option value="partial">Partial</option>
-                        <option value="unsupervised">Unsupervised</option>
+                        <option value="FOSTER_CAREGIVER">Foster Caregiver</option>
+                        <option value="KINSHIP_CAREGIVER">Kinship Caregiver</option>
+                        <option value="BIOLOGICAL_FAMILY">Biological Family</option>
+                        <option value="ADOPTIVE_PARENT">Adoptive Parent</option>
+                        <option value="FOSTER_PARENT">Foster Parent</option>
+                        <option value="BIOLOGICAL_PARENT">Biological Parent</option>
+                        <option value="STEP_PARENT">Step Parent</option>
+                        <option value="MATERNAL_GRANDPARENT">Maternal Grandparent</option>
+                        <option value="PATERNAL_GRANDPARENT">Paternal Grandparent</option>
+                        <option value="SIBLING">Sibling</option>
+                        <option value="STEP_SIBLING">Step Sibling</option>
+                        <option value="HALF_SIBLING">Half Sibling</option>
+                        <option value="UNCLE_AUNT">Uncle/Aunt</option>
+                        <option value="OTHER_RELATIVE">Other Relative</option>
+                        <option value="OTHER">Other</option>
                       </Select>
                     </Box>
                     <Box>
@@ -173,8 +185,9 @@ const AttendanceForm = ({
                         onChange={captureValue}
                         data-entry-index={index}
                       >
-                        <option value="Cancelled">Cancelled</option>
-                        <option value="Occurred">Occurred</option>
+                        <option value="PRESENT">Present</option>
+                        <option value="CANCELLED">Cancelled</option>
+                        <option value="NO_SHOW">No Show</option>
                       </Select>
                     </Box>
                     <Box>

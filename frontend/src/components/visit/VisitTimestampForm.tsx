@@ -31,16 +31,21 @@ const VisitTimestampForm = ({
   setVisitDetails,
   readOnly = false,
 }: VisitTimestampFormProps): React.ReactElement => {
-  const onSubmit = (values: VisitDetails) => {
-    setVisitDetails(values);
-  };
-
   const formik = useFormik({
     initialValues: visitDetails,
     onSubmit: (values: VisitDetails) => {
-      onSubmit(values);
+      console.log(values);
     },
   });
+
+  const captureValue = (e: React.ChangeEvent<any>) => {
+      const { name, value } = e.target;
+      formik.handleChange(e);
+      setVisitDetails(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
 
   return (
     <FormikProvider value={formik}>
@@ -57,6 +62,7 @@ const VisitTimestampForm = ({
                 type="string"
                 placeholder="MM/DD/YYYY"
                 icon={<Icon as={Calendar} />}
+                onChange={captureValue}
               />
             </Box>
             <Box>
@@ -69,13 +75,14 @@ const VisitTimestampForm = ({
                 type="string"
                 placeholder="Eg. Wednesday"
                 icon={<Icon as={Calendar} />}
+                onChange={captureValue}
               />
             </Box>
             <Box>
               <FormLabel htmlFor="visitSupervision">
                 VISIT SUPERVISION
               </FormLabel>
-              <Field
+              <Select
                 disabled={readOnly}
                 as={Select}
                 id="visitSupervision"
@@ -83,7 +90,12 @@ const VisitTimestampForm = ({
                 name="visitSupervision"
                 type="string"
                 placeholder="Select option"
-              />
+                onChange={captureValue}
+              >
+                <option value="Full">Full</option>
+                <option value="Partial">Partial</option>
+                <option value="Unsupervised">Unsupervised</option>
+              </Select>
             </Box>
           </SimpleGrid>
           <SimpleGrid columns={3} spacingX="30px" spacingY="10px">
@@ -97,6 +109,7 @@ const VisitTimestampForm = ({
                 type="string"
                 placeholder="00:00      24HR"
                 icon={<Icon as={Clock} />}
+                onChange={captureValue}
               />
             </Box>
             <Box>
@@ -109,6 +122,7 @@ const VisitTimestampForm = ({
                 type="string"
                 placeholder="00:00"
                 icon={<Icon as={Clock} />}
+                onChange={captureValue}
               />
             </Box>
           </SimpleGrid>
@@ -122,6 +136,7 @@ const VisitTimestampForm = ({
               type="string"
               placeholder="Enter location of visit"
               icon={<Icon as={Navigation} />}
+              onChange={captureValue}
             />
           </Box>
         </FormControl>

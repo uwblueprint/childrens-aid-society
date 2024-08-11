@@ -121,7 +121,7 @@ def insert_test_data():
         insert_values(db, "providers", ("name", "file_number", "primary_phone_number", "secondary_phone_number", "email", "address", "relationship_to_child", "additional_contact_notes", "child_id"), value)
 
     # Attendance Sheets
-    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc'), (2, 2, 'Wang', 'a', 'b', 'c')]
+    values = [(1, 'Zhang', 'csw', 'cpw', 'fcc'), (2, 'Wang', 'a', 'b', 'c')]
     for value in values:
         insert_values(db, "attendance_sheets", ("intake_id", "family_name", "csw", "cpw", "fcc"), value)
 

@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Icon,
+  Select,
   Button,
   SimpleGrid,
   Divider,
@@ -14,7 +15,7 @@ import CustomInput from "../common/CustomInput";
 import { CustomSelectField } from "../intake/CustomSelectField";
 
 export type TransportationDetails = {
-  gaurdian: string;
+  guardian: string;
   name: string;
   duration: string;
 };
@@ -47,6 +48,29 @@ const TransportationForm = ({
     },
   });
 
+  const captureValue = (e: React.ChangeEvent<any>) => {
+    const { id, value } = e.target;
+    const { entryIndex } = e.target.dataset;
+    formik.handleChange(e);
+
+    const temp = transportationEntries;
+
+    switch (id) {
+      case "duration":
+        temp.entries[entryIndex].duration = value;
+        break;
+      case "guardian":
+        temp.entries[entryIndex].guardian = value;
+        break;
+      case "name":
+        temp.entries[entryIndex].name = value;
+        break;
+      default:
+        break;
+    }
+    setTransportationEntries(temp);
+  };
+
   return (
     <FormikProvider value={formik}>
       <Form>
@@ -59,14 +83,21 @@ const TransportationForm = ({
                   <SimpleGrid columns={3} spacingX="30px" spacingY="10px">
                     <Box>
                       <FormLabel htmlFor="guardian">GUARDIAN</FormLabel>
-                      <CustomSelectField
-                        readOnly={readOnly}
+                      <Select
+                        disabled={readOnly}
+                        as={Select}
                         id="guardian"
                         options={["Full", "Partial", "Unsupervised"]}
                         name={`entries[${index}].guardian`}
                         placeholder="Select"
                         iconRight={<Icon as={ChevronDown} />}
-                      />
+                        onChange={captureValue}
+                        data-entry-index={index}
+                      >
+                        <option value="transport1">transport 1</option>
+                        <option value="transport2">transport 2</option>
+                        <option value="transport3">transport 3</option>
+                      </Select>
                     </Box>
                     <Box>
                       {/* TODO: make ethis dropdown conditional on other visitor */}
@@ -79,19 +110,23 @@ const TransportationForm = ({
                         type="string"
                         placeholder="Enter name"
                         icon={<Icon as={User} />}
+                        onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                     <Box>
                       {/* TODO: make ethis dropdown conditional on other relationship */}
-                      <FormLabel htmlFor="duration">DURATION</FormLabel>
+                      <FormLabel htmlFor="duration">DURATION (min)</FormLabel>
                       <Field
                         disabled={readOnly}
                         as={CustomInput}
                         id="duration"
                         name={`entries[${index}].duration`}
                         type="string"
-                        placeholder="00:00 MINUTES"
+                        placeholder="0"
                         icon={<Icon as={Clock} />}
+                        onChange={captureValue}
+                        data-entry-index={index}
                       />
                     </Box>
                   </SimpleGrid>
@@ -123,11 +158,18 @@ const TransportationForm = ({
                         textStyle="button-small"
                         variant="secondary"
                         onClick={() => {
+                          const temp = transportationEntries;
+                          temp.entries.push({
+                            guardian: "",
+                            name: "",
+                            duration: ""
+                          });
+                          setTransportationEntries(temp);
                           arrayHelpers.push({
                             guardian: "",
                             name: "",
-                            duration: "",
-                          });
+                            duration: ""
+                          })
                         }}
                       >
                         + Add transportation

@@ -116,14 +116,14 @@ const TransportationForm = ({
                     </Box>
                     <Box>
                       {/* TODO: make ethis dropdown conditional on other relationship */}
-                      <FormLabel htmlFor="duration">DURATION</FormLabel>
+                      <FormLabel htmlFor="duration">DURATION (min)</FormLabel>
                       <Field
                         disabled={readOnly}
                         as={CustomInput}
                         id="duration"
                         name={`entries[${index}].duration`}
                         type="string"
-                        placeholder="00:00 MINUTES"
+                        placeholder="0"
                         icon={<Icon as={Clock} />}
                         onChange={captureValue}
                         data-entry-index={index}

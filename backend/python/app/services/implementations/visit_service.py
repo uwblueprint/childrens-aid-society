@@ -5,6 +5,8 @@ from ...resources.attendance_sheet_dto import AttendanceSheetDTO
 from ...resources.attendance_records_dto import AttendanceRecordsDTO
 from ...models.attendance_sheets import AttendanceSheets
 from ...models.attendance_records import AttendanceRecords
+from ...models.attendance_records import VisitingMember
+from ...models.attendance_records import Transportation
 from ...models.transportation_method import TransportationMethod
 
 
@@ -34,6 +36,27 @@ class VisitService(IVisitService):
                 notes=visit.notes,
             )
             db.session.add(attendance_record)
+            db.session.flush()
+
+            for visiting_member in visit.attendance["entries"]:
+                member = VisitingMember(
+                    attendance_record_id=attendance_record.id,
+                    visitor_relationship=visiting_member["visitor_relationship"],
+                    visiting_member_name=visiting_member["visiting_member_name"],
+                    description=visiting_member["description"],
+                    visit_attendance=visiting_member["visit_attendance"],
+                    reason_for_absence=visiting_member["absence_reason"],
+                )
+                db.session.add(member)
+
+            for transport in visit.transportation["entries"]:
+                transportation = Transportation(
+                    attendance_record_id=attendance_record.id,
+                    guardian=transport["guardian"],
+                    name=transport["name"],
+                    duration=transport["duration"],
+                )
+                db.session.add(transportation)
 
             # TODO: Add a reference key to transportation method for the visit
             # transportation_entry = visit.transportation["entries"][0]

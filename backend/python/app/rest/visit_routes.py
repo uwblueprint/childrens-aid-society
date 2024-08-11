@@ -17,13 +17,13 @@ def create_visit():
     data = request.json
 
     visit_data = {
-        "user_id": data.get("userId"),
-        "case_id": data.get("caseId"),
+        "user_id": int(data.get("user_id")),
+        "case_id": data.get("case_id"),
         "child_details": data.get("child_details"),
         "visit_details": data.get("visit_details"),
         "attendance_entries": data.get("attendance_entries"),
         "transportation_entries": data.get("transportation_entries"),
-        "visit_notes": data.get("visitNotes"),
+        "visit_notes": data.get("visit_notes"),
     }
 
     visit = CreateVisitDTO(**visit_data)

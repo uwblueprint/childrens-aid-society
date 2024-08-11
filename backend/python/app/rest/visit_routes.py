@@ -19,23 +19,22 @@ def create_visit():
     visit_data = {
         "user_id": data.get("userId"),
         "case_id": data.get("caseId"),
-        "childInformation": data.get("childDetails"),
-        "visitDetails": data.get("visitDetails"),
-        "attendance": data.get("attendanceEntries"),
-        "transportation": data.get("transportationEntries"),
-        "visitNotes": data.get("visitNotes")
+        "child_details": data.get("child_details"),
+        "visit_details": data.get("visit_details"),
+        "attendance_entries": data.get("attendance_entries"),
+        "transportation_entries": data.get("transportation_entries"),
+        "visit_notes": data.get("visitNotes"),
     }
-    
+
     visit = CreateVisitDTO(**visit_data)
     errors = visit.validate()
     if errors:
         return {"error": errors}, 400
-    else:
-        try:
-            visit_service.create_visit(visit)
-            return jsonify({"message": "Visit created successfully"}), 201
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+    try:
+        visit_service.create_visit(visit)
+        return jsonify({"message": "Visit created successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @blueprint.route("/<int:user_id>", methods=["GET"], strict_slashes=False)
@@ -48,4 +47,3 @@ def get_visit_by_user_id(user_id):
         jsonify(merged_dict),
         200,
     )
-

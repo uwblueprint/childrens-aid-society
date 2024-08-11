@@ -15,22 +15,22 @@ class VisitService(IVisitService):
     def create_visit(self, visit: VisitDTO):
         try:
             attendance_sheet = AttendanceSheets(
-                family_name=visit.childInformation["familyName"],
-                csw=visit.childInformation["childServiceWorker"],
-                cpw=visit.childInformation["childProtectionWorker"],
-                fcc=visit.childInformation["fosterCareCoordinator"],
+                family_name=visit.child_details["family_name"],
+                csw=visit.child_details["child_service_worker"],
+                cpw=visit.child_details["child_protection_worker"],
+                fcc=visit.child_details["foster_care_coordinator"],
             )
             db.session.add(attendance_sheet)
             db.session.flush()
 
             attendance_record = AttendanceRecords(
                 attendance_sheet_id=attendance_sheet.id,
-                visit_date=visit.visitDetails["visitDate"],
-                visit_day=visit.visitDetails["visitDay"],
-                visit_supervision=visit.visitDetails["visitSupervision"],
-                start_time=visit.visitDetails["startTime"],
-                end_time=visit.visitDetails["endTime"],
-                location=visit.visitDetails["location"],
+                visit_date=visit.visit_details["visit_date"],
+                visit_day=visit.visit_details["visit_day"],
+                visit_supervision=visit.visit_details["visit_supervision"].upper(),
+                start_time=visit.visit_details["start_time"],
+                end_time=visit.visit_details["end_time"],
+                location=visit.visit_details["location"],
                 notes=visit.notes,
             )
             db.session.add(attendance_record)
@@ -54,12 +54,16 @@ class VisitService(IVisitService):
         try:
             attendance_sheets = AttendanceSheets.query.filter_by(id=userID)
             attendance_sheets_dto = [
-                AttendanceSheetDTO(**attendance_sheet.to_dict()) for attendance_sheet in attendance_sheets
+                AttendanceSheetDTO(**attendance_sheet.to_dict())
+                for attendance_sheet in attendance_sheets
             ]
 
-            attendance_records = AttendanceRecords.query.filter_by(attendance_sheet_id=userID)
+            attendance_records = AttendanceRecords.query.filter_by(
+                attendance_sheet_id=userID
+            )
             attendance_records_dto = [
-                AttendanceRecordsDTO(**attendance_record.to_dict()) for attendance_record in attendance_records
+                AttendanceRecordsDTO(**attendance_record.to_dict())
+                for attendance_record in attendance_records
             ]
 
             return attendance_sheets_dto + attendance_records_dto
